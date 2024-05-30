@@ -16,20 +16,20 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="/dosen" class="sidebar-link">
+                <a href="/daftar_bimbingan" class="sidebar-link">
                     <i class="lni lni-folder"></i>
-                    <span>Daftar Mahasiswa Bimbingan</span>
+                    <span>Daftar Bimbingan</span>
                 </a>
             </li>
             
             <li class="sidebar-item">
                 <a href="/logbook_mhs" class="sidebar-link">
                     <i class="lni lni-notepad"></i>
-                    <span>Logbook Bimbingan Mahasiswa</span>
+                    <span>Logbook Bimbingan </span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="/dosen" class="sidebar-link">
+                <a href="/review_mhs" class="sidebar-link">
                     <i class="lni lni-add-files"></i>
                     <span>Review Penyelia</span>
                 </a>

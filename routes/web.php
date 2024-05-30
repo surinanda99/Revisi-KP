@@ -53,14 +53,16 @@ Route::get('/logbook', [SidebarMahasiswaController::class, 'logbook_kp']);
 Route::get('/form', [SidebarMahasiswaController::class, 'form_kp']);
 Route::get('/draft', [SidebarMahasiswaController::class, 'draft_kp']);
 
-//review penyelia
+//review penyelia mahasiswa
 Route::get('/Review', [SidebarMahasiswaController::class, 'review_penyelia']);
 Route::get('/detail', [SidebarMahasiswaController::class, 'detail']);
 
-//profil
+//profil mahasiswa
 Route::get('/Profil', [SidebarMahasiswaController::class, 'profil_mhs']);
 
 //dosen
-Route::get('/dosen', [SidebarDosenController::class, 'daftar_mhs_bimbingan']);
+Route::get('/dosen', [SidebarDosenController::class, 'index']);
+Route::get('/daftar_bimbingan', [SidebarDosenController::class, 'daftar_mhs_bimbingan']);
 Route::get('/logbook_mhs', [SidebarDosenController::class, 'logbook_bimbingan_mhs']);
+Route::get('/review_mhs', [SidebarDosenController::class, 'review_penyelia']);
 
