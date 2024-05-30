@@ -2,57 +2,36 @@
 @section('title', 'Daftar Bimbingan Kerja Praktek')
 @section('content')
 <div class="container">
-    <h4 class="mb-4">Daftar Bimbingan Mahasiswa Kerja Praktek</h4>
+    <h4 class="mb-4">Daftar Logbook Mahasiswa Kerja Praktek</h4>
 
     <p class="mb-2 d-flex justify-content-between align-items-center">
-        Berikut merupakan daftar bimbingan mahasiswa
+        Berikut merupakan daftar Logbook bimbingan mahasiswa
     </p>
-    <blockquote class="blockquote-primary">
-        <p class="mb-3">Klik tombol <button type="button" class="btn btn-primary"><i class="fas fa-info-circle"></i></button> untuk melihat detail pengajuan mahasiswa</p>
-    </blockquote>
     <div class="table-container table-logbook">
         <table class="table table-bordered">
             <thead class="table-header">
                 <th class="align-middle">No.</th>
+                <th class="align-middle">Tanggal</th>
                 <th class="align-middle">NIM</th>
                 <th class="align-middle">Nama Mahasiswa</th>
-                <th class="align-middle">IPK</th>
-                <th class="align-middle">Detail</th>
+                <th class="align-middle">Uraian Bimbingan</th>
+                <th class="align-middle">Bab Terakhir</th>
+                <th class="align-middle">Dokumen</th>
                 <th class="align-middle">Status</th>
             </thead>
             </thead>
             <tr>
                 <td class="centered-column">1</td>
+                <td class="centered-column">2024-05-23</td>
                 <td class="centered-column">A11.2021.13489</td>
                 <td class="centered-column">Surinanda</td>
-                <td class="centered-column">4.00</td>
+                <td class="centered-column">cape bat anying</td>
+                <td class="centered-column">Bab 1</td>
+                <td class="centered-column"><a href="https://drive.google.com/drive/folders/1NSgwE4CEOqnPBZrfcoIu7wSFYuvvCu-O?usp=drive_link" target="_blank">Dokumen</a></td>
                 <td class="centered-column">
-                    <button type="info" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogDetailPengajuan"><i class="fas fa-info-circle"></i></button>
+                    <button type="info" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#dialogDetailLogbook"><i class="fas fa-check-circle"></i></button>
+                    <button type="info" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#dialogDetailLogbook"><i class="fas fa-times-circle"></i></button>
                 </td>
-                <td class="centered-column">
-                    <button type="status" class="btn btn-success rounded-5">diterima</button>
-            </tr>
-            <tr>
-                <td class="centered-column">2</td>
-                <td class="centered-column">A11.2021.13472</td>
-                <td class="centered-column">Yoga Adi Pratama</td>
-                <td class="centered-column">4.00</td>
-                <td class="centered-column">
-                    <button type="info" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogDetailPengajuan"><i class="fas fa-info-circle"></i></button>
-                </td>
-                <td class="centered-column">
-                    <button type="status" class="btn btn-danger rounded-5">ditolak</button>
-            </tr>
-            <tr>
-                <td class="centered-column">3</td>
-                <td class="centered-column">A11.2021.13800</td>
-                <td class="centered-column">Nikolas Adi Kurniatmaja Sijabat</td>
-                <td class="centered-column">4.00</td>
-                <td class="centered-column">
-                    <button type="info" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogDetailPengajuan"><i class="fas fa-info-circle"></i></button>
-                </td>
-                <td class="centered-column">
-                    <button type="status" class="btn btn-warning rounded-5">on process</button>
             </tr>
         </table>
     </div>
@@ -75,7 +54,7 @@
 </div>
 
 <!--Dialog Tambah Logbook-->
-@include('dosen.daftar_bimbingan.detail_bimbingan')
+@include('dosen.logbook_bimbingan.detail_logbook')
 
 {{-- <!--Dialog Edit Logbook-->
 @include('mahasiswa.logbook_kp.edit_logbook')

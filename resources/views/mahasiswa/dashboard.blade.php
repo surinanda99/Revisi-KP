@@ -22,11 +22,25 @@
                     </thead>
                     <tr>
                         <td class="centered-column">1</td>
-                        <td class="content-column">Pengajuan Tugas Akhir ke-1</td>
+                        <td class="content-column">Pengajuan Bimbingan Kerja Praktek</td>
+                        <td class="centered-column">05 April 2024</td>
+                        <td class="centered-column">
+                            <button type="status" class="btn btn-danger rounded-5">ditolak
+                                <i class="fas fa- icon-dark-acc"></i>
+                            </button>
+                            <!--
+                            <button type="status" class="btn btn-danger rounded-5">Belum ACC
+                                <i class="fas fa-times icon-dark-no"></i>
+                            </button>
+                            -->
+                        </td>
+                    <tr>
+                        <td class="centered-column">2</td>
+                        <td class="content-column">Pengajuan Bimbingan Kerja Praktek</td>
                         <td class="centered-column">30 April 2024</td>
                         <td class="centered-column">
-                            <button type="status" class="btn btn-success rounded-5">ACC
-                                <i class="fas fa-check icon-dark-acc"></i>
+                            <button type="status" class="btn btn-success rounded-5">diterima
+                                <i class="fas  icon-dark-acc"></i>
                             </button>
                             <!--
                             <button type="status" class="btn btn-danger rounded-5">Belum ACC

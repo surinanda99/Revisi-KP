@@ -4,6 +4,7 @@ use App\Http\Controllers\mahasiswaController;
 use App\Http\Controllers\dosenController;
 use App\Http\Controllers\adminController;
 use App\Http\Controllers\SidebarMahasiswaController;
+use App\Http\Controllers\SidebarDosenController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -23,23 +24,23 @@ Route::get('/', function () {
     return view('login');
 });
 
-//mahasiswa
-Route::get('/halamanDosen', [mahasiswaController::class, 'index']);
-Route::get('/halamanPengajuan', [mahasiswaController::class, 'create'])->name('pengajuan');
-Route::get('/draftPengajuan', [mahasiswaController::class, 'draft']);
-Route::get('/dashboardMahasiswa', [mahasiswaController::class, 'dashboard'])->name('home');
-Route::get('/riwayatMahasiswa', [mahasiswaController::class, 'history'])->name('riwayat');
-Route::get('/reviewMahasiswa', [mahasiswaController::class, 'hasil'])->name('review');
-Route::get('/rejectedMahasiswa', [mahasiswaController::class, 'tolak']);
+// //mahasiswa
+// Route::get('/halamanDosen', [mahasiswaController::class, 'index']);
+// Route::get('/halamanPengajuan', [mahasiswaController::class, 'create'])->name('pengajuan');
+// Route::get('/draftPengajuan', [mahasiswaController::class, 'draft']);
+// Route::get('/dashboardMahasiswa', [mahasiswaController::class, 'dashboard'])->name('home');
+// Route::get('/riwayatMahasiswa', [mahasiswaController::class, 'history'])->name('riwayat');
+// Route::get('/reviewMahasiswa', [mahasiswaController::class, 'hasil'])->name('review');
+// Route::get('/rejectedMahasiswa', [mahasiswaController::class, 'tolak']);
 
 
-//dosen
-Route::get('/daftarBimbingan', [dosenController::class, 'list']);
-Route::get('/rincianDocument', [dosenController::class, 'rinci']);
-Route::get('/dosen', [dosenController::class, 'list']);
+// //dosen
+// Route::get('/daftarBimbingan', [dosenController::class, 'list']);
+// Route::get('/rincianDocument', [dosenController::class, 'rinci']);
+// Route::get('/dosen', [dosenController::class, 'list']);
 
-//admin
-Route::get('/halaman-admin-bimbingan', [adminController::class, 'mhsBimbingan']);
+// //admin
+// Route::get('/halaman-admin-bimbingan', [adminController::class, 'mhsBimbingan']);
 
 
 //mahasiswa
@@ -58,4 +59,8 @@ Route::get('/detail', [SidebarMahasiswaController::class, 'detail']);
 
 //profil
 Route::get('/Profil', [SidebarMahasiswaController::class, 'profil_mhs']);
+
+//dosen
+Route::get('/dosen', [SidebarDosenController::class, 'daftar_mhs_bimbingan']);
+Route::get('/logbook_mhs', [SidebarDosenController::class, 'logbook_bimbingan_mhs']);
 
