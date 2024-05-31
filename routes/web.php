@@ -5,6 +5,7 @@ use App\Http\Controllers\dosenController;
 use App\Http\Controllers\adminController;
 use App\Http\Controllers\SidebarMahasiswaController;
 use App\Http\Controllers\SidebarDosenController;
+use App\Http\Controllers\SidebarKoorController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -65,4 +66,8 @@ Route::get('/dosen', [SidebarDosenController::class, 'index']);
 Route::get('/daftar_bimbingan', [SidebarDosenController::class, 'daftar_mhs_bimbingan']);
 Route::get('/logbook_mhs', [SidebarDosenController::class, 'logbook_bimbingan_mhs']);
 Route::get('/review_mhs', [SidebarDosenController::class, 'review_penyelia']);
+
+//koor
+Route::get('/data_dosen', [SidebarKoorController::class, 'daftar_data_dosen']);
+Route::get('/data_mhs', [SidebarKoorController::class, 'daftar_mhs']);
 

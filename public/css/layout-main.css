@@ -339,3 +339,29 @@ input.form-control:focus {
     border-radius: 0.5rem;
     box-shadow: 0 0.5rem 1rem -0.25rem #000000;
 }
+
+.container-koor {
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgb(240, 245, 255);
+    border-radius: 10px;
+}
+
+.modal-xl {
+    max-width: 70%;
+}
+.table-responsive {
+    overflow-x: auto;
+}
+.table th, .table td {
+    white-space: nowrap;
+}
+.centered-column {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.custom-left-shift {
+    justify-content: start;
+    margin-left: 900px; /* Adjust this value to control the left shift amount */
+}
