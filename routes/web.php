@@ -6,6 +6,7 @@ use App\Http\Controllers\adminController;
 use App\Http\Controllers\SidebarMahasiswaController;
 use App\Http\Controllers\SidebarDosenController;
 use App\Http\Controllers\SidebarKoorController;
+use App\Http\Controllers\SidebarAdminController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -70,4 +71,9 @@ Route::get('/review_mhs', [SidebarDosenController::class, 'review_penyelia']);
 //koor
 Route::get('/data_dosen', [SidebarKoorController::class, 'daftar_data_dosen']);
 Route::get('/data_mhs', [SidebarKoorController::class, 'daftar_mhs']);
+
+//admin
+Route::get('/data_user_mhs', [SidebarAdminController::class, 'user_mhs']);
+Route::get('/data_user_dosen', [SidebarAdminController::class, 'user_dsn']);
+Route::get('/data_user_koor', [SidebarAdminController::class, 'user_koor']);
 
