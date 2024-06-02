@@ -10,7 +10,6 @@ use App\Http\Controllers\SidebarMahasiswaController;
 use App\Http\Controllers\SidebarDosenController;
 use App\Http\Controllers\SidebarKoorController;
 use App\Http\Controllers\SidebarAdminController;
-use App\Http\Controllers\SesiController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -70,6 +69,9 @@ Route::get('/logbook', [SidebarMahasiswaController::class, 'logbook_kp']);
 
 
 //pengajuan mahasiswa
+Route::get('/pilih-dosbing', [DosenPembimbingController::class, 'index'])->name('pilihDosbing');
+Route::post('/pilih-dosbing', [DosenPembimbingController::class, 'pilihDosen'])->name('pilihDosen');
+Route::get('/form-pengajuan', [DosenPembimbingController::class, 'formPengajuan'])->name('formPengajuan');
 Route::get('/form', [SidebarMahasiswaController::class, 'form_kp']);
 Route::get('/draft', [SidebarMahasiswaController::class, 'draft_kp']);
 
