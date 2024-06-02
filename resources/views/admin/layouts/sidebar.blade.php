@@ -5,12 +5,12 @@
                 <i class="lni lni-list"></i>
             </button>
             <div class="sidebar-logo">
-                <a href="/dosen">kerja praktek</a>
+                <a href="/">kerja praktek</a>
             </div>
         </div>
         <ul class="sidebar-nav">
             <li class="sidebar-item">
-                <a href="/dosen" class="sidebar-link">
+                <a href="/" class="sidebar-link">
                     <i class="lni lni-home"></i>
                     <span>Dashboard</span>
                 </a>
@@ -34,12 +34,6 @@
                     <span>Data Koor</span>
                 </a>
             </li>
-            {{-- <li class="sidebar-item">
-                <a href="/Profil" class="sidebar-link">
-                    <i class="lni lni-user"></i>
-                    <span>Profil Mahasiswa</span>
-                </a>
-            </li> --}}
         </ul>
         <div class="sidebar-footer">
             <a href="/tentang" class="sidebar-link">
@@ -48,7 +42,7 @@
             </a>
         </div>
         <div class="sidebar-footer">
-            <a href="#" class="sidebar-link">
+            <a href="/logout" class="sidebar-link">
                 <i class="lni lni-exit"></i>
                 <span>Logout</span>
             </a>

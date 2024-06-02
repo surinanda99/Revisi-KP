@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class adminController extends Controller
+class KoorController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard');
+        return view('koor.dashboard');
     }
 }

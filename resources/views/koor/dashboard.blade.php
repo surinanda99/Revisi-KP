@@ -1,8 +1,8 @@
-@extends('dosen.layouts.main')
-@section('title', 'Dashboard Dosen')
+@extends('koor.layouts.main')
+@section('title', 'Dashboard Koor')
 @section('content')
 <div class="container">
-        <h1>Dashboard Dosen</h1>   
+        <h1>Dashboard Koor</h1>   
 </div>
 
 
@@ -10,7 +10,7 @@
         <div class="row">
             <!-- Detail Mahasiswa Bimbingan -->
             <div class="col-md-6 mb-4">
-                    <div class="card border-primary shadow h-100 rounded-lg">
+                <div class="card border-primary shadow h-100 rounded-lg">
                     <div class="card-body text-center">
                         <i class="fas fa-users fa-3x text-primary mb-3"></i>
                         <h5 class="text-primary">Detail Mahasiswa Bimbingan</h5>

@@ -5,12 +5,12 @@
                 <i class="lni lni-list"></i>
             </button>
             <div class="sidebar-logo">
-                <a href="/mahasiswa">kerja praktek</a>
+                <a href="/koor">kerja praktek</a>
             </div>
         </div>
         <ul class="sidebar-nav">
             <li class="sidebar-item">
-                <a href="/mahasiswa" class="sidebar-link">
+                <a href="/koor" class="sidebar-link">
                     <i class="lni lni-home"></i>
                     <span>Dashboard</span>
                 </a>
@@ -48,7 +48,7 @@
             </a>
         </div>
         <div class="sidebar-footer">
-            <a href="#" class="sidebar-link">
+            <a href="/logout" class="sidebar-link">
                 <i class="lni lni-exit"></i>
                 <span>Logout</span>
             </a>

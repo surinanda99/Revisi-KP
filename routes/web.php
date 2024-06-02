@@ -1,10 +1,16 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\mahasiswaController;
+use App\Http\Controllers\dosenController;
+use App\Http\Controllers\adminController;
+use App\Http\Controllers\KoorController;
 use App\Http\Controllers\SidebarMahasiswaController;
 use App\Http\Controllers\SidebarDosenController;
 use App\Http\Controllers\SidebarKoorController;
 use App\Http\Controllers\SidebarAdminController;
+use App\Http\Controllers\SesiController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -20,9 +26,42 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 
-Route::get('/', function () {
-    return view('login');
+// Route::get('/', function () {
+//     return view('login');
+// });
+
+Route::middleware(['guest'])->group(function(){
+    Route::get('/', [SesiController::class, 'index'])->name('login');
+    Route::post('/', [SesiController::class, 'login']);
 });
+Route::get('/home',function(){
+    $user = Auth::user();
+
+    if ($user->role == 'mahasiswa') {
+        return redirect('/mahasiswa');
+    } elseif ($user->role == 'dosen') {
+        return redirect('/dosen');
+    } elseif ($user->role == 'koor') {
+        return redirect('/koor');
+    } elseif ($user->role == 'admin') {
+        return redirect('/admin');
+    }
+
+    return redirect('/login');
+})->middleware('auth');
+
+Route::middleware(['auth'])->group(function(){
+    Route::get('/mahasiswa', [mahasiswaController::class, 'index'])->middleware('role:mahasiswa');
+    Route::get('/dosen', [DosenController::class, 'index'])->middleware('role:dosen');
+    Route::get('/koor', [KoorController::class, 'index'])->middleware('role:koor');
+    Route::get('/admin', [AdminController::class, 'index'])->middleware('role:admin');
+    Route::get('/logout', [SesiController::class, 'logout']);
+});
+
+Route::get('/unauthorized', function() {
+    return view('unauthorized');
+});
+
 
 //mahasiswa
 Route::get('/mahasiswa', [SidebarMahasiswaController::class, 'index']);
@@ -47,7 +86,10 @@ Route::get('/daftar_bimbingan', [SidebarDosenController::class, 'daftar_mhs_bimb
 Route::get('/logbook_mhs', [SidebarDosenController::class, 'logbook_bimbingan_mhs']);
 Route::get('/review_mhs', [SidebarDosenController::class, 'review_penyelia']);
 
+
+
 //koor
+Route::get('/koor', [KoorController::class, 'index']);
 Route::get('/data_dosen', [SidebarKoorController::class, 'daftar_data_dosen']);
 Route::get('/data_mhs', [SidebarKoorController::class, 'daftar_mhs']);
 
