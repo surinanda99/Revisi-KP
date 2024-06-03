@@ -10,7 +10,7 @@ class DosenPembimbingController extends Controller
     public function index()
     {
         $dosens = DosenPembimbing::all();
-        return view('mahasiswa.pilihDosbing', compact('dosens'));
+        return view('mahasiswa.pengajuan_kp.pilihDosbing', compact('dosens'));
     }
 
     public function pilihDosen(Request $request)

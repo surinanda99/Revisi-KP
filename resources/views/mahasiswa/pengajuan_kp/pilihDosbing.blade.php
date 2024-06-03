@@ -26,7 +26,7 @@
     <div class="tab-content">
         <div id="nav-tab-dosbing" class="tab-pane fade show active">
             <div class="container">
-                <h4 class="mb-4">Pemilihan Dosen Pembimbing</h4>
+                <h4 class="mb-4">Pemilihan Dosen Pembimbing</h4>  
                 <p class="mb-2">Berikut ini adalah daftar dosen pembimbing yang tersedia</p>
                 <blockquote class="blockquote-primary">
                     <p class="mb-3">Klik tombol panah <button type="button" class="btn btn-warning"><i class="fas fa-chevron-circle-right"></i></button> untuk memilih dosen pembimbing</p>

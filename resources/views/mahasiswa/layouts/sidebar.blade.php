@@ -16,7 +16,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="/pengajuanKP" class="sidebar-link">
+                <a href="{{ route('pilihDosbing') }}" class="sidebar-link">
                     <i class="lni lni-pencil-alt"></i>
                     <span>Pengajuan kerja praktek</span>
                 </a>

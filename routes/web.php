@@ -81,6 +81,7 @@ Route::get('/draft', [SidebarMahasiswaController::class, 'draft_kp']);
 Route::get('/Review', [SidebarMahasiswaController::class, 'review_penyelia']);
 Route::get('/detail', [SidebarMahasiswaController::class, 'detail']);
 
+
 //profil mahasiswa
 Route::get('/Profil', [SidebarMahasiswaController::class, 'profil_mhs']);
 
