@@ -23,10 +23,15 @@
         </li>
     </ul>
 
-    <div class="tab-content">
-        <div id="nav-tab-dosbing" class="tab-pane fade">
-            <!-- Konten untuk pilih dosbing di sini -->
+    @if (Session::get('error'))
+        <div class="row">
+            <div class="col-md-4 offset-4 mt-2 py-2 rounded bg-danger text-white fw-bold">
+                {{ Session::get('error') }}
+            </div>
         </div>
+    @endif
+    
+    <div class="tab-content">
         <div id="nav-tab-pengajuan" class="tab-pane fade show active">
             <div class="container">
                 <h4 class="mb-4">Pengajuan Kerja Praktek</h4>
@@ -35,64 +40,92 @@
                 </blockquote>
             </div>
             <div class="container">
-                <form>
+                <form action="{{ route('SimpanPengajuan') }}" method="POST">
+                    @csrf
                     <div class="form-group row mb-3">
-                        <label for="inputBidang" class="col-sm-2 col-form-label">Kategori Bidang <span class="required">*</span></label>
+                        <label for="kategori_bidang" class="col-sm-2 col-form-label">Kategori Bidang <span class="required">*</span></label>
                         <div class="col-sm-3">
-                            <select class="form-select" id="inputBidang" aria-label="Bidang Kajian">
-                                <option disabled selected hidden>Pilih Bidang</option>
-                                <option value="SC">Web Development</option>
-                                <option value="RPLD">Application Development</option>
-                                <option value="RPLD">Game Development</option>
-                                <option value="RPLD">Data Analysis</option>
-                                <option value="RPLD">Data Science</option>
-                                <option value="RPLD">Artificial Intelligence</option>
-                                <option value="RPLD">Graphic Design</option>
-                                <option value="RPLD">Networking</option>
+                            <select class="form-select form-control @error('kategori_bidang') is-invalid @enderror" name="kategori_bidang" id="kategori_bidang" aria-label="Bidang Kajian">
+                                <option selected value="0">Pilih Bidang</option>
+                                <option value="Web Development" {{ old('kategori_bidang') === 'Web Development' ? 'selected' : '' }}>Web Development</option>
+                                <option value="Application Development {{ old('kategori_bidang') === 'Application Development' ? 'selected' : '' }}">Application Development</option>
+                                <option value="Game Development" {{ old('kategori_bidang') === 'Game Development' ? 'selected' : '' }}>Game Development</option>
+                                <option value="Data Analysis" {{ old('kategori_bidang') === 'Data Analysis' ? 'selected' : '' }}>Data Analysis</option>
+                                <option value="Data Science" {{ old('kategori_bidang') === 'Data Science' ? 'selected' : '' }}>Data Science</option>
+                                <option value="Artificial Intelligence" {{ old('kategori_bidang') === 'Artificial Intelligence' ? 'selected' : '' }}>Artificial Intelligence</option>
+                                <option value="Graphic Design" {{ old('kategori_bidang') === 'Graphic Design' ? 'selected' : '' }}>Graphic Design</option>
+                                <option value="Networking" {{ old('kategori_bidang') === 'Networking' ? 'selected' : '' }}>Networking</option>
                             </select>
+                            @error('kategori_bidang')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row mb-3">
-                        <label for="inputTopik" class="col-sm-2 col-form-label">Judul Sementara <span class="required">*</span></label>
+                        <label for="judul" class="col-sm-2 col-form-label">Judul Sementara <span class="required">*</span></label>
                         <div class="col-sm-10">
-                            <input type="topik" class="form-control" id="inputTopik" placeholder="Masukkan Judul Sementara">
+                            <input type="text" class="form-control @error('judul') is-invalid @enderror" name="judul" id="judul" placeholder="Masukkan Judul Sementara" value="{{ old('judul') }}">
+                            @error('judul')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row mb-3">
-                        <label for="inputJudul" class="col-sm-2 col-form-label">Perusahaan <span class="required">*</span></label>
+                        <label for="perusahaan" class="col-sm-2 col-form-label">Perusahaan <span class="required">*</span></label>
                         <div class="col-sm-10">
-                            <input type="judul" class="form-control" id="inputJudul" placeholder="Masukkan Perusahaan">
+                            <input type="text" class="form-control @error('perusahaan') is-invalid @enderror" name="perusahaan" id="perusahaan" placeholder="Masukkan Perusahaan" value="{{ old('perusahaan') }}">
+                            @error('perusahaan')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row mb-3">
-                        <label for="inputDeskripsi" class="col-sm-2 col-form-label">Posisi <span class="required">*</span></label>
+                        <label for="posisi" class="col-sm-2 col-form-label">Posisi <span class="required">*</span></label>
                         <div class="col-sm-10">
-                            <input type="deskripsi" class="form-control" id="inputDeskripsi" placeholder="Masukkan Posisi">
+                            <input type="text" class="form-control @error('posisi') is-invalid @enderror" name="posisi" id="posisi" placeholder="Masukkan Posisi" value="{{ old('posisi') }}">
+                            @error('posisi')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row mb-3">
-                        <label for="inputCatatan" class="col-sm-2 col-form-label">Deskripsi</label>
+                        <label for="deskripsi" class="col-sm-2 col-form-label">Deskripsi</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" id="inputCatatan" rows="3" placeholder="Masukkan Deskripsi"></textarea>
+                            <textarea class="form-control @error('deskripsi') is-invalid @enderror" name="deskripsi" id="deskripsi" rows="3" placeholder="Masukkan Deskripsi">{{ old('deskripsi') }}</textarea>
+                            @error('deskripsi')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row mb-3">
-                        <label for="inputDeskripsi" class="col-sm-2 col-form-label">Durasi Magang <span class="required">*</span></label>
+                        <label for="durasi" class="col-sm-2 col-form-label">Durasi Magang <span class="required">*</span></label>
                         <div class="col-sm-10">
-                            <input type="deskripsi" class="form-control" id="inputDeskripsi" placeholder="Masukkan Durasi">
+                            <input type="text" class="form-control @error('durasi') is-invalid @enderror" name="durasi" id="durasi" placeholder="Masukkan Durasi" value="{{ old('durasi') }}">
+                            @error('durasi')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                         </div>
                     </div>
                     <div class="form-group row mb-3 justify-content-end">
                         <div class="col-sm-1 d-flex justify-content-end">
                             <button type="button" class="btn btn-secondary me-2">Kembali</button>
-                            <button type="button" class="btn btn-primary me-2">Simpan</button>
+                            <button type="submit" class="btn btn-primary me-2">Simpan</button>
                         </div>
                     </div>
                 </form>
             </div>
-        </div>
-        <div id="nav-tab-draft" class="tab-pane fade">
-            <!-- Konten untuk draft pengajuan di sini -->
         </div>
     </div>
 </div>

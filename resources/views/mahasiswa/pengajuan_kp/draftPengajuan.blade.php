@@ -4,7 +4,7 @@
 <div class="container">
     <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-3">
         <li class="nav-item">
-            <a data-toggle="pill" href="#nav-tab-dosbing" class="nav-link active rounded-pill">
+            <a data-toggle="pill" href="#nav-tab-dosbing" class="nav-link rounded-pill">
                 <i class="fas fa-chalkboard-teacher"></i>
                 Dosen Pembimbing
             </a>
@@ -16,69 +16,126 @@
             </a>
         </li>
         <li class="nav-item">
-            <a data-toggle="pill" href="#nav-tab-draft" class="nav-link rounded-pill">
+            <a data-toggle="pill" href="#nav-tab-draft" class="nav-link active rounded-pill">
                 <i class="fas fa-book-open"></i>
                 Draft Pengajuan
             </a>
         </li>
     </ul>
 
-    <div class="container mt-5">
-        <h4>Pengajuan Bimbingan KP</h4>
-        <div class="row mt-5">
-            <form action="" method="POST">
-                <div class="row">
-                    <div class="col-2 text-start">
-                        <label for="judul" class="form-label">Kategori Bidang </label>
-                    </div>
-                    <div class="col-10">
-                        <input class="form-control" type="text" id="judul" name="judul">
-                    </div>
+    @if (Session::get('success'))
+        <div class="alert alert-success mt-3">
+            {{ Session::get('success') }}
+        </div>
+    @endif
+
+    @if (Session::get('error'))
+        <div class="alert alert-danger mt-3">
+            {{ Session::get('error') }}
+        </div>
+    @endif
+
+    <div class="tab-content">
+        <div id="nav-tab-draft" class="tab-pane fade show active">
+            <div class="container mt-5">
+                <h4>Pengajuan Bimbingan KP</h4>
+                <div class="row mt-5">
+                    <form action="" method="POST">
+                        <div class="row">
+                            <div class="col-2 text-start">
+                                <label for="kategori_bidang" class="form-label">Kategori Bidang </label>
+                            </div>
+                            <div class="col-10">
+                                <select class="form-select form-control @error('kategori_bidang') is-invalid @enderror" name="kategori_bidang" id="kategori_bidang" aria-label="Bidang Kajian">
+                                    <option value="0" {{ !$mahasiswa || !$mahasiswa->kategori_bidang ? 'selected' : '' }}>Pilih Bidang</option>
+                                    <option value="Web Development" {{ $mahasiswa && $mahasiswa->kategori_bidang == 'Web Development' ? 'selected' : '' }}>Web Development</option>
+                                    <option value="Application Development" {{ $mahasiswa && $mahasiswa->kategori_bidang == 'Application Development' ? 'selected' : '' }}>Application Development</option>
+                                    <option value="Game Development" {{ $mahasiswa && $mahasiswa->kategori_bidang == 'Game Development' ? 'selected' : '' }}>Game Development</option>
+                                    <option value="Data Analysis" {{ $mahasiswa && $mahasiswa->kategori_bidang == 'Data Analysis' ? 'selected' : '' }}>Data Analysis</option>
+                                    <option value="Data Science" {{ $mahasiswa && $mahasiswa->kategori_bidang == 'Data Science' ? 'selected' : '' }}>Data Science</option>
+                                    <option value="Artificial Intelligence" {{ $mahasiswa && $mahasiswa->kategori_bidang == 'Artificial Intelligence' ? 'selected' : '' }}>Artificial Intelligence</option>
+                                    <option value="Graphic Design" {{ $mahasiswa && $mahasiswa->kategori_bidang == 'Graphic Design' ? 'selected' : '' }}>Graphic Design</option>
+                                    <option value="Networking" {{ $mahasiswa && $mahasiswa->kategori_bidang == 'Networking' ? 'selected' : '' }}>Networking</option>
+                                </select>
+                                @error('kategori_bidang')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-2 text-start">
+                                <label for="judul" class="form-label">Judul Sementara</label>
+                            </div>
+                            <div class="col-10">
+                                <input type="text" class="form-control @error('judul') is-invalid @enderror" name="judul" id="judul" value="{{ old('judul') ?? ($mahasiswa ? $mahasiswa->judul : '') }}">
+                                @error('judul')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-2 text-start">
+                                <label for="perusahaan" class="form-label">Perusahaan</label>
+                            </div>
+                            <div class="col-10">
+                                <input type="text" class="form-control @error('perusahaan') is-invalid @enderror" name="perusahaan" id="perusahaan" value="{{ old('perusahaan') ?? ($mahasiswa ? $mahasiswa->perusahaan : '') }}">
+                                @error('perusahaan')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-2 text-start">
+                                <label for="posisi" class="form-label">Posisi</label>
+                            </div>
+                            <div class="col-10">
+                                <input type="text" class="form-control @error('posisi') is-invalid @enderror" name="posisi" id="posisi" value="{{ old('posisi') ?? ($mahasiswa ? $mahasiswa->posisi : '') }}">
+                                @error('posisi')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-2 text-start">
+                                <label for="deskripsi" class="form-label">Deskripsi</label>
+                            </div>
+                            <div class="col-10">
+                                <textarea class="form-control @error('deskripsi') is-invalid @enderror" name="deskripsi" id="deskripsi">{{ old('deskripsi') ?? ($mahasiswa ? $mahasiswa->deskripsi : '') }}</textarea>
+                                @error('deskripsi')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mt-4 mb-5">
+                            <div class="col-2 text-start">
+                                <label for="durasi" class="form-label">Durasi Magang</label>
+                            </div>
+                            <div class="col-10">
+                                <input type="text" class="form-control @error('durasi') is-invalid @enderror" name="durasi" id="durasi" value="{{ old('durasi') ?? ($mahasiswa ? $mahasiswa->durasi : '') }}">
+                                @error('durasi')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-5 mb-3 me-5" style="width: 100px" type="submit">Ajukan</button>
+                        <a href="" class="btn btn-warning mt-5 mb-3 me-5" style="width: 100px">Edit</a>
+                        <button class="btn btn-danger mt-5 mb-3" style="width: 100px">Delete</button>
+                    </form>
                 </div>
-                <div class="row mt-4">
-                    <div class="col-2 text-start">
-                        <label for="keyword" class="form-label">Judul Sementara</label>
-                    </div>
-                    <div class="col-10">
-                        <input class="form-control" type="text" id="keyword" name="keyword">
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-2 text-start">
-                        <label for="perusahaan" class="form-label">Perusahaan</label>
-                    </div>
-                    <div class="col-10">
-                        <input class="form-control" type="text" id="perusahaan" name="perusahaan">
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-2 text-start">
-                        <label for="posisi" class="form-label">Posisi</label>
-                    </div>
-                    <div class="col-10">
-                        <input class="form-control" type="text" id="posisi" name="posisi">
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-2 text-start">
-                        <label for="deskripsi" class="form-label">Deskripsi</label>
-                    </div>
-                    <div class="col-10">
-                        <textarea class="form-control" name="deskripsi" id="deskripsi"></textarea>
-                    </div>
-                </div>
-                <div class="row mt-4 mb-5">
-                    <div class="col-2 text-start">
-                        <label for="catatan" class="form-label">Durasi Magang</label>
-                    </div>
-                    <div class="col-10">
-                        <input class="form-control" type="text" id="catatan" name="catatan">
-                    </div>
-                </div>
-                <button class="btn btn-primary mt-5 mb-3 me-5" style="width: 100px" type="submit">Ajukan</button>
-                <a href="" class="btn btn-warning mt-5 mb-3 me-5" style="width: 100px">Edit</a>
-                <button class="btn btn-danger mt-5 mb-3" style="width: 100px">Delete</button>
-            </form>
+            </div>
         </div>
     </div>
 </div>

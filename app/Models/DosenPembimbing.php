@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class DosenPembimbing extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'npp',
+        'nama',
+        'bidang_kajian',
+        'kuota',
+        'jumlah_ajuan',
+        'ajuan_diterima',
+        'sisa_kuota',
+        'status'
+    ];
 }

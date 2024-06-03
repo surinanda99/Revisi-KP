@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DosenPembimbing;
 use Illuminate\Http\Request;
 
 class SidebarMahasiswaController extends Controller
@@ -16,7 +17,8 @@ class SidebarMahasiswaController extends Controller
 
     public function pengajuan_kp()
     {
-        return view('mahasiswa.pengajuan_kp.pilihDosbing');
+        $dosens = DosenPembimbing::all();
+        return view('mahasiswa.pengajuan_kp.pengajuan_kp', compact('dosens'));
     }
 
     public function form_kp()

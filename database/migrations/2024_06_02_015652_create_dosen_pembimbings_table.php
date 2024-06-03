@@ -10,9 +10,14 @@ class CreateDosenPembimbingsTable extends Migration
     {
         Schema::create('dosen_pembimbings', function (Blueprint $table) {
             $table->id();
-            $table->string('nidn');
+            $table->string('npp');
             $table->string('nama');
+            $table->enum('bidang_kajian', ['RPLD', 'SC']);
+            $table->integer('kuota');
+            $table->integer('jumlah_ajuan');
+            $table->integer('ajuan_diterima');
             $table->integer('sisa_kuota');
+            $table->enum('status', ['Penuh', 'Tersedia']);
             $table->timestamps();
         });
     }

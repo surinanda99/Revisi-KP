@@ -5,11 +5,53 @@
     <h4 class="mb-4">Data Dosen Pembimbing</h4>
 
     <p class="mb-2 d-flex align-items-center">
-        <button type="submit" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#dialogTambahLogbook">
-            <i class="fas fa-plus"></i> Tambah</button>
-        <button type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#dialogTambahLogbook">
+        <a href="{{ route('tambahDosen') }}" class="btn btn-primary me-2">
+            <i class="fas fa-plus"></i> Tambah
+        </a>
+        <button data-bs-toggle="modal" data-bs-target="#DosenModal" class="btn btn-md btn-success fw-bold my-auto me-1">
             <i class="lni lni-exit-down"></i> Import</button>
+        </button>
+
+         <!-- Import Dosen Modal -->
+         <div class="modal fade" id="DosenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form method="POST" action="{{ route('importDosen') }}" class="modal-content" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Import Data Dosen</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label for="exampleFormControlInput1" class="form-label fw-semibold">Data Excel</label>
+                            <input type="file" class="form-control @error('import') is-invalid @enderror" name="import" placeholder="Masukkan data excel" value="{{ old('import') }}">
+                            @error('import')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </p>
+
+    @if (Session::get('success'))
+        <div class="alert alert-success mt-3">
+            {{ Session::get('success') }}
+        </div>
+    @endif
+
+    @if (Session::get('error'))
+        <div class="alert alert-danger mt-3">
+            {{ Session::get('error') }}
+        </div>
+    @endif
     
     <div class="table-container table-logbook">
         <table class="table table-bordered">
@@ -25,22 +67,35 @@
                 <th class="align-middle">Status</th>
                 <th class="align-middle">Aksi</th>
             </thead>
-            <tr>
-                <td class="centered-column">1</td>
-                <td class="centered-column">0686.11.2012.444</td>
-                <td class="centered-column">Adhitya Nugraha, S.Kom, M.CS</td>
-                <td class="centered-column">RPLD/SC</td>
-                <td class="centered-column">4</td>
-                <td class="centered-column">4</td>
-                <td class="centered-column">2</td>
-                <td class="centered-column">2</td>
-                <td class="centered-column">Penuh/Tersedia</td>
-                <td class="centered-column">
-                    <button type="info" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogDetailDataDosen" ><i class="fas fa-info-circle"></i></button>
-                    <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#dialogEditDosen"><i class="far fa-edit"></i></button>
-                    <button type="submit" class="btn btn-danger" ><i class="fas fa-trash"></i></button>
-                </td>
-            </tr>
+            <tbody>
+                @foreach($dosens as $dosen)
+                <tr>
+                    <td class="centered-column">{{ $loop->iteration }}</td>
+                    <td class="centered-column">{{ $dosen->npp }}</td>
+                    <td class="centered-column">{{ $dosen->nama }}</td>
+                    <td class="centered-column">{{ $dosen->bidang_kajian }}</td>
+                    <td class="centered-column">{{ $dosen->kuota }}</td>
+                    <td class="centered-column">{{ $dosen->jumlah_ajuan }}</td>
+                    <td class="centered-column">{{ $dosen->ajuan_diterima }}</td>
+                    <td class="centered-column">{{ $dosen->sisa_kuota }}</td>
+                    <td class="centered-column">{{ $dosen->status }}</td>
+                    <td class="centered-column">
+                        <div class="d-inline">
+                            <button type="button" class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataDosen_{{ $dosen->id }}">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                            <button class="btn btn-warning me-1 btn-edit" data-id="{{ $dosen->id }}" data-bs-toggle="modal" data-bs-target="#dialogEditDosen_{{ $dosen->id }}">
+                                <i class="far fa-edit"></i>
+                            </button>
+                        </div>
+                        <form action="{{ route('hapusDosen', ['id' => $dosen->id]) }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
     <nav aria-label="pageNavigationLogbook">
@@ -56,9 +111,6 @@
             </li>
         </ul>
     </nav>
-    <!--
-    <button type="submit" class="btn btn-primary"><i class="fas fa-chevron-right"></i>Pengajuan Sidang</button>
-    -->
 </div>
 
 <!--Dialog Tambah Logbook-->
@@ -69,4 +121,28 @@
 {{-- 
 <!--Dialog Info Logbook-->
 @include('mahasiswa.logbook_kp.detail_logbook')  --}}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.btn-edit').click(function() {
+            console.log("Tombol edit diklik"); // Untuk memeriksa apakah fungsi click ini dijalankan
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/edit-dosen/' + id,
+                type: 'GET',
+                success: function(response) {
+                    console.log(response); // Untuk memeriksa data respons dari server
+                    $('#inputKuota').val(response.kuota);
+                    $('#inputJumlahAjuan').val(response.jumlah_ajuan);
+                    $('#dialogEditDosen_' + id).modal('show'); // Menggunakan ID unik untuk menampilkan modal
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText); // Menampilkan pesan kesalahan jika terjadi kesalahan pada permintaan AJAX
+                }
+            });
+        });
+    });
+</script>
+
 @endsection
