@@ -9,20 +9,21 @@ class DosenPembimbingController extends Controller
 {
     public function index()
     {
-        $dosens = DosenPembimbing::all();
-        return view('mahasiswa.pengajuan_kp.pilihDosbing', compact('dosens'));
+        return view('dosen.daftar_bimbingan.daftar_bimbingan');
     }
 
-    public function pilihDosen(Request $request)
+    public function daftar_mhs_bimbingan()
     {
-        $request->session()->put('dosen_terpilih', $request->dosen_id);
-        return redirect()->route('formPengajuan');
+        return view('dosen.daftar_bimbingan.daftar_bimbingan');
     }
 
-    public function formPengajuan()
+    public function logbook_bimbingan_mhs()
     {
-        $dosenTerpilih = session('dosen_terpilih');
-        $dosen = DosenPembimbing::find($dosenTerpilih);
-        return view('mahasiswa.pengajuan_kp.formPengajuan', compact('dosen'));
+        return view('dosen.logbook_bimbingan.logbook_bimbingan');
+    }
+
+    public function review_penyelia()
+    {
+        return view('dosen.review_penyelia_mhs.review_penyelia_mhs');
     }
 }

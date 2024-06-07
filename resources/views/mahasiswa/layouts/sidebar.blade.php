@@ -5,41 +5,43 @@
                 <i class="lni lni-list"></i>
             </button>
             <div class="sidebar-logo">
-                <a href="/mahasiswa">kerja praktek</a>
+                <a href="{{ route('dashboardMahasiswa') }}">kerja praktek</a>
             </div>
         </div>
         <ul class="sidebar-nav">
             <li class="sidebar-item">
-                <a href="/mahasiswa" class="sidebar-link">
+                <a href="{{ route('dashboardMahasiswa') }}" class="sidebar-link">
                     <i class="lni lni-home"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="/pengajuanKP" class="sidebar-link">
+                <a href="{{ route('halamanPengajuan') }}" class="sidebar-link">
                     <i class="lni lni-pencil-alt"></i>
                     <span>Pengajuan kerja praktek</span>
                 </a>
             </li>
             
             <li class="sidebar-item">
-                <a href="/logbook" class="sidebar-link">
+                <a href="{{ route('halamanLogbook') }}" class="sidebar-link">
                     <i class="lni lni-notepad"></i>
                     <span>Logbook Bimbingan KP</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="/Review" class="sidebar-link">
+                <a href="{{ route('halamanReview') }}" class="sidebar-link">
                     <i class="lni lni-add-files"></i>
                     <span>Review Penyelia</span>
                 </a>
             </li>
-            <li class="sidebar-item">
-                <a href="/Profil" class="sidebar-link">
-                    <i class="lni lni-user"></i>
-                    <span>Profil Mahasiswa</span>
-                </a>
-            </li>
+            @foreach ($mahasiswas as $mahasiswa)
+                <li class="sidebar-item">
+                    <a href="{{ route('halamanProfil', ['id' => $mahasiswa->id]) }}" class="sidebar-link">
+                        <i class="lni lni-user"></i>
+                        <span>Profil Mahasiswa</span>
+                    </a>
+                </li>
+            @endforeach
         </ul>
         <div class="sidebar-footer">
             <a href="/tentang" class="sidebar-link">
@@ -48,7 +50,7 @@
             </a>
         </div>
         <div class="sidebar-footer">
-            <a href="#" class="sidebar-link">
+            <a href="{{ route('logout') }}" class="sidebar-link">
                 <i class="lni lni-exit"></i>
                 <span>Logout</span>
             </a>

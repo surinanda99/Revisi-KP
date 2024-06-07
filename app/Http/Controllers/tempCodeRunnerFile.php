@@ -157,7 +157,7 @@ class KoorController extends Controller
         return redirect()->route('halamanKoorMhs')->with('success', 'Data Mahasiswa Berhasil Ditambahkan');
     }
 
-    public function importMhs(Request $request)
+    public function importMahasiswa(Request $request)
     {
         $request->validate([
             'import' => 'required|file|mimes:xlsx,xls,csv',
@@ -174,53 +174,5 @@ class KoorController extends Controller
             Log::error('Import Error: ' . $e->getMessage());
             return redirect()->route('halamanKoorMhs')->with('error', 'Data Mahasiswa Gagal Diimport. Error: ' . $e->getMessage());
         }
-    }
-
-    public function editMhs($id)
-    {
-        $mahasiswas = Mahasiswa::find($id);
-        return view('koor.data_mahasiswa.edit_mhs', compact('mahasiswas'));
-    }
-
-    public function updateMhs(Request $request, $id)
-    {
-        // Validasi data yang diterima dari formulir
-        $validator = Validator::make($request->all(), [
-            'nim' => 'required',
-            'nama' => 'required',
-            'ipk' => 'required',
-            'telp_mhs' => 'required',
-            'email' => 'required',
-            'dosen_wali' => 'required',
-        ]);
-
-        // Jika validasi gagal, kembalikan respons dengan pesan kesalahan
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        // Temukan dosen yang akan diperbarui
-        $mahasiswas = Mahasiswa::findOrFail($id);
-
-        // Perbarui data dosen
-        $mahasiswas->update([
-            'nim' => $request->input('nim'),
-            'nama' => $request->input('nama'),
-            'ipk' => $request->input('ipk'),
-            'telp_mhs' => $request->input('telp_mhs'),
-            'email' => $request->input('email'),
-            'dosen_wali' => $request->input('dosen_wali'),
-        ]);
-
-        // Redirect kembali dengan pesan sukses
-        return redirect()->back()->with('success', 'Data Mahasiswa berhasil diperbarui.');
-    }
-
-    public function deleteMhs($id)
-    {
-        $mahasiswas = Mahasiswa::find($id);
-        $mahasiswas->delete();
-
-        return redirect()->back()->with('success', 'Mahasiswa Berhasil Dihapus');
     }
 }

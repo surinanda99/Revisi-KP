@@ -5,31 +5,31 @@
                 <i class="lni lni-list"></i>
             </button>
             <div class="sidebar-logo">
-                <a href="/dosen">kerja praktek</a>
+                <a href="{{ route('dashboardAdmin') }}">kerja praktek</a>
             </div>
         </div>
         <ul class="sidebar-nav">
             <li class="sidebar-item">
-                <a href="/dosen" class="sidebar-link">
+                <a href="{{ route('dashboardAdmin') }}" class="sidebar-link">
                     <i class="lni lni-home"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="/data_user_dosen" class="sidebar-link">
+                <a href="{{ route('dataDosen') }}" class="sidebar-link">
                     <i class="lni lni-folder"></i>
                     <span>Data Dosen</span>
                 </a>
             </li>
             
             <li class="sidebar-item">
-                <a href="/data_user_mhs" class="sidebar-link">
+                <a href="{{ route('dataMhs') }}" class="sidebar-link">
                     <i class="lni lni-notepad"></i>
                     <span>Data Mahasiswa </span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="/data_user_koor" class="sidebar-link">
+                <a href="{{ route('dataKoor') }}" class="sidebar-link">
                     <i class="lni lni-library"></i>
                     <span>Data Koor</span>
                 </a>
@@ -48,7 +48,7 @@
             </a>
         </div>
         <div class="sidebar-footer">
-            <a href="#" class="sidebar-link">
+            <a href="{{ route('logout')}}" class="sidebar-link">
                 <i class="lni lni-exit"></i>
                 <span>Logout</span>
             </a>

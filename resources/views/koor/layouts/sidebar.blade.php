@@ -16,14 +16,14 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="/data_dosen" class="sidebar-link">
+                <a href="{{ route('HalamanKoorDosen') }}" class="sidebar-link">
                     <i class="lni lni-pencil-alt"></i>
                     <span>Daftar Dosen Pembimbing</span>
                 </a>
             </li>
             
             <li class="sidebar-item">
-                <a href="/data_mhs" class="sidebar-link">
+                <a href="{{ route('halamanKoorMhs') }}" class="sidebar-link">
                     <i class="lni lni-notepad"></i>
                     <span>Daftar Mahasiswa</span>
                 </a>
@@ -48,7 +48,7 @@
             </a>
         </div>
         <div class="sidebar-footer">
-            <a href="#" class="sidebar-link">
+            <a href="{{ route('logout') }}" class="sidebar-link">
                 <i class="lni lni-exit"></i>
                 <span>Logout</span>
             </a>

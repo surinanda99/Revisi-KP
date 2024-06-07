@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
+use App\Models\Pengajuan;
 use App\Models\DosenPembimbing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -33,6 +34,7 @@ class MahasiswaController extends Controller
 
     public function storePengajuan(Request $request)
     {
+        dd($request->mahasiswa_id);
         $validator = Validator::make($request->all(), [
             'kategori_bidang' => 'required|in:Web Development,Application Development,Game Development,Data Analysis,Data Science,Artificial Intelligence,Graphic Design,Networking',
             'judul' => 'required|string',
@@ -48,7 +50,8 @@ class MahasiswaController extends Controller
                 ->withInput();
         }
 
-        $mahasiswa = Mahasiswa::create([
+        $pengajuan = Pengajuan::create([
+            'mahasiswa_id' => $request->mahasiswa_id,
             'kategori_bidang' => $request->kategori_bidang,
             'judul' => $request->judul,
             'perusahaan' => $request->perusahaan,
@@ -57,12 +60,80 @@ class MahasiswaController extends Controller
             'durasi' => $request->durasi,
         ]);
         
-        return redirect()->route('draftKP')->with('success', 'Data Mahasiswa Berhasil Ditambahkan')->with('mahasiswa', $mahasiswa);
+        // arahkan ke halaman draftPengajuan dengan mengirimkan parameter $id
+        return redirect()->route('draftKP', ['id' => $request->mahasiswa_id])
+            ->with('success', 'Data Mahasiswa Berhasil Ditambahkan');
     }
 
-    public function draft_kp()
+    public function draft_kp($id)
     {
-        $mahasiswa = session('mahasiswa');
-        return view('mahasiswa.pengajuan_kp.draftPengajuan', compact('mahasiswa'));
+        $pengajuan = Pengajuan::where('mahasiswa_id', $id)->first();
+        return view('draftPengajuan', compact('pengajuan'));
+    }
+
+    public function updatePengajuan(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'kategori_bidang' => 'required|in:Web Development,Application Development,Game Development,Data Analysis,Data Science,Artificial Intelligence,Graphic Design,Networking',
+            'judul' => 'required|string',
+            'perusahaan' => 'required|string',
+            'posisi' => 'required|string',
+            'deskripsi' => 'required|string',
+            'durasi' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('draftKP', ['id' => $id])
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $pengajuan = Pengajuan::find($id);
+        $pengajuan->update([
+            'kategori_bidang' => $request->kategori_bidang,
+            'judul' => $request->judul,
+            'perusahaan' => $request->perusahaan,
+            'posisi' => $request->posisi,
+            'deskripsi' => $request->deskripsi,
+            'durasi' => $request->durasi,
+        ]);
+
+        // arahkan ke halaman draftPengajuan dengan mengirimkan parameter $id
+        return redirect()->route('draftKP', ['id' => $pengajuan->mahasiswa_id])
+            ->with('success', 'Data Mahasiswa Berhasil Diperbarui');
+    }
+
+    public function deletePengajuan()
+    {
+        session()->forget('pengajuan');
+        return redirect()->route('formPengajuan')->with('success', 'Pengajuan berhasil dihapus');
+    }
+
+    // public function submitPengajuan()
+    // {
+    //     $pengajuan = session('pengajuan');
+    //     // Simpan pengajuan ke database, misal:
+    //     // $pengajuan->save();
+
+    //     // Hapus dari session setelah disimpan
+    //     session()->forget('pengajuan');
+
+    //     return redirect()->route('dashboardMahasiswa')->with('success', 'Pengajuan berhasil diajukan ke dosen');
+    // }
+
+    public function logbook()
+    {
+        return view('mahasiswa.logbook_kp.logbook_kp');
+    }
+
+    public function review_penyelia()
+    {
+        return view('mahasiswa.review_penyelia.review_penyelia');
+    }
+
+    public function profil($id)
+    {
+        $mahasiswa = Mahasiswa::find($id);
+        return view('mahasiswa.profil_mhs.profil_mhs', compact('mahasiswa'));
     }
 }

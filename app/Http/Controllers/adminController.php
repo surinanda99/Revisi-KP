@@ -6,8 +6,23 @@ use Illuminate\Http\Request;
 
 class adminController extends Controller
 {
-    public function mhsBimbingan()
+    public function index()
     {
-        return view('admin.bimbinganMhs');
+        return view('admin.user_mahasiswa.user_mahasiswa');
+    }
+
+    public function user_mhs()
+    {
+        return view('admin.user_mahasiswa.user_mahasiswa');
+    }
+
+    public function user_dosen()
+    {
+        return view('admin.user_dosen.user_dosen');
+    }
+
+    public function user_koor()
+    {
+        return view('admin.user_koor.user_koor');
     }
 }
