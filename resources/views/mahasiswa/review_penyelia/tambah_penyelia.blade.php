@@ -64,10 +64,10 @@
             </div>
         </div>
         <div class="form-group row mb-3">
-            <label for="inputDeskripsi" class="col-sm-2 col-form-label">Perusahaan <span class="required">*</span></label>
+            <label for="inputPerusahaan" class="col-sm-2 col-form-label">Perusahaan <span class="required">*</span></label>
             <div class="col-sm-10">
                 {{-- <input type="deskripsi" class="form-control" id="inputDeskripsi" placeholder="Masukkan Perusahaan"> --}}
-                <input type="text" class="form-control @error('inputDeskripsi') is-invalid @enderror" name="inputDeskripsi" id="inputDeskripsi" placeholder="Masukkan Perusahaan" value="{{ old('inputDeskripsi') }}">
+                <input type="text" class="form-control @error('inputDeskripsi') is-invalid @enderror" name="inputDeskripsi" id="inputPerusahaan" placeholder="Masukkan Perusahaan" value="{{ old('inputPerusahaan') }}">
                 @error('inputDeskripsi')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -84,6 +84,16 @@
     </form>
 </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputTopik = document.getElementById('inputTopik').querySelector('tbody');
+        const inputJudul = document.getElementById('inputJudul').querySelector('tbody');
+        const inputDeskripsi = document.getElementById('inputDeskripsi').querySelector('tbody');
+        const inputPerusahaan = document.getElementById('inputPerusahaan').querySelector('tbody');
+    });
+</script>
 
 </body>
 </html>
