@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
-// use App\Http\Controllers\SidebarMahasiswaController;
-// use App\Http\Controllers\SidebarDosenController;
+use App\Http\Controllers\SidebarMahasiswaController;
+use App\Http\Controllers\SidebarDosenController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\KoorController;
-// use App\Http\Controllers\SidebarAdminController;
+use App\Http\Controllers\SidebarAdminController;
 // use App\Http\Controllers\DosenPembimbingController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -32,6 +32,7 @@ Route::get('/pengajuanKP', [MahasiswaController::class, 'pengajuan_kp'])->name('
 Route::get('/pilih-dosbing', [MahasiswaController::class, 'pilih_dosbing'])->name('pilihDosbingPage');
 Route::get('/form-pengajuan', [MahasiswaController::class, 'formPengajuan'])->name('formPengajuan');
 Route::post('/storePengajuan', [MahasiswaController::class, 'storePengajuan'])->name('SimpanPengajuan');
+
 Route::get('/draft', [MahasiswaController::class, 'draft_kp'])->name('draftKP');
 
 
@@ -53,17 +54,18 @@ Route::get('/draft', [MahasiswaController::class, 'draft_kp'])->name('draftKP');
 // Route::get('/draft', [SidebarMahasiswaController::class, 'draft_kp']);
 
 //review penyelia mahasiswa
-// Route::get('/Review', [SidebarMahasiswaController::class, 'review_penyelia']);
-// Route::get('/detail', [SidebarMahasiswaController::class, 'detail']);
+Route::post('/storePenyelia', [MahasiswaController::class, 'storePenyelia'])->name('SimpanPenyelia');
+Route::get('/Review', [SidebarMahasiswaController::class, 'review_penyelia']);
+Route::get('/detail', [SidebarMahasiswaController::class, 'detail']);
 
 //profil mahasiswa
 // Route::get('/Profil', [SidebarMahasiswaController::class, 'profil_mhs']);
 
 //dosen
-// Route::get('/dosen', [SidebarDosenController::class, 'index']);
-// Route::get('/daftar_bimbingan', [SidebarDosenController::class, 'daftar_mhs_bimbingan']);
-// Route::get('/logbook_mhs', [SidebarDosenController::class, 'logbook_bimbingan_mhs']);
-// Route::get('/review_mhs', [SidebarDosenController::class, 'review_penyelia']);
+Route::get('/dosen', [SidebarDosenController::class, 'index']);
+Route::get('/daftar_bimbingan', [SidebarDosenController::class, 'daftar_mhs_bimbingan']);
+Route::get('/logbook_mhs', [SidebarDosenController::class, 'logbook_bimbingan_mhs']);
+Route::get('/review_mhs', [SidebarDosenController::class, 'review_penyelia']);
 
 //koor untuk Dosen
 Route::get('/data_dosen', [KoorController::class, 'daftar_data_dosen'])->name('HalamanKoorDosen');

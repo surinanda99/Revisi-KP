@@ -25,7 +25,7 @@
                 <td class="centered-column">2024-05-23</td>
                 <td class="centered-column">A11.2021.13489</td>
                 <td class="centered-column">Surinanda</td>
-                <td class="centered-column">cape bat anying</td>
+                <td class="centered-column">koding</td>
                 <td class="centered-column">Bab 1</td>
                 <td class="centered-column"><a href="https://drive.google.com/drive/folders/1NSgwE4CEOqnPBZrfcoIu7wSFYuvvCu-O?usp=drive_link" target="_blank">Dokumen</a></td>
                 <td class="centered-column">

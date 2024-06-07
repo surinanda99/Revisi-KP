@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
 use App\Models\DosenPembimbing;
+use App\Models\Penyelia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,18 +18,22 @@ class MahasiswaController extends Controller
     public function pengajuan_kp()
     {
         $dosens = DosenPembimbing::all();
-        return view('mahasiswa.pengajuan_kp.pengajuan_kp', compact('dosens'));
+        $mahasiswa = session('mahasiswa');
+        return view('mahasiswa.pengajuan_kp.pengajuan_kp', compact('dosens', 'mahasiswa'));
     }
 
     public function pilih_dosbing()
     {
         $dosens = DosenPembimbing::all();
-        return view('mahasiswa.pengajuan_kp.pilihDosbing', compact('dosens'));
+        $mahasiswa = session('mahasiswa');
+        return view('mahasiswa.pengajuan_kp.pilihDosbing', compact('dosens', 'mahasiswa'));
     }
 
     public function formPengajuan()
     {
-        return view('mahasiswa.pengajuan_kp.formPengajuan');
+        $dosens = DosenPembimbing::all();
+        $mahasiswa = session('mahasiswa');
+        return view('mahasiswa.pengajuan_kp.formPengajuan', compact('dosens', 'mahasiswa'));
     }
 
     public function storePengajuan(Request $request)
@@ -60,9 +65,41 @@ class MahasiswaController extends Controller
         return redirect()->route('draftKP')->with('success', 'Data Mahasiswa Berhasil Ditambahkan')->with('mahasiswa', $mahasiswa);
     }
 
+    public function storePenyelia(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|string',
+            'posisi' => 'required|string',
+            'departemen' => 'required|string',
+            'perusahaan' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('tambah_penyelia')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $penyelia = Penyelia::create([
+            'nama' => $request->nama,
+            'posisi' => $request->posisi,
+            'departemen' => $request->departemen,
+            'perusahaan' => $request->perusahaan,
+        ]);
+        
+        return redirect()->route('detail')->with('success', 'Profil Penyelia Berhasil Ditambahkan')->with('penyelia', $penyelia);
+    }
+
     public function draft_kp()
     {
+        $dosens = DosenPembimbing::all();
         $mahasiswa = session('mahasiswa');
-        return view('mahasiswa.pengajuan_kp.draftPengajuan', compact('mahasiswa'));
+        // dd($mahasiswa);
+        return view('mahasiswa.pengajuan_kp.draftPengajuan', compact('dosens', 'mahasiswa'));
+    }
+
+    public function review_penyelia()
+    {
+        return view('mahasiswa.review_penyelia.');
     }
 }

@@ -10,7 +10,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a data-toggle="pill" href="#nav-tab-pengajuan" class="nav-link rounded-pill">
+            <a href="/detail" data-toggle="pill" href="#nav-tab-pengajuan" class="nav-link rounded-pill">
                 <i class="fas fa-edit"></i>
                 Detail Penilaian
             </a>
@@ -26,29 +26,53 @@
 
 
 <div class="container">
-    <form>
+    <form action="{{ route('SimpanPenyelia') }}" method="POST">
         <div class="form-group row mb-3">
             <label for="inputTopik" class="col-sm-2 col-form-label">Nama<span class="required">*</span></label>
             <div class="col-sm-10">
-                <input type="topik" class="form-control" id="inputTopik" placeholder="Masukkan Nama Penyelia">
+                {{-- <input type="topik" class="form-control" id="inputTopik" placeholder="Masukkan Nama Penyelia"> --}}
+                <input type="text" class="form-control @error('inputTopik') is-invalid @enderror" name="inputTopik" id="inputTopik" placeholder="Masukkan Nama Penyelia" value="{{ old('inputTopik') }}">
+                @error('inputTopik')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
         </div>
         <div class="form-group row mb-3">
             <label for="inputJudul" class="col-sm-2 col-form-label">Posisi <span class="required">*</span></label>
             <div class="col-sm-10">
-                <input type="judul" class="form-control" id="inputJudul" placeholder="Masukkan Posisi Penyelia">
+                {{-- <input type="judul" class="form-control" id="inputJudul" placeholder="Masukkan Posisi Penyelia"> --}}
+                <input type="text" class="form-control @error('inputJudul') is-invalid @enderror" name="inputJudul" id="inputJudul" placeholder="Masukkan Posisi Penyelia" value="{{ old('inputJudul') }}">
+                @error('inputJudul')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
         </div>
         <div class="form-group row mb-3">
             <label for="inputDeskripsi" class="col-sm-2 col-form-label">Departemen <span class="required">*</span></label>
             <div class="col-sm-10">
-                <input type="deskripsi" class="form-control" id="inputDeskripsi" placeholder="Masukkan Departemen penyelia">
+                {{-- <input type="deskripsi" class="form-control" id="inputDeskripsi" placeholder="Masukkan Departemen penyelia"> --}}
+                <input type="text" class="form-control @error('inputDeskripsi') is-invalid @enderror" name="inputDeskripsi" id="inputDeskripsi" placeholder="Masukkan Departemen Penyelia" value="{{ old('inputDeskripsi') }}">
+                @error('inputDeskripsi')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
         </div>
         <div class="form-group row mb-3">
             <label for="inputDeskripsi" class="col-sm-2 col-form-label">Perusahaan <span class="required">*</span></label>
             <div class="col-sm-10">
-                <input type="deskripsi" class="form-control" id="inputDeskripsi" placeholder="Masukkan Perusahaan">
+                {{-- <input type="deskripsi" class="form-control" id="inputDeskripsi" placeholder="Masukkan Perusahaan"> --}}
+                <input type="text" class="form-control @error('inputDeskripsi') is-invalid @enderror" name="inputDeskripsi" id="inputDeskripsi" placeholder="Masukkan Perusahaan" value="{{ old('inputDeskripsi') }}">
+                @error('inputDeskripsi')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
         </div>
         <div class="form-group row mb-3 justify-content-end">
