@@ -15,6 +15,12 @@
                 Detail Penilaian
             </a>
         </li>
+        <li class="nav-item">
+            <a data-toggle="pill" href="#nav-tab-pengajuan" class="nav-link rounded-pill">
+                <i class="fas fa-book-open"></i>
+                Draft Review Penilaian
+            </a>
+        </li>
     </ul>
 
 <div class="container">

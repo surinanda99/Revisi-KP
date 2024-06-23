@@ -9,7 +9,12 @@ class DosenPembimbingController extends Controller
 {
     public function index()
     {
-        return view('dosen.daftar_bimbingan.daftar_bimbingan');
+        return view('dosen.dashboard');
+    }
+
+    public function dashboard_dsn()
+    {
+        return view('dosen.dashboard');
     }
 
     public function daftar_mhs_bimbingan()

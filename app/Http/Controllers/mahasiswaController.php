@@ -131,9 +131,29 @@ class MahasiswaController extends Controller
         return view('mahasiswa.review_penyelia.review_penyelia');
     }
 
+    public function detail_penilaian()
+    {
+        return view('mahasiswa.review_penyelia.detail_penilaian');
+    }
+
+    public function draft_penilaian()
+    {
+        return view('mahasiswa.review_penyelia.draft_penilaian');
+    }
+
     public function profil($id)
     {
         $mahasiswa = Mahasiswa::find($id);
         return view('mahasiswa.profil_mhs.profil_mhs', compact('mahasiswa'));
+    }
+
+    public function riwayat()
+    {
+        return view('mahasiswa.riwayat_pengajuan.riwayat_pengajuan');
+    }
+
+    public function datadiri()
+    {
+        return view('mahasiswa.profil');
     }
 }

@@ -34,6 +34,18 @@
                     <span>Review Penyelia</span>
                 </a>
             </li>
+            <li class="sidebar-item">
+                <a href="" class="sidebar-link">
+                    <i class="fas fa-certificate"></i>
+                    <span>Pengajuan Sidang</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{{ route('riwayatPengajuan') }}" class="sidebar-link">
+                    <i class="lni lni-folder"></i>
+                    <span>Riwayat Pengajuan</span>
+                </a>
+            </li>
             @foreach ($mahasiswas as $mahasiswa)
                 <li class="sidebar-item">
                     <a href="{{ route('halamanProfil', ['id' => $mahasiswa->id]) }}" class="sidebar-link">
@@ -44,9 +56,9 @@
             @endforeach
         </ul>
         <div class="sidebar-footer">
-            <a href="/tentang" class="sidebar-link">
-                <i class="lni lni-code-alt"></i>
-                <span>Tentang</span>
+            <a href="/profilmhs" class="sidebar-link">
+                <i class="fas fa-user"></i>
+                <span>Profil Mahasiswa</span>
             </a>
         </div>
         <div class="sidebar-footer">

@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\DosenPembimbingController;
 use App\Http\Controllers\KoorController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -37,7 +38,12 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
 // Route::post('/draft/submit', [MahasiswaController::class, 'submitPengajuan'])->name('submitPengajuan');
     Route::get('/logbook', [MahasiswaController::class, 'logbook'])->name('halamanLogbook');
     Route::get('/Review', [MahasiswaController::class, 'review_penyelia'])->name('halamanReview');
+    Route::get('/detail', [MahasiswaController::class, 'detail_penilaian']);
+    Route::get('/draft', [MahasiswaController::class, 'draft_penilaian']);
     Route::get('/Profil/{id}', [MahasiswaController::class, 'profil'])->name('halamanProfil');
+    Route::get('/riwayat', [MahasiswaController::class, 'riwayat'])->name('riwayatPengajuan');
+    Route::get('/profilmhs', [MahasiswaController::class, 'datadiri']);
+
 });
 
 // Dosen
@@ -77,6 +83,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/data_user_koor', [AdminController::class, 'user_koor'])->name('dataKoor');
 });
 
+//review
+Route::post('/submit_review', [ReviewController::class, 'store']);
 // review penyelia mahasiswa
 // Route::get('/Review', [SidebarMahasiswaController::class, 'review_penyelia']);
 // Route::get('/detail', [SidebarMahasiswaController::class, 'detail']);

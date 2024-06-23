@@ -26,6 +26,7 @@ class RoleSeeder extends Seeder
             ['name' => 'Admin', 'email' => 'admin@bimbingan.online', 'password' => bcrypt('123456'), 'role' => 'admin'],
             ['name' => 'Dosen', 'email' => 'adhitya@dsn.dinus.ac.id', 'password' => bcrypt('123456'), 'role' => 'dosen'],
             ['name' => 'Mahasiswa', 'email' => '111202113472@mhs.dinus.ac.id', 'password' => bcrypt('123456'), 'role' => 'mahasiswa'],
+            ['name' => 'Mahasiswa', 'email' => '111202113489@mhs.dinus.ac.id', 'password' => bcrypt('123456'), 'role' => 'mahasiswa'],
             ['name' => 'Koor', 'email' => 'koordinator@bimbingan.online', 'password' => bcrypt('123456'), 'role' => 'koor'],
         ];
 
