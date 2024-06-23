@@ -156,4 +156,9 @@ class MahasiswaController extends Controller
     {
         return view('mahasiswa.profil');
     }
+
+    public function penilaian_sidang()
+    {
+        return view('mahasiswa.pengajuan_sidang.pengajuan_sidang');
+    }
 }

@@ -223,4 +223,9 @@ class KoorController extends Controller
 
         return redirect()->back()->with('success', 'Mahasiswa Berhasil Dihapus');
     }
+
+    public function dashboard()
+    {
+        return view('koor.dashboard');
+    }
 }

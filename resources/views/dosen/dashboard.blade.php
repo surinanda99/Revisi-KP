@@ -1,12 +1,15 @@
 @extends('dosen.layouts.main')
 @section('title', 'Dashboard Dosen')
 @section('content')
-<div class="container">
-        <h1>Dashboard</h1>   
-</div>
+<main>
+<div class="container-fluid px-4">
+                <h1 class="mt-4"><b>Welcome,</b></h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
 
 
-    <div class="container mt-4">
+    <div class="container-border">
         <div class="row">
             <!-- Detail Mahasiswa Bimbingan -->
             <div class="col-md-6 mb-4">
@@ -24,8 +27,8 @@
                 <div class="card border-success shadow h-100 rounded-lg">
                     <div class="card-body text-center">
                         <i class="fas fa-file-signature fa-3x text-success mb-3"></i>
-                        <h5 class="text-success">Pengajuan KP</h5>
-                        <p class="text-muted">Tinjau dan setujui pengajuan KP</p>
+                        <h5 class="text-success">Pengajuan Kerja Praktek</h5>
+                        <p class="text-muted">Tinjau dan setujui pengajuan KP mahasiswa</p>
                     </div>
                 </div>
             </div>
@@ -35,8 +38,8 @@
                 <div class="card border-warning shadow h-100 rounded-lg">
                     <div class="card-body text-center">
                         <i class="fas fa-book-reader fa-3x text-warning mb-3"></i>
-                        <h5 class="text-warning">Review Mahasiswa</h5>
-                        <p class="text-muted">Lakukan review progres mahasiswa</p>
+                        <h5 class="text-warning">Review Penyelia Mahasiswa</h5>
+                        <p class="text-muted">Lakukan review Penyelia mahasiswa</p>
                     </div>
                 </div>
             </div>
@@ -47,7 +50,7 @@
                     <div class="card-body text-center">
                         <i class="fas fa-book fa-3x text-info mb-3"></i>
                         <h5 class="text-info">Logbook Mahasiswa</h5>
-                        <p class="text-muted">Periksa dan pantau logbook KP</p>
+                        <p class="text-muted">Periksa dan pantau logbook Kerja Praktek</p>
                     </div>
                 </div>
             </div>
@@ -97,4 +100,5 @@
         </div>
     </div>
 </div>
+</main>
 @endsection

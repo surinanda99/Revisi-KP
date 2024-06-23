@@ -43,6 +43,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::get('/Profil/{id}', [MahasiswaController::class, 'profil'])->name('halamanProfil');
     Route::get('/riwayat', [MahasiswaController::class, 'riwayat'])->name('riwayatPengajuan');
     Route::get('/profilmhs', [MahasiswaController::class, 'datadiri']);
+    Route::get('/pengajuan_sidang', [MahasiswaController::class, 'penilaian_sidang'])->name('pengajuanSidang');
 
 });
 
@@ -73,6 +74,9 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     Route::get('/edit-mhs/{id}', [KoorController::class, 'editMhs'])->name('editMhs');
     Route::put('/update-mhs/{id}', [KoorController::class, 'updateMhs'])->name('updateMhs');
     Route::post('delete-mhs/{id}', [KoorController::class, 'deleteMhs'])->name('hapusMhs');
+
+    // dashboard
+    Route::get('/dashboardKoor', [KoorController::class, 'dashboard']);
 });
 
 // Admin
