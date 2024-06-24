@@ -151,8 +151,9 @@ a.sidebar-link:hover {
     margin: 20px auto;
     padding: 20px;
     background-color: rgb(240, 245, 255);
-    border-radius: 10px;
+    border-radius: 20px;
 }
+
 
 th {
     text-align: center;
@@ -255,7 +256,7 @@ th {
 .container-border{
     margin: 20px auto;
     padding: 20px;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(240, 245, 255);
     border-radius: 10px;
 }
 

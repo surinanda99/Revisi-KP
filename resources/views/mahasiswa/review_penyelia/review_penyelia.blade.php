@@ -15,6 +15,12 @@
                 Detail Penilaian
             </a>
         </li>
+        <li class="nav-item">
+            <a data-toggle="pill" href="#nav-tab-pengajuan" class="nav-link rounded-pill">
+                <i class="fas fa-book-open"></i>
+                Draft Review Penialaian
+            </a>
+        </li>
     </ul>
 
     <div class="tab-content">
@@ -24,9 +30,9 @@
         <div id="nav-tab-pengajuan" class="tab-pane fade">
             @include('mahasiswa.review_penyelia.detail_penilaian')
         </div>
-        {{-- <div id="nav-tab-draft" class="tab-pane fade">
-            @include('mahasiswa.pengajuan_kp.draftPengajuan')
-        </div> --}}
+        <div id="nav-tab-draft" class="tab-pane fade">
+            @include('mahasiswa.review_penyelia.draft_penilaian')
+        </div>
     </div>
 </div>
 @endsection

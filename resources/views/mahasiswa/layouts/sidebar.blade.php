@@ -35,16 +35,30 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="{{ route('halamanProfil') }}" class="sidebar-link">
-                    <i class="lni lni-user"></i>
-                    <span>Profil Mahasiswa</span>
+                <a href="{{ route('pengajuanSidang') }}" class="sidebar-link">
+                    <i class="fas fa-certificate"></i>
+                    <span>Penilaian Sidang</span>
                 </a>
             </li>
+            <li class="sidebar-item">
+                <a href="{{ route('riwayatPengajuan') }}" class="sidebar-link">
+                    <i class="lni lni-folder"></i>
+                    <span>Riwayat Pengajuan</span>
+                </a>
+            </li>
+            @foreach ($mahasiswas as $mahasiswa)
+                <li class="sidebar-item">
+                    <a href="{{ route('halamanProfil', ['id' => $mahasiswa->id]) }}" class="sidebar-link">
+                        <i class="lni lni-user"></i>
+                        <span>Profil Mahasiswa</span>
+                    </a>
+                </li>
+            @endforeach
         </ul>
         <div class="sidebar-footer">
-            <a href="/tentang" class="sidebar-link">
-                <i class="lni lni-code-alt"></i>
-                <span>Tentang</span>
+            <a href="/profilmhs" class="sidebar-link">
+                <i class="fas fa-user"></i>
+                <span>Profil Mahasiswa</span>
             </a>
         </div>
         <div class="sidebar-footer">

@@ -16,13 +16,21 @@
         </div>
     @endif
     
+    <div class="row my-2">
+        <div class="col-md">
+            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogTambah"><i
+                    class="fas fa-plus"></i>Tambah Data</a>
+            <a target="_blank" class="btn btn-success ms-1" data-bs-toggle="modal" data-bs-target="#dialogImport"><i
+                    class="fas fa-file-import"></i>&nbsp;Import</a>
+        </div>
+    </div>
     <p class="mb-2 d-flex align-items-center">
-        <a href="{{ route('tambahMhs') }}" class="btn btn-primary me-2">
+        {{-- <a href="{{ route('tambahMhs') }}" class="btn btn-primary me-2">
             <i class="fas fa-plus"></i> Tambah
-        </a>
-            <button data-bs-toggle="modal" data-bs-target="#DosenModal" class="btn btn-md btn-success fw-bold my-auto me-1">
+        </a> --}}
+            {{-- <button data-bs-toggle="modal" data-bs-target="#DosenModal" class="btn btn-md btn-success fw-bold my-auto me-1">
                 <i class="lni lni-exit-down"></i> Import</button>
-            </button>
+            </button> --}}
     
              <!-- Import Dosen Modal -->
              <div class="modal fade" id="DosenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -60,12 +68,14 @@
                 <th class="align-middle">NIM</th>
                 <th class="align-middle">Nama Mahasiswa</th>
                 <th class="align-middle">IPK</th>
+                <th class="align-middle">Transkip</th>
                 <th class="align-middle">Telp Mhs</th>
                 <th class="align-middle">Email</th>
                 <th class="align-middle">Dosen Wali</th>
                 <th class="align-middle">Aksi</th>
             </thead>
             <tbody>
+                
                 <!-- Loop untuk Menampilkan Setiap Data Mahasiswa -->
                 @foreach($mahasiswas as $mahasiswa)
                 <tr>
@@ -109,12 +119,12 @@
     -->
 </div>
 
-<!--Dialog Tambah Logbook-->
+<!--Dialog detail mahasiswa-->
 @include('koor.data_mahasiswa.detail_mhs') 
 
-<!--Dialog Edit Logbook-->
+<!--Dialog Edit mahasiswa-->
 @include('koor.data_mahasiswa.edit_mhs')
-{{-- 
+
 <!--Dialog Info Logbook-->
-@include('mahasiswa.logbook_kp.detail_logbook')  --}}
+@include('koor.data_mahasiswa.tambah_data') 
 @endsection

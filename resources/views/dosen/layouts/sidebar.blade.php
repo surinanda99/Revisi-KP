@@ -17,20 +17,20 @@
             </li>
             <li class="sidebar-item">
                 <a href="{{ route('pageDaftarMhsBimbingan') }}" class="sidebar-link">
-                    <i class="lni lni-folder"></i>
-                    <span>Daftar Bimbingan</span>
+                    <i class="lni lni-consulting"></i>
+                    <span>Mahasiswa Bimbingan</span>
                 </a>
             </li>
             
             <li class="sidebar-item">
                 <a href="{{ route('pageLogbook') }}" class="sidebar-link">
                     <i class="lni lni-notepad"></i>
-                    <span>Logbook Bimbingan </span>
+                    <span>Logbook Mahasiswa </span>
                 </a>
             </li>
             <li class="sidebar-item">
                 <a href="{{ route('pageReviewPenyelia') }}" class="sidebar-link">
-                    <i class="lni lni-add-files"></i>
+                    <i class="fas fa-star"></i>
                     <span>Review Penyelia</span>
                 </a>
             </li>

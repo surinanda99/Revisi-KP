@@ -1,5 +1,5 @@
 @extends('mahasiswa.layouts.main')
-@section('title', 'Pengajuan TA')
+@section('title', 'Pengajuan KP')
 @section('content')
 <div class="container">
     <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-3">

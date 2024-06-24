@@ -5,12 +5,18 @@
     <h4 class="mb-4">Data Dosen Pembimbing</h4>
 
     <p class="mb-2 d-flex align-items-center">
-        <a href="{{ route('tambahDosen') }}" class="btn btn-primary me-2">
+        {{-- <a href="{{ route('tambahDosen') }}" class="btn btn-primary me-2">
             <i class="fas fa-plus"></i> Tambah
         </a>
         <button data-bs-toggle="modal" data-bs-target="#DosenModal" class="btn btn-md btn-success fw-bold my-auto me-1">
             <i class="lni lni-exit-down"></i> Import</button>
-        </button>
+        </button> --}}
+        <div class="col-md">
+            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogTambah"><i
+                    class="fas fa-plus"></i>Tambah Data</a>
+            <a target="_blank" class="btn btn-success ms-1" data-bs-toggle="modal" data-bs-target="#dialogImport"><i
+                    class="fas fa-file-import"></i>&nbsp;Import</a>
+        </div>
 
          <!-- Import Dosen Modal -->
          <div class="modal fade" id="DosenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -113,14 +119,14 @@
     </nav>
 </div>
 
-<!--Dialog Tambah Logbook-->
+<!--Dialog Tambah dosen-->
 @include('koor.data_dosen.detail_dosen')
 
-<!--Dialog Edit Logbook-->
+<!--Dialog Edit dosen-->
 @include('koor.data_dosen.edit_dosen')
-{{-- 
-<!--Dialog Info Logbook-->
-@include('mahasiswa.logbook_kp.detail_logbook')  --}}
+
+<!--Dialog tambah 2 dosen-->
+@include('koor.data_dosen.tambah') 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

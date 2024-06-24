@@ -139,4 +139,19 @@ class MahasiswaController extends Controller
         $mahasiswa = Mahasiswa::where('email', $user->email)->first();
         return view('mahasiswa.profil_mhs.profil_mhs', compact('mahasiswa'));
     }
+
+    public function riwayat()
+    {
+        return view('mahasiswa.riwayat_pengajuan.riwayat_pengajuan');
+    }
+
+    public function datadiri()
+    {
+        return view('mahasiswa.profil');
+    }
+
+    public function penilaian_sidang()
+    {
+        return view('mahasiswa.pengajuan_sidang.pengajuan_sidang');
+    }
 }
