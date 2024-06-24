@@ -32,7 +32,7 @@ class AuthMiddleware
                 if ($user->hasRole('koor')) {
                     return $next($request);
                 }
-                return redirect()->route('halamanKoorMhs');
+                return redirect()->route('dashboardKoor');
                 break;
             case 'admin':
                 if ($user->hasRole('admin')) {

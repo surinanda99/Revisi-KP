@@ -20,11 +20,6 @@ class KoorController extends Controller
         return view('koor.data_dosen.data_dosen', compact('dosens'));
     }
 
-    public function addDosen()
-    {
-        return view('koor.data_dosen.tambah_dosen');
-    }
-
     public function storeDosen(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -32,16 +27,10 @@ class KoorController extends Controller
             'nama' => 'required|string',
             'bidang_kajian' => 'required|in:RPLD,SC',
             'kuota' => 'required|integer',
-            'jumlah_ajuan' => 'required|integer',
-            'ajuan_diterima' => 'required|integer',
-            'sisa_kuota' => 'required|integer',
-            'status' => 'required|in:Penuh,Tersedia',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('tambahDosen')
-                ->withErrors($validator)
-                ->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         DosenPembimbing::create([
@@ -49,13 +38,9 @@ class KoorController extends Controller
             'nama' => $request->nama,
             'bidang_kajian' => $request->bidang_kajian,
             'kuota' => $request->kuota,
-            'jumlah_ajuan' => $request->jumlah_ajuan,
-            'ajuan_diterima' => $request->ajuan_diterima,
-            'sisa_kuota' => $request->sisa_kuota,
-            'status' => $request->status,
         ]);
 
-        return redirect()->route('HalamanKoorDosen')->with('success', 'Data Dosen Pembimbing Berhasil Ditambahkan');
+        return redirect()->back()->with('success', 'Data Dosen Pembimbing Berhasil Ditambahkan.');
     }
 
     public function importDosen(Request $request)
@@ -80,15 +65,17 @@ class KoorController extends Controller
     public function editDosen($id)
     {
         $dosen = DosenPembimbing::find($id);
-        return view('koor.data_dosen.edit_dosen', compact('dosen'));
-    }
+        return response()->json($dosen);
+    }    
 
     public function updateDosen(Request $request, $id)
     {
         // Validasi data yang diterima dari formulir
         $validator = Validator::make($request->all(), [
-            'kuota' => 'required',
-            'jumlah_ajuan' => 'required',
+            'npp' => 'required|string',
+            'nama' => 'required|string',
+            'bidang_kajian' => 'required|in:RPLD,SC',
+            'kuota' => 'required|integer',
         ]);
 
         // Jika validasi gagal, kembalikan respons dengan pesan kesalahan
@@ -101,12 +88,14 @@ class KoorController extends Controller
 
         // Perbarui data dosen
         $dosen->update([
+            'npp' => $request->input('npp'),
+            'nama' => $request->input('nama'),
+            'bidang_kajian' => $request->input('bidang_kajian'),
             'kuota' => $request->input('kuota'),
-            'jumlah_ajuan' => $request->input('jumlah_ajuan'),
         ]);
 
         // Redirect kembali dengan pesan sukses
-        return redirect()->back()->with('success', 'Data dosen berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Data Dosen Pembimbing Berhasil Diperbarui.');
     }
 
     public function deleteDosen($id)
