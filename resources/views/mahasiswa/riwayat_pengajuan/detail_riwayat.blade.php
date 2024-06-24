@@ -12,19 +12,19 @@
                         <tbody>
                             <tr>
                                 <td>Nama</td>
-                                <td>ridwan kamil</td>
+                                <td>-</td>
                             </tr>
                             <tr>
                                 <td>Posisi</td>
-                                <td>it development</td>
+                                <td>-</td>
                             </tr>
                             <tr>
                                 <td>Departemen</td>
-                                <td>it</td>
+                                <td>-</td>
                             </tr>
                             <tr>
                                 <td>Perusahaan</td>
-                                <td>teknik informatika</td>
+                                <td>-</td>
                             </tr>
                         </tbody>
                     </table>
