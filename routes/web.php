@@ -20,7 +20,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 
-Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('loginPost');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -37,7 +37,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
 // Route::post('/draft/submit', [MahasiswaController::class, 'submitPengajuan'])->name('submitPengajuan');
     Route::get('/logbook', [MahasiswaController::class, 'logbook'])->name('halamanLogbook');
     Route::get('/Review', [MahasiswaController::class, 'review_penyelia'])->name('halamanReview');
-    Route::get('/Profil/{id}', [MahasiswaController::class, 'profil'])->name('halamanProfil');
+    Route::get('/Profil', [MahasiswaController::class, 'profil'])->name('halamanProfil');
 });
 
 // Dosen

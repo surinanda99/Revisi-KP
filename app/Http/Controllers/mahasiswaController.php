@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
 use App\Models\Pengajuan;
-use App\Models\DosenPembimbing;
 use Illuminate\Http\Request;
+use App\Models\DosenPembimbing;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class MahasiswaController extends Controller
 {
     public function index()
     {
-        return view('mahasiswa.dashboard');
+        $mahasiswa = Auth::user()->mahasiswa;
+        return view('mahasiswa.dashboard', compact('mahasiswa'));
     }
 
     public function pengajuan_kp()
@@ -131,9 +133,10 @@ class MahasiswaController extends Controller
         return view('mahasiswa.review_penyelia.review_penyelia');
     }
 
-    public function profil($id)
+    public function profil()
     {
-        $mahasiswa = Mahasiswa::find($id);
+        $user = Auth::user();
+        $mahasiswa = Mahasiswa::where('email', $user->email)->first();
         return view('mahasiswa.profil_mhs.profil_mhs', compact('mahasiswa'));
     }
 }

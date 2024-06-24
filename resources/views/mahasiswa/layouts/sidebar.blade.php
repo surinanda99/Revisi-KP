@@ -34,14 +34,12 @@
                     <span>Review Penyelia</span>
                 </a>
             </li>
-            @foreach ($mahasiswas as $mahasiswa)
-                <li class="sidebar-item">
-                    <a href="{{ route('halamanProfil', ['id' => $mahasiswa->id]) }}" class="sidebar-link">
-                        <i class="lni lni-user"></i>
-                        <span>Profil Mahasiswa</span>
-                    </a>
-                </li>
-            @endforeach
+            <li class="sidebar-item">
+                <a href="{{ route('halamanProfil') }}" class="sidebar-link">
+                    <i class="lni lni-user"></i>
+                    <span>Profil Mahasiswa</span>
+                </a>
+            </li>
         </ul>
         <div class="sidebar-footer">
             <a href="/tentang" class="sidebar-link">
