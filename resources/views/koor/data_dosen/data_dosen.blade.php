@@ -5,26 +5,18 @@
     <h4 class="mb-4">Data Dosen Pembimbing</h4>
 
     <p class="mb-2 d-flex align-items-center">
-        {{-- <a href="{{ route('tambahDosen') }}" class="btn btn-primary me-2">
-            <i class="fas fa-plus"></i> Tambah
-        </a>
-        <button data-bs-toggle="modal" data-bs-target="#DosenModal" class="btn btn-md btn-success fw-bold my-auto me-1">
-            <i class="lni lni-exit-down"></i> Import</button>
-        </button> --}}
         <div class="col-md">
-            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogTambah"><i
-                    class="fas fa-plus"></i>Tambah Data</a>
-            <a target="_blank" class="btn btn-success ms-1" data-bs-toggle="modal" data-bs-target="#dialogImport"><i
-                    class="fas fa-file-import"></i>&nbsp;Import</a>
+            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogTambah"><i class="fas fa-plus"></i>Tambah Data</a>
+            <button class="btn btn-success ms-1" data-bs-toggle="modal" data-bs-target="#dialogImport"><i class="fas fa-file-import"></i>&nbsp;Import</button>
         </div>
 
          <!-- Import Dosen Modal -->
-         <div class="modal fade" id="DosenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal fade" id="dialogImport" tabindex="-1" aria-labelledby="dialogImportLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <form method="POST" action="{{ route('importDosen') }}" class="modal-content" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Import Data Dosen</h1>
+                        <h1 class="modal-title fs-5" id="dialogImportLabel">Import Data Dosen</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -87,17 +79,16 @@
                     <td class="centered-column">{{ $dosen->status }}</td>
                     <td class="centered-column">
                         <div class="d-inline">
-                            <button type="button" class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataDosen_{{ $dosen->id }}">
+                            <button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataDosen_{{ $dosen->id }}">
                                 <i class="fas fa-info-circle"></i>
                             </button>
                             <button class="btn btn-warning me-1 btn-edit" data-id="{{ $dosen->id }}" data-bs-toggle="modal" data-bs-target="#dialogEditDosen_{{ $dosen->id }}">
                                 <i class="far fa-edit"></i>
                             </button>
+                            <button class="btn btn-danger btn-delete" data-id="{{ $dosen->id }}" data-bs-toggle="modal" data-bs-target="#dialogHapusDosen_{{ $dosen->id }}">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
-                        <form action="{{ route('hapusDosen', ['id' => $dosen->id]) }}" method="POST" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                        </form>
                     </td>
                 </tr>
                 @endforeach
@@ -119,34 +110,52 @@
     </nav>
 </div>
 
-<!--Dialog Tambah dosen-->
+<!--Dialog tambah Dosen-->
+@include('koor.data_dosen.tambah') 
+
+<!--Dialog Detail Dosen-->
 @include('koor.data_dosen.detail_dosen')
 
-<!--Dialog Edit dosen-->
-@include('koor.data_dosen.edit_dosen')
+<!--Dialog Edit Dosen-->
+@include('koor.data_dosen.edit')
 
-<!--Dialog tambah 2 dosen-->
-@include('koor.data_dosen.tambah') 
+<!--Dialog Hapus Dosen-->
+@include('koor.data_dosen.hapus') 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
+        // Function to handle click on detail button
+        $('.btn-detail').click(function() {
+            var dosenId = $(this).data('id');
+            $('#dialogDetailDataDosen_' + dosenId).modal('show');
+        });
+
         $('.btn-edit').click(function() {
-            console.log("Tombol edit diklik"); // Untuk memeriksa apakah fungsi click ini dijalankan
+            console.log("Tombol edit diklik");
             var id = $(this).data('id');
             $.ajax({
                 url: '/edit-dosen/' + id,
                 type: 'GET',
                 success: function(response) {
-                    console.log(response); // Untuk memeriksa data respons dari server
-                    $('#inputKuota').val(response.kuota);
-                    $('#inputJumlahAjuan').val(response.jumlah_ajuan);
-                    $('#dialogEditDosen_' + id).modal('show'); // Menggunakan ID unik untuk menampilkan modal
+                    console.log(response);
+                    $('#inputNPP_' + id).val(response.npp);
+                    $('#inputNama_' + id).val(response.nama);
+                    $('#inputBidangKajian_' + id).val(response.bidang_kajian);
+                    $('#inputKuota_' + id).val(response.kuota);
+                    $('#inputJumlahAjuan_' + id).val(response.jumlah_ajuan);
+                    $('#dialogEditDosen_' + id).modal('show');
                 },
                 error: function(xhr, status, error) {
-                    console.error(xhr.responseText); // Menampilkan pesan kesalahan jika terjadi kesalahan pada permintaan AJAX
+                    console.error(xhr.responseText);
                 }
             });
+        });
+
+        // Function to handle click on delete button
+        $('.btn-delete').click(function() {
+            var id = $(this).data('id');
+            $('#dialogHapusDosen_' + id).modal('show');
         });
     });
 </script>

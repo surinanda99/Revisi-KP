@@ -14,10 +14,10 @@ class CreateDosenPembimbingsTable extends Migration
             $table->string('nama');
             $table->enum('bidang_kajian', ['RPLD', 'SC']);
             $table->integer('kuota');
-            $table->integer('jumlah_ajuan');
-            $table->integer('ajuan_diterima');
-            $table->integer('sisa_kuota');
-            $table->enum('status', ['Penuh', 'Tersedia']);
+            $table->integer('jumlah_ajuan')->default(0);
+            $table->integer('ajuan_diterima')->default(0);
+            $table->integer('sisa_kuota')->default(0);
+            $table->enum('status', ['Penuh', 'Tersedia'])->default('Tersedia');
             $table->timestamps();
         });
     }

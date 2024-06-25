@@ -1,68 +1,64 @@
-<div class="modal fade" id="dialogEditDosbingKoor" tabindex="-1" aria-labelledby="dialogEditDosbing" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="dialogEditDosbing">Edit Data Dosbing</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <blockquote class="blockquote-primary">
-                        <p class="mb-3">Form dengan tanda asterik (<span class="required">*</span>) wajib diisi.</p>
-                    </blockquote>
-                    @isset($ds)
-                        <form method="POST" action="{{ route('koor-data-dospem-update', ['id' => $ds->id_dospem]) }}"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <input type="hidden" name="id_dospem" id="inputDospem" value="">
-                            <div class="form-group row mb-3">
-                                <label for="inputNPP" class="col-sm-2 col-form-label">NPP <span
-                                        class="required">*</span></label>
-                                <div class="col-sm-10">
-                                    <input type="topik" name="npp" class="form-control" id="inputNPP">
-                                </div>
+@foreach($dosens as $dosen)
+    <div class="modal fade" id="dialogEditDosen_{{ $dosen->id }}" tabindex="-1" aria-labelledby="dialogEditDosenLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dialogEditDosenLabel">Edit Data Dosen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('updateDosen', ['id' => $dosen->id]) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="form-group row mb-3">
+                            <label for="inputNPP_{{ $dosen->id }}" class="col-sm-2 col-form-label">NPP <span class="required">*</span></label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control @error('npp') is-invalid @enderror" name="npp" id="inputNPP_{{ $dosen->id }}" value="{{ old('npp') ? old('npp') : $dosen->npp }}">
+                                @error('npp')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputNama" class="col-sm-2 col-form-label">Nama Dosbing <span
-                                        class="required">*</span></label>
-                                <div class="col-sm-10">
-                                    <input type="topik" name="nama" class="form-control" id="inputNama">
-                                </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label for="inputNama_{{ $dosen->id }}" class="col-sm-2 col-form-label">Nama Dosbing <span class="required">*</span></label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" id="inputNama_{{ $dosen->id }}" value="{{ old('nama') ? old('nama') : $dosen->nama }}">
+                                @error('nama')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputBidangKajian" class="col-sm-2 col-form-label">Bidang Kajian <span
-                                        class="required">*</span></label>
-                                <div class="col-sm-4">
-                                    <select class="form-select" name="bidang_kajian" id="inputBidangKajian"
-                                        aria-label="Bidang Kajian">
-                                        <option disabled selected hidden>Pilih Bidang Kajian</option>
-                                        <option value="SC">SC</option>
-                                        <option value="RPLD">RPLD</option>
-                                    </select>
-                                </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label for="inputBidangKajian_{{ $dosen->id }}" class="col-sm-2 col-form-label">Bidang Kajian <span class="required">*</span></label>
+                            <div class="col-sm-4">
+                                <select class="form-select @error('bidang_kajian') is-invalid @enderror" name="bidang_kajian" id="inputBidangKajian_{{ $dosen->id }}">
+                                    <option value="SC" {{ $dosen->bidang_kajian == 'SC' ? 'selected' : '' }}>SC</option>
+                                    <option value="RPLD" {{ $dosen->bidang_kajian == 'RPLD' ? 'selected' : '' }}>RPLD</option>
+                                </select>
                             </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputKuota" class="col-sm-2 col-form-label">Kuota Mhs TA (Baru) <span
-                                        class="required">*</span></label>
-                                <div class="col-sm-10">
-                                    <input type="topik" name="kuota_mhs_ta" class="form-control" id="inputKuota">
-                                </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label for="inputKuota_{{ $dosen->id }}" class="col-sm-2 col-form-label">Kuota Mhs TA (Baru) <span class="required">*</span></label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control @error('kuota') is-invalid @enderror" name="kuota" id="inputKuota_{{ $dosen->id }}" value="{{ old('kuota') ? old('kuota') : $dosen->kuota }}">
+                                @error('kuota')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputAjuan" class="col-sm-2 col-form-label">Email<span
-                                        class="required">*</span></label>
-                                <div class="col-sm-10">
-                                    <input type="email" name="email" class="form-control" id="inputEmail">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Edit</button>
-                            </div>
-                        </form>
-                    @endisset
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary">Simpan perubahan</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
+@endforeach

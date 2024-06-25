@@ -19,11 +19,12 @@ class Mahasiswa extends Model
         'telp_mhs', 
         'email', 
         'dosen_wali' 
+
     ];
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class, 'email', 'email');
     }
 
     public function pengajuan()

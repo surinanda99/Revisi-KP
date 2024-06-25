@@ -22,7 +22,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 
-Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('loginPost');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -61,7 +61,6 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     // Koor untuk Dosen
     Route::get('/data_dosen', [KoorController::class, 'daftar_data_dosen'])->name('HalamanKoorDosen');
     Route::post('/import-dosen', [KoorController::class, 'importDosen'])->name('importDosen');
-    Route::get('/tambah-dosen', [KoorController::class, 'addDosen'])->name('tambahDosen');
     Route::post('/store-dosen', [KoorController::class, 'storeDosen'])->name('simpanDosen');
     Route::get('/edit-dosen/{id}', [KoorController::class, 'editDosen'])->name('editDosen');
     Route::put('/update-dosen/{id}', [KoorController::class, 'updateDosen'])->name('updateDosen');
@@ -77,7 +76,7 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     Route::post('delete-mhs/{id}', [KoorController::class, 'deleteMhs'])->name('hapusMhs');
 
     // dashboard
-    Route::get('/dashboardKoor', [KoorController::class, 'dashboard']);
+    Route::get('/dashboardKoor', [KoorController::class, 'dashboard'])->name('dashboardKoor');
 });
 
 // Admin

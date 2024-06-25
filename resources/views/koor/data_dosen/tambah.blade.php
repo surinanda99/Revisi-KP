@@ -10,46 +10,54 @@
                     <blockquote class="blockquote-primary">
                         <p class="mb-3">Form dengan tanda asterik (<span class="required">*</span>) wajib diisi.</p>
                     </blockquote>
-                    {{-- <form method="POST" action="{{ route('koor-data-dospem-add') }}" enctype="multipart/form-data"> --}}
+                    <form action="{{ route('simpanDosen') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row mb-3">
-                            <label for="inputNPP" class="col-sm-2 col-form-label">NPP <span
-                                    class="required">*</span></label>
+                            <label for="inputNPP" class="col-sm-2 col-form-label">NPP <span class="required">*</span></label>
                             <div class="col-sm-10">
-                                <input type="topik" name="npp" class="form-control" id="inputNPP">
+                                <input type="text" class="form-control @error('npp') is-invalid @enderror" name="npp" id="inputNPP" value="{{ old('npp') }}">
+                                @error('npp')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row mb-3">
-                            <label for="inputNama" class="col-sm-2 col-form-label">Nama Dosbing <span
-                                    class="required">*</span></label>
+                            <label for="inputNama" class="col-sm-2 col-form-label">Nama Dosbing <span class="required">*</span></label>
                             <div class="col-sm-10">
-                                <input type="topik" name="nama" class="form-control" id="inputNama">
+                                <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" id="inputNama" value="{{ old('nama') }}">
+                                @error('nama')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row mb-3">
-                            <label for="inputBidangKajian" class="col-sm-2 col-form-label">Bidang Kajian <span
-                                    class="required">*</span></label>
+                            <label for="inputBidangKajian" class="col-sm-2 col-form-label">Bidang Kajian <span class="required">*</span></label>
                             <div class="col-sm-4">
-                                <select class="form-select" name="bidang_kajian" id="inputBidangKajian"
-                                    aria-label="Bidang Kajian">
+                                <select class="form-select @error('bidang_kajian') is-invalid @enderror" name="bidang_kajian" id="inputBidangKajian" aria-label="Bidang Kajian">
                                     <option disabled selected hidden>Pilih Bidang Kajian</option>
-                                    <option value="SC">SC</option>
-                                    <option value="RPLD">RPLD</option>
+                                    <option value="SC" {{ old('bidang_kajian') === 'SC' ? 'selected' : '' }}>SC</option>
+                                    <option value="RPLD" {{ old('bidang_kajian') === 'RPLD' ? 'selected' : '' }}>RPLD</option>
                                 </select>
+                                @error('bidang_kajian')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row mb-3">
-                            <label for="inputKuota" class="col-sm-2 col-form-label">Kuota Mhs Kerja Praktek (Baru) <span
-                                    class="required">*</span></label>
+                            <label for="inputKuota" class="col-sm-2 col-form-label">Kuota Mhs Kerja Praktek (Baru) <span class="required">*</span></label>
                             <div class="col-sm-10">
-                                <input type="topik" name="kuota_mhs_ta" class="form-control" id="inputKuota">
-                            </div>
-                        </div>
-                        <div class="form-group row mb-3">
-                            <label for="inputEmail" class="col-sm-2 col-form-label">Email<span
-                                    class="required">*</span></label>
-                            <div class="col-sm-10">
-                                <input type="email" name="email" class="form-control" id="inputEmail">
+                                <input type="number" class="form-control @error('kuota') is-invalid @enderror" name="kuota" id="inputKuota" value="{{ old('kuota') }}">
+                                @error('kuota')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="modal-footer">

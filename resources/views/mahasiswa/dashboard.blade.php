@@ -4,7 +4,7 @@
 <div class="container-dashboard">
     <h1>Hi,</h1>
     <div class="type">
-        {{-- mengambil nama dari controller --}}
+        <h1>{{$mahasiswa->nama}}</h1>
     </div>
     <p>Siap untuk kerja praktek hari ini?</p>
 </div>

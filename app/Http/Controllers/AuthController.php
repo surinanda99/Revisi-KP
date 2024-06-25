@@ -27,7 +27,7 @@ class AuthController extends Controller
             } elseif (Auth::user()->hasRole('mahasiswa')) {
                 return redirect()->route('dashboardMahasiswa');
             } elseif (Auth::user()->hasRole('koor')) {
-                return redirect()->route('halamanKoorMhs'); 
+                return redirect()->route('dashboardKoor'); 
             }
         }
 

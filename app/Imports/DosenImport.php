@@ -15,10 +15,6 @@ class DosenImport implements ToModel, WithHeadingRow
             'nama' => $row['nama'],
             'bidang_kajian' => $row['bidang_kajian'],
             'kuota' => $row['kuota'],
-            'jumlah_ajuan' => $row['jumlah_ajuan'],
-            'ajuan_diterima' => $row['ajuan_diterima'],
-            'sisa_kuota' => $row['sisa_kuota'],
-            'status' => $row['status'],
         ]);
     }
 }
