@@ -2,6 +2,11 @@
 @section('title', 'Review Penyelia')
 @section('content')
 <div class="container">
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-3">
         <li class="nav-item">
             <a data-toggle="pill" href="#nav-tab-dosbing" class="nav-link active rounded-pill">

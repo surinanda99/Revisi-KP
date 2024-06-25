@@ -32,66 +32,94 @@
 
 
 <div class="container">
-    <form>
+    <form action="{{ route('submit') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <!-- Form fields -->
         <div class="form-group row mb-3">
-            <label for="inputTopik" class="col-sm-2 col-form-label">Deskripsi Pekerjaan<span class="required">*</span></label>
+            <label for="inputNama" class="col-sm-2 col-form-label">Nama<span class="required">*</span></label>
             <div class="col-sm-10">
-                <input type="topik" class="form-control" id="inputTopik" placeholder="Masukkan Deskripsi Pekerjaan">
-            </div>
-        </div>
-        <div class="form-group row mb-3">
-            <label for="inputJudul" class="col-sm-2 col-form-label">Prestasi dan Kontribusi <span class="required">*</span></label>
-            <div class="col-sm-10">
-                <input type="judul" class="form-control" id="inputJudul" placeholder="Masukkan Prestasi dan Kontribusi">
+                <input type="text" class="form-control" id="inputNama" name="nama" placeholder="Masukkan Nama Penyelia" required>
             </div>
         </div>
         <div class="form-group row mb-3">
-            <label for="inputDeskripsi" class="col-sm-2 col-form-label">Keterampilan dan Kemampuan <span class="required">*</span></label>
+            <label for="inputPosisi" class="col-sm-2 col-form-label">Posisi <span class="required">*</span></label>
             <div class="col-sm-10">
-                <input type="deskripsi" class="form-control" id="inputDeskripsi" placeholder="Masukkan Keterampilan dan Kemampuan">
+                <input type="text" class="form-control" id="inputPosisi" name="posisi" placeholder="Masukkan Posisi Penyelia" required>
             </div>
         </div>
         <div class="form-group row mb-3">
-            <label for="inputDeskripsi" class="col-sm-2 col-form-label">Kerjasama Dan Keterlibatan <span class="required">*</span></label>
+            <label for="inputDepartemen" class="col-sm-2 col-form-label">Departemen <span class="required">*</span></label>
             <div class="col-sm-10">
-                <input type="deskripsi" class="form-control" id="inputDeskripsi" placeholder="Masukkan Kerjasama Dan Keterlibatan ">
+                <input type="text" class="form-control" id="inputDepartemen" name="departemen" placeholder="Masukkan Departemen penyelia" required>
             </div>
         </div>
         <div class="form-group row mb-3">
-            <label for="inputCatatan" class="col-sm-2 col-form-label">Komentar</label>
+            <label for="inputPerusahaan" class="col-sm-2 col-form-label">Perusahaan <span class="required">*</span></label>
             <div class="col-sm-10">
-                <textarea class="form-control" id="inputCatatan" rows="3" placeholder="Masukkan Komentar"></textarea>
+                <input type="text" class="form-control" id="inputPerusahaan" name="perusahaan" placeholder="Masukkan Perusahaan" required>
+            </div>
+        </div>
+        <div class="mb-4">Detail Penilaian</div>
+        <div class="form-group row mb-3">
+            <label for="inputDeskripsiPekerjaan" class="col-sm-2 col-form-label">Deskripsi Pekerjaan<span class="required">*</span></label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputDeskripsiPekerjaan" name="deskripsi_pekerjaan" placeholder="Masukkan Deskripsi Pekerjaan" required>
             </div>
         </div>
         <div class="form-group row mb-3">
-            <label for="inputDeskripsi" class="col-sm-2 col-form-label">Perkembangan <span class="required">*</span></label>
+            <label for="inputPrestasiKontribusi" class="col-sm-2 col-form-label">Prestasi dan Kontribusi <span class="required">*</span></label>
             <div class="col-sm-10">
-                <input type="deskripsi" class="form-control" id="inputDeskripsi" placeholder="Masukkan Perkembangan">
+                <input type="text" class="form-control" id="inputPrestasiKontribusi" name="prestasi_kontribusi" placeholder="Masukkan Prestasi dan Kontribusi" required>
             </div>
         </div>
         <div class="form-group row mb-3">
-            <label for="inputCatatan" class="col-sm-2 col-form-label">Kesimpulan dan Saran</label>
+            <label for="inputKeterampilanKemampuan" class="col-sm-2 col-form-label">Keterampilan dan Kemampuan <span class="required">*</span></label>
             <div class="col-sm-10">
-                <textarea class="form-control" id="inputCatatan" rows="3" placeholder="Masukkan Kesimpulan dan Saran"></textarea>
+                <input type="text" class="form-control" id="inputKeterampilanKemampuan" name="keterampilan_kemampuan" placeholder="Masukkan Keterampilan dan Kemampuan" required>
             </div>
         </div>
         <div class="form-group row mb-3">
-            <label for="inputDeskripsi" class="col-sm-2 col-form-label">Score <span class="required">*</span></label>
+            <label for="inputKerjasamaKeterlibatan" class="col-sm-2 col-form-label">Kerjasama Dan Keterlibatan <span class="required">*</span></label>
             <div class="col-sm-10">
-                <input type="deskripsi" class="form-control" id="inputDeskripsi" placeholder="Masukkan Score">
+                <input type="text" class="form-control" id="inputKerjasamaKeterlibatan" name="kerjasama_keterlibatan" placeholder="Masukkan Kerjasama Dan Keterlibatan" required>
             </div>
         </div>
-        <div class="mb-3">
-            <label for="formFile" class="form-label">file</label>
-            <input class="form-control" type="file" id="formFile">
-          </div>
-        <div class="form-group row mb-3 justify-content-end">
-            <div class="col-sm-1 d-flex justify-content-end">
-                <button type="button" class="btn btn-secondary me-2">Kembali</button>
-                <button type="button" class="btn btn-primary me-2">Simpan</button>
+        <div class="form-group row mb-3">
+            <label for="inputKomentar" class="col-sm-2 col-form-label">Komentar</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" id="inputKomentar" name="komentar" rows="3" placeholder="Masukkan Komentar"></textarea>
             </div>
         </div>
-    </form>
+        <div class="form-group row mb-3">
+            <label for="inputPerkembangan" class="col-sm-2 col-form-label">Perkembangan <span class="required">*</span></label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputPerkembangan" name="perkembangan" placeholder="Masukkan Perkembangan" required>
+            </div>
+        </div>
+        <div class="form-group row mb-3">
+            <label for="inputKesimpulanSaran" class="col-sm-2 col-form-label">Kesimpulan Dan Saran <span class="required">*</span></label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputKesimpulanSaran" name="kesimpulan_saran" placeholder="Masukkan Kesimpulan Dan Saran" required>
+            </div>
+        </div>
+        <div class="form-group row mb-3">
+            <label for="inputScore" class="col-sm-2 col-form-label">Score <span class="required">*</span></label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputScore" name="score" placeholder="Masukkan Score" required>
+            </div>
+        </div>
+        <div class="form-group row mb-3">
+            <label for="inputFile" class="col-sm-2 col-form-label">Upload File</label>
+            <div class="col-sm-10">
+                <input type="file" class="form-control" id="inputFile" name="file">
+            </div>
+        </div>
+        <div class="form-group row mb-3">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>   
 </div>
 </div>
 

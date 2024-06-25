@@ -6,6 +6,7 @@ use App\Http\Controllers\DosenPembimbingController;
 use App\Http\Controllers\KoorController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PenyeliaController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -89,6 +90,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 //review
 Route::post('/submit_review', [ReviewController::class, 'store']);
+Route::post('/submit', [PenyeliaController::class, 'store'])->name('submit');
 // review penyelia mahasiswa
 // Route::get('/Review', [SidebarMahasiswaController::class, 'review_penyelia']);
 // Route::get('/detail', [SidebarMahasiswaController::class, 'detail']);

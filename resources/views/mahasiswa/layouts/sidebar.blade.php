@@ -30,7 +30,7 @@
             </li>
             <li class="sidebar-item">
                 <a href="{{ route('halamanReview') }}" class="sidebar-link">
-                    <i class="lni lni-add-files"></i>
+                    <i class="fas fa-chalkboard-teacher me-1"></i>
                     <span>Review Penyelia</span>
                 </a>
             </li>
