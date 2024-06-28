@@ -32,7 +32,7 @@
 
 
 <div class="container">
-    <form action="{{ route('submit') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('detail_penilaian') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <!-- Form fields -->
         <div class="form-group row mb-3">

@@ -9,33 +9,32 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('penyelias', function (Blueprint $table) {
+        Schema::create('detail_penilaians', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
             $table->string('posisi');
             $table->string('departemen');
             $table->string('perusahaan');
-            $table->text('deskripsi_pekerjaan')->nullable();
-            $table->text('prestasi_kontribusi')->nullable();
-            $table->text('keterampilan_kemampuan')->nullable();
-            $table->text('kerjasama_keterlibatan')->nullable();
+            $table->text('deskripsi_pekerjaan');
+            $table->text('prestasi_kontribusi');
+            $table->text('keterampilan_kemampuan');
+            $table->text('kerjasama_keterlibatan');
             $table->text('komentar')->nullable();
-            $table->text('perkembangan')->nullable();
-            $table->text('kesimpulan_saran')->nullable();
-            $table->integer('score')->nullable();
+            $table->text('perkembangan');
+            $table->text('kesimpulan_saran');
+            $table->float('score');
             $table->string('file_path')->nullable();
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('penyelias');
+        Schema::dropIfExists('detail_penilaians');
     }
 };

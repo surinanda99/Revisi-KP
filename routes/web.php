@@ -39,13 +39,15 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
 // Route::post('/draft/submit', [MahasiswaController::class, 'submitPengajuan'])->name('submitPengajuan');
     Route::get('/logbook', [MahasiswaController::class, 'logbook'])->name('halamanLogbook');
     Route::get('/Review', [MahasiswaController::class, 'review_penyelia'])->name('halamanReview');
-    Route::get('/detail', [MahasiswaController::class, 'detail_penilaian']);
+    Route::get('/detail', [MahasiswaController::class, 'detail_penilaian'])->name('detail_penilaian');
     Route::get('/draft', [MahasiswaController::class, 'draft_penilaian']);
     Route::get('/Profil/{id}', [MahasiswaController::class, 'profil'])->name('halamanProfil');
     Route::get('/riwayat', [MahasiswaController::class, 'riwayat'])->name('riwayatPengajuan');
     Route::get('/profilmhs', [MahasiswaController::class, 'datadiri']);
     Route::get('/pengajuan_sidang', [MahasiswaController::class, 'penilaian_sidang'])->name('pengajuanSidang');
-
+    Route::post('/insertSupervisor', [MahasiswaController::class, 'insertSupervisor'])->name('insertSupervisor');
+    Route::get('/detail_penilaian', [MahasiswaController::class, 'detail_penilaian'])->name('detail_penilaian');
+    Route::post('/submit', [MahasiswaController::class, 'submit'])->name('submit');
 });
 
 // Dosen

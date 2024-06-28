@@ -6,6 +6,8 @@ use App\Models\Mahasiswa;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
 use App\Models\DosenPembimbing;
+use App\Models\Penyelia;
+use App\Models\detailPenilaian;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -140,6 +142,67 @@ class MahasiswaController extends Controller
         return view('mahasiswa.profil_mhs.profil_mhs', compact('mahasiswa'));
     }
 
+    public function insertSupervisor(Request $request)
+    {
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'posisi' => 'required|string|max:255',
+            'departemen' => 'required|string|max:255',
+            'perusahaan' => 'required|string|max:255',
+        ]);
+
+        $penyelia = new Penyelia();
+        $penyelia->nama = $request->input('nama');
+        $penyelia->posisi = $request->input('posisi');
+        $penyelia->departemen = $request->input('departemen');
+        $penyelia->perusahaan = $request->input('perusahaan');
+        $penyelia->save();
+
+        return redirect()->route('detail_penilaian');    
+    }
+
+    public function detail_penilaian(Request $request)
+    {
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'posisi' => 'required|string|max:255',
+            'departemen' => 'required|string|max:255',
+            'perusahaan' => 'required|string|max:255',
+            'deskripsi_pekerjaan' => 'required|string|max:1000',
+            'prestasi_kontribusi' => 'required|string|max:1000',
+            'keterampilan_kemampuan' => 'required|string|max:1000',
+            'kerjasama_keterlibatan' => 'required|string|max:1000',
+            'komentar' => 'nullable|string|max:1000',
+            'perkembangan' => 'required|string|max:1000',
+            'kesimpulan_saran' => 'required|string|max:1000',
+            'score' => 'required|numeric|min:0|max:100',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,txt|max:2048'
+        ]);
+
+        $detailPenilaian = new detailPenilaian();
+        $detailPenilaian->nama = $request->input('nama');
+        $detailPenilaian->posisi = $request->input('posisi');
+        $detailPenilaian->departemen = $request->input('departemen');
+        $detailPenilaian->perusahaan = $request->input('perusahaan');
+        $detailPenilaian->deskripsi_pekerjaan = $request->input('deskripsi_pekerjaan');
+        $detailPenilaian->prestasi_kontribusi = $request->input('prestasi_kontribusi');
+        $detailPenilaian->keterampilan_kemampuan = $request->input('keterampilan_kemampuan');
+        $detailPenilaian->kerjasama_keterlibatan = $request->input('kerjasama_keterlibatan');
+        $detailPenilaian->komentar = $request->input('komentar');
+        $detailPenilaian->perkembangan = $request->input('perkembangan');
+        $detailPenilaian->kesimpulan_saran = $request->input('kesimpulan_saran');
+        $detailPenilaian->score = $request->input('score');
+
+        if ($request->hasFile('file')) {
+            $path = $request->file('file')->store('uploads');
+            $detailPenilaian->file_path = $path;
+        }
+
+        $detailPenilaian->save();
+
+        return redirect()->route('draft_review'); // Sesuaikan redirect setelah menyimpan data
+    }
+    
     public function riwayat()
     {
         return view('mahasiswa.riwayat_pengajuan.riwayat_pengajuan');
