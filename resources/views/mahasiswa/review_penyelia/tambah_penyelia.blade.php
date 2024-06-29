@@ -31,7 +31,7 @@
     </div>
 
     <div class="container">
-        <form method="POST" action="{{ route('insertSupervisor') }}">
+        <form method="POST" action="{{ route('halaman_tambah_penyelia') }}">
             @csrf
             <div class="form-group row mb-3">
                 <label for="inputNama" class="col-sm-2 col-form-label">Nama <span class="required">*</span></label>

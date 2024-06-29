@@ -5,15 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class detailPenilaian extends Model
+class DetailPenilaian extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'nama',
-        'posisi',
-        'departemen',
-        'perusahaan',
         'deskripsi_pekerjaan',
         'prestasi_kontribusi',
         'keterampilan_kemampuan',
@@ -22,11 +18,18 @@ class detailPenilaian extends Model
         'perkembangan',
         'kesimpulan_saran',
         'score',
-        'file_path'
+        'file_path',
+        'mahasiswa_id',
+        'penyelia_id'
     ];
 
-    public function profilPenyelia()
+    public function mahasiswa()
     {
-        return $this->belongsTo(ProfilPenyelia::class);
+        return $this->belongsTo(Mahasiswa::class);
+    }
+
+    public function penyelia()
+    {
+        return $this->belongsTo(Penyelia::class);
     }
 }

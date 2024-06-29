@@ -7,7 +7,7 @@ use App\Models\Pengajuan;
 use Illuminate\Http\Request;
 use App\Models\DosenPembimbing;
 use App\Models\Penyelia;
-use App\Models\detailPenilaian;
+use App\Models\DetailPenilaian;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -130,11 +130,6 @@ class MahasiswaController extends Controller
         return view('mahasiswa.logbook_kp.logbook_kp');
     }
 
-    public function review_penyelia()
-    {
-        return view('mahasiswa.review_penyelia.review_penyelia');
-    }
-
     public function profil()
     {
         $user = Auth::user();
@@ -142,32 +137,42 @@ class MahasiswaController extends Controller
         return view('mahasiswa.profil_mhs.profil_mhs', compact('mahasiswa'));
     }
 
-    public function insertSupervisor(Request $request)
+    public function profile_penyelia()
     {
-        $validated = $request->validate([
-            'nama' => 'required|string|max:255',
-            'posisi' => 'required|string|max:255',
-            'departemen' => 'required|string|max:255',
-            'perusahaan' => 'required|string|max:255',
-        ]);
-
-        $penyelia = new Penyelia();
-        $penyelia->nama = $request->input('nama');
-        $penyelia->posisi = $request->input('posisi');
-        $penyelia->departemen = $request->input('departemen');
-        $penyelia->perusahaan = $request->input('perusahaan');
-        $penyelia->save();
-
-        return redirect()->route('detail_penilaian');    
+        return view('mahasiswa.review_penyelia.tambah_penyelia');
     }
 
-    public function detail_penilaian(Request $request)
+    public function tambah_penyelia(Request $request)
     {
-        $validated = $request->validate([
-            'nama' => 'required|string|max:255',
-            'posisi' => 'required|string|max:255',
-            'departemen' => 'required|string|max:255',
-            'perusahaan' => 'required|string|max:255',
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|string',
+            'posisi' => 'required|string',
+            'departemen' => 'required|string',
+            'perusahaan' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        Penyelia::create([
+            'nama' => $request->nama,
+            'posisi' => $request->posisi,
+            'departemen' => $request->departemen,
+            'perusahaan' => $request->perusahaan,
+        ]);
+
+        return redirect()->route('detail_penilaian'); 
+    }
+
+    public function detail_penilaian()
+    {
+        return view('mahasiswa.review_penyelia.detail_penilaian');
+    }
+
+    public function store_detail_penilaian(Request $request)
+    {
+        $validatedData = $request->validate([
             'deskripsi_pekerjaan' => 'required|string|max:1000',
             'prestasi_kontribusi' => 'required|string|max:1000',
             'keterampilan_kemampuan' => 'required|string|max:1000',
@@ -176,31 +181,39 @@ class MahasiswaController extends Controller
             'perkembangan' => 'required|string|max:1000',
             'kesimpulan_saran' => 'required|string|max:1000',
             'score' => 'required|numeric|min:0|max:100',
-            'file' => 'nullable|file|mimes:pdf,doc,docx,txt|max:2048'
+            'file' => 'nullable|file|mimes:pdf,doc,docx,txt|max:2048',
+            'penyelia_id' => 'required|exists:penyelias,id', // Ensure penyelia_id exists in penyelias table
         ]);
 
-        $detailPenilaian = new detailPenilaian();
-        $detailPenilaian->nama = $request->input('nama');
-        $detailPenilaian->posisi = $request->input('posisi');
-        $detailPenilaian->departemen = $request->input('departemen');
-        $detailPenilaian->perusahaan = $request->input('perusahaan');
-        $detailPenilaian->deskripsi_pekerjaan = $request->input('deskripsi_pekerjaan');
-        $detailPenilaian->prestasi_kontribusi = $request->input('prestasi_kontribusi');
-        $detailPenilaian->keterampilan_kemampuan = $request->input('keterampilan_kemampuan');
-        $detailPenilaian->kerjasama_keterlibatan = $request->input('kerjasama_keterlibatan');
-        $detailPenilaian->komentar = $request->input('komentar');
-        $detailPenilaian->perkembangan = $request->input('perkembangan');
-        $detailPenilaian->kesimpulan_saran = $request->input('kesimpulan_saran');
-        $detailPenilaian->score = $request->input('score');
+        $file = $request->file('file');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $file->move('storage/penilaian', $fileName);
 
-        if ($request->hasFile('file')) {
-            $path = $request->file('file')->store('uploads');
-            $detailPenilaian->file_path = $path;
-        }
+        // Assuming 'mahasiswa_id' is available, replace '1' with the actual 'mahasiswa_id' value
+        $mahasiswaId = 1; // Replace with the actual 'mahasiswa_id'
 
-        $detailPenilaian->save();
+        DetailPenilaian::create([
+            'deskripsi_pekerjaan' => $validatedData['deskripsi_pekerjaan'],
+            'prestasi_kontribusi' => $validatedData['prestasi_kontribusi'],
+            'keterampilan_kemampuan' => $validatedData['keterampilan_kemampuan'],
+            'kerjasama_keterlibatan' => $validatedData['kerjasama_keterlibatan'],
+            'komentar' => $validatedData['komentar'],
+            'perkembangan' => $validatedData['perkembangan'],
+            'kesimpulan_saran' => $validatedData['kesimpulan_saran'],
+            'score' => $validatedData['score'],
+            'file_path' => '/storage/penilaian/' . $fileName,
+            'mahasiswa_id' => $mahasiswaId,
+            'penyelia_id' => $validatedData['penyelia_id'], // Ensure penyelia_id is provided and valid
+        ]);
 
-        return redirect()->route('draft_review'); // Sesuaikan redirect setelah menyimpan data
+        return redirect()->route('draft_review');
+    }
+
+    public function draft_review()
+    {
+        $penyelia = Penyelia::all();
+        $detailPenilaian = detailPenilaian::all();
+        return view('mahasiswa.review_penyelia.draft_penilaian', compact('penyelia', 'detailPenilaian'));
     }
     
     public function riwayat()

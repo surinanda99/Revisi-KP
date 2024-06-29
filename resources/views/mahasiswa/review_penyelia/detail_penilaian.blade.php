@@ -4,13 +4,13 @@
 <div class="container">
     <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-3">
         <li class="nav-item">
-            <a data-toggle="pill" href="#nav-tab-dosbing" class="nav-link active rounded-pill">
+            <a data-toggle="pill" href="#nav-tab-dosbing" class="nav-link rounded-pill">
                 <i class="fas fa-chalkboard-teacher"></i>
                 Profil Penyelia
             </a>
         </li>
         <li class="nav-item">
-            <a data-toggle="pill" href="#nav-tab-pengajuan" class="nav-link rounded-pill">
+            <a data-toggle="pill" href="#nav-tab-pengajuan" class="nav-link active rounded-pill">
                 <i class="fas fa-edit"></i>
                 Detail Penilaian
             </a>
@@ -32,34 +32,9 @@
 
 
 <div class="container">
-    <form action="{{ route('detail_penilaian') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('store_detail_penilaian') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <!-- Form fields -->
-        <div class="form-group row mb-3">
-            <label for="inputNama" class="col-sm-2 col-form-label">Nama<span class="required">*</span></label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputNama" name="nama" placeholder="Masukkan Nama Penyelia" required>
-            </div>
-        </div>
-        <div class="form-group row mb-3">
-            <label for="inputPosisi" class="col-sm-2 col-form-label">Posisi <span class="required">*</span></label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputPosisi" name="posisi" placeholder="Masukkan Posisi Penyelia" required>
-            </div>
-        </div>
-        <div class="form-group row mb-3">
-            <label for="inputDepartemen" class="col-sm-2 col-form-label">Departemen <span class="required">*</span></label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputDepartemen" name="departemen" placeholder="Masukkan Departemen penyelia" required>
-            </div>
-        </div>
-        <div class="form-group row mb-3">
-            <label for="inputPerusahaan" class="col-sm-2 col-form-label">Perusahaan <span class="required">*</span></label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputPerusahaan" name="perusahaan" placeholder="Masukkan Perusahaan" required>
-            </div>
-        </div>
-        <div class="mb-4">Detail Penilaian</div>
         <div class="form-group row mb-3">
             <label for="inputDeskripsiPekerjaan" class="col-sm-2 col-form-label">Deskripsi Pekerjaan<span class="required">*</span></label>
             <div class="col-sm-10">

@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('detail_penilaians', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('posisi');
-            $table->string('departemen');
-            $table->string('perusahaan');
+            $table->foreignId('mahasiswa_id')->constrained('mahasiswas')->onDelete('cascade');
+            $table->foreignId('penyelia_id')->constrained('penyelias')->onDelete('cascade');
             $table->text('deskripsi_pekerjaan');
             $table->text('prestasi_kontribusi');
             $table->text('keterampilan_kemampuan');
