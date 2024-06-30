@@ -36,4 +36,9 @@ class Mahasiswa extends Model
     {
         return $this->hasMany(detailPenilaian::class);
     }
+
+    public function mahasiswaPenyelia()
+    {
+        return $this->hasOne(MahasiswaPenyelia::class);
+    }
 }

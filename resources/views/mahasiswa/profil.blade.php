@@ -24,15 +24,15 @@
                 <h5 class="card-title">Informasi Pribadi</h5>
                 <div class="row">
                     <div class="col-md-6">
-                        <p class="card-text"><strong>Nama:</strong> </p>
-                        <p class="card-text"><strong>NIM:</strong> </p>
+                        <p class="card-text"><strong>Nama: {{ $mhs['nama'] }}</strong> </p>
+                        <p class="card-text"><strong>NIM: {{ $mhs['nim' ]}}</strong> </p>
                         <p class="card-text"><strong>Jurusan:</strong> Teknik Informatika</p>
-                        <p class="card-text"><strong>IPK:</strong> </p>
+                        <p class="card-text"><strong>IPK: {{ $mhs['ipk'] }}</strong> </p>
                     </div>
                     <div class="col-md-6">
-                        <p class="card-text"><strong>Telepon:</strong> </p>
-                        <p class="card-text"><strong>Email:</strong> </p>
-                        <p class="card-text"><strong>Dosen Wali:</strong></p>
+                        <p class="card-text"><strong>Telepon: {{ $mhs['telp_mhs'] }}</strong> </p>
+                        <p class="card-text"><strong>Email: {{ $mhs['email'] }}</strong> </p>
+                        <p class="card-text"><strong>Dosen Wali: {{ $mhs['dosen_wali'] }}</strong></p>
                     </div>
                 </div>
 

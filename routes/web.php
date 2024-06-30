@@ -41,7 +41,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     
     
     // Route::get('/draft', [MahasiswaController::class, 'draft_penilaian']);
-    // Route::get('/Profil/{id}', [MahasiswaController::class, 'profil'])->name('halamanProfil');
+    Route::get('/Profil/{id}', [MahasiswaController::class, 'profil'])->name('halamanProfil');
     Route::get('/riwayat', [MahasiswaController::class, 'riwayat'])->name('riwayatPengajuan');
     Route::get('/profilmhs', [MahasiswaController::class, 'datadiri']);
     Route::get('/pengajuan_sidang', [MahasiswaController::class, 'penilaian_sidang'])->name('pengajuanSidang');
@@ -52,7 +52,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::get('/detail-penilaian', [MahasiswaController::class, 'detail_penilaian'])->name('detail_penilaian');
     Route::post('/storeDetail', [MahasiswaController::class, 'store_detail_penilaian'])->name('store_detail_penilaian');
     
-    Route::get('/draft_review', [MahasiswaController::class, 'draft_review'])->name('draft_review');
+    // Route::get('/draft_review', [MahasiswaController::class, 'draft_review'])->name('draft_review');
     Route::post('/submit_draft_review', [MahasiswaController::class, 'submit_review'])->name('submit_review');
 });
 

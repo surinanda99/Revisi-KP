@@ -35,6 +35,13 @@
     <form action="{{ route('store_detail_penilaian') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <!-- Form fields -->
+        <input type="hidden" name="nama" value="{{ $data['nama'] }}">
+        <input type="hidden" name="posisi" value="{{ $data['posisi'] }}">
+        <input type="hidden" name="departemen" value="{{ $data['departemen'] }}">
+        <input type="hidden" name="perusahaan" value="{{ $data['perusahaan'] }}">
+        <input type="hidden" name="mhs" value="{{ $mhs['id'] }}">
+        <input type="hidden" name="penyelia" value="{{ $penyelia['id'] }}">
+
         <div class="form-group row mb-3">
             <label for="inputDeskripsiPekerjaan" class="col-sm-2 col-form-label">Deskripsi Pekerjaan<span class="required">*</span></label>
             <div class="col-sm-10">
@@ -83,12 +90,12 @@
                 <input type="text" class="form-control" id="inputScore" name="score" placeholder="Masukkan Score" required>
             </div>
         </div>
-        <div class="form-group row mb-3">
+        {{-- <div class="form-group row mb-3">
             <label for="inputFile" class="col-sm-2 col-form-label">Upload File</label>
             <div class="col-sm-10">
                 <input type="file" class="form-control" id="inputFile" name="file">
             </div>
-        </div>
+        </div> --}}
         <div class="form-group row mb-3">
             <div class="col-sm-10 offset-sm-2">
                 <button type="submit" class="btn btn-primary">Submit</button>

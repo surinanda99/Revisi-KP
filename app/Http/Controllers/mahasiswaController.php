@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Penyelia;
 use App\Models\Mahasiswa;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
-use App\Models\DosenPembimbing;
-use App\Models\Penyelia;
 use App\Models\DetailPenilaian;
+use App\Models\DosenPembimbing;
+use App\Models\MahasiswaPenyelia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -161,8 +162,15 @@ class MahasiswaController extends Controller
             'departemen' => $request->departemen,
             'perusahaan' => $request->perusahaan,
         ]);
+        
+        $data = $request->all();
 
-        return redirect()->route('detail_penilaian'); 
+        // dd($data);
+
+        $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
+        $penyelia = Penyelia::where('nama', $request->nama)->first();
+
+        return view('mahasiswa.review_penyelia.detail_penilaian', compact('data', 'mhs', 'penyelia'));
     }
 
     public function detail_penilaian()
@@ -182,38 +190,83 @@ class MahasiswaController extends Controller
             'kesimpulan_saran' => 'required|string|max:1000',
             'score' => 'required|numeric|min:0|max:100',
             'file' => 'nullable|file|mimes:pdf,doc,docx,txt|max:2048',
-            'penyelia_id' => 'required|exists:penyelias,id', // Ensure penyelia_id exists in penyelias table
         ]);
 
-        $file = $request->file('file');
-        $fileName = time() . '_' . $file->getClientOriginalName();
-        $file->move('storage/penilaian', $fileName);
+        $data = $request->all();
 
-        // Assuming 'mahasiswa_id' is available, replace '1' with the actual 'mahasiswa_id' value
-        $mahasiswaId = 1; // Replace with the actual 'mahasiswa_id'
+        // dd($request);
 
-        DetailPenilaian::create([
-            'deskripsi_pekerjaan' => $validatedData['deskripsi_pekerjaan'],
-            'prestasi_kontribusi' => $validatedData['prestasi_kontribusi'],
-            'keterampilan_kemampuan' => $validatedData['keterampilan_kemampuan'],
-            'kerjasama_keterlibatan' => $validatedData['kerjasama_keterlibatan'],
-            'komentar' => $validatedData['komentar'],
-            'perkembangan' => $validatedData['perkembangan'],
-            'kesimpulan_saran' => $validatedData['kesimpulan_saran'],
-            'score' => $validatedData['score'],
-            'file_path' => '/storage/penilaian/' . $fileName,
-            'mahasiswa_id' => $mahasiswaId,
-            'penyelia_id' => $validatedData['penyelia_id'], // Ensure penyelia_id is provided and valid
-        ]);
+        // Check if file is uploaded
+        // if ($request->hasFile('file')) {
+        //     $file = $request->file('file');
+        //     $fileName = time() . '_' . $file->getClientOriginalName();
+        //     $filePath = 'storage/penilaian';
+            
+        //     // Create directory if it doesn't exist
+        //     if (!file_exists($filePath)) {
+        //         mkdir($filePath, 0777, true);
+        //     }
+            
+        //     $file->move($filePath, $fileName);
+        //     $fileFullPath = '/' . $filePath . '/' . $fileName;
+        // } else {
+        //     $fileFullPath = null;
+        // }
 
-        return redirect()->route('draft_review');
+        return view('mahasiswa.review_penyelia.draft_penilaian', compact('data'));
     }
 
-    public function draft_review()
+    // public function draft_review()
+    // {
+    //     $penyelia = Penyelia::all();
+    //     $detailPenilaian = detailPenilaian::all();
+    //     return view('mahasiswa.review_penyelia.draft_penilaian', compact('penyelia', 'detailPenilaian'));
+    // }
+
+    public function submit_review(Request $request) 
     {
-        $penyelia = Penyelia::all();
-        $detailPenilaian = detailPenilaian::all();
-        return view('mahasiswa.review_penyelia.draft_penilaian', compact('penyelia', 'detailPenilaian'));
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|string',
+            'posisi' => 'required|string',
+            'departemen' => 'required|string',
+            'perusahaan' => 'required|string',
+            'deskripsi_pekerjaan' => 'required|string|max:1000',
+            'prestasi_kontribusi' => 'required|string|max:1000',
+            'keterampilan_kemampuan' => 'required|string|max:1000',
+            'kerjasama_keterlibatan' => 'required|string|max:1000',
+            'komentar' => 'nullable|string|max:1000',
+            'perkembangan' => 'required|string|max:1000',
+            'kesimpulan_saran' => 'required|string|max:1000',
+            'score' => 'required|numeric|min:0|max:100',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,txt|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $file = $request->file('file')->store('assets/file', 'public');
+
+        DetailPenilaian::create([
+            'deskripsi_pekerjaan' => $request->deskripsi_pekerjaan,
+            'prestasi_kontribusi' => $request->prestasi_kontribusi,
+            'keterampilan_kemampuan' => $request->keterampilan_kemampuan,
+            'kerjasama_keterlibatan' => $request->kerjasama_keterlibatan,
+            'komentar' => $request->komentar,
+            'perkembangan' => $request->perkembangan,
+            'kesimpulan_saran' => $request->kesimpulan_saran,
+            'score' => $request->score,
+            'file_path' => $request->file,
+            'mahasiswa_id' => $request->mhs,
+            'penyelia_id' => $request->penyelia,
+        ]);
+
+        MahasiswaPenyelia::create([
+            'mahasiswaId' => $request->mhs,
+            'penyeliaId' => $request->penyelia,
+        ]);
+
+        return redirect()->route('dashboardMahasiswa');
     }
     
     public function riwayat()
@@ -223,7 +276,8 @@ class MahasiswaController extends Controller
 
     public function datadiri()
     {
-        return view('mahasiswa.profil');
+        $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
+        return view('mahasiswa.profil', compact('mhs'));
     }
 
     public function penilaian_sidang()

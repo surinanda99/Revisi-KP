@@ -33,78 +33,81 @@
     <div class="container">
         <form action="{{ route('submit_review') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            <input type="hidden" name="mhs" value="{{ $data['mhs'] }}">
+            <input type="hidden" name="penyelia" value="{{ $data['penyelia'] }}">
+
             <div class="mb-4">Profil Penyelia</div>
             <div class="form-group row mb-3">
                 <label for="inputNama" class="col-sm-2 col-form-label">Nama<span class="required">*</span></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputNama" name="nama" placeholder="Masukkan Nama Penyelia" value="{{ $penyelia->nama }}" required readonly>
+                    <input type="text" class="form-control" id="inputNama" name="nama" placeholder="Masukkan Nama Penyelia" value="{{ $data['nama'] }}" required readonly>
                 </div>
             </div>
             <div class="form-group row mb-3">
                 <label for="inputPosisi" class="col-sm-2 col-form-label">Posisi <span class="required">*</span></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPosisi" name="posisi" placeholder="Masukkan Posisi Penyelia" value="{{ $penyelia->posisi }}" required readonly>
+                    <input type="text" class="form-control" id="inputPosisi" name="posisi" placeholder="Masukkan Posisi Penyelia" value="{{ $data['posisi'] }}" required readonly>
                 </div>
             </div>
             <div class="form-group row mb-3">
                 <label for="inputDepartemen" class="col-sm-2 col-form-label">Departemen <span class="required">*</span></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputDepartemen" name="departemen" placeholder="Masukkan Departemen penyelia" value="{{ $penyelia->departemen }}" required readonly>
+                    <input type="text" class="form-control" id="inputDepartemen" name="departemen" placeholder="Masukkan Departemen penyelia" value="{{ $data['departemen'] }}" required readonly>
                 </div>
             </div>
             <div class="form-group row mb-3">
                 <label for="inputPerusahaan" class="col-sm-2 col-form-label">Perusahaan <span class="required">*</span></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPerusahaan" name="perusahaan" placeholder="Masukkan Perusahaan" value="{{ $penyelia->perusahaan }}" required readonly>
+                    <input type="text" class="form-control" id="inputPerusahaan" name="perusahaan" placeholder="Masukkan Perusahaan" value="{{ $data['perusahaan'] }}" required readonly>
                 </div>
             </div>
             <div class="mb-4">Detail Penilaian</div>
             <div class="form-group row mb-3">
                 <label for="inputDeskripsiPekerjaan" class="col-sm-2 col-form-label">Deskripsi Pekerjaan<span class="required">*</span></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputDeskripsiPekerjaan" name="deskripsi_pekerjaan" placeholder="Masukkan Deskripsi Pekerjaan" value="{{ $detailPenilaian->deskripsi_pekerjaan }}" required>
+                    <input type="text" class="form-control" id="inputDeskripsiPekerjaan" name="deskripsi_pekerjaan" placeholder="Masukkan Deskripsi Pekerjaan" value="{{ $data['deskripsi_pekerjaan'] }}" required>
                 </div>
             </div>
             <div class="form-group row mb-3">
                 <label for="inputPrestasiKontribusi" class="col-sm-2 col-form-label">Prestasi dan Kontribusi <span class="required">*</span></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPrestasiKontribusi" name="prestasi_kontribusi" placeholder="Masukkan Prestasi dan Kontribusi" value="{{ $detailPenilaian->prestasi_kontribusi }}" required>
+                    <input type="text" class="form-control" id="inputPrestasiKontribusi" name="prestasi_kontribusi" placeholder="Masukkan Prestasi dan Kontribusi" value="{{ $data['prestasi_kontribusi'] }}" required>
                 </div>
             </div>
             <div class="form-group row mb-3">
                 <label for="inputKeterampilanKemampuan" class="col-sm-2 col-form-label">Keterampilan dan Kemampuan <span class="required">*</span></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputKeterampilanKemampuan" name="keterampilan_kemampuan" placeholder="Masukkan Keterampilan dan Kemampuan" value="{{ $detailPenilaian->keterampilan_kemampuan }}" required>
+                    <input type="text" class="form-control" id="inputKeterampilanKemampuan" name="keterampilan_kemampuan" placeholder="Masukkan Keterampilan dan Kemampuan" value="{{ $data['keterampilan_kemampuan'] }}" required>
                 </div>
             </div>
             <div class="form-group row mb-3">
                 <label for="inputKerjasamaKeterlibatan" class="col-sm-2 col-form-label">Kerjasama Dan Keterlibatan <span class="required">*</span></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputKerjasamaKeterlibatan" name="kerjasama_keterlibatan" placeholder="Masukkan Kerjasama Dan Keterlibatan" value="{{ $detailPenilaian->kerjasama_keterlibatan }}" required>
+                    <input type="text" class="form-control" id="inputKerjasamaKeterlibatan" name="kerjasama_keterlibatan" placeholder="Masukkan Kerjasama Dan Keterlibatan" value="{{ $data['kerjasama_keterlibatan'] }}" required>
                 </div>
             </div>
             <div class="form-group row mb-3">
                 <label for="inputKomentar" class="col-sm-2 col-form-label">Komentar</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="inputKomentar" name="komentar" rows="3" placeholder="Masukkan Komentar">{{ $detailPenilaian->komentar }}</textarea>
+                    <textarea class="form-control" id="inputKomentar" name="komentar" rows="3" placeholder="Masukkan Komentar">{{ $data['komentar'] }}</textarea>
                 </div>
             </div>
             <div class="form-group row mb-3">
                 <label for="inputPerkembangan" class="col-sm-2 col-form-label">Perkembangan <span class="required">*</span></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPerkembangan" name="perkembangan" placeholder="Masukkan Perkembangan" value="{{ $detailPenilaian->perkembangan }}" required>
+                    <input type="text" class="form-control" id="inputPerkembangan" name="perkembangan" placeholder="Masukkan Perkembangan" value="{{ $data['perkembangan'] }}" required>
                 </div>
             </div>
             <div class="form-group row mb-3">
                 <label for="inputKesimpulanSaran" class="col-sm-2 col-form-label">Kesimpulan dan Saran</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="inputKesimpulanSaran" name="kesimpulan_saran" rows="3" placeholder="Masukkan Kesimpulan dan Saran">{{ $detailPenilaian->kesimpulan_saran }}</textarea>
+                    <textarea class="form-control" id="inputKesimpulanSaran" name="kesimpulan_saran" rows="3" placeholder="Masukkan Kesimpulan dan Saran">{{ $data['kesimpulan_saran'] }}</textarea>
                 </div>
             </div>
             <div class="form-group row mb-3">
                 <label for="inputScore" class="col-sm-2 col-form-label">Score <span class="required">*</span></label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" id="inputScore" name="score" placeholder="Masukkan Score" value="{{ $detailPenilaian->score }}" required>
+                    <input type="number" class="form-control" id="inputScore" name="score" placeholder="Masukkan Score" value="{{ $data['score'] }}" required>
                 </div>
             </div>
             <div class="form-group row mb-3">
