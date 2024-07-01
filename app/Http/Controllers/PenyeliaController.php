@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Mahasiswa;
 use App\Models\Penyelia;
+use App\Models\StatusMahasiswa;
 
 class PenyeliaController extends Controller
 {
@@ -51,6 +53,28 @@ class PenyeliaController extends Controller
 
         // Redirect atau berikan respons sukses
         return redirect()->back()->with('success', 'Data berhasil disimpan');
+    }
+
+    public function PenyeliaForm(){
+        $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
+        $status = StatusMahasiswa::where('id_mhs', $mhs->id)->first();
+
+        // Cek apakah mahasiswa sudah menyelesaikan KP
+        if ($status) {
+            return view('mahasiswa.review_penyelia.tambah_penyelia', compact('status'));
+        } else {
+            return redirect()->route('halaman_kp')->with('error', 'Anda belum menyelesaikan Kerja Praktek.');
+        }
+    }
+
+    public function StorePenyelia(){
+        $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
+        $status = StatusMahasiswa::where('id_mhs', $mhs->id)->first();
+
+        // Cek apakah mahasiswa sudah menyelesaikan KP
+        if (!$status->kp_selesai) {
+            return redirect()->route('halaman_kp')->with('error', 'Anda belum menyelesaikan Kerja Praktek.');
+        }
     }
 
 
