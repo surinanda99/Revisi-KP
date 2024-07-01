@@ -38,20 +38,21 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
 // Route::post('/draft/delete', [MahasiswaController::class, 'deletePengajuan'])->name('deletePengajuan');
 // Route::post('/draft/submit', [MahasiswaController::class, 'submitPengajuan'])->name('submitPengajuan');
     Route::get('/logbook', [MahasiswaController::class, 'logbook'])->name('halamanLogbook');
-    
-    
+
+
     // Route::get('/draft', [MahasiswaController::class, 'draft_penilaian']);
     Route::get('/Profil/{id}', [MahasiswaController::class, 'profil'])->name('halamanProfil');
     Route::get('/riwayat', [MahasiswaController::class, 'riwayat'])->name('riwayatPengajuan');
     Route::get('/profilmhs', [MahasiswaController::class, 'datadiri']);
     Route::get('/pengajuan_sidang', [MahasiswaController::class, 'penilaian_sidang'])->name('pengajuanSidang');
 
-    Route::get('/profile-penyelia', [MahasiswaController::class, 'profile_penyelia'])->name('profile_penyelia');
+    // Route::get('/profile-penyelia', [MahasiswaController::class, 'profile_penyelia'])->name('profile_penyelia');
+    Route::get('/profile-penyelia', [PenyeliaController::class, 'PenyeliaForm'])->name('profile_penyelia');
     Route::post('/tambah_penyelia', [MahasiswaController::class, 'tambah_penyelia'])->name('halaman_tambah_penyelia');
 
     Route::get('/detail-penilaian', [MahasiswaController::class, 'detail_penilaian'])->name('detail_penilaian');
     Route::post('/storeDetail', [MahasiswaController::class, 'store_detail_penilaian'])->name('store_detail_penilaian');
-    
+
     // Route::get('/draft_review', [MahasiswaController::class, 'draft_review'])->name('draft_review');
     Route::post('/submit_draft_review', [MahasiswaController::class, 'submit_review'])->name('submit_review');
 });
@@ -82,6 +83,7 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     Route::get('/edit-mhs/{id}', [KoorController::class, 'editMhs'])->name('editMhs');
     Route::put('/update-mhs/{id}', [KoorController::class, 'updateMhs'])->name('updateMhs');
     Route::post('delete-mhs/{id}', [KoorController::class, 'deleteMhs'])->name('hapusMhs');
+    Route::get('/penyelia-mhs', [KoorController::class, 'penyeliaMhs'])->name('penyeliaMhs');
 
     // dashboard
     Route::get('/dashboardKoor', [KoorController::class, 'dashboard'])->name('dashboardKoor');

@@ -41,4 +41,10 @@ class Mahasiswa extends Model
     {
         return $this->hasOne(MahasiswaPenyelia::class);
     }
+
+    public function statusMahasiswa()
+    {
+        return $this->hasOne(StatusMahasiswa::class);
+    }
+
 }
