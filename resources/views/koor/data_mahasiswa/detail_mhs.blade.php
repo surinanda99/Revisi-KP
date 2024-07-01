@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="dialogDetailDataMahasiswaLabel">Data Dosbing Dari Mahasiswa [nama]</h5>
+                <h5 class="modal-title" id="dialogDetailDataMahasiswaLabel">Data Dosbing Dari Mahasiswa {{ $mahasiswa->nama }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="table-responsive">
@@ -39,7 +39,7 @@
                         <a class="page-link" href="#">Next</a>
                     </li>
                 </ul>
-            </nav>            
+            </nav>
         </div>
     </div>
 </div>
