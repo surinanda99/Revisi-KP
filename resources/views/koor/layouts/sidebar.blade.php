@@ -21,20 +21,20 @@
                     <span>Daftar Dosen Pembimbing</span>
                 </a>
             </li>
-            
+
             <li class="sidebar-item">
                 <a href="{{ route('halamanKoorMhs') }}" class="sidebar-link">
                     <i class="lni lni-notepad"></i>
                     <span>Daftar Mahasiswa</span>
                 </a>
             </li>
-            {{-- <li class="sidebar-item">
+            <li class="sidebar-item">
                 <a href="/Review" class="sidebar-link">
-                    <i class="lni lni-add-files"></i>
+                    <i class="fas fa-chalkboard-teacher me-1"></i>
                     <span>Review Penyelia</span>
                 </a>
             </li>
-            <li class="sidebar-item">
+            {{-- <li class="sidebar-item">
                 <a href="/Profil" class="sidebar-link">
                     <i class="lni lni-user"></i>
                     <span>Profil Mahasiswa</span>

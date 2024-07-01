@@ -66,7 +66,7 @@ class KoorController extends Controller
     {
         $dosen = DosenPembimbing::find($id);
         return response()->json($dosen);
-    }    
+    }
 
     public function updateDosen(Request $request, $id)
     {
@@ -211,6 +211,11 @@ class KoorController extends Controller
         $mahasiswas->delete();
 
         return redirect()->back()->with('success', 'Mahasiswa Berhasil Dihapus');
+    }
+
+    public function penyeliaMhs()
+    {
+
     }
 
     public function dashboard()
