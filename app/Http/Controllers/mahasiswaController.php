@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\DetailPenilaian;
 use App\Models\DosenPembimbing;
 use App\Models\MahasiswaPenyelia;
-use App\Models\StatusMahasiswa;
+use App\Models\tatusMahasiswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -68,7 +68,10 @@ class MahasiswaController extends Controller
             'deskripsi' => $request->deskripsi,
             'durasi' => $request->durasi,
         ]);
+<<<<<<< HEAD
         $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
+=======
+>>>>>>> a46af018206c3b014ef4e7975e3c94f43be92a5f
 
         // arahkan ke halaman draftPengajuan dengan mengirimkan parameter $id
         return redirect()->route('draftKP', ['id' => $mhs->id])
@@ -175,7 +178,7 @@ class MahasiswaController extends Controller
             'departemen' => $request->departemen,
             'perusahaan' => $request->perusahaan,
         ]);
-        
+
         $data = $request->all();
 
         // dd($data);
@@ -214,12 +217,12 @@ class MahasiswaController extends Controller
         //     $file = $request->file('file');
         //     $fileName = time() . '_' . $file->getClientOriginalName();
         //     $filePath = 'storage/penilaian';
-            
+
         //     // Create directory if it doesn't exist
         //     if (!file_exists($filePath)) {
         //         mkdir($filePath, 0777, true);
         //     }
-            
+
         //     $file->move($filePath, $fileName);
         //     $fileFullPath = '/' . $filePath . '/' . $fileName;
         // } else {
@@ -236,7 +239,7 @@ class MahasiswaController extends Controller
     //     return view('mahasiswa.review_penyelia.draft_penilaian', compact('penyelia', 'detailPenilaian'));
     // }
 
-    public function submit_review(Request $request) 
+    public function submit_review(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required|string',
@@ -281,7 +284,7 @@ class MahasiswaController extends Controller
 
         return redirect()->route('dashboardMahasiswa');
     }
-    
+
     public function riwayat()
     {
         return view('mahasiswa.riwayat_pengajuan.riwayat_pengajuan');

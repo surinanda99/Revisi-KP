@@ -15,7 +15,7 @@
             {{ Session::get('error') }}
         </div>
     @endif
-    
+
     <div class="row my-2">
         <div class="col-md">
             <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogTambah"><i
@@ -31,7 +31,7 @@
             {{-- <button data-bs-toggle="modal" data-bs-target="#DosenModal" class="btn btn-md btn-success fw-bold my-auto me-1">
                 <i class="lni lni-exit-down"></i> Import</button>
             </button> --}}
-    
+
              <!-- Import Dosen Modal -->
              <div class="modal fade" id="DosenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -60,7 +60,7 @@
                 </div>
             </div>
     </p>
-    
+
     <div class="table-container table-logbook">
         <table class="table table-bordered">
             <thead class="table-header">
@@ -75,7 +75,7 @@
                 <th class="align-middle">Aksi</th>
             </thead>
             <tbody>
-                
+
                 <!-- Loop untuk Menampilkan Setiap Data Mahasiswa -->
                 @foreach($mahasiswas as $mahasiswa)
                 <tr>
@@ -83,6 +83,7 @@
                     <td class="centered-column">{{ $mahasiswa->nim }}</td>
                     <td class="centered-column">{{ $mahasiswa->nama }}</td>
                     <td class="centered-column">{{ $mahasiswa->ipk }}</td>
+                    <td class="centered-column">{{ $mahasiswa->transkip }}</td>
                     <td class="centered-column">{{ $mahasiswa->telp_mhs }}</td>
                     <td class="centered-column">{{ $mahasiswa->email }}</td>
                     <td class="centered-column">{{ $mahasiswa->dosen_wali }}</td>
@@ -120,11 +121,11 @@
 </div>
 
 <!--Dialog detail mahasiswa-->
-@include('koor.data_mahasiswa.detail_mhs') 
+@include('koor.data_mahasiswa.detail_mhs')
 
 <!--Dialog Edit mahasiswa-->
 @include('koor.data_mahasiswa.edit_mhs')
 
 <!--Dialog Info Logbook-->
-@include('koor.data_mahasiswa.tambah_data') 
+@include('koor.data_mahasiswa.tambah_data')
 @endsection

@@ -66,7 +66,7 @@ class KoorController extends Controller
     {
         $dosen = DosenPembimbing::find($id);
         return response()->json($dosen);
-    }    
+    }
 
     public function updateDosen(Request $request, $id)
     {
@@ -123,6 +123,7 @@ class KoorController extends Controller
             'nim' => 'required|unique:mahasiswas',
             'nama' => 'required|string',
             'ipk' => 'required',
+            'transkip' => 'required',
             'telp_mhs' => 'required',
             'email' => 'required|email|unique:mahasiswas',
             'dosen_wali' => 'required',
@@ -138,6 +139,7 @@ class KoorController extends Controller
             'nim' => $request->nim,
             'nama' => $request->nama,
             'ipk' => $request->ipk,
+            'transkip' => $request->transkip,
             'telp_mhs' => $request->telp_mhs,
             'email' => $request->email,
             'dosen_wali' => $request->dosen_wali,
@@ -178,6 +180,7 @@ class KoorController extends Controller
             'nim' => 'required',
             'nama' => 'required',
             'ipk' => 'required',
+            'transkip' => 'transkip',
             'telp_mhs' => 'required',
             'email' => 'required',
             'dosen_wali' => 'required',
@@ -196,6 +199,7 @@ class KoorController extends Controller
             'nim' => $request->input('nim'),
             'nama' => $request->input('nama'),
             'ipk' => $request->input('ipk'),
+            'transkip' => $request->input('transkip'),
             'telp_mhs' => $request->input('telp_mhs'),
             'email' => $request->input('email'),
             'dosen_wali' => $request->input('dosen_wali'),
