@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('pengajuans', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_mhs');
+            $table->unsignedBigInteger('id_dospem');
             $table->enum('kategori_bidang', ['Web Development', 'Application Development', 'Game Development', 'Data Analysis', 'Data Science', 'Artificial Intelligence', 'Graphic Design', 'Networking']);
             $table->string('judul');
             $table->string('perusahaan');

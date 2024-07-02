@@ -35,7 +35,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::post('/storePengajuan', [MahasiswaController::class, 'storePengajuan'])->name('SimpanPengajuan');
     Route::get('/draft/{id}', [MahasiswaController::class, 'draft_kp'])->name('draftKP');
 // Route::post('/draft/update', [MahasiswaController::class, 'updatePengajuan'])->name('updatePengajuan');
-// Route::post('/draft/delete', [MahasiswaController::class, 'deletePengajuan'])->name('deletePengajuan');
+    Route::post('/draft/delete', [MahasiswaController::class, 'deletePengajuan'])->name('deletePengajuan');
 // Route::post('/draft/submit', [MahasiswaController::class, 'submitPengajuan'])->name('submitPengajuan');
     Route::get('/logbook', [MahasiswaController::class, 'logbook'])->name('halamanLogbook');
 
