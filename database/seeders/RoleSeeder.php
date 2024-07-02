@@ -44,10 +44,10 @@ class RoleSeeder extends Seeder
         $mahasiswa = Mahasiswa::create([
             'nim' => 'A11.2021.13472', 
             'nama' => 'Yoga Adi Pratama', 
-            'ipk' => '4.00', 
-            'telp_mhs' => '0191827210', 
+            // 'ipk' => '4.00', 
+            // 'telp_mhs' => '0191827210', 
             'email' => '111202113472@mhs.dinus.ac.id', 
-            'dosen_wali' => 'adhitya' 
+            'dosen_wali' => 'Galuh Wilujeng Saraswati' 
         ]);
     }
 }

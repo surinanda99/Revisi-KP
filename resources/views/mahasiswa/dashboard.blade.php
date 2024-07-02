@@ -71,7 +71,7 @@
             {{-- Tombol Pengajuan Dosen Pembimbing jika belum melakukan pengajuan --}}
             @if (!$mhs->pengajuan_status)
                 <div class="alert alert-warning" role="alert">
-                    Anda belum menyelesaikan Kerja Praktek.
+                    Anda belum memiliki dosen pembimbing, silahkan pilih dosen pembimbing.
                 </div>
                 <a href="{{ route('halamanPengajuan') }}" class="btn btn-primary"><i class="fas fa-chevron-right"></i> Pengajuan Dosen Pembimbing</a>
             @endif
