@@ -13,12 +13,13 @@ class Mahasiswa extends Model
 
     protected $fillable = [
         'id_mhs',
-        'nim', 
-        'nama', 
-        'ipk', 
-        'telp_mhs', 
-        'email', 
-        'dosen_wali' 
+        'nim',
+        'nama',
+        'ipk',
+        'transkip',
+        'telp_mhs',
+        'email',
+        'dosen_wali'
 
     ];
 
