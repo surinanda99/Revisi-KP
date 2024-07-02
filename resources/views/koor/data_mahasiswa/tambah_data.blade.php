@@ -10,7 +10,7 @@
                     <blockquote class="blockquote-primary">
                         <p class="mb-3">Form dengan tanda asterik (<span class="required">*</span>) wajib diisi.</p>
                     </blockquote>
-                    {{-- <form method="POST" action="{{ route('koor-data-mahasiswa-add') }}" enctype="multipart/form-data"> --}}
+                    <form method="POST" action="{{ route('simpanMhs') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row mb-3">
                             <label for="inputNIM" class="col-sm-2 col-form-label">NIM <span
@@ -71,3 +71,4 @@
         </div>
     </div>
 </div>
+
