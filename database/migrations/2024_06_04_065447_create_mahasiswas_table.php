@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('nim')->unique();
             $table->string('nama');
-            $table->double('ipk');
-            $table->string('telp_mhs')->unique();
+            $table->double('ipk')->nullable();
+            $table->text('transkrip_nilai')->nullable();
+            $table->string('telp_mhs')->nullable()->unique();
             $table->string('email')->unique();
             $table->string('dosen_wali')->nullable();
             $table->timestamps();

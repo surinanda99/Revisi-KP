@@ -29,6 +29,8 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 // Mahasiswa
 Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('dashboardMahasiswa');
+    Route::post('/update-mhs/{id}', [MahasiswaController::class, 'update'])->name('updateMhs');
+
     Route::get('/pengajuanKP', [MahasiswaController::class, 'pengajuan_kp'])->name('halamanPengajuan');
     Route::get('/pilih-dosbing', [MahasiswaController::class, 'pilih_dosbing'])->name('pilihDosbingPage');
     Route::get('/form-pengajuan', [MahasiswaController::class, 'formPengajuan'])->name('formPengajuan');
@@ -41,7 +43,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
 
 
     // Route::get('/draft', [MahasiswaController::class, 'draft_penilaian']);
-    Route::get('/Profil/{id}', [MahasiswaController::class, 'profil'])->name('halamanProfil');
+    // Route::get('/Profil/{id}', [MahasiswaController::class, 'profil'])->name('halamanProfil');
     Route::get('/riwayat', [MahasiswaController::class, 'riwayat'])->name('riwayatPengajuan');
     Route::get('/profilmhs', [MahasiswaController::class, 'datadiri']);
     Route::get('/pengajuan_sidang', [MahasiswaController::class, 'penilaian_sidang'])->name('pengajuanSidang');
@@ -78,7 +80,6 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     // Koor untuk Mahasiswa
     Route::get('/data_mhs', [KoorController::class, 'daftar_mhs'])->name('halamanKoorMhs');
     Route::post('/import-mhs', [KoorController::class, 'importMhs'])->name('importMhs');
-    Route::get('/tambah-mhs', [KoorController::class, 'addMhs'])->name('tambahMhs');
     Route::post('/store-mhs', [KoorController::class, 'storeMhs'])->name('simpanMhs');
     Route::get('/edit-mhs/{id}', [KoorController::class, 'editMhs'])->name('editMhs');
     Route::put('/update-mhs/{id}', [KoorController::class, 'updateMhs'])->name('updateMhs');

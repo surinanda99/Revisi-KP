@@ -33,6 +33,8 @@
                         <p class="card-text"><strong>Telepon: {{ $mhs['telp_mhs'] }}</strong> </p>
                         <p class="card-text"><strong>Email: {{ $mhs['email'] }}</strong> </p>
                         <p class="card-text"><strong>Dosen Wali: {{ $mhs['dosen_wali'] }}</strong></p>
+                        {{-- <p class="card-text"><strong>Transkip Nilai: {{ $mhs['transkrip_nilai'] }}</strong></p> --}}
+                        {{-- <p class="card-text"><strong>Transkip Nilai: <a href="{{ $mhs['transkrip_nilai'] }}">{{ $mhs['transkrip_nilai'] }}</a></strong></p> --}}
                     </div>
                 </div>
 

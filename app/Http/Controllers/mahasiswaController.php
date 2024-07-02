@@ -17,10 +17,30 @@ class MahasiswaController extends Controller
 {
     public function index()
     {
-        $mahasiswa = Auth::user()->mahasiswa;
-        return view('mahasiswa.dashboard', compact('mahasiswa'));
+        $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
+        return view('mahasiswa.dashboard', compact('mhs'));
     }
 
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'telp_mhs' => 'required',
+            'ipk' => 'required',
+            'transkrip_nilai' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $mahasiswa = Mahasiswa::findOrFail($id);
+        $mahasiswa->telp_mhs = $request->telp_mhs;
+        $mahasiswa->ipk = $request->ipk;
+        $mahasiswa->transkrip_nilai = $request->transkrip_nilai;
+        $mahasiswa->save();
+
+        return redirect()->back()->with('success', 'Data Mahasiswa Berhasil Diperbarui.');
+    }
 
     public function pengajuan_kp()
     {
@@ -133,12 +153,12 @@ class MahasiswaController extends Controller
         return view('mahasiswa.logbook_kp.logbook_kp');
     }
 
-    public function profil()
-    {
-        $user = Auth::user();
-        $mahasiswa = Mahasiswa::where('email', $user->email)->first();
-        return view('mahasiswa.profil_mhs.profil_mhs', compact('mahasiswa'));
-    }
+    // public function profil()
+    // {
+    //     $user = Auth::user();
+    //     $mahasiswa = Mahasiswa::where('email', $user->email)->first();
+    //     return view('mahasiswa.profil_mhs.profil_mhs', compact('mahasiswa'));
+    // }
 
     public function profile_penyelia()
     {

@@ -16,7 +16,7 @@ class Mahasiswa extends Model
         'nim',
         'nama',
         'ipk',
-        'transkip',
+        'transkrip_nilai',
         'telp_mhs',
         'email',
         'dosen_wali'
