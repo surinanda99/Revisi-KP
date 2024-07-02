@@ -68,10 +68,7 @@ class MahasiswaController extends Controller
             'deskripsi' => $request->deskripsi,
             'durasi' => $request->durasi,
         ]);
-<<<<<<< HEAD
         $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
-=======
->>>>>>> a46af018206c3b014ef4e7975e3c94f43be92a5f
 
         // arahkan ke halaman draftPengajuan dengan mengirimkan parameter $id
         return redirect()->route('draftKP', ['id' => $mhs->id])
