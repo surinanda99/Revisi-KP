@@ -45,7 +45,8 @@ class MahasiswaController extends Controller
     public function pengajuan_kp()
     {
         $dosens = DosenPembimbing::all();
-        return view('mahasiswa.pengajuan_kp.pengajuan_kp', compact('dosens'));
+        $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
+        return view('mahasiswa.pengajuan_kp.pilihDosbing', compact('dosens', 'mhs'));
     }
 
     public function pilih_dosbing()
@@ -54,14 +55,16 @@ class MahasiswaController extends Controller
         return view('mahasiswa.pengajuan_kp.pilihDosbing', compact('dosens'));
     }
 
-    public function formPengajuan()
+    public function formPengajuan(Request $request)
     {
-        return view('mahasiswa.pengajuan_kp.formPengajuan');
+        $data = $request->all();
+        $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
+        return view('mahasiswa.pengajuan_kp.formPengajuan', compact('data', 'mhs'));
     }
 
     public function storePengajuan(Request $request)
     {
-        dd($request->mahasiswa_id);
+        // dd($request->mahasiswa_id);
         $validator = Validator::make($request->all(), [
             'kategori_bidang' => 'required|in:Web Development,Application Development,Game Development,Data Analysis,Data Science,Artificial Intelligence,Graphic Design,Networking',
             'judul' => 'required|string',
@@ -86,16 +89,23 @@ class MahasiswaController extends Controller
             'deskripsi' => $request->deskripsi,
             'durasi' => $request->durasi,
         ]);
+        $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
 
         // arahkan ke halaman draftPengajuan dengan mengirimkan parameter $id
-        return redirect()->route('draftKP', ['id' => $request->mahasiswa_id])
+        return redirect()->route('draftKP', ['id' => $mhs->id])
             ->with('success', 'Data Mahasiswa Berhasil Ditambahkan');
     }
 
-    public function draft_kp($id)
+    public function draft_kp(Request $request)
     {
-        $pengajuan = Pengajuan::where('mahasiswa_id', $id)->first();
-        return view('draftPengajuan', compact('pengajuan'));
+        $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
+        $data = $request->all();
+        if(empty($data)){
+            $pengajuan = Pengajuan::where('id_mhs', $mhs)->first();
+        } else {
+            $pengajuan = $request->all();
+        }
+        return view('mahasiswa.pengajuan_kp.draftPengajuan', compact('mhs', 'pengajuan'));
     }
 
     public function updatePengajuan(Request $request, $id)
@@ -125,8 +135,10 @@ class MahasiswaController extends Controller
             'durasi' => $request->durasi,
         ]);
 
+        $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
+
         // arahkan ke halaman draftPengajuan dengan mengirimkan parameter $id
-        return redirect()->route('draftKP', ['id' => $pengajuan->mahasiswa_id])
+        return redirect()->route('draftKP', ['id' => $mhs->id])
             ->with('success', 'Data Mahasiswa Berhasil Diperbarui');
     }
 

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Mahasiswa;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -37,6 +38,16 @@ class RoleSeeder extends Seeder
                 'password' => $userData['password'],
             ]);
             $user->assignRole($userData['role']);
+
         }
+
+        $mahasiswa = Mahasiswa::create([
+            'nim' => 'A11.2021.13472', 
+            'nama' => 'Yoga Adi Pratama', 
+            'ipk' => '4.00', 
+            'telp_mhs' => '0191827210', 
+            'email' => '111202113472@mhs.dinus.ac.id', 
+            'dosen_wali' => 'adhitya' 
+        ]);
     }
 }

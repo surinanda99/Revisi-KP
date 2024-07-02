@@ -94,6 +94,7 @@
                     <div class="form-group row mb-3 justify-content-end" id="continueButtonContainer" style="display: none;">
                         <div class="d-flex justify-content-end">
                             <a href="{{ route('formPengajuan') }}" class="btn btn-primary">
+                                <input type="hidden" name="id_dospem" id="id_dospem" value="">
                                 <i class="fas fa-chevron-right"></i>Lanjutkan
                             </a>
                             {{-- <button type="submit" class="btn btn-primary"><i class="fas fa-chevron-right"></i>Lanjutkan</button> --}}
@@ -156,6 +157,17 @@
             const hapusDosbingModalElement = document.getElementById('hapusDosbingModal');
             const pilihDosbingModal = new bootstrap.Modal(pilihDosbingModalElement);
             const hapusDosbingModal = new bootstrap.Modal(hapusDosbingModalElement);
+            let id_dospem = document.getElementById('id_dospem');
+
+            document.getElementById('konfirmasiPilihDosbing').addEventListener('click', 
+            function() {
+                if (dosbingToBeAdded) {
+                    // Logika untuk menambah dosbing terpilih ke dalam daftar
+                    // Set nilai id_dospem ke input tersembunyi
+                    document.getElementById('id_dospem').value = 'your_dospem_id_value';
+                    // Tampilkan elemen tersembunyi dan lanjutkan ke logika berikutnya
+                }
+            });
 
             // Function to update display status
             function updateDisplayStatus() {
