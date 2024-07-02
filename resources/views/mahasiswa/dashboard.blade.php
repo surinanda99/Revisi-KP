@@ -10,6 +10,13 @@
 </div>
 <main class="container-border">
     <div class="container">
+        {{-- @if ($status->pengajuan == 0)
+        <div class="alert alert-warning" role="alert">
+            Anda belum menyelesaikan Kerja Praktek.
+        </div>
+        <a href="{{ route('halamanPengajuan') }}" class="btn btn-primary"><i
+                    class="fas fa-chevron-right"></i>Pengajuan Dosen Pembimbing</a>
+        @else --}}
         <form>
             <h4 class="text-center">Lengkapi Data Diri</h4>
             <hr>
@@ -37,13 +44,15 @@
                 </div>
             </div>
         </form>
+        
     </div>
     <div class="row">
-        {{-- @if ($status->id_dsn == 0)
+        {{-- @if ($status->pengajuan == 0)
             <div class="alert alert-warning" role="alert">
-                Anda belum memiliki dosen pembimbing. Silahkan melakukan pengajuan TA terlebih dahulu.
+                Anda belum menyelesaikan Kerja Praktek.
             </div>
-            <a href="" class="btn btn-primary"><i class="fas fa-chevron-right"></i>Pengajuan Dosen Pembimbing</a>
+            <a href="{{ route('halamanPengajuan') }}" class="btn btn-primary"><i
+                        class="fas fa-chevron-right"></i>Pengajuan Dosen Pembimbing</a>
         @else --}}
             <!-- Closing div added here -->
     </div>
@@ -94,7 +103,7 @@
         </div>
         <!-- Closing div added here -->
     </div>
-    {{-- @endif --}}
+        {{-- @endif --}}
 </main>
 
 @endsection

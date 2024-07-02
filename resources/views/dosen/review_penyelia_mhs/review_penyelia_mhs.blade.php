@@ -7,6 +7,8 @@
     <p class="mb-2 d-flex justify-content-between align-items-center">
         <blockquote class="blockquote-primary">
             <p class="mb-3">Klik tombol <button type="button" class="btn btn-primary"><i class="lni lni-empty-file"></i></button> untuk melihat detail Review Penyelia mahasiswa</p>
+            <p class="mb-3">Klik tombol <button type="button" class="btn btn-secondary"><i class="fas fa-lock"></i></button> untuk menutup halaman Review Penyelia pada mahasiswa</p>
+            <p class="mb-3">Klik tombol <button type="button" class="btn btn-info"><i class="fas fa-unlock"></i></button> untuk membuka halaman Review Penyelia pada mahasiswa</p>
         </blockquote>
         Berikut merupakan daftar Detail Penilaian Mahasiswa
     </p>
@@ -37,7 +39,10 @@
                 <td class="centered-column">2</td>
                 <td class="centered-column">A11.2021.13800</td>
                 <td class="centered-column">Nikolas Adi Kurniatmaja Sijabat</td>
-                <td class="centered-column"><button type="button" class="btn btn-primary"><i class="lni lni-empty-file"></i></td>
+                <td class="centered-column">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogDetailRiwayat">
+                <i class="fas fa-file-alt"></i>
+                </button></td>
                 <td class="centered-column"><a href="https://drive.google.com/drive/folders/1NSgwE4CEOqnPBZrfcoIu7wSFYuvvCu-O?usp=drive_link" target="_blank">Dokumen</a></td>
                 <td class="centered-column">
                     <button type="info" class="btn btn-info"><i class="fas fa-lock"></i></button>
@@ -65,5 +70,6 @@
 </div>
 
 <!--Dialog Detail Logbook-->
-@include('dosen.logbook_bimbingan.detail_logbook')
+@include('dosen.review_penyelia_mhs.detail_riwayat')
+
 @endsection

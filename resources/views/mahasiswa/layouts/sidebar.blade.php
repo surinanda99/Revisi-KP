@@ -46,14 +46,14 @@
                     <span>Riwayat Pengajuan</span>
                 </a>
             </li>
-            @foreach ($mahasiswas as $mahasiswa)
+            {{-- @foreach ($mahasiswas as $mahasiswa)
                 <li class="sidebar-item">
                     <a href="{{ route('halamanProfil', ['id' => $mahasiswa->id]) }}" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>Profil Mahasiswa</span>
                     </a>
                 </li>
-            @endforeach
+            @endforeach --}}
         </ul>
         <div class="sidebar-footer">
             <a href="/profilmhs" class="sidebar-link">

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\DetailPenilaian;
 use App\Models\DosenPembimbing;
 use App\Models\MahasiswaPenyelia;
+use App\Models\StatusMahasiswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,6 +20,7 @@ class MahasiswaController extends Controller
         $mahasiswa = Auth::user()->mahasiswa;
         return view('mahasiswa.dashboard', compact('mahasiswa'));
     }
+
 
     public function pengajuan_kp()
     {
