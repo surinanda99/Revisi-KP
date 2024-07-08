@@ -18,7 +18,7 @@
                 <th>Nama Mahasiswa</th>
                 <th>Foto</th>
                 <th>IPK</th>
-                <th>Topik Penelitian</th>
+                <th>Judul</th>
                 <th>Status</th>
                 </thead>
                 @foreach ($pengajuan as $pj)
@@ -35,7 +35,7 @@
                             <td>{{ $pj->mahasiswa->mahasiswa->ipk }}</td>
                             <td>{{ $pj->topik }}</td>
                             <td class="centered-column">
-                                <form action=" " method="post"
+                                <form action="{{route('update-mahasiswa-bimbingan')}}" method="post"
                                       enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $pj->id }}">

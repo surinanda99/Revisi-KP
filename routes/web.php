@@ -103,9 +103,11 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
 // Admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard-Admin', [AdminController::class, 'index'])->name('dashboardAdmin');
-    Route::get('/data_user_mhs', [AdminController::class, 'user_mhs'])->name('dataMhs');
-    Route::get('/data_user_dosen', [AdminController::class, 'user_dosen'])->name('dataDosen');
-    Route::get('/data_user_koor', [AdminController::class, 'user_koor'])->name('dataKoor');
+    Route::get('/user_mhs', [AdminController::class, 'log_mhs'])->name('DataMahasiswa');
+    Route::get('/user_dosen', [AdminController::class, 'log_dosbing'])->name('DataDosbing');
+    // Route::get('/data_user_mhs', [AdminController::class, 'user_mhs'])->name('dataMhs');
+    // Route::get('/data_user_dosen', [AdminController::class, 'user_dosen'])->name('dataDosen');
+    // Route::get('/data_user_koor', [AdminController::class, 'user_koor'])->name('dataKoor');
 });
 
 //review

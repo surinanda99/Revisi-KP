@@ -16,24 +16,24 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="{{ route('dataDosen') }}" class="sidebar-link">
+                <a href="{{ route('DataDosbing') }}" class="sidebar-link">
                     <i class="lni lni-folder"></i>
                     <span>Data Dosen</span>
                 </a>
             </li>
             
             <li class="sidebar-item">
-                <a href="{{ route('dataMhs') }}" class="sidebar-link">
+                <a href="{{ route('DataMahasiswa') }}" class="sidebar-link">
                     <i class="lni lni-notepad"></i>
                     <span>Data Mahasiswa </span>
                 </a>
             </li>
-            <li class="sidebar-item">
+            {{-- <li class="sidebar-item">
                 <a href="{{ route('dataKoor') }}" class="sidebar-link">
                     <i class="lni lni-library"></i>
                     <span>Data Koor</span>
                 </a>
-            </li>
+            </li> --}}
             {{-- <li class="sidebar-item">
                 <a href="/Profil" class="sidebar-link">
                     <i class="lni lni-user"></i>

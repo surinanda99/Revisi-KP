@@ -50,18 +50,6 @@
                 </table>
             </div>
         </div>
-        <footer class="py-4 mt-auto">
-            <div class="container-fluid px-4">
-                <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Bimbingan Online</div>
-                    <div>
-                        <a href="#" class="text-secondary">Privacy Policy</a>
-                        &middot;
-                        <a href="#" class="text-secondary">Terms &amp; Conditions</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
