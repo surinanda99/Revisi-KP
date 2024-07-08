@@ -4,12 +4,6 @@
     <div class="container">
         <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-3">
             <li class="nav-item">
-                <a data-toggle="pill" class="nav-link active rounded-pill">
-                    <i class="far fa-calendar-check"></i>
-                    Jadwal Sidang
-                </a>
-            </li>
-            <li class="nav-item">
                 <a data-toggle="pill" class="nav-link rounded-pill">
                     <i class="fas fa-edit"></i>
                     Form Pengajuan
@@ -24,111 +18,169 @@
         </ul>
 
         <div class="tab-content">
-            <div id="nav-tab-jadwal" class="tab-pane fade show active">
-                <div class="container">
-                    <h4 class="mb-4">Pemilihan Jadwal Sidang</h4>
-                    
-                        <div class="alert alert-danger" role="alert">
-                            Anda belum menyelesaikan bab 3, silahkan selesaikan terlebih dahulu lalu update logbook terbaru
-                            anda.
-                        </div>
-                    
-                        {{-- <p class="mb-2">Berikut ini adalah daftar sidang yang tersedia</p>
-                        <blockquote class="blockquote-primary">
-                            <p class="mb-3">Klik tombol panah <button type="button" class="btn btn-warning"><i
-                                        class="fas fa-chevron-circle-right"></i></button> untuk memilih jadwal sidang</p>
-                        </blockquote>
-                        <div class="input-group justify-content-end mb-3">
-                            <input type="text" class="form-control" placeholder="Cari Jadwal">
-                            <div class="input-group-append"><button class="btn btn-primary"><i
-                                        class="fas fa-search"></i></button></div>
-                        </div>
-                        <div class="table-container table-jadwal">
-                            <table class="table table-bordered mb-1">
-                                <thead class="table-header">
-                                    <th>No</th>
-                                    <th>Periode</th>
-                                    <th>Pendaftaran Sidang</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
-                                </thead>
-                                <tr>
-                                    <td class="centered-column">1</td>
-                                    <td class="centered-column">April</td>
-                                    <td class="centered-column">1 April 2024 - 30 April 2024</td>
-                                    <td class="centered-column">Tersedia</td>
-                                    <td class="centered-column"><button type="button" class="btn btn-warning"
-                                            data-bs-toggle="modal" data-bs-target="#pilihJadwalModal"><i
-                                                class="fas fa-chevron-circle-right"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td class="centered-column">1</td>
-                                    <td class="centered-column">Mei</td>
-                                    <td class="centered-column">1 Mei 2024 - 30 Mei 2024</td>
-                                    <td class="centered-column">Belum Tersedia</td>
-                                    <td class="centered-column"><button type="button" class="btn btn-warning"
-                                            data-bs-toggle="modal" data-bs-target="#pilihJadwalModal"><i
-                                                class="fas fa-chevron-circle-right"></i></button></td>
-                                </tr>
-                            </table>
-                        </div>
-                        <nav aria-label="pageNavigationJadwal">
-                            <ul class="pagination justify-content-end">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                </li>
-                                <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
+            <div id="nav-tab-pengajuan-sidang" class="tab-pane fade show active">
+                {{-- @if (!$logbook3)
+                    <div class="alert alert-danger" role="alert">
+                        Anda belum menyelesaikan bab 3, silahkan selesaikan terlebih dahulu lalu update logbook terbaru
+                        anda.
+                    </div>
+                @elseif ($logbook5)
+                    <div class="alert alert-danger" role="alert">
+                        Anda belum menyelesaikan bab 5, silahkan selesaikan terlebih dahulu lalu update logbook terbaru
+                        anda.
+                    </div>
+                @else
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
                             </ul>
-                        </nav> --}}
-
-                </div>
-
-                <!-- Modal Pilih Dosbing -->
-                <div class="modal fade" id="pilihJadwalModal" tabindex="-1" aria-labelledby="pilihJadwalModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="pilihJadwalModalLabel">Pilih Jadwal Sidang</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Yakin untuk memilih jadwal sidang ini?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
-                                <button type="button" class="btn btn-primary">Ya</button>
-                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Modal Hapus Dosbing -->
-                <div class="modal fade" id="hapusJadwalModal" tabindex="-1" aria-labelledby="hapusJadwalModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="hapusJadwalModalLabel">Hapus Jadwal Sidang</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Yakin untuk menghapus jadwal sidang ini?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
-                                <button type="button" class="btn btn-primary">Ya</button>
-                            </div>
+                    @endif
+                    @if($data) --}}
+                        {{-- <div class="container">
+                            <h4 class="mb-4">Pengajuan Sidang</h4>
+                            <blockquote class="blockquote-primary">
+                                <p class="mb-3">Form dengan tanda asterik (<span class="required">*</span>) wajib diisi.
+                                </p>
+                            </blockquote>
+                            <form action="" method="post"
+                                  enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group row mb-3">
+                                    <label for="inputJudul" class="col-sm-2 col-form-label">Judul <span
+                                            class="required">*</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="judul" class="form-control" id="inputJudul"
+                                               placeholder="Masukkan Judul TA" name="judul" value=""
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label for="inputBidang" class="col-sm-2 col-form-label">Bidang Kajian <span
+                                            class="required">*</span></label>
+                                    <div class="col-sm-3">
+                                        <select class="form-select" name="bidang_kajian" id="inputBidang"
+                                                aria-label="Bidang Kajian" required>
+                                            {{-- @if($data['bidang_kajian'] == 'SC')
+                                                <option disabled hidden>Pilih Bidang Kajian</option>
+                                                <option value="SC" selected>SC</option>
+                                                <option value="RPLD">RPLD</option>
+                                                <option value="SKKKD">SKKKD</option>
+                                            @elseif ($data['bidang_kajian'] == 'SKKKD')
+                                                <option disabled hidden>Pilih Bidang Kajian</option>
+                                                <option value="SC">SC</option>
+                                                <option value="RPLD">RPLD</option>
+                                                <option value="SKKKD" selected>SKKKD</option>
+                                            @else
+                                                <option disabled hidden>Pilih Bidang Kajian</option>
+                                                <option value="SC">SC</option>
+                                                <option value="RPLD" selected>RPLD</option>
+                                                <option value="SKKKD">SKKKD</option>
+                                            @endif --}}
+                                        {{-- </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label for="inputBerkas" class="col-sm-2 col-form-label">Dokumen Tugas Akhir <span
+                                            class="required">*</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="berkas" class="form-control" name="dokumen" id="inputBerkas"
+                                               placeholder="Masukkan Link Dokumen" value=""
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label for="inputPengesahan" class="col-sm-2 col-form-label">Lembar Pengesahan <span
+                                            class="required">*</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="berkas" class="form-control" name="dokumen" id="inputBerkas"
+                                               placeholder="Masukkan Link Lembar Pengesahan" value=""
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3 justify-content-end">
+                                    <div class="col-sm-1 d-flex justify-content-end">
+                                        {{--                                    <button type="submit" class="btn btn-secondary me-2">Kembali</button>--}}
+                                        {{-- <button type="submit" class="btn btn-primary me-2">Simpan</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>  --}} 
+                    {{-- @else --}}
+                        <div class="container">
+                            <h4 class="mb-4">Pengajuan Sidang</h4>
+                            <blockquote class="blockquote-primary">
+                                <p class="mb-3">Form dengan tanda asterik (<span class="required">*</span>) wajib diisi.
+                                </p>
+                            </blockquote>
+                            <form action="" method="post"
+                                  enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group row mb-3">
+                                    <label for="inputJudul" class="col-sm-2 col-form-label">Judul <span
+                                            class="required">*</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="judul" class="form-control" id="inputJudul"
+                                               placeholder="Masukkan Judul Kerja Praktek" name="judul">
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label for="inputBidang" class="col-sm-2 col-form-label">Bidang Kajian <span
+                                            class="required">*</span></label>
+                                    <div class="col-sm-3">
+                                        <select class="form-select" name="bidang_kajian" id="inputBidang"
+                                                aria-label="Bidang Kajian">
+                                            <option disabled selected hidden>Pilih Bidang Kajian</option>
+                                            <option value="SC">SC</option>
+                                            <option value="RPLD">RPLD</option>
+                                            <option value="SKKKD">SKKKD</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label for="inputBerkas" class="col-sm-2 col-form-label">Dokumen Tugas Akhir <span
+                                            class="required">*</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="berkas" class="form-control" name="dokumen" id="inputBerkas"
+                                               placeholder="Masukkan Link Dokumen">
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label for="inputBerkas" class="col-sm-2 col-form-label">Dokumen Validasi Dosbing <span
+                                            class="required">*</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="berkas" class="form-control" name="dokumen" id="inputBerkas"
+                                               placeholder="Masukkan Link Dokumen">
+                                    </div>
+                                </div>
+                                {{-- <div class="form-group row mb-3">
+                                    <label for="inputJudul" class="col-sm-2 col-form-label">Nilai Penyelia <span
+                                            class="required">*</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="judul" class="form-control" id="inputJudul"
+                                               placeholder="Masukkan Judul Nilai Penyelia" name="judul">
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label for="inputJudul" class="col-sm-2 col-form-label">Nilai Pembimbing <span
+                                            class="required">*</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="judul" class="form-control" id="inputJudul"
+                                               placeholder="Masukkan Judul Nilai Pembimbing" name="judul">
+                                    </div>
+                                </div> --}}
+                                <div class="form-group row mb-3 justify-content-end">
+                                    <div class="col-sm-1 d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary me-2">Lanjut</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </div>
-                </div>
+                    {{-- @endif
+                @endif --}}
             </div>
         </div>
     </div>

@@ -34,6 +34,12 @@
                     <span>Review Penyelia</span>
                 </a>
             </li>
+            <li class="sidebar-item">
+                <a href="{{ route('pagePengajuanSidang') }}" class="sidebar-link">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Pengajuan Sidang Mhs</span>
+                </a>
+            </li>
             {{-- <li class="sidebar-item">
                 <a href="/Profil" class="sidebar-link">
                     <i class="lni lni-user"></i>

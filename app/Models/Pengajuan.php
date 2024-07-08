@@ -9,7 +9,10 @@ class Pengajuan extends Model
 {
     use HasFactory;
 
+    protected $table = 'pengajuan';
     protected $fillable = [
+        'id_mhs',
+        'id_dsn',
         'kategori_bidang',
         'judul',
         'perusahaan',
@@ -17,4 +20,13 @@ class Pengajuan extends Model
         'deskripsi',
         'durasi',
     ];
+
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class, 'id_dsn', 'id');
+    }
+    public function mahasiswa()
+    {
+        return $this->belongsTo(StatusMahasiswa::class, 'id_mhs', 'id_mhs');
+    }
 }

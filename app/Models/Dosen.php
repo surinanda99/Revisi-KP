@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Dosen extends Model
+{
+    use HasFactory;
+    protected $table = 'dosens';
+    protected $fillable = [
+        'nama',
+        'npp',
+        'email',
+        'bidang_kajian',
+        'telp'
+    ];
+
+    public function mahasiswa()
+    {
+        return $this->hasMany(StatusMahasiswa::class, 'id_dsn', 'id');
+    }
+
+    public function pengajuan()
+    {
+        return $this->hasMany(Pengajuan::class, 'id_dsn', 'id');
+    }
+
+    public function user()
+    {
+        return $this->hasOne(Dosen::class, 'email', 'email');
+    }
+
+    public function dosen(){
+        return $this->hasOne(DosenPembimbing::class, 'id_dsn', 'id');
+    }
+}

@@ -20,7 +20,7 @@
                             </tr>
                             <tr>
                                 <td>Perusahaan</td>
-                                <td>a</td>
+                                <td>a</td>`
                             </tr>
                             <tr>
                                 <td>Posisi</td>

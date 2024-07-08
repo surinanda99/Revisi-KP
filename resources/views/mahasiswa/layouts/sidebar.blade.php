@@ -16,14 +16,14 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="{{ route('halamanPengajuan') }}" class="sidebar-link">
+                <a href="{{ route('pengajuan-mahasiswa') }}" class="sidebar-link">
                     <i class="lni lni-pencil-alt"></i>
                     <span>Pengajuan kerja praktek</span>
                 </a>
             </li>
             
             <li class="sidebar-item">
-                <a href="{{ route('halamanLogbook') }}" class="sidebar-link">
+                <a href="{{ route('mahasiswa-logbook') }}" class="sidebar-link">
                     <i class="lni lni-notepad"></i>
                     <span>Logbook Bimbingan KP</span>
                 </a>
@@ -37,23 +37,23 @@
             <li class="sidebar-item">
                 <a href="{{ route('pengajuanSidang') }}" class="sidebar-link">
                     <i class="fas fa-certificate"></i>
-                    <span>Penilaian Sidang</span>
+                    <span>Pengajuan Sidang</span>
                 </a>
             </li>
-            <li class="sidebar-item">
+            {{-- <li class="sidebar-item">
                 <a href="{{ route('riwayatPengajuan') }}" class="sidebar-link">
                     <i class="lni lni-folder"></i>
                     <span>Riwayat Pengajuan</span>
                 </a>
-            </li>
-            @foreach ($mahasiswas as $mahasiswa)
+            </li> --}}
+            {{-- @foreach ($mahasiswas as $mahasiswa)
                 <li class="sidebar-item">
                     <a href="{{ route('halamanProfil', ['id' => $mahasiswa->id]) }}" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>Profil Mahasiswa</span>
                     </a>
                 </li>
-            @endforeach
+            @endforeach --}}
         </ul>
         <div class="sidebar-footer">
             <a href="/profilmhs" class="sidebar-link">

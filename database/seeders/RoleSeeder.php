@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Mahasiswa;
+use App\Models\Dosen;
+use App\Models\DosenPembimbing;
+use App\Models\StatusMahasiswa;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -14,6 +18,7 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
+        
         // Buat Role
         $roles = ['dosen', 'mahasiswa', 'koor', 'admin'];
 
@@ -38,5 +43,35 @@ class RoleSeeder extends Seeder
             ]);
             $user->assignRole($userData['role']);
         }
+
+        // Seed data Mahasiswa
+        $mhs = Mahasiswa::create([
+            'nim' => 'A11.2021.13472',
+            'nama' => 'Yoga Adi Pratama',
+            'ipk' => 4.00,
+            'transkrip' => 'https://www.google.com',
+            'telp' => '082243539209',
+            'email' => '111202113472@mhs.dinus.ac.id',
+        ]);
+
+        StatusMahasiswa::create([
+            'id_mhs' => $mhs->id,
+            'pengajuan' => 0
+        ]);
+
+        // Seed data Dosen
+        $dsn = Dosen::create([
+            'nama' => 'Adhitya Nugraha, S.Kom, M.CS',
+            'npp' => '0686.11.2012.460',
+            'email' => 'adhitya@dsn.dinus.ac.id',
+            'bidang_kajian' => 'SC',
+            'telp' => '081325105905',
+        ]);
+
+        DosenPembimbing::create([
+            'id_dsn' => $dsn->id,
+            'kuota' => 5
+        ]);
     }
+
 }

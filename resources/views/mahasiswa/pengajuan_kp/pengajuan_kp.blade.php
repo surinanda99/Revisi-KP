@@ -1,4 +1,4 @@
-@extends('mahasiswa.layouts.main')
+{{-- @extends('mahasiswa.layouts.main')
 @section('title', 'Pengajuan KP')
 @section('content')
 <div class="container">
@@ -35,4 +35,4 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection --}}
