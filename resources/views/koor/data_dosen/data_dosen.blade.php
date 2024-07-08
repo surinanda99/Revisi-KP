@@ -69,9 +69,9 @@
                 @foreach($dosens as $dosen)
                 <tr>
                     <td class="centered-column">{{ $loop->iteration }}</td>
-                    <td class="centered-column">{{ $dosen->npp }}</td>
-                    <td class="centered-column">{{ $dosen->nama }}</td>
-                    <td class="centered-column">{{ $dosen->bidang_kajian }}</td>
+                    <td class="centered-column">{{ $dosen->dosen->npp }}</td>
+                    <td class="centered-column">{{ $dosen->dosen->nama }}</td>
+                    <td class="centered-column">{{ $dosen->dosen->bidang_kajian }}</td>
                     <td class="centered-column">{{ $dosen->kuota }}</td>
                     <td class="centered-column">{{ $dosen->jumlah_ajuan }}</td>
                     <td class="centered-column">{{ $dosen->ajuan_diterima }}</td>
@@ -139,12 +139,12 @@
                 type: 'GET',
                 success: function(response) {
                     console.log(response);
-                    $('#inputNPP_' + id).val(response.npp);
-                    $('#inputNama_' + id).val(response.nama);
-                    $('#inputBidangKajian_' + id).val(response.bidang_kajian);
-                    $('#inputKuota_' + id).val(response.kuota);
-                    $('#inputJumlahAjuan_' + id).val(response.jumlah_ajuan);
-                    $('#dialogEditDosen_' + id).modal('show');
+                    $('#editDosenId').val(response.id);
+                    $('#inputNPP').val(response.npp);
+                    $('#inputNama').val(response.nama);
+                    $('#inputBidangKajian').val(response.bidang_kajian);
+                    $('#inputKuota').val(response.kuota);
+                    $('#dialogEditDosen').modal('show');
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText);

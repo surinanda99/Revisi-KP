@@ -62,16 +62,30 @@ class RoleSeeder extends Seeder
 
         // Seed data Dosen
         $dsn = Dosen::create([
-            'nama' => 'Adhitya Nugraha, S.Kom, M.CS',
-            'npp' => '0686.11.2012.460',
+            'nama' => 'ADHITYA NUGRAHA, S.Kom, M.CS',
+            'npp' => '0686.11.2012.444',
             'email' => 'adhitya@dsn.dinus.ac.id',
-            'bidang_kajian' => 'SC',
+            'bidang_kajian' => 'RPLD',
             'telp' => '081325105905',
         ]);
 
         DosenPembimbing::create([
             'id_dsn' => $dsn->id,
             'kuota' => 5
+        ]);
+
+        // Seed data Dosen
+        $dsn2 = Dosen::create([
+            'nama' => 'ARDYTHA LUTFIARTHA, S.Kom, M.CS',
+            'npp' => '0686.11.2012.460',
+            'email' => 'ardytha.luthfiarta@dsn.dinus.ac.id',
+            'bidang_kajian' => 'SC',
+            'telp' => '085235756436',
+        ]);
+
+        DosenPembimbing::create([
+            'id_dsn' => $dsn2->id,
+            'kuota' => 25
         ]);
     }
 

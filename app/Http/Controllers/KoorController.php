@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DosenPembimbing;
+use App\Models\Dosen;
 use App\Models\Mahasiswa;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Imports\DosenImport;
+use Illuminate\Http\Request;
+use App\Models\DosenPembimbing;
 use App\Imports\MahasiswaImport;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
 
 class KoorController extends Controller
 {
     public function daftar_data_dosen()
     {
-        $dosens = DosenPembimbing::all();
+        // $dosens = DosenPembimbing::all();
+        $dosens = DosenPembimbing::with('dosen')->get();
         return view('koor.data_dosen.data_dosen', compact('dosens'));
     }
 
@@ -27,16 +29,34 @@ class KoorController extends Controller
             'nama' => 'required|string',
             'bidang_kajian' => 'required|in:RPLD,SC',
             'kuota' => 'required|integer',
+            'email' => 'nullable|email',
+            'telp' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        DosenPembimbing::create([
-            'npp' => $request->npp,
+        // Simpan data dosen
+        $dosen = Dosen::create([
             'nama' => $request->nama,
+            'npp' => $request->npp,
+            'email' => $request->email, // Pastikan email dosen ada jika diperlukan
             'bidang_kajian' => $request->bidang_kajian,
+            'telp' => $request->telp, // Pastikan nomor telepon ada jika diperlukan
+        ]);
+
+        // DosenPembimbing::create([
+        //     'id_dsn' => $request->id_dsn,
+        //     'npp' => $request->npp,
+        //     'nama' => $request->nama,
+        //     'bidang_kajian' => $request->bidang_kajian,
+        //     'kuota' => $request->kuota,
+        // ]);
+
+        // Simpan data dosen pembimbing
+        DosenPembimbing::create([
+            'id_dsn' => $dosen->id,
             'kuota' => $request->kuota,
         ]);
 
@@ -64,7 +84,8 @@ class KoorController extends Controller
 
     public function editDosen($id)
     {
-        $dosen = DosenPembimbing::find($id);
+        // $dosen = DosenPembimbing::find($id);
+        $dosen = DosenPembimbing::with('dosen')->findOrFail($id);
         return response()->json($dosen);
     }
 
@@ -76,6 +97,8 @@ class KoorController extends Controller
             'nama' => 'required|string',
             'bidang_kajian' => 'required|in:RPLD,SC',
             'kuota' => 'required|integer',
+            'email' => 'nullable|email',
+            'telp' => 'nullable|string',
         ]);
 
         // Jika validasi gagal, kembalikan respons dengan pesan kesalahan
@@ -87,12 +110,26 @@ class KoorController extends Controller
         $dosen = DosenPembimbing::findOrFail($id);
 
         // Perbarui data dosen
-        $dosen->update([
-            'npp' => $request->input('npp'),
+        $dosen->dosen->update([
             'nama' => $request->input('nama'),
+            'npp' => $request->input('npp'),
+            'email' => $request->input('email'),
             'bidang_kajian' => $request->input('bidang_kajian'),
+            'telp' => $request->input('telp'),
+        ]);
+
+        // Update data dosen pembimbing
+        $dosen->update([
             'kuota' => $request->input('kuota'),
         ]);
+
+        // Perbarui data dosen
+        // $dosen->update([
+        //     'npp' => $request->input('npp'),
+        //     'nama' => $request->input('nama'),
+        //     'bidang_kajian' => $request->input('bidang_kajian'),
+        //     'kuota' => $request->input('kuota'),
+        // ]);
 
         // Redirect kembali dengan pesan sukses
         return redirect()->back()->with('success', 'Data Dosen Pembimbing Berhasil Diperbarui.');

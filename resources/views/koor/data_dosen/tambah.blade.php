@@ -12,6 +12,7 @@
                     </blockquote>
                     <form action="{{ route('simpanDosen') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        {{-- <input type="hidden" name="id_dsn" value="{{ $dosen->id }}"> <!-- Sesuaikan dengan apa yang Anda butuhkan --> --}}
                         <div class="form-group row mb-3">
                             <label for="inputNPP" class="col-sm-2 col-form-label">NPP <span class="required">*</span></label>
                             <div class="col-sm-10">
@@ -54,6 +55,28 @@
                             <div class="col-sm-10">
                                 <input type="number" class="form-control @error('kuota') is-invalid @enderror" name="kuota" id="inputKuota" value="{{ old('kuota') }}">
                                 @error('kuota')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label for="inputEmail" class="col-sm-2 col-form-label">Email Dosen<span class="required">*</span></label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="inputEmail" value="{{ old('email') }}">
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label for="inputTelp" class="col-sm-2 col-form-label">Telepon Dosen<span class="required">*</span></label>
+                            <div class="col-sm-10">
+                                <input type="tel" class="form-control @error('telp') is-invalid @enderror" name="telp" id="inputTelp" value="{{ old('telp') }}">
+                                @error('telp')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
