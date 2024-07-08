@@ -34,12 +34,13 @@ return new class extends Migration
     {
         Schema::create('mahasiswas', function (Blueprint $table) {
             $table->id();
+            $table->string('nim')->unique();
             $table->string('nama');
-            $table->string('nim');
-            $table->string('email');
             $table->double('ipk')->nullable();
-            $table->string('telp')->nullable();
-            $table->longText('transkrip')->nullable();
+            $table->string('telp_mhs')->nullable()->unique();
+            $table->string('email')->unique();
+            $table->string('dosen_wali');
+            $table->longText('transkrip_nilai')->nullable();
             $table->timestamps();
         });
     }

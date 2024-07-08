@@ -49,9 +49,10 @@ class RoleSeeder extends Seeder
             'nim' => 'A11.2021.13472',
             'nama' => 'Yoga Adi Pratama',
             'ipk' => 4.00,
-            'transkrip' => 'https://www.google.com',
-            'telp' => '082243539209',
+            'telp_mhs' => '082243539209',
             'email' => '111202113472@mhs.dinus.ac.id',
+            'dosen_wali' => 'GALUH WILUJENG SARASWATI, M.CS',
+            'transkrip_nilai' => 'https://www.google.com',
         ]);
 
         StatusMahasiswa::create([

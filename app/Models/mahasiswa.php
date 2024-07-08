@@ -18,8 +18,8 @@ class Mahasiswa extends Model
         'ipk', 
         'telp_mhs', 
         'email', 
-        'dosen_wali' 
-
+        'dosen_wali',
+        'transkrip_nilai'
     ];
 
     public function user()

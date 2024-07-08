@@ -20,6 +20,27 @@ class MahasiswaController extends Controller
         return view('mahasiswa.dashboard', compact('mahasiswa'));
     }
 
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'telp_mhs' => 'required',
+            'ipk' => 'required',
+            'transkrip_nilai' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $mahasiswa = Mahasiswa::findOrFail($id);
+        $mahasiswa->telp_mhs = $request->telp_mhs;
+        $mahasiswa->ipk = $request->ipk;
+        $mahasiswa->transkrip_nilai = $request->transkrip_nilai;
+        $mahasiswa->save();
+
+        return redirect()->back()->with('success', 'Data Mahasiswa Berhasil Diperbarui.');
+    }
+
     public function pengajuan_kp()
     {
         $dosens = DosenPembimbing::all();

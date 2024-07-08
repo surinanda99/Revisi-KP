@@ -22,8 +22,8 @@ return new class extends Migration
             $table->enum('status', ['ACC', 'REVISI', 'PENDING'])->default('PENDING');
             $table->timestamps();
 
-            $table->foreign('id_mhs')->references('id')->on('mahasiswa')->cascadeOnDelete();
-            $table->foreign('id_dsn')->references('id')->on('dosen')->cascadeOnDelete();
+            $table->foreign('id_mhs')->references('id')->on('mahasiswas')->cascadeOnDelete();
+            $table->foreign('id_dsn')->references('id')->on('dosens')->cascadeOnDelete();
         });
     }
 
