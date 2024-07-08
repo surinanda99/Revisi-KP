@@ -111,11 +111,17 @@
                 </div>
             </div>
             <div class="form-group row mb-3">
+                <label for="inputFile" class="col-sm-2 col-form-label">Upload File <span class="required">*</span></label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputFile" name="file_path" placeholder="Masukkan Link Dokumen" value="{{ $data['file_path'] }}" required>
+                </div>
+            </div>
+            {{-- <div class="form-group row mb-3">
                 <label for="inputFile" class="col-sm-2 col-form-label">Upload File</label>
                 <div class="col-sm-10">
                     <input type="file" class="form-control" id="inputFile" name="file">
                 </div>
-            </div>
+            </div> --}}
             <div class="form-group row mb-3">
                 <div class="col-sm-10 offset-sm-2">
                     <button type="submit" class="btn btn-primary">Submit</button>

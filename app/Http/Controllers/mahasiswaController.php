@@ -259,14 +259,14 @@ class MahasiswaController extends Controller
             'perkembangan' => 'required|string|max:1000',
             'kesimpulan_saran' => 'required|string|max:1000',
             'score' => 'required|numeric|min:0|max:100',
-            'file' => 'nullable|file|mimes:pdf,doc,docx,txt|max:2048',
+            'file_path' => 'nullable|string|max:1000',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $file = $request->file('file')->store('assets/file', 'public');
+        // $file = $request->file('file')->store('assets/file', 'public');
 
         DetailPenilaian::create([
             'deskripsi_pekerjaan' => $request->deskripsi_pekerjaan,
@@ -277,7 +277,7 @@ class MahasiswaController extends Controller
             'perkembangan' => $request->perkembangan,
             'kesimpulan_saran' => $request->kesimpulan_saran,
             'score' => $request->score,
-            'file_path' => $request->file,
+            'file_path' => $request->file_path,
             'mahasiswa_id' => $request->mhs,
             'penyelia_id' => $request->penyelia,
         ]);
