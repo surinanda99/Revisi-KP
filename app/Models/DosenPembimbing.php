@@ -19,4 +19,9 @@ class DosenPembimbing extends Model
         'sisa_kuota',
         'status'
     ];
+
+    public function pengajuans()
+    {
+        return $this->hasMany(Pengajuan::class, 'id_dospem', 'id');
+    }
 }

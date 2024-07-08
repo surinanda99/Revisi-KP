@@ -10,6 +10,8 @@ class Pengajuan extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id_mhs', 
+        'id_dospem', 
         'kategori_bidang',
         'judul',
         'perusahaan',
@@ -17,4 +19,9 @@ class Pengajuan extends Model
         'deskripsi',
         'durasi',
     ];
+
+    public function dosenPembimbing()
+    {
+        return $this->belongsTo(DosenPembimbing::class, 'id_dospem', 'id');
+    }
 }

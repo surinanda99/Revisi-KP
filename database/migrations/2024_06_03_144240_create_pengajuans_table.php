@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_mhs');
             $table->unsignedBigInteger('id_dospem');
+            $table->foreign('id_dospem')->references('id')->on('dosen_pembimbings');
             $table->enum('kategori_bidang', ['Web Development', 'Application Development', 'Game Development', 'Data Analysis', 'Data Science', 'Artificial Intelligence', 'Graphic Design', 'Networking']);
             $table->string('judul');
             $table->string('perusahaan');

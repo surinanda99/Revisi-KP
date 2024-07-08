@@ -43,7 +43,9 @@
                 <form action="{{ route('draftKP', ['id' => $mhs->id]) }}" method="GET">
                     @csrf
                     <input type="hidden" name="id_mhs" value="{{ $mhs['id'] }}">
-                    <input type="hidden" name="id_dospem" value="{{ $data['id_dospem'] }}">
+                    {{-- <input type="hidden" name="id_dospem" value="{{ $data['id_dospem'] }}"> --}}
+                    <input type="hidden" name="id_dospem" value="{{ $data['id_dospem'] ?? '' }}"> 
+                    {{-- <input type="hidden" name="id_dospem" value="{{ isset($data['id_dospem']) ? $data['id_dospem'] : '' }}"> --}}
                     <div class="form-group row mb-3">
                         <label for="kategori_bidang" class="col-sm-2 col-form-label">Kategori Bidang <span class="required">*</span></label>
                         <div class="col-sm-3">

@@ -28,9 +28,14 @@ class Mahasiswa extends Model
         return $this->hasOne(User::class, 'email', 'email');
     }
 
+    // public function pengajuan()
+    // {
+    //     return $this->hasOne(Pengajuan::class);
+    // }
+
     public function pengajuan()
     {
-        return $this->hasOne(Pengajuan::class);
+        return $this->hasOne(Pengajuan::class, 'id_mhs', 'id');
     }
 
     public function detailPenilaians()

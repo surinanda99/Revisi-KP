@@ -6,10 +6,10 @@ use App\Models\Penyelia;
 use App\Models\Mahasiswa;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
+use App\Models\tatusMahasiswa;
 use App\Models\DetailPenilaian;
 use App\Models\DosenPembimbing;
 use App\Models\MahasiswaPenyelia;
-use App\Models\tatusMahasiswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -65,6 +65,7 @@ class MahasiswaController extends Controller
     public function storePengajuan(Request $request)
     {
         // dd($request->mahasiswa_id);
+        dd($request->all()); 
         $validator = Validator::make($request->all(), [
             'kategori_bidang' => 'required|in:Web Development,Application Development,Game Development,Data Analysis,Data Science,Artificial Intelligence,Graphic Design,Networking',
             'judul' => 'required|string',
@@ -72,16 +73,20 @@ class MahasiswaController extends Controller
             'posisi' => 'required|string',
             'deskripsi' => 'required|string',
             'durasi' => 'required|string',
+            // 'id_dospem' => 'required|exists:dosen_pembimbings,id',
         ]);
 
         if ($validator->fails()) {
             return redirect()->route('formPengajuan')
+            // return redirect()->route('draftKP', ['id' => $request->id_mhs])
                 ->withErrors($validator)
                 ->withInput();
         }
 
         $pengajuan = Pengajuan::create([
-            'mahasiswa_id' => $request->mahasiswa_id,
+            'id_mhs' => $request->id_mhs, 
+            // 'mahasiswa_id' => $request->mahasiswa_id,
+            'id_dospem' => $request->id_dospem, 
             'kategori_bidang' => $request->kategori_bidang,
             'judul' => $request->judul,
             'perusahaan' => $request->perusahaan,
@@ -92,8 +97,13 @@ class MahasiswaController extends Controller
         $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
 
         // arahkan ke halaman draftPengajuan dengan mengirimkan parameter $id
-        return redirect()->route('draftKP', ['id' => $mhs->id])
-            ->with('success', 'Data Mahasiswa Berhasil Ditambahkan');
+        // return redirect()->route('draftKP', ['id' => $mhs->id])
+        //     ->with('success', 'Data Mahasiswa Berhasil Ditambahkan');
+
+        // return redirect()->route('draftKP', ['id' => $request->id_mhs])
+        //     ->with('success', 'Data Mahasiswa Berhasil Ditambahkan');
+
+        return redirect()->route('dashboardMahasiswa')->with('success', 'Pengajuan berhasil dibuat');
     }
 
     public function draft_kp(Request $request)
@@ -108,39 +118,39 @@ class MahasiswaController extends Controller
         return view('mahasiswa.pengajuan_kp.draftPengajuan', compact('mhs', 'pengajuan'));
     }
 
-    public function updatePengajuan(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'kategori_bidang' => 'required|in:Web Development,Application Development,Game Development,Data Analysis,Data Science,Artificial Intelligence,Graphic Design,Networking',
-            'judul' => 'required|string',
-            'perusahaan' => 'required|string',
-            'posisi' => 'required|string',
-            'deskripsi' => 'required|string',
-            'durasi' => 'required|string',
-        ]);
+    // public function updatePengajuan(Request $request, $id)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'kategori_bidang' => 'required|in:Web Development,Application Development,Game Development,Data Analysis,Data Science,Artificial Intelligence,Graphic Design,Networking',
+    //         'judul' => 'required|string',
+    //         'perusahaan' => 'required|string',
+    //         'posisi' => 'required|string',
+    //         'deskripsi' => 'required|string',
+    //         'durasi' => 'required|string',
+    //     ]);
 
-        if ($validator->fails()) {
-            return redirect()->route('draftKP', ['id' => $id])
-                        ->withErrors($validator)
-                        ->withInput();
-        }
+    //     if ($validator->fails()) {
+    //         return redirect()->route('draftKP', ['id' => $id])
+    //                     ->withErrors($validator)
+    //                     ->withInput();
+    //     }
 
-        $pengajuan = Pengajuan::find($id);
-        $pengajuan->update([
-            'kategori_bidang' => $request->kategori_bidang,
-            'judul' => $request->judul,
-            'perusahaan' => $request->perusahaan,
-            'posisi' => $request->posisi,
-            'deskripsi' => $request->deskripsi,
-            'durasi' => $request->durasi,
-        ]);
+    //     $pengajuan = Pengajuan::find($id);
+    //     $pengajuan->update([
+    //         'kategori_bidang' => $request->kategori_bidang,
+    //         'judul' => $request->judul,
+    //         'perusahaan' => $request->perusahaan,
+    //         'posisi' => $request->posisi,
+    //         'deskripsi' => $request->deskripsi,
+    //         'durasi' => $request->durasi,
+    //     ]);
 
-        $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
+    //     $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
 
-        // arahkan ke halaman draftPengajuan dengan mengirimkan parameter $id
-        return redirect()->route('draftKP', ['id' => $mhs->id])
-            ->with('success', 'Data Mahasiswa Berhasil Diperbarui');
-    }
+    //     // arahkan ke halaman draftPengajuan dengan mengirimkan parameter $id
+    //     return redirect()->route('draftKP', ['id' => $mhs->id])
+    //         ->with('success', 'Data Mahasiswa Berhasil Diperbarui');
+    // }
 
     public function deletePengajuan()
     {
