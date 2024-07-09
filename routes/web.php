@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DetailLogbookControlller;
 use App\Http\Controllers\LogbookControlller;
 use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\PengajuanSidangController;
 use App\Http\Controllers\PenyeliaController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -66,6 +67,9 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
 
     // Route::get('/draft_review', [MahasiswaController::class, 'draft_review'])->name('draft_review');
     Route::post('/submit_draft_review', [MahasiswaController::class, 'submit_review'])->name('submit_review');
+    Route::get('/form-sidang', [PengajuanSidangController::class, 'form_sidang'])->name('form_pengajuan');
+    Route::get('/draft-sidang', [PengajuanSidangController::class, 'draft_sidang'])->name('draft_sidang');  
+    Route::post('/submit-sidang', [PengajuanSidangController::class, 'pengajuan_sidang'])->name('submit_sidang');
 });
 
 // Dosen

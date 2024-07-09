@@ -43,12 +43,13 @@
                                 <th>Aksi</th>
                             </thead>
                             @foreach($dosen as $dos)
+                            <tr>
                                 <td class="centered-column">{{ $loop->iteration }}</td>
                                 <td class="centered-column">{{ $dos->npp }}</td>
                                 <td class="centered-column">{{ $dos->nama }}</td>
                                 <td class="centered-column">{{ $dos->dosen->sisa_kuota }}</td>
-                                <td class="centered-column">{{ $dos->dosen->jumlah_ujian }}</td>
-                            @endforeach
+                                <td class="centered-column">{{ $dos->dosen->jumlah_ujian }}</td>`
+
                             <form action="{{ route('form-pengajuan-mahasiswa') }}" method="GET">
                                 @csrf
                                 <input type="hidden" name="id_dsn" value="{{ $dos->id }}">
@@ -67,6 +68,8 @@
                                             class="fas fa-chevron-circle-right"></i></button>
                                 </td>
                             </form>
+                            </tr>
+                            @endforeach
                         </table>
                     </div>
                     @if ($status->id_dospem != 0)

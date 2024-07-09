@@ -35,7 +35,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="{{ route('pengajuanSidang') }}" class="sidebar-link">
+                <a href="{{ route('form_pengajuan') }}" class="sidebar-link">
                     <i class="fas fa-certificate"></i>
                     <span>Pengajuan Sidang</span>
                 </a>

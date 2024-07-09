@@ -29,4 +29,9 @@ class StatusMahasiswa extends Model
     {
         return $this->hasMany(Pengajuan::class, 'id_mhs', 'id_mhs');
     }
+
+    public function sidang()
+    {
+        return $this->hasMany(PengajuanSidang::class, 'id_mhs', 'id_mhs');
+    }
 }

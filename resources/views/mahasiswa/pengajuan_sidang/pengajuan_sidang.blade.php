@@ -38,15 +38,15 @@
                                 @endforeach
                             </ul>
                         </div>
-                    @endif
-                    @if($data) --}}
-                        {{-- <div class="container">
+                    @endif --}}
+                    {{-- @if($data) 
+                        <div class="container">
                             <h4 class="mb-4">Pengajuan Sidang</h4>
                             <blockquote class="blockquote-primary">
                                 <p class="mb-3">Form dengan tanda asterik (<span class="required">*</span>) wajib diisi.
                                 </p>
                             </blockquote>
-                            <form action="" method="post"
+                            <form action="{{ route('submit_sidang') }}" method="post"
                                   enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group row mb-3">
@@ -64,7 +64,7 @@
                                     <div class="col-sm-3">
                                         <select class="form-select" name="bidang_kajian" id="inputBidang"
                                                 aria-label="Bidang Kajian" required>
-                                            {{-- @if($data['bidang_kajian'] == 'SC')
+                                            @if($data['bidang_kajian'] == 'SC')
                                                 <option disabled hidden>Pilih Bidang Kajian</option>
                                                 <option value="SC" selected>SC</option>
                                                 <option value="RPLD">RPLD</option>
@@ -79,8 +79,8 @@
                                                 <option value="SC">SC</option>
                                                 <option value="RPLD" selected>RPLD</option>
                                                 <option value="SKKKD">SKKKD</option>
-                                            @endif --}}
-                                        {{-- </select>
+                                            @endif 
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
@@ -103,37 +103,32 @@
                                 </div>
                                 <div class="form-group row mb-3 justify-content-end">
                                     <div class="col-sm-1 d-flex justify-content-end">
-                                        {{--                                    <button type="submit" class="btn btn-secondary me-2">Kembali</button>--}}
-                                        {{-- <button type="submit" class="btn btn-primary me-2">Simpan</button>
+                                        <button type="submit" class="btn btn-secondary me-2">Kembali</button>
+                                        <button type="submit" class="btn btn-primary me-2">Simpan</button>
                                     </div>
                                 </div>
                             </form>
-                        </div>  --}} 
-                    {{-- @else --}}
+                        </div> 
+                    @else --}}
                         <div class="container">
                             <h4 class="mb-4">Pengajuan Sidang</h4>
                             <blockquote class="blockquote-primary">
                                 <p class="mb-3">Form dengan tanda asterik (<span class="required">*</span>) wajib diisi.
                                 </p>
                             </blockquote>
-                            <form action="" method="post"
-                                  enctype="multipart/form-data">
+                            <form action="{{ route('submit_sidang') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group row mb-3">
-                                    <label for="inputJudul" class="col-sm-2 col-form-label">Judul <span
-                                            class="required">*</span></label>
+                                    <label for="inputJudul" class="col-sm-2 col-form-label">Judul <span class="required">*</span></label>
                                     <div class="col-sm-10">
-                                        <input type="judul" class="form-control" id="inputJudul"
-                                               placeholder="Masukkan Judul Kerja Praktek" name="judul">
+                                        <input type="text" class="form-control" id="inputJudul" placeholder="Masukkan Judul TA" name="judul" required>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
-                                    <label for="inputBidang" class="col-sm-2 col-form-label">Bidang Kajian <span
-                                            class="required">*</span></label>
+                                    <label for="inputBidang" class="col-sm-2 col-form-label">Bidang Kajian <span class="required">*</span></label>
                                     <div class="col-sm-3">
-                                        <select class="form-select" name="bidang_kajian" id="inputBidang"
-                                                aria-label="Bidang Kajian">
-                                            <option disabled selected hidden>Pilih Bidang Kajian</option>
+                                        <select class="form-select" name="bidang_kajian" id="inputBidang" aria-label="Bidang Kajian" required>
+                                            <option disabled hidden>Pilih Bidang Kajian</option>
                                             <option value="SC">SC</option>
                                             <option value="RPLD">RPLD</option>
                                             <option value="SKKKD">SKKKD</option>
@@ -141,46 +136,33 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
-                                    <label for="inputBerkas" class="col-sm-2 col-form-label">Dokumen Tugas Akhir <span
-                                            class="required">*</span></label>
+                                    <label for="inputBerkas" class="col-sm-2 col-form-label">Dokumen Tugas Akhir <span class="required">*</span></label>
                                     <div class="col-sm-10">
-                                        <input type="berkas" class="form-control" name="dokumen" id="inputBerkas"
-                                               placeholder="Masukkan Link Dokumen">
+                                        <input type="text" class="form-control" name="dokumen" id="inputBerkas" placeholder="Masukkan Link Dokumen" required>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
-                                    <label for="inputBerkas" class="col-sm-2 col-form-label">Dokumen Validasi Dosbing <span
-                                            class="required">*</span></label>
+                                    <label for="inputBerkas" class="col-sm-2 col-form-label">Dokumen Validasi Dosbing <span class="required">*</span></label>
                                     <div class="col-sm-10">
-                                        <input type="berkas" class="form-control" name="dokumen" id="inputBerkas"
-                                               placeholder="Masukkan Link Dokumen">
-                                    </div>
-                                </div>
-                                {{-- <div class="form-group row mb-3">
-                                    <label for="inputJudul" class="col-sm-2 col-form-label">Nilai Penyelia <span
-                                            class="required">*</span></label>
-                                    <div class="col-sm-10">
-                                        <input type="judul" class="form-control" id="inputJudul"
-                                               placeholder="Masukkan Judul Nilai Penyelia" name="judul">
+                                        <input type="text" class="form-control" name="validasi" id="inputBerkas" placeholder="Masukkan Link Dokumen" required>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
-                                    <label for="inputJudul" class="col-sm-2 col-form-label">Nilai Pembimbing <span
-                                            class="required">*</span></label>
+                                    <label for="inputNilai" class="col-sm-2 col-form-label">Nilai Penyelia <span class="required">*</span></label>
                                     <div class="col-sm-10">
-                                        <input type="judul" class="form-control" id="inputJudul"
-                                               placeholder="Masukkan Judul Nilai Pembimbing" name="judul">
+                                        <input type="text" class="form-control" id="inputNilai" placeholder="Masukkan Nilai Penyelia" name="nilaiPenyelia" required>
                                     </div>
-                                </div> --}}
+                                </div>
                                 <div class="form-group row mb-3 justify-content-end">
                                     <div class="col-sm-1 d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-primary me-2">Lanjut</button>
+                                        <button type="submit" class="btn btn-secondary me-2">Kembali</button>
+                                        <button type="submit" class="btn btn-primary me-2">Simpan</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                    {{-- @endif
-                @endif --}}
+                     {{-- @endif --}}
+                {{-- @endif  --}}
             </div>
         </div>
     </div>
