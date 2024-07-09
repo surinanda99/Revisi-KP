@@ -15,6 +15,7 @@
             <thead class="table-header">
                 <th class="align-middle">No.</th>
                 <th class="align-middle">Mahasiswa</th>
+                <th class="align-middle">Penyelia</th>
                 <th class="align-middle">Deskripsi Pekerjaan</th>
                 <th class="align-middle">Prestasi dan Kontribusi</th>
                 <th class="align-middle">Keterampilan dan Kemampuan</th>
@@ -23,7 +24,8 @@
                 <th class="align-middle">Perkembangan</th>
                 <th class="align-middle">Kesimpulan Dan Saran</th>
                 <th class="align-middle">Score</th>
-                <th class="align-middle">Upload File</th>
+                <th class="align-middle">File</th>
+                <th class="align-middle">Aksi</th>
             </thead>
             {{-- <tr>
                 <td class="centered-column">1</td>
@@ -64,6 +66,7 @@
                     <td class="centered-column">{{ $review->perkembangan }}</td>
                     <td class="centered-column">{{ $review->kesimpulan_saran }}</td>
                     <td class="centered-column">{{ $review->score }}</td>
+                    <td class="centered-column">{{ $review->file_path }}</td>
                     <td class="centered-column">
                         <button type="info" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#dialogDetailDataMahasiswa" ><i class="fas fa-info-circle"></i></button>
                         <button class="btn btn-warning me-1 btn-edit" data-id="{{ $review->id }}" data-bs-toggle="modal" data-bs-target="#dialogEditMhs_{{ $review->id }}">

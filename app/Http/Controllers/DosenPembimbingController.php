@@ -62,7 +62,7 @@ class DosenPembimbingController extends Controller
     public function review_penyelia()
     {
         $detail_penilaians = DetailPenilaian::all();
-        return view('dosen.review_penyelia_mhs.review_penyelia_mhs');
+        return view('dosen.review_penyelia_mhs.review_penyelia_mhs', compact('detail_penilaians'));
     }
 
     public function Pengajuan_sidang_mhs()
