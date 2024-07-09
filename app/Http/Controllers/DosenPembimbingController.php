@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailPenilaian;
 use Illuminate\Http\Request;
 use App\Models\Dosen;
 use App\Models\StatusMahasiswa;
@@ -60,6 +61,7 @@ class DosenPembimbingController extends Controller
 
     public function review_penyelia()
     {
+        $detail_penilaians = DetailPenilaian::all();
         return view('dosen.review_penyelia_mhs.review_penyelia_mhs');
     }
 

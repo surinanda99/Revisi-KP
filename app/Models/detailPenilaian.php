@@ -9,6 +9,8 @@ class DetailPenilaian extends Model
 {
     use HasFactory;
 
+    protected $table = 'detail_penilaians';
+
     protected $fillable = [
         'deskripsi_pekerjaan',
         'prestasi_kontribusi',
