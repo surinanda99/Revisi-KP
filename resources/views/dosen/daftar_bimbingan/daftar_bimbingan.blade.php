@@ -33,7 +33,7 @@
                                 </button>
                             </td>
                             <td>{{ $pj->mahasiswa->mahasiswa->ipk }}</td>
-                            <td>{{ $pj->topik }}</td>
+                            <td>{{ $pj->judul }}</td>
                             <td class="centered-column">
                                 <form action="{{route('update-mahasiswa-bimbingan')}}" method="post"
                                       enctype="multipart/form-data">
@@ -49,22 +49,22 @@
                             </td>
                         </tr>
                     @endforeach
-                {{-- <tr class="centered-column">
-                    <td>1</td>
-                    <td>A11.2021.13550</td>
-                    <td>Muhammad Maulana Hikam</td>
+                <tr class="centered-column">
+                    <td>2</td>
+                    <td>A11.2021.13800</td>
+                    <td>Nikolas Adi Kurniatmaja Sijabat</td>
                     <td>
                         <a href="#" class="btn btn-warning"><i class="fa-solid fa-images"></i></a>
                     </td>
                     <td>3.84</td>
-                    <td>Aplikasi Identifikasi Penyakit Kanker</td>
+                    <td>Sentimen Analysis</td>
                     <td class="centered-column">
                         <button type="submit" name="status" class="btn btn-success" value="ACC"><i
                                 class="fa-regular fa-circle-check"></i></button>
                         <button type="submit" name="status" class="btn btn-danger delete-button" value="REVISI"><i
                                 class="fa-regular fa-circle-xmark"></i></button>
                     </td>
-                </tr> --}}
+                </tr>
             </table>
         </div>
         {{-- {{ $pengajuan->links() }} --}}

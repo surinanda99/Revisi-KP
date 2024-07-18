@@ -25,8 +25,8 @@ return new class extends Migration
              $table->longText('alasan')->nullable();
              $table->timestamps();
  
-            //  $table->foreign('id_mhs')->references('id')->on('mahasiswa')->cascadeOnDelete();
-            //  $table->foreign('id_dsn')->references('id')->on('dosen')->cascadeOnDelete();
+             $table->foreign('id_mhs')->references('id')->on('mahasiswa')->cascadeOnDelete();
+             $table->foreign('id_dsn')->references('id')->on('dosen')->cascadeOnDelete();
          });
      }
     // public function up(): void

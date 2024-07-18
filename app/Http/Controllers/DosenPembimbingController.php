@@ -69,4 +69,9 @@ class DosenPembimbingController extends Controller
     {
         return view('dosen.pengajuan_sidang.pengajuan_sidang_mhs');
     }
+
+    public function dash()
+    {
+        return view('dosen.dashboard');
+    }
 }

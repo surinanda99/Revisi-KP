@@ -20,6 +20,8 @@ return new class extends Migration
             $table->integer('sisa')->default(0);
             $table->enum('status', ['TERSEDIA', 'PENUH'])->default('TERSEDIA');
             $table->timestamps();
+
+            $table->foreign('id_mhs')->references('id')->on('mahasiswa')->cascadeOnDelete();
         });
     }
 

@@ -20,6 +20,7 @@
                 <th>Nilai Pembimbing</th>
                 <th>Nilai Penguji</th>
                 <th>Waktu Sidang</th>
+                <th>Aksi</th>
                 </thead>
                 {{-- @foreach ($pengajuan as $pj)
                         <tr class="centered-column">

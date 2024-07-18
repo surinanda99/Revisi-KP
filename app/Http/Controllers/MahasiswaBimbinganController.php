@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dosen;
 use App\Models\Pengajuan;
+use App\Models\LogbookBimbingan;
 use App\Models\StatusMahasiswa;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
@@ -32,6 +33,28 @@ class MahasiswaBimbinganControlller extends Controller
 
     public function update(Request $request)
     {
+        $logbook = LogbookBimbingan::findOrFail($request->id_logbook);
+        $logbook->status = $request->status;
+        $logbook->save();
+
+        $status = StatusMahasiswa::where('id_mhs', $logbook->id_mhs)->first();
+        $status->status = $request->status;
+        $status->save();
+
+        $dsn = Dosen::where('email', auth()->user()->email)->first();
+
+        // activity()
+        //     ->inLog('logbook')
+        //     ->causedBy($dsn)
+        //     ->performedOn($logbook)
+        //     ->withProperties(['id_mhs' => $logbook->id_mhs])
+        //     ->log('Update status logbook');
+
+        return redirect()->route('dosbing-logbook');
+    }
+
+    // public function update(Request $request)
+    // {
 //         try {
 // //            dd($request->all());
 //             $pengajuan = Pengajuan::findOrFail($request->id);
@@ -84,7 +107,7 @@ class MahasiswaBimbinganControlller extends Controller
 //         }
 
 //        return redirect()->route('mahasiswa-bimbingan');
-    }
+//    }
 
     
 
