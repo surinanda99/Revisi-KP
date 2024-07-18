@@ -12,6 +12,8 @@ class StatusMahasiswa extends Model
     protected $fillable = [
         'id_mhs',
         'id_dsn',
+        'bab_terakhir',
+        'jml_bimbingan',
         'status',
         'pengajuan',
     ];

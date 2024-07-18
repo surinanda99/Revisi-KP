@@ -5,9 +5,9 @@
     <h4 class="mb-4">Bimbingan Kerja Praktek</h4>
 
     @php
-        if ($status->id_dospem == 0) {
+        if ($status->id_dsn == 0) {
             echo '<div class="alert alert-warning" role="alert">
-                Anda belum memiliki dosen pembimbing. Silahkan melakukan pengajuan TA terlebih dahulu.
+                Anda belum memiliki dosen pembimbing. Silahkan melakukan pengajuan KP terlebih dahulu.
             </div>';
         } else {
             echo '<p class="mb-2 d-flex justify-content-between align-items-center">
@@ -30,9 +30,9 @@
             @foreach ($logbook as $lb)
                 <tr>
                     <td class="centered-column">{{ $loop->iteration }}</td>
-                    <td class="centered-column">{{ $lb->tanggal_bimbingan }}</td>
-                    <td class="content-column">{{ $lb->uraian_bimbingan }}</td>
-                    <td class="centered-column">{{ $lb->bab_terakhir_bimbingan }}</td>
+                    <td class="centered-column">{{ $lb->tanggal }}</td>
+                    <td class="content-column">{{ $lb->uraian }}</td>
+                    <td class="centered-column">{{ $lb->bab }}</td>
                     <td class="centered-column">
                         @if ($lb->status_logbook == 'ACC')
                             <button type="status" class="btn btn-success rounded-5">ACC
@@ -59,7 +59,7 @@
             @endforeach
         </table>
     </div>
-    {{ $logbook->links() }}
+    {{-- {{ $logbook->links() }} --}}
     
 </div>
 
@@ -88,9 +88,9 @@
                 .then(response => response.json())
                 .then(data => {
                     // Update konten modal dengan data yang diterima dari backend
-                    detailModal.querySelector('.date').textContent = data.tanggal_bimbingan;
-                    detailModal.querySelector('.uraian').textContent = data.uraian_bimbingan;
-                    detailModal.querySelector('.bab').textContent = data.bab_terakhir_bimbingan;
+                    detailModal.querySelector('.date').textContent = data.tanggal;
+                    detailModal.querySelector('.uraian').textContent = data.uraian;
+                    detailModal.querySelector('.bab').textContent = data.bab;
                     detailModal.querySelector('.status').textContent = data.status_logbook;
                     detailModal.querySelector('.dokumen').textContent = data.dokumen;
 
@@ -114,9 +114,9 @@
             fetch('/logbook/' + logbookId)
                 .then(response => response.json())
                 .then(data => {
-                    editModal.querySelector('#inputTanggal').value = data.tanggal_bimbingan;
-                    editModal.querySelector('#inputCatatan').value = data.uraian_bimbingan;
-                    editModal.querySelector('#inputBidang').value = data.bab_terakhir_bimbingan;
+                    editModal.querySelector('#inputTanggal').value = data.tanggal;
+                    editModal.querySelector('#inputCatatan').value = data.uraian;
+                    editModal.querySelector('#inputBidang').value = data.bab;
                     editModal.querySelector('#inputDok').value = data.dokumen;
                 })
                 .catch(error => console.error('Error:', error));

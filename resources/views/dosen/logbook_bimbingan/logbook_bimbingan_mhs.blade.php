@@ -1,9 +1,9 @@
-@extends('dosbing.layouts.main')
+@extends('dosen.layouts.main')
 @section('title', 'Logbook Mahasiswa Bimbingan')
 @section('content')
 
     <!--Dialog Info Logbook-->
-    @include('dosbing.daftar_logbook_mahasiswa.detail_logbook')
+    @include('dosen.logbook_bimbingan.detail_logbook')
 
     <div class="wrapper d-flex flex-column min-vh-100">
         <div class="container flex-grow-1">
