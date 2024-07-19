@@ -48,13 +48,13 @@
         </nav>
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4"><b>Welcome,</b></h1>
+                <h1 class="mt-4"><b>Welcome, {{ $dosen->nama }}</b></h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active">Dashboard</li>
                 </ol>
                 <div class="row">
                     <div class="col-xl-3 col-md-6">
-                        <div class="card text-white mb-4" id="card-view">
+                        <div class="card text-dark mb-4" id="card-view">
                             <div class="card-body"><b>Mahasiswa Bimbingan</b></div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
                                 <a class="small text-white stretched-link" href="">See
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
-                        <div class="card text-white mb-4" id="card-view">
+                        <div class="card text-dark mb-4" id="card-view">
                             <div class="card-body"><b>Logbook Mahasiswa</b></div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
                                 <a class="small text-white stretched-link" href="">See
@@ -74,18 +74,18 @@
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
-                        <div class="card text-white mb-4" id="card-view">
+                        <div class="card text-dark mb-4" id="card-view">
                             <div class="card-body"><b>Mahasiswa Sidang</b></div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
                                 <a class="small text-white stretched-link"
-                                   href=""">See
+                                   href="">See
                                     Details</a>
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
-                        <div class="card text-white mb-4" id="card-view">
+                        <div class="card text-dark mb-4" id="card-view">
                             <div class="card-body"><b>Tentang Kami</b></div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
                                 <a class="small text-white stretched-link" href="/about">See Details</a>

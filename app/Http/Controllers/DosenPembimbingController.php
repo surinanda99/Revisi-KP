@@ -13,19 +13,19 @@ use App\Models\Pengajuan;
 
 class DosenPembimbingController extends Controller
 {
-    public function index()
-    {
-        $user = auth()->user();
-        $dosen = Dosen::where('email', $user->email)->first();
-        $logbook = LogbookBimbingan::where('id_dsn', $dosen->id_dospem)->paginate(10);
-        $status = StatusMahasiswa::all();
-        $mahasiswa = Mahasiswa::all();
+    // public function index()
+    // {
+    //     $user = auth()->user();
+    //     $dosen = Dosen::where('email', $user->email)->first();
+    //     $logbook = LogbookBimbingan::where('id_dsn', $dosen->id_dospem)->paginate(10);
+    //     $status = StatusMahasiswa::all();
+    //     $mahasiswa = Mahasiswa::all();
 
-        return view(
-            'dosen.logbook_bimbingan.logbook_bimbingan_mhs',
-            compact('dosen', 'logbook', 'status', 'mahasiswa')
-        );
-    }
+    //     return view(
+    //         'dosen.logbook_bimbingan.logbook_bimbingan_mhs',
+    //         compact('dosen', 'logbook', 'status', 'mahasiswa')
+    //     );
+    // }
 
     public function update(Request $request)
     {
@@ -72,6 +72,9 @@ class DosenPembimbingController extends Controller
 
     public function dash()
     {
-        return view('dosen.dashboard');
+        $user = auth()->user();
+        $dosen = Dosen::where('email', $user->email)->first();
+
+        return view('dosen.dashboard', compact('dosen'));
     }
 }
