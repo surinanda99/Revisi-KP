@@ -19,6 +19,8 @@ class Pengajuan extends Model
         'posisi',
         'deskripsi',
         'durasi',
+        'status',
+        'alasan',
     ];
 
     public function dosen()

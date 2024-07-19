@@ -21,6 +21,7 @@ class PengajuanController extends Controller
         if (Pengajuan::where('id_mhs', $status->id_mhs)->first() != null) {
             $pengajuan = Pengajuan::where('id_mhs', $status->id_mhs)
             ->whereIn('status', ['ACC', 'PENDING'])->first();
+        if ($pengajuan) {
             $dospil = Dosen::where('id', $pengajuan->id_dsn)->first();
             return view('mahasiswa.pengajuan_kp.draftPengajuan', compact(
                 'mhs',
@@ -31,7 +32,8 @@ class PengajuanController extends Controller
                 'data'
             ));
         }
-
+    }
+        // dd($dosen);
         return view('mahasiswa.pengajuan_kp.pilihDosbing', compact('status', 'dosen'));
     }
 

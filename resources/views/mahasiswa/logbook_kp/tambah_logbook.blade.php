@@ -17,14 +17,14 @@
                                 <label for="inputTanggal" class="col-sm-2 col-form-label">Tanggal <span
                                         class="required">*</span></label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control" id="inputTanggal">
+                                    <input type="date" name="tanggal" class="form-control" id="inputTanggal">
                                 </div>
                         </div>
                         <div class="form-group row mb-3">
                             <label for="inputUraian" class="col-sm-2 col-form-label">Uraian Bimbingan <span
                                     class="required">*</span></label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" name="uraian_bimbingan" id="inputUraian" rows="3"
+                                <textarea class="form-control" name="uraian" id="inputUraian" rows="3"
                                     placeholder="Masukkan Uraian Bimbingan"></textarea>
                             </div>
                         </div>
@@ -32,7 +32,7 @@
                             <label for="inputBab" class="col-sm-2 col-form-label">Bab Terakhir Bimbingan <span
                                     class="required">*</span></label>
                             <div class="col-sm-3">
-                                <select class="form-select" id="inputBab" name="bab_terakhir_bimbingan"
+                                <select class="form-select" id="inputBab" name="bab"
                                     aria-label="Bidang Kajian">
                                     <option disabled selected hidden>Pilih Bab</option>
                                     <option value="1">Bab I</option>

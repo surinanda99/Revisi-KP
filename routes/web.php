@@ -11,6 +11,8 @@ use App\Http\Controllers\LogbookControlller;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PengajuanSidangController;
 use App\Http\Controllers\PenyeliaController;
+use App\Http\Controllers\DospemBimbinganController;
+use App\Http\Controllers\MahasiswaBimbinganControlller;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -52,6 +54,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::post('/logbook', [LogbookControlller::class, 'store'])->name('mahasiswa-logbook-create');
     Route::get('/logbook/{id}', [DetailLogbookControlller::class,'show'])->name('mahasiswa-logbook-detail');
     Route::post('/logbook/{id}', [DetailLogbookControlller::class,'update'])->name('mahasiswa-logbook-update');
+    Route::post('/updatePengajuan', [MahasiswaBimbinganControlller::class, 'update'])->name('update-mahasiswa-bimbingan');
 
     // Route::get('/draft', [MahasiswaController::class, 'draft_penilaian']);
     Route::get('/Profil/{id}', [MahasiswaController::class, 'profil'])->name('halamanProfil');
@@ -74,11 +77,13 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
 
 // Dosen
 Route::middleware(['auth', 'role:dosen'])->group(function () {
-    Route::get('/dosen', [DosenPembimbingController::class, 'index'])->name('dashboardDosen');
+    // Route::get('/dosen', [DosenPembimbingController::class, 'index'])->name('dashboardDosen');
+    Route::get('/dosen', [DosenPembimbingController::class, 'dash'])->name('dashboardDosen');
     Route::get('/daftar_bimbingan', [DosenPembimbingController::class, 'daftar_mhs_bimbingan'])->name('pageDaftarMhsBimbingan');
     Route::get('/logbook_mhs', [DosenPembimbingController::class, 'logbook_bimbingan_mhs'])->name('pageLogbook');
     Route::get('/review_mhs', [DosenPembimbingController::class, 'review_penyelia'])->name('pageReviewPenyelia');
-    Route::get('/pengajuan_mhs', [DosenPembimbingController::class, 'pengajuan_sidang_mhs'])->name('pagePengajuanSidang');   
+    Route::get('/pengajuan_mhs', [DosenPembimbingController::class, 'pengajuan_sidang_mhs'])->name('pagePengajuanSidang'); 
+    Route::get('/logbookBimbingan', [DospemBimbinganController::class, 'index'])->name('dosbing-logbook');  
 });
 
 // Koordinator

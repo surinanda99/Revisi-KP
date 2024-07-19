@@ -2,103 +2,184 @@
 @section('title', 'Dashboard Dosen')
 @section('content')
 <main>
-<div class="container-fluid px-4">
+    <div class="wrapper d-flex flex-column min-vh-100">
+        <nav class="sb-topnav navbar navbar-expand">
+            <!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search here..." aria-label="Search for..."
+                           aria-describedby="btnNavbarSearch" />
+                    <button class="btn" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+            <!-- Notification -->
+            <div class="navbar-nav px-1">
+                <div class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdown" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-bell"></i>
+                        <span id="notificationCount" class="badge bg-danger">3</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end mt-2" aria-labelledby="notificationDropdown">
+                        <li class="dropdown-header d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold">Notifications</span>
+                            <div class="markAsRead" id="markAsRead" onclick="markAsRead(this)">Sudah dibaca</div>
+                        </li>
+                        <li class="dropdown-item d-flex justify-content-between align-items-center">
+                            <span>New logbook entry from John Doe</span>
+                        </li>
+                        <li class="dropdown-item d-flex justify-content-between align-items-center">
+                            <span>Jane Smith submitted her final report</span>
+                        </li>
+                        <li class="dropdown-item d-flex justify-content-between align-items-center">
+                            <span>Meeting reminder with your students</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Navbar Profile-->
+            <div class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <div class="nav-item">
+                    <a class="nav-link" id="navbarDropdown" href="/profile" role="button" aria-expanded="false">
+                        <img src="https://via.placeholder.com/200x200" alt="Profile Picture" class="rounded-circle" width="30" height="30">
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <main>
+            <div class="container-fluid px-4">
                 <h1 class="mt-4"><b>Welcome,</b></h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active">Dashboard</li>
                 </ol>
-
-
-    <div class="container-border">
-        <div class="row">
-            <!-- Detail Mahasiswa Bimbingan -->
-            <div class="col-md-6 mb-4">
-                <div class="card border-primary shadow h-100 rounded-lg">
-                    <div class="card-body text-center">
-                        <i class="fas fa-users fa-3x text-primary mb-3"></i>
-                        <h5 class="text-primary">Detail Mahasiswa Bimbingan</h5>
-                        <p class="text-muted">Lihat dan kelola detail mahasiswa</p>
+                <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card text-white mb-4" id="card-view">
+                            <div class="card-body"><b>Mahasiswa Bimbingan</b></div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="">See
+                                    Details</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card text-white mb-4" id="card-view">
+                            <div class="card-body"><b>Logbook Mahasiswa</b></div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="">See
+                                    Details</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card text-white mb-4" id="card-view">
+                            <div class="card-body"><b>Mahasiswa Sidang</b></div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link"
+                                   href=""">See
+                                    Details</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card text-white mb-4" id="card-view">
+                            <div class="card-body"><b>Tentang Kami</b></div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="/about">See Details</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Pengajuan KP -->
-            <div class="col-md-6 mb-4">
-                <div class="card border-success shadow h-100 rounded-lg">
-                    <div class="card-body text-center">
-                        <i class="fas fa-file-signature fa-3x text-success mb-3"></i>
-                        <h5 class="text-success">Pengajuan Kerja Praktek</h5>
-                        <p class="text-muted">Tinjau dan setujui pengajuan KP mahasiswa</p>
+                {{--Chart Mahasiswa TA 1 & TA 2--}}
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-area me-1"></i>
+                                Mahasiswa TA 1
+                            </div>
+                            <div class="card-body">
+                                <canvas id="chartTA1" width="100%" height="40"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-area me-1"></i>
+                                Mahasiswa TA 2
+                            </div>
+                            <div class="card-body">
+                                <canvas id="chartTA2" width="100%" height="40"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Review Mahasiswa -->
-            <div class="col-md-6 mb-4">
-                <div class="card border-warning shadow h-100 rounded-lg">
-                    <div class="card-body text-center">
-                        <i class="fas fa-book-reader fa-3x text-warning mb-3"></i>
-                        <h5 class="text-warning">Review Penyelia Mahasiswa</h5>
-                        <p class="text-muted">Lakukan review Penyelia mahasiswa</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Logbook Mahasiswa -->
-            <div class="col-md-6 mb-4">
-                <div class="card border-info shadow h-100 rounded-lg">
-                    <div class="card-body text-center">
-                        <i class="fas fa-book fa-3x text-info mb-3"></i>
-                        <h5 class="text-info">Logbook Mahasiswa</h5>
-                        <p class="text-muted">Periksa dan pantau logbook Kerja Praktek</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-            
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Aktivitas Terbaru</h6>
+                {{--Jumlah Kuota, Ajuan, Diterima, serta Sisa Mahasiswa Bimbingan--}}
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-regular fa-address-book me-1"></i>
+                        Informasi Kuota Bimbingan
                     </div>
                     <div class="card-body">
-                        <table class="table table-bordered">
+                        <table class="table table-striped">
                             <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Aktivitas</th>
-                                    <th>Tanggal</th>
-                                </tr>
+                                <th>Total Kuota</th>
+                                <th>Jumlah Ajuan</th>
+                                <th>Jumlah Diterima</th>
+                                <th>Sisa Kuota</th>
                             </thead>
-                            <tbody>
+                            <tbody class="centered-column">
                                 <tr>
+                                    <td>5</td>
                                     <td>1</td>
-                                    <td>Mahasiswa A mengajukan proposal Kerja Praktek</td>
-                                    <td>2024-05-01</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Mahasiswa B telah menyelesaikan Bab 2 laporan KP</td>
-                                    <td>2024-05-05</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Mahasiswa C meminta tinjauan untuk Bab 3 laporan KP</td>
-                                    <td>2024-05-10</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Mahasiswa D telah menyelesaikan presentasi KP</td>
-                                    <td>2024-05-15</td>
+                                    <td>0</td>
+                                    <td>5</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
+        <footer class="py-4 mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Bimbingan Online</div>
+                    <div>
+                        <a href="#" class="text-secondary">Privacy Policy</a>
+                        &middot;
+                        <a href="#" class="text-secondary">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
-</div>
-</main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Misalnya, jumlah notifikasi diambil dari server
+            var notificationCount = 3; // Gantilah dengan jumlah notifikasi yang sesuai
+            var notificationCountElement = document.getElementById('notificationCount');
+
+            if (notificationCount > 0) {
+                notificationCountElement.textContent = notificationCount;
+                notificationCountElement.style.display = 'inline-block';
+            } else {
+                notificationCountElement.style.display = 'none';
+            }
+        });
+
+        function markAsRead(button) {
+            // Mark the notification as read
+            button.parentElement.style.display = 'none';
+            // Decrement the notification count
+            let countElement = document.getElementById('notificationCount');
+            let count = parseInt(countElement.innerText);
+            countElement.innerText = count > 0 ? count - count : 0;
+        }
+    </script>
 @endsection

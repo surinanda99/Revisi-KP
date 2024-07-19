@@ -16,6 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('id_mhs');
             $table->unsignedBigInteger('id_dsn')->default(0);
             $table->tinyInteger('pengajuan');
+            $table->integer('bab_terakhir')->nullable();
+            $table->integer('jml_bimbingan')->default(0);
+            $table->enum('status', ['ACC', 'REVISI', 'PENDING'])->default('PENDING');
+            $table->longText('logbook')->nullable();
             $table->timestamps();
         });
     }
