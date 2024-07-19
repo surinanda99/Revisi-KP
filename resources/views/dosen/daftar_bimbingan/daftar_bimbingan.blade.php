@@ -35,17 +35,16 @@
                             <td>{{ $pj->mahasiswa->mahasiswa->ipk }}</td>
                             <td>{{ $pj->judul }}</td>
                             <td class="centered-column">
-                                <form action="{{route('update-mahasiswa-bimbingan')}}" method="post"
-                                      enctype="multipart/form-data">
+                                <form action="{{ route('update-mahasiswa-bimbingan') }}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $pj->id }}">
-                                    <button type="submit" name="status" class="btn btn-success" value="ACC"><i
-                                            class="fa-regular fa-circle-check"></i></button>
+                                    <button type="submit" name="status" class="btn btn-success" value="ACC">
+                                        <i class="fa-regular fa-circle-check"></i> ACC
+                                    </button>
+                                    <button type="submit" name="status "class="btn btn-danger delete-button" value="TOLAK" id="rejectButton_{{ $pj->id }}">
+                                        <i class="fa-regular fa-circle-xmark"></i> TOLAK
+                                    </button>
                                 </form>
-                                <button type="button" class="btn btn-danger delete-button" value="TOLAK"
-                                        id="rejectButton_{{ $pj->id }}">
-                                    <i class="fa-regular fa-circle-xmark"></i>
-                                </button>
                             </td>
                         </tr>
                     @endforeach
@@ -104,7 +103,7 @@
             });
         </script>
     @endsection
-    
+
 
 
 
