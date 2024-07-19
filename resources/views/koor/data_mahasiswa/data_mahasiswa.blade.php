@@ -68,7 +68,7 @@
                 <th class="align-middle">NIM</th>
                 <th class="align-middle">Nama Mahasiswa</th>
                 <th class="align-middle">IPK</th>
-                {{-- <th class="align-middle">Transkip</th> --}}
+                <th class="align-middle">Transkip</th>
                 <th class="align-middle">Telp Mhs</th>
                 <th class="align-middle">Email</th>
                 <th class="align-middle">Dosen Wali</th>
@@ -83,6 +83,7 @@
                     <td class="centered-column">{{ $mahasiswa->nim }}</td>
                     <td class="centered-column">{{ $mahasiswa->nama }}</td>
                     <td class="centered-column">{{ $mahasiswa->ipk }}</td>
+                    <td class="centered-column">{{ $mahasiswa->transkrip_nilai }}</td>
                     <td class="centered-column">{{ $mahasiswa->telp_mhs }}</td>
                     <td class="centered-column">{{ $mahasiswa->email }}</td>
                     <td class="centered-column">{{ $mahasiswa->dosen_wali }}</td>
