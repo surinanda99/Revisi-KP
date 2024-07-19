@@ -13,27 +13,27 @@ class PengajuanController extends Controller
     public function index()
     {
         $dosen = Dosen::with('dosen')->get();
-        // dd($dosen);
         $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
         $status = StatusMahasiswa::where('id_mhs', $mhs->id)->first();
         $history = Pengajuan::where('id_mhs', $status->id_mhs)->where('status', 'TOLAK')->get();
         $data = false;
+        
         if (Pengajuan::where('id_mhs', $status->id_mhs)->first() != null) {
             $pengajuan = Pengajuan::where('id_mhs', $status->id_mhs)
-            ->whereIn('status', ['ACC', 'PENDING'])->first();
-        if ($pengajuan) {
-            $dospil = Dosen::where('id', $pengajuan->id_dsn)->first();
-            return view('mahasiswa.pengajuan_kp.draftPengajuan', compact(
-                'mhs',
-                'status',
-                'pengajuan',
-                'history',
-                'dospil',
-                'data'
-            ));
+                ->whereIn('status', ['ACC', 'PENDING'])->first();
+            if ($pengajuan) {
+                $dospil = Dosen::where('id', $pengajuan->id_dsn)->first();
+                return view('mahasiswa.pengajuan_kp.draftPengajuan', compact(
+                    'mhs',
+                    'status',
+                    'pengajuan',
+                    'history',
+                    'dospil',
+                    'data'
+                ));
+            }
         }
-    }
-        // dd($dosen);
+        
         return view('mahasiswa.pengajuan_kp.pilihDosbing', compact('status', 'dosen'));
     }
 

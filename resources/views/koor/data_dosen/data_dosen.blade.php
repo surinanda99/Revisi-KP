@@ -73,7 +73,8 @@
                     <td class="centered-column">{{ $dosen->dosen->nama }}</td>
                     <td class="centered-column">{{ $dosen->dosen->bidang_kajian }}</td>
                     <td class="centered-column">{{ $dosen->kuota }}</td>
-                    <td class="centered-column">{{ $dosen->jumlah_ajuan }}</td>
+                    <td class="centered-column">{{ $dosen->dosen->pengajuan->count() }}</td>
+                    {{-- <td class="centered-column">{{ $dosen->jumlah_ajuan }}</td> --}}
                     <td class="centered-column">{{ $dosen->ajuan_diterima }}</td>
                     <td class="centered-column">{{ $dosen->sisa_kuota }}</td>
                     <td class="centered-column">{{ $dosen->status }}</td>

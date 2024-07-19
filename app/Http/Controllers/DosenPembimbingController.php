@@ -75,6 +75,12 @@ class DosenPembimbingController extends Controller
         $user = auth()->user();
         $dosen = Dosen::where('email', $user->email)->first();
 
-        return view('dosen.dashboard', compact('dosen'));
+        // Get the DosenPembimbing related to the Dosen
+        $dosenPembimbing = $dosen->dosen;
+
+        // Count the number of submissions for the DosenPembimbing
+        $jumlahAjuan = Pengajuan::where('id_dsn', $dosenPembimbing->id)->count();
+
+        return view('dosen.dashboard', compact('dosen', 'jumlahAjuan'));
     }
 }

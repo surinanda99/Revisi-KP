@@ -135,10 +135,14 @@
                             </thead>
                             <tbody class="centered-column">
                                 <tr>
-                                    <td>5</td>
+                                    {{-- <td>5</td>
                                     <td>1</td>
                                     <td>0</td>
-                                    <td>5</td>
+                                    <td>5</td> --}}
+                                    <td>{{ $dosen->dosen->kuota }}</td>
+                                    <td>{{ $jumlahAjuan }}</td>
+                                    <td>{{ $dosen->dosen->ajuan_diterima }}</td>
+                                    <td>{{ $dosen->dosen->sisa_kuota }}</td>
                                 </tr>
                             </tbody>
                         </table>

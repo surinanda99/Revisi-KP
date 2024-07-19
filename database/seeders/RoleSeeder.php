@@ -18,7 +18,6 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        
         // Buat Role
         $roles = ['dosen', 'mahasiswa', 'koor', 'admin'];
 
@@ -30,6 +29,7 @@ class RoleSeeder extends Seeder
         $users = [
             ['name' => 'Admin', 'email' => 'admin@bimbingan.online', 'password' => bcrypt('123456'), 'role' => 'admin'],
             ['name' => 'Dosen', 'email' => 'adhitya@dsn.dinus.ac.id', 'password' => bcrypt('123456'), 'role' => 'dosen'],
+            ['name' => 'Dosen', 'email' => 'ardytha.luthfiarta@dsn.dinus.ac.id', 'password' => bcrypt('123456'), 'role' => 'dosen'],
             ['name' => 'Mahasiswa', 'email' => '111202113472@mhs.dinus.ac.id', 'password' => bcrypt('123456'), 'role' => 'mahasiswa'],
             ['name' => 'Mahasiswa', 'email' => '111202113489@mhs.dinus.ac.id', 'password' => bcrypt('123456'), 'role' => 'mahasiswa'],
             ['name' => 'Koor', 'email' => 'koordinator@bimbingan.online', 'password' => bcrypt('123456'), 'role' => 'koor'],
@@ -71,7 +71,7 @@ class RoleSeeder extends Seeder
 
         DosenPembimbing::create([
             'id_dsn' => $dsn->id,
-            'kuota' => 5
+            'kuota' => 25
         ]);
 
         // Seed data Dosen

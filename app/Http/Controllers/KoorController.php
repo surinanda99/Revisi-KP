@@ -19,7 +19,7 @@ class KoorController extends Controller
     public function daftar_data_dosen()
     {
         // $dosens = DosenPembimbing::all();
-        $dosens = DosenPembimbing::with('dosen')->get();
+        $dosens = DosenPembimbing::with(['dosen', 'dosen.pengajuan'])->get();
         return view('koor.data_dosen.data_dosen', compact('dosens'));
     }
 
