@@ -49,7 +49,7 @@
                             </td>
                         </tr>
                     @endforeach
-                <tr class="centered-column">
+                {{-- <tr class="centered-column">
                     <td>2</td>
                     <td>A11.2021.13800</td>
                     <td>Nikolas Adi Kurniatmaja Sijabat</td>
@@ -64,7 +64,7 @@
                         <button type="submit" name="status" class="btn btn-danger delete-button" value="REVISI"><i
                                 class="fa-regular fa-circle-xmark"></i></button>
                     </td>
-                </tr>
+                </tr> --}}
             </table>
         </div>
         {{-- {{ $pengajuan->links() }} --}}

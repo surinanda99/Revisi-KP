@@ -14,17 +14,17 @@
         <table class="table table-bordered">
             <thead class="table-header">
                 <th class="align-middle">No.</th>
-                <th class="align-middle">Mahasiswa</th>
-                <th class="align-middle">Penyelia</th>
-                <th class="align-middle">Deskripsi Pekerjaan</th>
-                <th class="align-middle">Prestasi dan Kontribusi</th>
+                <th class="align-middle">NIM</th>
+                <th class="align-middle">Nama Mahasiswa</th>
+                <th class="align-middle">Review Penyelia</th>
+                {{-- <th class="align-middle">Prestasi dan Kontribusi</th>
                 <th class="align-middle">Keterampilan dan Kemampuan</th>
                 <th class="align-middle">Kerjasama Dan Keterlibatan</th>
                 <th class="align-middle">Komentar</th>
                 <th class="align-middle">Perkembangan</th>
                 <th class="align-middle">Kesimpulan Dan Saran</th>
                 <th class="align-middle">Score</th>
-                <th class="align-middle">File</th>
+                <th class="align-middle">File</th> --}}
                 <th class="align-middle">Aksi</th>
             </thead>
             {{-- <tr>
@@ -53,7 +53,10 @@
             <tbody>
 
                 <!-- Loop untuk Menampilkan Setiap Data Mahasiswa -->
-                @foreach($detail_penilaians as $review)
+                @foreach
+                
+                @endforeach
+                {{-- @foreach($detail_penilaians as $review)
                 <tr>
                     <td class="centered-column">{{ $loop->iteration }}</td>
                     <td class="centered-column">{{ $review->mahasiswa_id }}</td>
@@ -78,7 +81,7 @@
                         </form>
                     </td>
                 </tr>
-                @endforeach
+                @endforeach --}}
             </tbody>
         </table>
     </div>

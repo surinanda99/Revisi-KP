@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProfilPenyelia;
+use App\Models\Penyelia;
 use App\Models\DetailPenilaian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -27,7 +27,7 @@ class ReviewController extends Controller
             'file' => 'nullable|file|max:2048',
         ]);
 
-        $profilPenyelia = ProfilPenyelia::create([
+        $profilPenyelia = Penyelia::create([
             'nama' => $request->nama,
             'posisi' => $request->posisi,
             'departemen' => $request->departemen,
