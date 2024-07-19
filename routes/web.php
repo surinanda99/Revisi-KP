@@ -99,7 +99,6 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     // Koor untuk Mahasiswa
     Route::get('/data_mhs', [KoorController::class, 'daftar_mhs'])->name('halamanKoorMhs');
     Route::post('/import-mhs', [KoorController::class, 'importMhs'])->name('importMhs');
-    Route::get('/tambah-mhs', [KoorController::class, 'addMhs'])->name('tambahMhs');
     Route::post('/store-mhs', [KoorController::class, 'storeMhs'])->name('simpanMhs');
     Route::get('/edit-mhs/{id}', [KoorController::class, 'editMhs'])->name('editMhs');
     Route::put('/update-mhs/{id}', [KoorController::class, 'updateMhs'])->name('updateMhs');

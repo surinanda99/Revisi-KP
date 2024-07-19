@@ -7,6 +7,7 @@ use App\Models\Mahasiswa;
 use App\Imports\DosenImport;
 use Illuminate\Http\Request;
 use App\Models\DosenPembimbing;
+use App\Exports\ExportMahasiswa;
 use App\Imports\MahasiswaImport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -29,8 +30,8 @@ class KoorController extends Controller
             'nama' => 'required|string',
             'bidang_kajian' => 'required|in:RPLD,SC',
             'kuota' => 'required|integer',
-            'email' => 'nullable|email',
-            'telp' => 'nullable|string',
+            'email' => 'required|nullable|email',
+            'telp' => 'required|nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -149,33 +150,26 @@ class KoorController extends Controller
         return view('koor.data_mahasiswa.data_mahasiswa', compact('mahasiswas'));
     }
 
-    public function addMhs()
-    {
-        return view('koor.data_mahasiswa.tambah_mhs');
-    }
-
     public function storeMhs(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'nim' => 'required|unique:mahasiswas',
             'nama' => 'required|string',
-            'ipk' => 'required',
-            'telp_mhs' => 'required',
+            // 'ipk' => 'required',
+            // 'telp_mhs' => 'required',
             'email' => 'required|email|unique:mahasiswas',
-            'dosen_wali' => 'required',
+            'dosen_wali' => 'required|string',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('tambahMhs')
-                ->withErrors($validator)
-                ->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         Mahasiswa::create([
             'nim' => $request->nim,
             'nama' => $request->nama,
-            'ipk' => $request->ipk,
-            'telp_mhs' => $request->telp_mhs,
+            // 'ipk' => $request->ipk,
+            // 'telp_mhs' => $request->telp_mhs,
             'email' => $request->email,
             'dosen_wali' => $request->dosen_wali,
         ]);

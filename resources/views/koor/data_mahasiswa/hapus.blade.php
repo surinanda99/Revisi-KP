@@ -17,18 +17,6 @@
                         <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Ya</button>
                     </div>
                 </form>
-
-                {{-- @isset($mhs)
-                    <form action="{{ route('koor-data-mahasiswa-delete', ['id' => $mhs->statusMahasiswa->id_mhs]) }}"
-                        method="POST">
-                        @csrf
-                        <input type="hidden" name="nim" id="nim" value="">
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
-                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Ya</button>
-                        </div>
-                    </form>
-                @endisset --}}
             </div>
         </div>
     </div>

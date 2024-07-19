@@ -13,20 +13,28 @@
                     <form method="POST" action="{{ route('simpanMhs') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row mb-3">
-                            <label for="inputNIM" class="col-sm-2 col-form-label">NIM <span
-                                    class="required">*</span></label>
+                            <label for="inputNIM" class="col-sm-2 col-form-label">NIM <span class="required">*</span></label>
                             <div class="col-sm-10">
-                                <input type="topik" name="nim" class="form-control" id="inputNIM">
+                                <input type="text" class="form-control @error('nim') is-invalid @enderror" name="nim" id="inputNIM" value="{{ old('nim') }}">
+                                @error('nim')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row mb-3">
-                            <label for="inputNama" class="col-sm-2 col-form-label">Nama <span
-                                    class="required">*</span></label>
+                            <label for="inputNama" class="col-sm-2 col-form-label">Nama <span class="required">*</span></label>
                             <div class="col-sm-10">
-                                <input type="topik" name="nama" class="form-control" id="inputNama">
+                                <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" id="inputNama" value="{{ old('nama') }}">
+                                @error('nama')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
-                        <div class="form-group row mb-3">
+                        {{-- <div class="form-group row mb-3">
                             <label for="inputIPK" class="col-sm-2 col-form-label">IPK <span
                                     class="required">*</span></label>
                             <div class="col-sm-10">
@@ -46,19 +54,27 @@
                             <div class="col-sm-10">
                                 <input type="topik" name="telp_mhs" class="form-control" id="inputTelp">
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="form-group row mb-3">
-                            <label for="inputEmail" class="col-sm-2 col-form-label">Email <span
-                                    class="required">*</span></label>
+                            <label for="inputEmail" class="col-sm-2 col-form-label">Email <span class="required">*</span></label>
                             <div class="col-sm-10">
-                                <input type="topik" name="email" class="form-control" id="inputEmail">
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="inputEmail" value="{{ old('email') }}">
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row mb-3">
-                            <label for="inputDoswal" class="col-sm-2 col-form-label">Dosen Wali <span
-                                    class="required">*</span></label>
+                            <label for="inputDoswal" class="col-sm-2 col-form-label">Dosen Wali <span class="required">*</span></label>
                             <div class="col-sm-10">
-                                <input type="topik" name="dosen_wali" class="form-control" id="inputDoswal">
+                                <input type="text" class="form-control @error('dosen_wali') is-invalid @enderror" name="dosen_wali" id="inputDoswal" value="{{ old('dosen_wali') }}">
+                                @error('dosen_wali')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="modal-footer">
