@@ -17,7 +17,8 @@ class MahasiswaController extends Controller
     public function index()
     {
         $mahasiswa = Auth::user()->mahasiswa;
-        return view('mahasiswa.dashboard', compact('mahasiswa'));
+        $isCompleted = $mahasiswa->ipk && $mahasiswa->telp_mhs && $mahasiswa->transkrip_nilai;
+        return view('mahasiswa.dashboard', compact('mahasiswa', 'isCompleted'));
     }
 
     public function update(Request $request, $id)
