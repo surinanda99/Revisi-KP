@@ -56,7 +56,11 @@ class DosenPembimbingController extends Controller
 
     public function logbook_bimbingan_mhs()
     {
-        return view('dosen.logbook_bimbingan.logbook_bimbingan_mhs');
+        $status = StatusMahasiswa::with(['mahasiswa', 'dospem', 'pengajuan', 'sidang'])->get();
+        $logbooks = LogbookBimbingan::with(['mahasiswa', 'dosen'])
+                ->whereIn('id_mhs', $status->pluck('id_mhs'))->get();
+
+        return view('dosen.logbook_bimbingan.logbook_bimbingan_mhs', compact('status', 'logbooks'));
     }
 
     public function review_penyelia()

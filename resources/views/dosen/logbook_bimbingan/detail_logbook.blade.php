@@ -18,8 +18,24 @@
                             <th>Aksi</th>
                         </tr>
                         </thead>
-                        <tbody id="mahasiswaLogbookList">
-
+                        <tbody>
+                            @foreach($logbooks as $key => $logbook)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $logbook->tanggal }}</td>
+                                    <td>{{ $logbook->bab }}</td>
+                                    <td>{{ $logbook->uraian }}</td>
+                                    <td>{{ $logbook->dokumen }}</td>
+                                    <td>
+                                        <button type="submit" name="status" class="btn btn-success" value="ACC">
+                                            <i class="fa-regular fa-circle-check"></i> ACC
+                                        </button>
+                                        <button type="submit" name="status "class="btn btn-danger delete-button" value="TOLAK">
+                                            <i class="fa-regular fa-circle-xmark"></i> TOLAK
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
