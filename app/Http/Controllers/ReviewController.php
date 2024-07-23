@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Penyelia;
 use App\Models\DetailPenilaian;
+use App\Models\MahasiswaPenyelia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -54,4 +55,13 @@ class ReviewController extends Controller
 
         return redirect()->back()->with('success', 'Review submitted successfully.');
     }
+
+    public function updateReview(Request $request, $id)
+{
+    $review = MahasiswaPenyelia::findOrFail($id);
+    $review->status = $request->status;
+    $review->save();
+
+    return response()->json(['message' => 'Review updated successfully']);
+}
 }
