@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DetailPenilaian;
+use App\Models\PengajuanSidang;
 use Illuminate\Http\Request;
 use App\Models\Dosen;
 use App\Models\StatusMahasiswa;
@@ -71,7 +72,8 @@ class DosenPembimbingController extends Controller
 
     public function Pengajuan_sidang_mhs()
     {
-        return view('dosen.pengajuan_sidang.pengajuan_sidang_mhs');
+        $pengajuan_sidangs = PengajuanSidang::all();
+        return view('dosen.pengajuan_sidang.pengajuan_sidang_mhs', compact('pengajuan_sidangs'));
     }
 
     public function dash()

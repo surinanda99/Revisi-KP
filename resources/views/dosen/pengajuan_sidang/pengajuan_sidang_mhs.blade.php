@@ -13,6 +13,31 @@
         <div class="table-container table-dosbing">
             <table class="table table-bordered mb-1">
                 <thead class="table-header">
+                    <th class="align-middle">No</th>
+                    <th class="align-middle">NIM</th>
+                    <th class="align-middle">Judul</th>
+                    <th class="align-middle">Bidang Kajian</th>
+                    <th class="align-middle">Dokumen</th>
+                    <th class="align-middle">Nilai Penyelia</th>
+                    </thead>
+                    <tbody>
+                    @foreach($pengajuan_sidangs as $ps)
+                        <tr class="centered-column">
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $ps->id_mhs }}</td>
+                            <td>{{ $ps->judul }}</td>
+                            <td>{{ $ps->bidang_kajian }}</td>
+                            <td>{{ $ps->dokumen }}</td>
+                            <td>{{ $ps->nilaiPenyelia }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+            </table>
+        </div>
+
+        {{-- <div class="table-container table-dosbing">
+            <table class="table table-bordered mb-1">
+                <thead class="table-header">
                 <th>No</th>
                 <th>NIM</th>
                 <th>Nama Mahasiswa</th>
@@ -65,9 +90,10 @@
                         <button type="submit" name="status" class="btn btn-danger delete-button" value="REVISI"><i
                                 class="fa-regular fa-circle-xmark"></i></button>
                     </td>
-                </tr> --}}
+                </tr>
             </table>
-        </div>
+        </div> --}}
+
         {{-- {{ $pengajuan->links() }} --}}
         {{-- <script>
             document.addEventListener('DOMContentLoaded', function() {
