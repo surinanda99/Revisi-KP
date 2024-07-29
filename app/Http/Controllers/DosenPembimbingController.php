@@ -89,4 +89,11 @@ class DosenPembimbingController extends Controller
 
         return view('dosen.dashboard', compact('dosen', 'jumlahAjuan'));
     }
+
+    public function daftarPengajuanSidang()
+    {
+        $pengajuan_sidangs = PengajuanSidang::with('mahasiswa')->get();
+
+        return view('dosen.pengajuan_sidang.pengajuan_sidang_mhs', compact('pengajuan_sidangs'));
+    }
 }

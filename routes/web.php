@@ -87,6 +87,10 @@ Route::middleware(['auth', 'role:dosen'])->group(function () {
     Route::get('/dosen/review_penyelia', [DosenPembimbingController::class, 'review_penyelia'])->name('review_penyelia');
     Route::post('/review/update/{id}', [ReviewController::class, 'updateReview'])->name('updateReview');
     Route::post('/dosen/review_penyelia/hapus/{id}', [DosenPembimbingController::class, 'hapusMhs'])->name('hapusMhs');
+    Route::post('/update-nilai-pembimbing/{id}', [PengajuanSidangController::class, 'updateNilaiPembimbing'])->name('updateNilaiPembimbing');
+    Route::post('/pengajuan-sidang/update/{id}', [PengajuanSidangController::class, 'update'])->name('updatePengajuanSidang');
+    Route::post('/update-pengajuan-sidang/{id}', [PengajuanSidangController::class, 'updatePengajuanSidang'])->name('updatePengajuanSidang');
+
 
 });
 

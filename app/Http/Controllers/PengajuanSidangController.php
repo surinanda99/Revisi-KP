@@ -24,6 +24,7 @@ class PengajuanSidangController extends Controller
             'dokumen' => 'required|string',
             'validasi' => 'required|string',
             'nilaiPenyelia' => 'required|string',
+            'nilaiPembimbing' => 'nullable|string',
         ]);
     
         if ($validator->fails()) {
@@ -31,16 +32,29 @@ class PengajuanSidangController extends Controller
         }
     
         $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
-        PengajuanSidang::create([
-            'id_mhs' => $mahasiswa->id,
-            'judul' => $request->judul,
-            'bidang_kajian' => $request->bidang_kajian,
-            'dokumen' => $request->dokumen,
-            'validasi' => $request->validasi,
-            'nilaiPenyelia' => $request->nilaiPenyelia,
-        ]);
-    
-        return redirect()->route('draft_sidang')->with('success', 'Pengajuan sidang berhasil disimpan.');
+        $pengajuanSidang = PengajuanSidang::where('id_mhs', $mahasiswa->id)->first();
+
+        if ($pengajuanSidang) {
+            $pengajuanSidang->judul = $request->judul;
+            $pengajuanSidang->bidang_kajian = $request->bidang_kajian;
+            $pengajuanSidang->dokumen = $request->dokumen;
+            $pengajuanSidang->validasi = $request->validasi;
+            $pengajuanSidang->nilaiPenyelia = $request->nilaiPenyelia;
+            $pengajuanSidang->nilaiPembimbing = $request->nilaiPembimbing;
+            $pengajuanSidang->save();
+        } else {
+            PengajuanSidang::create([
+                'id_mhs' => $mahasiswa->id,
+                'judul' => $request->judul,
+                'bidang_kajian' => $request->bidang_kajian,
+                'dokumen' => $request->dokumen,
+                'validasi' => $request->validasi,
+                'nilaiPenyelia' => $request->nilaiPenyelia,
+                'nilaiPembimbing' => $request->nilaiPembimbing,
+            ]);
+    }
+
+    return redirect()->route('draft_sidang')->with('success', 'Pengajuan sidang berhasil disimpan.');
     }
 
     public function form_sidang(Request $request)
@@ -88,4 +102,48 @@ class PengajuanSidangController extends Controller
         return view('mahasiswa.pengajuan_sidang.draft_sidang', compact('data', 'mahasiswa','status',));
 
     }
+
+    public function updateNilaiPembimbing(Request $request, $id)
+    {
+        // Validasi input
+        $request->validate([
+            'nilaiPembimbing' => 'required|numeric|min:0|max:100',
+        ]);
+
+        // Temukan pengajuan sidang berdasarkan ID
+        $pengajuanSidang = PengajuanSidang::findOrFail($id);
+
+        // Perbarui nilai pembimbing
+        $pengajuanSidang->nilaiPembimbing = $request->input('nilaiPembimbing');
+        $pengajuanSidang->save();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back()->with('success', 'Nilai Pembimbing berhasil diperbarui.');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $pengajuanSidang = PengajuanSidang::find($id);
+        if ($pengajuanSidang) {
+            $pengajuanSidang->status = $request->status;
+            $pengajuanSidang->save();
+            return response()->json(['success' => 'Status updated successfully.']);
+        } else {
+            return response()->json(['error' => 'Pengajuan not found.'], 404);
+        }
+    }
+
+    public function updatePengajuanSidang(Request $request, $id)
+{
+    $pengajuanSidang = PengajuanSidang::find($id);
+
+    if ($pengajuanSidang) {
+        $pengajuanSidang->nilaiPembimbing = $request->input('nilaiPembimbing');
+        $pengajuanSidang->save();
+
+        return response()->json(['success' => 'Nilai pembimbing updated successfully']);
+    }
+
+    return response()->json(['error' => 'Pengajuan sidang not found'], 404);
+}
 }

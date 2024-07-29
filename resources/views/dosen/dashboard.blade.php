@@ -94,31 +94,19 @@
                         </div>
                     </div>
                 </div>
-                {{--Chart Mahasiswa TA 1 & TA 2--}}
+                {{--Chart Mahasiswa KP 1 --}}
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-chart-area me-1"></i>
-                                Mahasiswa TA 1
+                                Mahasiswa Kerja Praktek
                             </div>
                             <div class="card-body">
                                 <canvas id="chartTA1" width="100%" height="40"></canvas>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-area me-1"></i>
-                                Mahasiswa TA 2
-                            </div>
-                            <div class="card-body">
-                                <canvas id="chartTA2" width="100%" height="40"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 {{--Jumlah Kuota, Ajuan, Diterima, serta Sisa Mahasiswa Bimbingan--}}
                 <div class="card mb-4">
                     <div class="card-header">
