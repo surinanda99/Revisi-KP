@@ -76,7 +76,7 @@ class RoleSeeder extends Seeder
 
         // Seed data Dosen
         $dsn2 = Dosen::create([
-            'nama' => 'ARDYTHA LUTFIARTHA, S.Kom, M.CS',
+            'nama' => 'ARDYTHA LUTFIARTHA, M.Kom',
             'npp' => '0686.11.2012.460',
             'email' => 'ardytha.luthfiarta@dsn.dinus.ac.id',
             'bidang_kajian' => 'SC',
