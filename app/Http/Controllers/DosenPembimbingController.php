@@ -55,6 +55,20 @@ class DosenPembimbingController extends Controller
         return view('dosen.daftar_bimbingan.daftar_bimbingan', compact('pengajuan'));
     }
 
+    public function update_pengajuan(Request $request)
+    {
+        $pengajuan = Pengajuan::findOrFail($request->id);
+    
+        if (!$pengajuan) {
+            return redirect()->back()->with('error', 'Pengajuan tidak ditemukan.');
+        }
+
+        $pengajuan->status = $request->status;
+        $pengajuan->save();
+
+        return redirect()->back()->with('success', 'Status pengajuan berhasil diperbarui.');
+    }
+
     public function logbook_bimbingan_mhs()
     {
         $status = StatusMahasiswa::with(['mahasiswa', 'dospem', 'pengajuan', 'sidang'])->get();

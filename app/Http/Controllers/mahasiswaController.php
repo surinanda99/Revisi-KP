@@ -18,7 +18,11 @@ class MahasiswaController extends Controller
     {
         $mahasiswa = Auth::user()->mahasiswa;
         $isCompleted = $mahasiswa->ipk && $mahasiswa->telp_mhs && $mahasiswa->transkrip_nilai;
-        return view('mahasiswa.dashboard', compact('mahasiswa', 'isCompleted'));
+        $pengajuans = Pengajuan::where('id_mhs', $mahasiswa->id_mhs)->with('dosen')->get();
+        // $pengajuans = $mahasiswa->pengajuan()->with('dosen')->get();
+        // $pengajuans = $mahasiswa->pengajuans()->orderBy('created_at', 'desc')->get();
+        // dd($pengajuans); 
+        return view('mahasiswa.dashboard', compact('mahasiswa', 'isCompleted', 'pengajuans'));
     }
 
     public function update(Request $request, $id)

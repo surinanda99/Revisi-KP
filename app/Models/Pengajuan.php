@@ -27,8 +27,13 @@ class Pengajuan extends Model
     {
         return $this->belongsTo(Dosen::class, 'id_dsn', 'id');
     }
+    // public function mahasiswa()
+    // {
+    //     return $this->belongsTo(StatusMahasiswa::class, 'id_mhs', 'id_mhs');
+    // }
+
     public function mahasiswa()
-    {
-        return $this->belongsTo(StatusMahasiswa::class, 'id_mhs', 'id_mhs');
-    }
+{
+    return $this->belongsTo(Mahasiswa::class, 'id_mhs', 'id_mhs');
+}
 }

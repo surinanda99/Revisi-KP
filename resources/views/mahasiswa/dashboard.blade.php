@@ -69,7 +69,7 @@
                 </form>
             @endif
         </div>
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-8 py-5">
                 <h1><i class="far fa-calendar-check"></i> Aktivitas Terbaru</h1>
                 <div class="table-container table-aktivitas">
@@ -110,6 +110,45 @@
                                 -->
                             </td>
                         </tr>
+                    </table>
+                </div>
+            </div>
+        </div> --}}
+        <div class="row">
+            <div class="col-md-8 py-5">
+                <h1><i class="far fa-calendar-check"></i> Aktivitas Terbaru</h1>
+                <div class="table-container table-aktivitas">
+                    <table class="table table-bordered">
+                        <thead class="table-header">
+                            <th class="align-middle">No.</th>
+                            <th class="align-middle">Aktivitas</th>
+                            <th class="align-middle">Tanggal Pengajuan</th>
+                            <th class="align-middle">Status</th>
+                        </thead>
+                        <tbody>
+                        @foreach ($pengajuans as $index => $pengajuan)
+                            <tr>
+                                <td class="centered-column">{{ $index + 1 }}</td>
+                                <td class="content-column">Pengajuan Bimbingan Kerja Praktek</td>
+                                <td class="centered-column">{{ $pengajuan->created_at->format('d M Y') }}</td>
+                                <td class="centered-column">
+                                    @if ($pengajuan->status == 'diterima')
+                                        <button type="status" class="btn btn-success rounded-5">Diterima
+                                            <i class="fas icon-dark-acc"></i>
+                                        </button>
+                                    @elseif ($pengajuan->status == 'ditolak')
+                                        <button type="status" class="btn btn-danger rounded-5">Ditolak
+                                            <i class="fas icon-dark-no"></i>
+                                        </button>
+                                    @else
+                                        <button type="status" class="btn btn-warning rounded-5">Belum ACC
+                                            <i class="fas icon-dark-pending"></i>
+                                        </button>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>

@@ -1,6 +1,19 @@
 @extends('dosen.layouts.main')
 @section('title', 'Daftar Bimbingan Kerja Praktek')
 @section('content')
+
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
 <div class="wrapper d-flex flex-column min-vh-100">
     <div class="container flex-grow-1">
         <h3 class="mb-3"><b>Daftar Pengajuan Mahasiswa Bimbingan</b></h3>
