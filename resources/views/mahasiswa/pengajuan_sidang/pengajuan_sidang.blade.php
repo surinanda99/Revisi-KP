@@ -121,7 +121,7 @@
                                 <div class="form-group row mb-3">
                                     <label for="inputJudul" class="col-sm-2 col-form-label">Judul <span class="required">*</span></label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputJudul" placeholder="Masukkan Judul TA" name="judul" required>
+                                        <input type="text" class="form-control" id="inputJudul" placeholder="Masukkan Judul KP" name="judul" required>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">

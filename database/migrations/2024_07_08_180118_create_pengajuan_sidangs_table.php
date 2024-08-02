@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('dokumen');
             $table->string('validasi');
             $table->string('nilaiPenyelia');
+            $table->string('nilaiPembimbing');
             $table->timestamps();
 
         });

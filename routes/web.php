@@ -84,6 +84,14 @@ Route::middleware(['auth', 'role:dosen'])->group(function () {
     Route::get('/review_mhs', [DosenPembimbingController::class, 'review_penyelia'])->name('pageReviewPenyelia');
     Route::get('/pengajuan_mhs', [DosenPembimbingController::class, 'pengajuan_sidang_mhs'])->name('pagePengajuanSidang'); 
     Route::get('/logbookBimbingan', [DospemBimbinganController::class, 'index'])->name('dosbing-logbook');  
+    Route::get('/dosen/review_penyelia', [DosenPembimbingController::class, 'review_penyelia'])->name('review_penyelia');
+    Route::post('/review/update/{id}', [ReviewController::class, 'updateReview'])->name('updateReview');
+    Route::post('/dosen/review_penyelia/hapus/{id}', [DosenPembimbingController::class, 'hapusMhs'])->name('hapusMhs');
+    Route::post('/update-nilai-pembimbing/{id}', [PengajuanSidangController::class, 'updateNilaiPembimbing'])->name('updateNilaiPembimbing');
+    Route::post('/pengajuan-sidang/update/{id}', [PengajuanSidangController::class, 'update'])->name('updatePengajuanSidang');
+    Route::post('/update-pengajuan-sidang/{id}', [PengajuanSidangController::class, 'updatePengajuanSidang'])->name('updatePengajuanSidang');
+
+
 });
 
 // Koordinator
