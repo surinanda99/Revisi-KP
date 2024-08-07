@@ -37,17 +37,17 @@
                 @foreach ($pengajuan as $pj)
                         <tr class="centered-column">
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $pj->mahasiswa->mahasiswa->nim }}</td>
-                            <td>{{ $pj->mahasiswa->mahasiswa->nama }}</td>
+                            <td>{{ $pj->mahasiswa->nim }}</td>
+                            <td>{{ $pj->mahasiswa->nama }}</td>
                             <td>
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                        data-bs-target="{{ $pj->mahasiswa->mahasiswa->id }}">
+                                        data-bs-target="{{ $pj->mahasiswa->id }}">
                                     <i class="fa-solid fa-images"></i>
                                 </button>
                             </td>
-                            <td>{{ $pj->mahasiswa->mahasiswa->ipk }}</td>
+                            <td>{{ $pj->mahasiswa->ipk }}</td>
                             <td>{{ $pj->judul }}</td>
-                            <td class="centered-column">
+                            {{-- <td class="centered-column">
                                 <form action="{{ route('update-mahasiswa-bimbingan') }}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $pj->id }}">
@@ -58,6 +58,26 @@
                                         <i class="fa-regular fa-circle-xmark"></i> TOLAK
                                     </button>
                                 </form>
+                            </td> --}}
+                            <td class="centered-column">
+                                @if ($pj->status == 'ACC')
+                                    <button class="btn btn-success" value="ACC">
+                                        Status Diterima
+                                    </button>
+                                @elseif ($pj->status == 'TOLAK')
+                                    Status Ditolak
+                                @else
+                                    <form action="{{ route('update-mahasiswa-bimbingan') }}" method="post" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $pj->id }}">
+                                        <button type="submit" name="status" class="btn btn-success" value="ACC">
+                                            <i class="fa-regular fa-circle-check"></i> ACC
+                                        </button>
+                                        <button type="submit" name="status" class="btn btn-danger delete-button" value="TOLAK" id="rejectButton_{{ $pj->id }}">
+                                            <i class="fa-regular fa-circle-xmark"></i> TOLAK
+                                        </button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

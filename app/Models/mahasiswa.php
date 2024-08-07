@@ -32,7 +32,7 @@ class Mahasiswa extends Model
     //     return $this->hasOne(Pengajuan::class);
     // }
 
-    public function pengajuan()
+    public function pengajuans()
     {
         return $this->hasMany(Pengajuan::class, 'id_mhs', 'id_mhs');
     }

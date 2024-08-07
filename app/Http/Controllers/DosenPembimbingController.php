@@ -51,31 +51,68 @@ class DosenPembimbingController extends Controller
     {
         $user = auth()->user();
         $dosen = Dosen::where('email', $user->email)->first();
-        $pengajuan = Pengajuan::where('id_dsn', $dosen->id)->get();
+        $pengajuan = Pengajuan::where('id_dsn', $dosen->id)->with('mahasiswa')->get();
         return view('dosen.daftar_bimbingan.daftar_bimbingan', compact('pengajuan'));
     }
 
     public function update_pengajuan(Request $request)
     {
         $pengajuan = Pengajuan::findOrFail($request->id);
-    
+        
         if (!$pengajuan) {
             return redirect()->back()->with('error', 'Pengajuan tidak ditemukan.');
         }
 
         $pengajuan->status = $request->status;
         $pengajuan->save();
+        
+        $status = StatusMahasiswa::where('id_mhs', $pengajuan->id_mhs)->first();
+        $status->id_dsn = $pengajuan->id_dsn;
+        $status->save();
 
         return redirect()->back()->with('success', 'Status pengajuan berhasil diperbarui.');
     }
 
+    // public function logbook_bimbingan_mhs()
+    // {
+    //     $status = StatusMahasiswa::with(['mahasiswa', 'dospem', 'pengajuan', 'sidang'])->get();
+    //     $logbooks = LogbookBimbingan::with(['mahasiswa', 'dosen'])
+    //             ->whereIn('id_mhs', $status->pluck('id_mhs'))->get();
+
+    //     return view('dosen.logbook_bimbingan.logbook_bimbingan_mhs', compact('status', 'logbooks'));
+    // }
+
     public function logbook_bimbingan_mhs()
     {
-        $status = StatusMahasiswa::with(['mahasiswa', 'dospem', 'pengajuan', 'sidang'])->get();
-        $logbooks = LogbookBimbingan::with(['mahasiswa', 'dosen'])
-                ->whereIn('id_mhs', $status->pluck('id_mhs'))->get();
+        // Ambil semua status mahasiswa yang sudah diterima sebagai mahasiswa bimbingan
+        $status = StatusMahasiswa::with(['mahasiswa'])
+            ->whereNotNull('id_dsn') // Pastikan mahasiswa sudah diterima sebagai bimbingan
+            ->get();
 
-        return view('dosen.logbook_bimbingan.logbook_bimbingan_mhs', compact('status', 'logbooks'));
+        // Ambil logbook hanya untuk mahasiswa yang sudah mengisi logbook
+        $logbooks = LogbookBimbingan::with(['mahasiswa', 'dosen'])
+            ->whereIn('id_mhs', $status->pluck('id_mhs'))
+            ->whereNotNull('tanggal')  // Pastikan logbook sudah diisi
+            ->get();
+
+        // Ambil mahasiswa yang sudah mengisi logbook dan sudah diterima sebagai bimbingan
+        $acceptedStudents = $status->pluck('id_mhs');
+        $logbookEntries = LogbookBimbingan::whereIn('id_mhs', $acceptedStudents)
+            ->whereNotNull('tanggal')
+            ->get();
+
+        // Ambil daftar mahasiswa yang sudah diterima dan sudah mengisi logbook
+        $studentsWithLogbook = $acceptedStudents->intersect($logbookEntries->pluck('id_mhs'));
+
+        // Filter status untuk mahasiswa yang sudah mengisi logbook
+        $filteredStatus = $status->filter(function ($st) use ($studentsWithLogbook) {
+            return $studentsWithLogbook->contains($st->id_mhs);
+        });
+
+        return view('dosen.logbook_bimbingan.logbook_bimbingan_mhs', [
+            'status' => $filteredStatus,
+            'logbooks' => $logbookEntries
+        ]);
     }
 
     public function review_penyelia()

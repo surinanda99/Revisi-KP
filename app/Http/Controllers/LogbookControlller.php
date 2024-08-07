@@ -54,6 +54,8 @@ class LogbookControlller extends Controller
 
         $status->save();
 
+        return redirect()->back();
+
         // activity()
         //     ->inLog('logbook')
         //     ->causedBy(auth()->user())

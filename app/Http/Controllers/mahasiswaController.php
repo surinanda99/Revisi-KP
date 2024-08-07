@@ -8,6 +8,7 @@ use App\Models\Pengajuan;
 use Illuminate\Http\Request;
 use App\Models\DetailPenilaian;
 use App\Models\DosenPembimbing;
+use App\Models\StatusMahasiswa;
 use App\Models\MahasiswaPenyelia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -17,12 +18,19 @@ class MahasiswaController extends Controller
     public function index()
     {
         $mahasiswa = Auth::user()->mahasiswa;
-        $isCompleted = $mahasiswa->ipk && $mahasiswa->telp_mhs && $mahasiswa->transkrip_nilai;
-        $pengajuans = Pengajuan::where('id_mhs', $mahasiswa->id_mhs)->with('dosen')->get();
+        // dd($mahasiswa);
+        $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
+        $pengajuans = Pengajuan::where('id_mhs', $mahasiswa->id)->get();
+        // $pengajuans = $mahasiswa->pengajuans()->get();
+        // dd($pengajuans);
+        // $pengajuans = $mahasiswa->pengajuans()->get();
+        // dd($mahasiswa->id_mhs, $pengajuans);
+        // $isCompleted = $mahasiswa->ipk && $mahasiswa->telp_mhs && $mahasiswa->transkrip_nilai;
+        // $pengajuans = Pengajuan::where('id_mhs', $mahasiswa->id_mhs)->with('dosen')->get();
         // $pengajuans = $mahasiswa->pengajuan()->with('dosen')->get();
         // $pengajuans = $mahasiswa->pengajuans()->orderBy('created_at', 'desc')->get();
         // dd($pengajuans); 
-        return view('mahasiswa.dashboard', compact('mahasiswa', 'isCompleted', 'pengajuans'));
+        return view('mahasiswa.dashboard', compact('mahasiswa', 'status', 'pengajuans'));
     }
 
     public function update(Request $request, $id)

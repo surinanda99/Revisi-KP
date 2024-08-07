@@ -1,6 +1,109 @@
 @extends('mahasiswa.layouts.main')
 @section('title', 'Dashboard Mahasiswa')
 @section('content')
+
+    <div class="container-dashboard">
+        <h1>Welcome,</h1>
+        <h1>{{ $mahasiswa->nama }}</h1>
+        <p>Siap untuk kerja praktek hari ini?</p>
+    </div>
+
+    @if (Session::get('success'))
+        <div class="alert alert-success mt-3">
+            {{ Session::get('success') }}
+        </div>
+    @endif
+
+    @if (Session::get('error'))
+        <div class="alert alert-danger mt-3">
+            {{ Session::get('error') }}
+        </div>
+    @endif
+
+    <main class="container-border">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <i class="fas fa-info-circle"></i> Informasi Kerja Praktek
+                    </div>
+                    <div class="card-body">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore atque consequuntur asperiores cupiditate vel quam esse voluptatibus, veniam explicabo vero sit eos.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <i class="fas fa-info-circle"></i> Informasi Penyelia
+                    </div>
+                    <div class="card-body">
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quia voluptate voluptatibus unde libero doloremque ratione a minus blanditiis eveniet, inventore obcaecati.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        @if($status->id_dsn == 0)
+            <div class="alert alert-warning mt-1">
+                Anda belum memiliki dosen pembimbing. Silahkan melakukan pengajuan TA terlebih dahulu.
+            </div>
+            <div class="mb-4">
+                <a href="{{ route('pengajuan-mahasiswa') }}" class="btn btn-primary w-100">
+                    <i class="fas fa-angle-right"></i>
+                    Pengajuan Dosen Pembimbing
+                </a>
+            </div>
+        @else
+            <div class="row">
+                <div class="col-md-8">
+                    <h1><i class="far fa-calendar-check"></i> Aktivitas Terbaru</h1>
+                    <div class="table-container table-aktivitas">
+                        <table class="table table-bordered">
+                            <thead class="table-header">
+                                <tr>
+                                    <th class="align-middle">No.</th>
+                                    <th class="align-middle">Aktivitas</th>
+                                    <th class="align-middle">Tanggal Pengajuan</th>
+                                    <th class="align-middle">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($pengajuans as $index => $pengajuan)
+                                    <tr>
+                                        <td class="centered-column">{{ $index + 1 }}</td>
+                                        <td class="content-column">Pengajuan Bimbingan Kerja Praktek</td>
+                                        <td class="centered-column">{{ $pengajuan->created_at->format('d M Y') }}</td>
+                                        <td class="centered-column">
+                                            @if ($pengajuan->status == 'ACC')
+                                                <button type="status" class="btn btn-success rounded-5">Diterima
+                                                    <i class="fas icon-dark-acc"></i>
+                                                </button>
+                                            @elseif ($pengajuan->status == 'TOLAK')
+                                                <button type="status" class="btn btn-danger rounded-5">Ditolak
+                                                    <i class="fas icon-dark-no"></i>
+                                                </button>
+                                            @else
+                                                <button type="status" class="btn btn-warning rounded-5">Belum ACC
+                                                    <i class="fas icon-dark-pending"></i>
+                                                </button>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>  
+            </div>
+        @endif
+    </main>
+@endsection
+
+
+{{-- @extends('mahasiswa.layouts.main')
+@section('title', 'Dashboard Mahasiswa')
+@section('content')
     <div class="container-dashboard">
         <h1>Hi, {{ $mahasiswa->nama }}</h1>
         <div class="type">
@@ -69,7 +172,7 @@
                 </form>
             @endif
         </div>
-        {{-- <div class="row">
+        <div class="row">
             <div class="col-md-8 py-5">
                 <h1><i class="far fa-calendar-check"></i> Aktivitas Terbaru</h1>
                 <div class="table-container table-aktivitas">
@@ -113,7 +216,7 @@
                     </table>
                 </div>
             </div>
-        </div> --}}
+        </div>
         <div class="row">
             <div class="col-md-8 py-5">
                 <h1><i class="far fa-calendar-check"></i> Aktivitas Terbaru</h1>
@@ -154,4 +257,4 @@
             </div>
         </div>
     </main>
-@endsection
+@endsection --}}

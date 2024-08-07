@@ -33,7 +33,7 @@ class Pengajuan extends Model
     // }
 
     public function mahasiswa()
-{
-    return $this->belongsTo(Mahasiswa::class, 'id_mhs', 'id_mhs');
-}
+    {
+        return $this->belongsTo(Mahasiswa::class, 'id_mhs', 'id');
+    }
 }
