@@ -49,23 +49,17 @@
                             </td>
                             <td>{{ $pj->mahasiswa->ipk }}</td>
                             <td>{{ $pj->judul }}</td>
-                            <td>
-                                <div class="d-flex justify-content-center">
-                                    <form action="{{ route('update-mahasiswa-bimbingan') }}" method="post"
-                                          enctype="multipart/form-data">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{ $pj->id }}">
-                                        <button type="submit" name="status" class="btn btn-success" value="ACC">
-                                            <i class="fa-regular fa-circle-check"></i>
-                                            Terima
-                                        </button>
-                                    </form>
-                                    <button type="button" class="btn btn-danger delete-button ms-2" value="TOLAK"
-                                            id="rejectButton_{{ $pj->id }}">
-                                        <i class="fa-regular fa-circle-xmark"></i>
-                                        Tolak
+                            <td class="centered-column">
+                                <form action="{{ route('update-mahasiswa-bimbingan') }}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $pj->id }}">
+                                    <button type="submit" name="status" class="btn btn-success" value="ACC">
+                                        <i class="fa-regular fa-circle-check"></i> ACC
                                     </button>
-                                </div>
+                                    <button type="submit" name="status "class="btn btn-danger delete-button" value="TOLAK" id="rejectButton_{{ $pj->id }}">
+                                        <i class="fa-regular fa-circle-xmark"></i> TOLAK
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endif

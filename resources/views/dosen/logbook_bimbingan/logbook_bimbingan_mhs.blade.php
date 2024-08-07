@@ -28,8 +28,8 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $st->mahasiswa->nim }}</td>
                                 <td>{{ $st->mahasiswa->nama }}</td>
-                                <td>{{ $st->bab_terakhir }}</td>
                                 <td>{{ $st->jml_bimbingan }}</td>
+                                <td>{{ $st->bab_terakhir }}</td>
                                 <td>
                                     <button class="btn btn-warning btn-sm me-2">
                                         <i class="fa-regular fa-folder-open"></i> Folder
