@@ -6,13 +6,14 @@ use App\Http\Controllers\DosenPembimbingController;
 use App\Http\Controllers\KoorController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BimbinganController;
 use App\Http\Controllers\DetailLogbookControlller;
 use App\Http\Controllers\LogbookControlller;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PengajuanSidangController;
 use App\Http\Controllers\PenyeliaController;
 use App\Http\Controllers\DospemBimbinganController;
-use App\Http\Controllers\MahasiswaBimbinganControlller;
+use App\Http\Controllers\MahasiswaBimbinganController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -54,7 +55,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::post('/logbook', [LogbookControlller::class, 'store'])->name('mahasiswa-logbook-create');
     Route::get('/logbook/{id}', [DetailLogbookControlller::class,'show'])->name('mahasiswa-logbook-detail');
     Route::post('/logbook/{id}', [DetailLogbookControlller::class,'update'])->name('mahasiswa-logbook-update');
-    Route::post('/updatePengajuan', [MahasiswaBimbinganControlller::class, 'update'])->name('update-mahasiswa-bimbingan');
+    // Route::post('/updatePengajuan', [MahasiswaBimbinganControlller::class, 'update'])->name('update-mahasiswa-bimbingan');
 
     // Route::get('/draft', [MahasiswaController::class, 'draft_penilaian']);
     Route::get('/Profil/{id}', [MahasiswaController::class, 'profil'])->name('halamanProfil');
@@ -91,6 +92,8 @@ Route::middleware(['auth', 'role:dosen'])->group(function () {
     Route::post('/update-nilai-pembimbing/{id}', [PengajuanSidangController::class, 'updateNilaiPembimbing'])->name('updateNilaiPembimbing');
     Route::post('/pengajuan-sidang/update/{id}', [PengajuanSidangController::class, 'update'])->name('updatePengajuanSidang');
     Route::post('/update-pengajuan-sidang/{id}', [PengajuanSidangController::class, 'updatePengajuanSidang'])->name('updatePengajuanSidang');
+    Route::post('/update-pengajuan', [BimbinganController::class, 'update'])->name('update-bimbingan-mhs');
+    Route::post('/update-magang', [BimbinganController::class, 'selesaiMagang'])->name('update-selesai-magang');
 
 
 });

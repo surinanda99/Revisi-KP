@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dosen;
+use App\Models\DosenPembimbing;
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
 use App\Models\StatusMahasiswa;
@@ -77,10 +78,10 @@ class PengajuanController extends Controller
 
         $pengajuan->save();
 
-        if (isset($data['id_dospem'])) {
-            $dosen = Dosen::find($data['id_dospem']);
+        if (isset($data['id_dsn'])) {
+            $dosen = DosenPembimbing::where('id_dsn',$data['id_dsn'])->first();
             if ($dosen) {
-                $dosen->jml_ajuan = $dosen->jml_ajuan + 1;
+                $dosen->jumlah_ajuan = $dosen->jumlah_ajuan + 1;
                 $dosen->save();
             }
         }

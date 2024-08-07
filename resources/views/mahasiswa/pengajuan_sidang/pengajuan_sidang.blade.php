@@ -4,7 +4,7 @@
     <div class="container">
         <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-3">
             <li class="nav-item">
-                <a data-toggle="pill" class="nav-link rounded-pill">
+                <a data-toggle="pill" class="nav-link active rounded-pill">
                     <i class="fas fa-edit"></i>
                     Form Pengajuan
                 </a>
@@ -116,7 +116,7 @@
                                 <p class="mb-3">Form dengan tanda asterik (<span class="required">*</span>) wajib diisi.
                                 </p>
                             </blockquote>
-                            <form action="{{ route('submit_sidang') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('draft_sidang') }}" method="GET" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group row mb-3">
                                     <label for="inputJudul" class="col-sm-2 col-form-label">Judul <span class="required">*</span></label>

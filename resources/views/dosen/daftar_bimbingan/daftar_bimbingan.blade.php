@@ -33,6 +33,7 @@
                 <th>IPK</th>
                 <th>Judul</th>
                 <th>Status</th>
+                <th>Status Magang</th>
                 </thead>
                 @foreach ($pengajuan as $pj)
                         <tr class="centered-column">
@@ -47,18 +48,6 @@
                             </td>
                             <td>{{ $pj->mahasiswa->ipk }}</td>
                             <td>{{ $pj->judul }}</td>
-                            {{-- <td class="centered-column">
-                                <form action="{{ route('update-mahasiswa-bimbingan') }}" method="post" enctype="multipart/form-data">
-                                    @csrf
-                                    <input type="hidden" name="id" value="{{ $pj->id }}">
-                                    <button type="submit" name="status" class="btn btn-success" value="ACC">
-                                        <i class="fa-regular fa-circle-check"></i> ACC
-                                    </button>
-                                    <button type="submit" name="status "class="btn btn-danger delete-button" value="TOLAK" id="rejectButton_{{ $pj->id }}">
-                                        <i class="fa-regular fa-circle-xmark"></i> TOLAK
-                                    </button>
-                                </form>
-                            </td> --}}
                             <td class="centered-column">
                                 @if ($pj->status == 'ACC')
                                     <button class="btn btn-success" value="ACC">
@@ -73,34 +62,134 @@
                                         <button type="submit" name="status" class="btn btn-success" value="ACC">
                                             <i class="fa-regular fa-circle-check"></i> ACC
                                         </button>
+                                    </form>
                                         <button type="submit" name="status" class="btn btn-danger delete-button" value="TOLAK" id="rejectButton_{{ $pj->id }}">
                                             <i class="fa-regular fa-circle-xmark"></i> TOLAK
                                         </button>
+                                @endif
+                            </td>
+                            <td>
+                                @if($pj->mahasiswa->statusMahasiswa->status_magang == 'SELESAI')
+                                    <button type="button" class="btn btn-success" disabled>
+                                        <i class="fa-regular fa-circle-check"></i> Selesai
+                                    </button>
+                                @else
+                                    <form action="{{ route('update-selesai-magang') }}" method="post" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $pj->id_mhs }}">
+                                        <button type="submit" name="status_magang" class="btn btn-success" value="SELESAI">
+                                            <i class="fa-regular fa-circle-check"></i> selesai
+                                        </button>
                                     </form>
                                 @endif
+                                
                             </td>
                         </tr>
                     @endforeach
-                {{-- <tr class="centered-column">
-                    <td>2</td>
-                    <td>A11.2021.13800</td>
-                    <td>Nikolas Adi Kurniatmaja Sijabat</td>
-                    <td>
-                        <a href="#" class="btn btn-warning"><i class="fa-solid fa-images"></i></a>
-                    </td>
-                    <td>3.84</td>
-                    <td>Sentimen Analysis</td>
-                    <td class="centered-column">
-                        <button type="submit" name="status" class="btn btn-success" value="ACC"><i
-                                class="fa-regular fa-circle-check"></i></button>
-                        <button type="submit" name="status" class="btn btn-danger delete-button" value="REVISI"><i
-                                class="fa-regular fa-circle-xmark"></i></button>
-                    </td>
-                </tr> --}}
             </table>
         </div>
+
+         <!-- Modal Alasan Penolakan -->
+            <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="rejectModalLabel">Alasan Penolakan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" id="rejectForm">
+                                <input type="hidden" name="id" id="rejectId">
+                                <div class="mb-3">
+                                    <label for="reason" class="form-label">Keterangan</label>
+                                    <textarea class="form-control" id="reason" name="alasan" rows="3" required></textarea>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-danger">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var deleteButtons = document.querySelectorAll('.delete-button');
+                    var rejectModal = new bootstrap.Modal(document.getElementById('rejectModal'));
+                    var rejectForm = document.getElementById('rejectForm');
+        
+                    deleteButtons.forEach(function (button) {
+                        button.addEventListener('click', function (event) {
+                            event.preventDefault();
+                            var id = this.id.split('_')[1]; // Ambil ID pengajuan dari ID tombol
+                            document.getElementById('rejectId').value = id;
+                            rejectModal.show();
+                        });
+                    });
+        
+                    rejectForm.addEventListener('submit', function (event) {
+                        event.preventDefault();
+                        var id = document.getElementById('rejectId').value;
+                        var reason = document.getElementById('reason').value;
+        
+                        if (reason) {
+                            Swal.fire({
+                                title: 'Apakah Anda yakin?',
+                                text: "Alasan penolakan: " + reason,
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Ya, tolak!',
+                                cancelButtonText: 'Batal'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    console.log({id: id, status: 'TOLAK', alasan: reason})
+                                    fetch('/update-pengajuan', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                        },
+                                        body: JSON.stringify({id: id, status: 'TOLAK', alasan: reason})
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.status === 'success') {
+                                                Swal.fire('Success!', 'Pengajuan berhasil ditolak', 'success');
+                                                // Lakukan tindakan tambahan setelah berhasil (misalnya, refresh tabel)
+                                                location.reload(); // Contoh: Refresh halaman setelah berhasil
+                                            } else {
+                                                Swal.fire('Error!', 'Terjadi kesalahan saat menolak pengajuan.', 'error');
+                                            }
+                                        });
+                                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                                    Swal.fire('Canceled!', 'Pengajuan gagal ditolak', 'error');
+                                }
+                            });
+                        } else {
+                            Swal.fire('Error!', 'Alasan penolakan harus diisi.', 'error');
+                        }
+                    });
+                });
+        
+            </script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+                    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+                    integrity="sha384-IQsoLXl1KUsJf1w73p4Clb2l1ftPb2iY9hbGGnKHBQ+hI6VH4fRPw8K5n5pHjtAN"
+                    crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+                    integrity="sha384-cVKIPhGWi2+M2K9K8+6eR6KAOU6zY9Cw5f6zGFLVuAl1FUd8p3jZKf06M9gE6yLg"
+                    crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+                    integrity="sha512-dN5BUoGJ+HJo3ImzdoECQQicIC4Z9GyD6qtuibkCwK6uykIC0mI0sRCufU68o2XmZpJfRIOnjFuWwvG+DnGF6g=="
+                    crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
         {{-- {{ $pengajuan->links() }} --}}
-        <script>
+        {{-- <script>
             document.addEventListener('DOMContentLoaded', function() {
                 var deleteButtons = document.querySelectorAll('.delete-button');
                 deleteButtons.forEach(function(button) {
@@ -134,7 +223,7 @@
                     });
                 });
             });
-        </script>
+        </script> --}}
     @endsection
 
 

@@ -10,7 +10,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a data-toggle="pill" class="nav-link rounded-pill">
+                <a data-toggle="pill" class="nav-link active rounded-pill">
                     <i class="fas fa-book-open"></i>
                     Draft Pengajuan
                 </a>
@@ -28,34 +28,34 @@
                             <tbody>
                                 <tr>
                                     <td>Judul</td>
-                                    <td>{{ $data->judul }}</td>
+                                    <td>{{ $data['judul'] }}</td>
                                 </tr>
                                 <tr>
                                     <td>Bidang Kajian</td>
-                                    <td>{{ $data->bidang_kajian }}</td>
+                                    <td>{{ $data['bidang_kajian'] }}</td>
                                 </tr>          
                                 <tr>
                                     <td>Dokumen Tugas Akhir</td>
-                                    <td>{{ $data->dokumen }}</td>
+                                    <td>{{ $data['dokumen'] }}</td>
                                 </tr>
                                 <tr>
                                     <td>Validasi Dosen</td>
-                                    <td>{{ $data->validasi }}</td>
+                                    <td>{{ $data['validasi'] }}</td>
                                 </tr>
                                 <tr>
                                     <td>Nilai Penyelia</td>
-                                    <td>{{ $data->nilaiPenyelia }}</td>
+                                    <td>{{ $data['nilaiPenyelia'] }}</td>
                                 </tr>
                             </tbody>
                         </table>
                     @else
                         @if ($sidang && $sidang->status == 'PENDING')
                             <blockquote class="blockquote-pengajuan">
-                                <p class="mb-3"><b>Status: Pengajuan</b> - Proposal telah diajukan pada tanggal [{{ $sidang->created_at }} WIB]</p>
+                                <p class="mb-3"><b>Status: Pengajuan</b> - Pengajuan sidang telah diajukan pada tanggal [{{ $sidang->created_at }} WIB]</p>
                             </blockquote>
                         @elseif ($sidang)
                             <blockquote class="blockquote-primary">
-                                <p class="mb-3"><b>Status: Disetujui</b> - Untuk tahap selanjutnya, silahkan melakukan bimbingan dengan dosen pembimbing dengan melakukan pengisian logbook bimbingan </p>
+                                <p class="mb-3"><b>Status: Disetujui</b> - Untuk tahap selanjutnya, silahkan menunggu informasi dari dosen pembimbing </p>
                             </blockquote>
                         @endif
                         <table class="table table-bordered mb-5">
@@ -90,20 +90,20 @@
                             <a href="{{ route('form_pengajuan') }}" class="btn btn-danger me-2">Hapus</a>
                             <form action="{{ route('form_pengajuan') }}" method="GET">
                                 @csrf
-                                <input type="hidden" name="judul" value="{{ $data->judul }}">
-                                <input type="hidden" name="bidang_kajian" value="{{ $data->bidang_kajian }}">
-                                <input type="hidden" name="dokumen" value="{{ $data->dokumen }}">
-                                <input type="hidden" name="validasi" value="{{ $data->validasi }}">
-                                <input type="hidden" name="nilaiPenyelia" value="{{ $data->nilaiPenyelia }}">
+                                <input type="hidden" name="judul" value="{{ $data['judul'] }}">
+                                <input type="hidden" name="bidang_kajian" value="{{ $data['bidang_kajian'] }}">
+                                <input type="hidden" name="dokumen" value="{{ $data['dokumen'] }}">
+                                <input type="hidden" name="validasi" value="{{ $data['validasi'] }}">
+                                <input type="hidden" name="nilaiPenyelia" value="{{ $data['nilaiPenyelia'] }}">
                                 <button type="submit" class="btn btn-warning me-2">Edit</button>
                             </form>
                             <form action="{{ route('submit_sidang') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="judul" value="{{ $data->judul }}">
-                                <input type="hidden" name="bidang_kajian" value="{{ $data->bidang_kajian }}">
-                                <input type="hidden" name="dokumen" value="{{ $data->dokumen }}">
-                                <input type="hidden" name="validasi" value="{{ $data->validasi }}">
-                                <input type="hidden" name="nilaiPenyelia" value="{{ $data->nilaiPenyelia }}">
+                                <input type="hidden" name="judul" value="{{ $data['judul'] }}">
+                                <input type="hidden" name="bidang_kajian" value="{{ $data['bidang_kajian'] }}">
+                                <input type="hidden" name="dokumen" value="{{ $data['dokumen'] }}">
+                                <input type="hidden" name="validasi" value="{{ $data['validasi'] }}">
+                                <input type="hidden" name="nilaiPenyelia" value="{{ $data['nilaiPenyelia'] }}">
                                 <button type="submit" class="btn btn-primary me-2">Ajukan</button>
                             </form>
                         </div>
