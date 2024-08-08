@@ -46,7 +46,7 @@
         <hr>
         @if($status->id_dsn == 0)
             <div class="alert alert-warning mt-1">
-                Anda belum memiliki dosen pembimbing. Silahkan melakukan pengajuan TA terlebih dahulu.
+                Anda belum memiliki dosen pembimbing. Silahkan melakukan pengajuan KP terlebih dahulu.
             </div>
             <div class="mb-4">
                 <a href="{{ route('pengajuan-mahasiswa') }}" class="btn btn-primary w-100">

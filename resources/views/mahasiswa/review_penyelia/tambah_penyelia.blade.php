@@ -25,12 +25,11 @@
 
     <div class="container">
         <h4 class="mb-4">Profil Penyelia</h4>
+        @if($mahasiswa->statusMahasiswa->status_magang == 'SELESAI')
         <blockquote class="blockquote-primary">
             <p class="mb-3">Form dengan tanda asterik (<span class="required">*</span>) wajib diisi.</p>
         </blockquote>
-    </div>
 
-    <div class="container">
         <form method="POST" action="{{ route('halaman_tambah_penyelia') }}">
             @csrf
             <div class="form-group row mb-3">
@@ -64,6 +63,12 @@
                 </div>
             </div>
         </form>
+        @else
+        <div class="alert alert-warning" role="alert">
+            Harap menghubungi Dosen Pembimbing untuk pengisian Review Penyelia.
+        </div>
+        @endif
+        
     </div>
 </div>
 @endsection

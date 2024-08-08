@@ -4,7 +4,7 @@
 <div class="container">
     <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-3">
         <li class="nav-item">
-            <a data-toggle="pill" href="#nav-tab-dosbing" class="nav-link active rounded-pill">
+            <a data-toggle="pill" href="#nav-tab-dosbing" class="nav-link rounded-pill">
                 <i class="fas fa-chalkboard-teacher"></i>
                 Profil Penyelia
             </a>
@@ -16,7 +16,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a data-toggle="pill" href="#nav-tab-pengajuan" class="nav-link rounded-pill">
+            <a data-toggle="pill" href="#nav-tab-pengajuan" class="nav-link active rounded-pill">
                 <i class="fas fa-book-open"></i>
                 Draft Review Penilaian
             </a>

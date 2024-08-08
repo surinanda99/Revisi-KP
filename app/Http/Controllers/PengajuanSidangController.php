@@ -61,12 +61,14 @@ class PengajuanSidangController extends Controller
     {
         $data = $request->all();
         // dd($data);
+
         return view('mahasiswa.pengajuan_sidang.pengajuan_sidang', compact('data'));
     }
 
     public function draft_sidang(Request $request)
     {
-        $data = $request->all();
+        $data = $request->query();
+        // dd($data);
         $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
         $sidang = PengajuanSidang::where('id_mhs', $mahasiswa->id)->first(); // Ambil data pengajuan sidang
         $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
@@ -77,7 +79,7 @@ class PengajuanSidangController extends Controller
         // ));
         return view('mahasiswa.pengajuan_sidang.draft_sidang', [
             'sidang' => $sidang,
-            'data' => $sidang, // Asumsi $data sama dengan $sidang
+            'data' => $data, // Asumsi $data sama dengan $sidang
         ]);
     }
 

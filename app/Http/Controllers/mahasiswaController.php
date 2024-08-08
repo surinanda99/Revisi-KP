@@ -174,7 +174,9 @@ class MahasiswaController extends Controller
 
     public function profile_penyelia()
     {
-        return view('mahasiswa.review_penyelia.tambah_penyelia');
+        $user = Auth::user();
+        $mahasiswa = Mahasiswa::where('email', $user->email)->with('statusMahasiswa')->first();
+        return view('mahasiswa.review_penyelia.tambah_penyelia',compact('mahasiswa'));
     }
 
     public function tambah_penyelia(Request $request)

@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class StatusDosen extends Model
 {
     use HasFactory;
-    protected $table = 'status_dosen';
+    protected $table = 'status_dosens';
     protected $fillable = [
-        'id_period',
+        'id_dsn',
         'kuota',
         'ajuan',
         'diterima',
@@ -18,6 +18,6 @@ class StatusDosen extends Model
     ];
     public function periode()
     {
-        return $this->belongsTo(DosenPeriodik::class, 'id_period', 'id');
+        return $this->belongsTo(DosenPeriodik::class, 'id_dsn', 'id');
     }
 }
