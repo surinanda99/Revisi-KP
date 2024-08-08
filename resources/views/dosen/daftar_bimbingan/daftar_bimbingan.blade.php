@@ -54,7 +54,10 @@
                                         Status Diterima
                                     </button>
                                 @elseif ($pj->status == 'TOLAK')
-                                    Status Ditolak
+                                    {{-- Status Ditolak --}}
+                                    <button class="btn btn-danger" value="TOLAK">
+                                        Status Ditolak
+                                    </button>
                                 @else
                                     <form action="{{ route('update-mahasiswa-bimbingan') }}" method="post" enctype="multipart/form-data">
                                         @csrf

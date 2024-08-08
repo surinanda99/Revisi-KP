@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Schema::table('status_dosens', function (Blueprint $table) {
+        //     $table->renameColumn('id_period', 'id_dsn');
+        // });
         Schema::table('status_dosens', function (Blueprint $table) {
-            $table->renameColumn('id_period', 'id_dsn');
+            $table->dropColumn('id_period'); // Hapus kolom lama
+            $table->unsignedBigInteger('id_dsn'); // Tambahkan kolom baru dengan nama yang diinginkan
         });
     }
 
@@ -21,8 +25,12 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Schema::table('status_dosens', function (Blueprint $table) {
+        //     $table->renameColumn('id_dsn','id_period');
+        // });
         Schema::table('status_dosens', function (Blueprint $table) {
-            $table->renameColumn('id_dsn','id_period');
+            $table->dropColumn('id_dsn'); // Hapus kolom baru
+            $table->unsignedBigInteger('id_period'); // Tambahkan kembali kolom lama
         });
     }
 };
