@@ -7,8 +7,8 @@ use App\Http\Controllers\KoorController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BimbinganController;
-use App\Http\Controllers\DetailLogbookControlller;
-use App\Http\Controllers\LogbookControlller;
+use App\Http\Controllers\DetailLogbookController;
+use App\Http\Controllers\LogbookController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PengajuanSidangController;
 use App\Http\Controllers\PenyeliaController;
@@ -51,20 +51,12 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::get('/pengajuan-draft', [PengajuanController::class, 'draft'])->name('draft-pengajuan-mahasiswa');
     Route::post('/pengajuan-submit', [PengajuanController::class, 'store'])->name('mahasiswa-pengajuan-submit');
     Route::get('/dosen/{id}', [PengajuanController::class, 'show'])->name('mahasiswa-pengajuan-detail-dosen');
-<<<<<<< HEAD
     Route::get('/logbook', [LogbookController::class, 'index'])->name('mahasiswa-logbook');
     Route::post('/logbook', [LogbookController::class, 'store'])->name('mahasiswa-logbook-create');
     Route::post('/updateFolder', [LogbookController::class, 'updateFolder'])->name('mahasiswa-logbook-folder');
     Route::get('/logbook/{id}', [DetailLogbookController::class,'show'])->name('mahasiswa-logbook-detail');
     Route::post('/logbook/{id}', [DetailLogbookController::class,'update'])->name('mahasiswa-logbook-update');
     Route::post('/updatePengajuan', [MahasiswaBimbinganControlller::class, 'update'])->name('update-mahasiswa-bimbingan');
-=======
-    Route::get('/logbook', [LogbookControlller::class, 'index'])->name('mahasiswa-logbook');
-    Route::post('/logbook', [LogbookControlller::class, 'store'])->name('mahasiswa-logbook-create');
-    Route::get('/logbook/{id}', [DetailLogbookControlller::class,'show'])->name('mahasiswa-logbook-detail');
-    Route::post('/logbook/{id}', [DetailLogbookControlller::class,'update'])->name('mahasiswa-logbook-update');
-    // Route::post('/updatePengajuan', [MahasiswaBimbinganControlller::class, 'update'])->name('update-mahasiswa-bimbingan');
->>>>>>> c4cde67897238b1800c941959a2de2d98cbdaeb0
 
     // Route::get('/draft', [MahasiswaController::class, 'draft_penilaian']);
     Route::get('/Profil/{id}', [MahasiswaController::class, 'profil'])->name('halamanProfil');
