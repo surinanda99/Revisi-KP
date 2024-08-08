@@ -9,7 +9,7 @@ use App\Models\StatusMahasiswa;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 
-class MahasiswaBimbinganControlller extends Controller
+class MahasiswaBimbinganController extends Controller
 {
     public function index()
     {

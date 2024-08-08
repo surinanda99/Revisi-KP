@@ -6,8 +6,10 @@ use App\Models\LogbookBimbingan;
 use App\Models\Mahasiswa;
 use App\Models\StatusMahasiswa;
 use Illuminate\Http\Request;
+use Spatie\Activitylog\Models\Activity;
 
-class LogbookControlller extends Controller
+
+class LogbookController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -54,15 +56,16 @@ class LogbookControlller extends Controller
 
         $status->save();
 
-        return redirect()->back();
+        // return redirect()->back();
 
-        // activity()
-        //     ->inLog('logbook')
-        //     ->causedBy(auth()->user())
-        //     ->performedOn($logbook)
-        //     ->withProperties(['id_mhs' => $mahasiswa->id, 'id_dsn' => $status->id_dsn])
-        //     ->log('menambahkan logbook');
+        activity()
+            ->inLog('logbook')
+            ->causedBy(auth()->user())
+            ->performedOn($logbook)
+            ->withProperties(['id_mhs' => $mahasiswa->id, 'id_dsn' => $status->id_dsn])
+            ->log('menambahkan logbook');
         // return redirect()->route('mahasiswa-logbook');
+        return redirect()->back()->with('success', 'Logbook Berhasil Ditambahkan.');
     }
 
     public function updateFolder(Request $request)
@@ -73,12 +76,13 @@ class LogbookControlller extends Controller
 
         $status->save();
 
-        // activity()
-        //     ->inLog('logbook')
-        //     ->causedBy(auth()->user())
-        //     ->withProperties(['id_mhs' => $mahasiswa->id, 'id_dsn' => $status->id_dsn])
-        //     ->log('mengupdate folder logbook');
+        activity()
+            ->inLog('logbook')
+            ->causedBy(auth()->user())
+            ->withProperties(['id_mhs' => $mahasiswa->id, 'id_dsn' => $status->id_dsn])
+            ->log('mengupdate folder logbook');
         // return redirect()->route('mahasiswa-logbook');
+        return redirect()->back()->with('success', 'Folder Link KP Berhasil Ditambahkan.');
     }
 
     /**
