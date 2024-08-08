@@ -43,19 +43,6 @@
             </div>
             @if($status->logbook != null)
                 <hr>
-                
-                {{-- @if (Session::get('success'))
-                    <div class="alert alert-success mt-3">
-                        {{ Session::get('success') }}
-                    </div>
-                @endif
-
-                @if (Session::get('error'))
-                    <div class="alert alert-danger mt-3">
-                        {{ Session::get('error') }}
-                    </div>
-                @endif --}}
-
                 <div class="mb-2 d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogTambahLogbook">
                         <i class="fas fa-plus"></i> Tambah

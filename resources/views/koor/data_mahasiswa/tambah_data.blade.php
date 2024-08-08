@@ -34,7 +34,7 @@
                                 @enderror
                             </div>
                         </div>
-                        {{-- <div class="form-group row mb-3">
+                        <div class="form-group row mb-3">
                             <label for="inputIPK" class="col-sm-2 col-form-label">IPK <span
                                     class="required">*</span></label>
                             <div class="col-sm-10">
@@ -54,7 +54,7 @@
                             <div class="col-sm-10">
                                 <input type="topik" name="telp_mhs" class="form-control" id="inputTelp">
                             </div>
-                        </div> --}}
+                        </div>
                         <div class="form-group row mb-3">
                             <label for="inputEmail" class="col-sm-2 col-form-label">Email <span class="required">*</span></label>
                             <div class="col-sm-10">
