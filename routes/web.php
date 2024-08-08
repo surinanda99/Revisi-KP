@@ -6,14 +6,9 @@ use App\Http\Controllers\DosenPembimbingController;
 use App\Http\Controllers\KoorController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminController;
-<<<<<<< HEAD
-use App\Http\Controllers\DetailLogbookController;
-use App\Http\Controllers\LogbookController;
-=======
 use App\Http\Controllers\BimbinganController;
 use App\Http\Controllers\DetailLogbookControlller;
 use App\Http\Controllers\LogbookControlller;
->>>>>>> c4cde67897238b1800c941959a2de2d98cbdaeb0
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PengajuanSidangController;
 use App\Http\Controllers\PenyeliaController;
