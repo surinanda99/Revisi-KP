@@ -30,6 +30,29 @@
                                 Lihat Detail
                             </button>
                         </td>
+                        <td class="centered-column">
+                            @if ($ps->status == 'ACC')
+                                <button class="btn btn-success" value="ACC">
+                                    Status Diterima
+                                </button>
+                            @elseif ($ps->status == 'TOLAK')
+                                {{-- Status Ditolak --}}
+                                <button class="btn btn-danger" value="TOLAK">
+                                    Status Ditolak
+                                </button>
+                            @else
+                                <form action="{{ route('update-mahasiswa-bimbingan') }}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $ps->id }}">
+                                    <button type="submit" name="status" class="btn btn-success" value="ACC">
+                                        <i class="fa-regular fa-circle-check"></i> ACC
+                                    </button>
+                                </form>
+                                    <button type="submit" name="status" class="btn btn-danger delete-button" value="TOLAK" id="rejectButton_{{ $ps->id }}">
+                                        <i class="fa-regular fa-circle-xmark"></i> TOLAK
+                                    </button>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -84,7 +107,7 @@
             var $this = $(this);
             var pengajuanId = $this.data('pengajuan-id');
             var nilaiPembimbing = $('#nilaiPembimbing' + pengajuanId).val();
-            
+
             // Nonaktifkan tombol untuk mencegah klik ganda
             $this.prop('disabled', true);
 
