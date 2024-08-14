@@ -15,11 +15,11 @@
                     <th class="align-middle">NIM</th>
                     <th class="align-middle">Nama Mahasiswa</th>
                     <th class="align-middle">Review Penyelia</th>
-                    <th class="align-middle">Aksi</th>
+                    {{-- <th class="align-middle">Aksi</th> --}}
                 </tr>
             </thead>
             <tbody>
-                {{-- @foreach($detail_penilaians as $review)
+                @foreach($detail_penilaians as $review)
                 <tr id="review-row-{{ $review->id }}">
                     <td class="centered-column">{{ $loop->iteration }}</td>
                     <td class="centered-column">{{ $review->mahasiswa->nim }}</td>
@@ -29,7 +29,7 @@
                             Lihat Detail
                         </button>
                     </td>
-                    <td class="centered-column">
+                    {{-- <td class="centered-column">
                         @if ($review->status == 'ACC')
                             <button class="btn btn-success" disabled>
                                 Status Selesai
@@ -45,9 +45,9 @@
                                 </form>
                             </div>
                         @endif
-                    </td>                    
+                    </td>                     --}}
                 </tr>
-                @endforeach --}}
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -67,7 +67,7 @@
 </div>
 
 <!-- Dialog Modal Detail Review dan Penyelia -->
-{{-- @foreach($detail_penilaians as $review)
+@foreach($detail_penilaians as $review)
 <div class="modal fade" id="detailModal{{ $review->id }}" tabindex="-1" aria-labelledby="detailModalLabel{{ $review->id }}" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -120,7 +120,7 @@
         </div>
     </div>
 </div>
-@endforeach --}}
+@endforeach
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

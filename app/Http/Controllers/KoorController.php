@@ -5,17 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Mahasiswa;
+use App\Models\Pengajuan;
 use App\Imports\DosenImport;
 use Illuminate\Http\Request;
 use App\Models\DetailPenilaian;
 use App\Models\DosenPembimbing;
 use App\Exports\ExportMahasiswa;
-use App\Imports\MahasiswaImport;
 // use Spatie\Permission\Models\Role;
+use App\Imports\MahasiswaImport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Spatie\Activitylog\Models\Activity;
 use Maatwebsite\Excel\Facades\Excel;
+use Spatie\Activitylog\Models\Activity;
 use Illuminate\Support\Facades\Validator;
 
 class KoorController extends Controller
@@ -41,6 +42,15 @@ class KoorController extends Controller
     {
         // $dosens = DosenPembimbing::all();
         $dosens = DosenPembimbing::with(['dosen', 'dosen.pengajuan'])->get();
+
+        foreach ($dosens as $dosen) {
+            // Calculate the number of accepted applications for each DosenPembimbing
+            $dosen->ajuan_diterima = $dosen->dosen->pengajuan()->where('status', 'ACC')->count();
+    
+            // Calculate the remaining quota
+            $dosen->sisa_kuota = $dosen->kuota - $dosen->dosen->pengajuan->count();
+        }
+
         return view('koor.data_dosen.data_dosen', compact('dosens'));
     }
 
@@ -269,7 +279,11 @@ class KoorController extends Controller
 
     public function penyeliaMhs()
     {
-        return view('koor.data_penyelia.data_penyelia');
+        // return view('koor.data_penyelia.data_penyelia');
+
+        $detail_penilaians = DetailPenilaian::with('mahasiswa', 'penyelia')->get();
+
+        return view('koor.data_penyelia.data_penyelia', compact('detail_penilaians'));
     }
 
     public function showReviewPenilaian()

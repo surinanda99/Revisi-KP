@@ -44,7 +44,7 @@
                             </button>
                         @else
                             <div class="d-flex justify-content-center">
-                                <form action="{{ route('updateReviewKoor', $review->id) }}" method="post">
+                                <form action="{{ route('updateReview', $review->id) }}" method="post">
                                     @csrf
                                     <input type="hidden" name="status" value="ACC">
                                     <button type="submit" class="btn btn-success acc-btn">
