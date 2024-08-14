@@ -218,8 +218,16 @@ class DosenPembimbingController extends Controller
 
         // Mendapatkan data dari tabel logbook dan mengelompokkan berdasarkan bab
         $logbooks = LogbookBimbingan::select('bab', \DB::raw('count(*) as total'))
+            // ->where('dosen_id', $dosen->id_dsn)
             ->groupBy('bab')
             ->get();
+
+        // Mendapatkan data Mahasiswa TA1 & TA2
+        $kpCount = StatusMahasiswa::where('bab_terakhir', '>', 0)->count();
+
+        // Mengubah data menjadi format yang bisa digunakan oleh chart
+        // $logbookLabels = $logbooks->pluck('bab'); // Mendapatkan label bab
+        // $logbookData = $logbooks->pluck('total'); // Mendapatkan jumlah entri per bab
 
         // Get the DosenPembimbing related to the Dosen
         $dosenPembimbing = $dosen->dosen;
@@ -227,9 +235,24 @@ class DosenPembimbingController extends Controller
         // Mendapatkan data Mahasiswa KP
         $jumlahAjuan = Pengajuan::where('id_dsn', $dosenPembimbing->id)->count();
 
-        // $foto = ProfileController::lecture($dosen->npp);
+        //  // Menyiapkan data untuk grafik
+        // $logbookData = $logbooks->pluck('total');
+        // $logbookLabels = $logbooks->pluck('bab');
+        
+        // Data Mahasiswa KP
+        // $mahasiswaKPData = Mahasiswa::all()->pluck('jumlah_bimbingan'); // Contoh: ambil jumlah bimbingan mahasiswa
+        // $mahasiswaKPLabels = Mahasiswa::all()->pluck('nama'); // Contoh: ambil nama mahasiswa
 
-        return view('dosen.dashboard', compact('dosen', 'logbook', 'status', 'mhs', 'logbooks', 'activities', 'jumlahAjuan'));
+        return view('dosen.dashboard', compact(
+            'dosen', 
+            'logbook', 
+            'status', 
+            'mhs', 
+            'logbooks', 
+            'kpCount',
+            'activities', 
+            'jumlahAjuan'
+        ));
     }
 
     public function daftarPengajuanSidang()

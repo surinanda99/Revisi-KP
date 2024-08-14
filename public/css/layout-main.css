@@ -313,6 +313,23 @@ input.form-control:focus {
     max-width: 200px;
 }
 
+.card {
+    margin-top: 20px;
+}
+
+.card-header {
+    background-color: #114D91;
+    color: #fff;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+#card-view {
+    background-color: #114D91;
+}
+
 /* Tentang Kami */
 .content-about{
     margin-top: 20px;
