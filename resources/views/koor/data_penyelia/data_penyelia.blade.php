@@ -19,7 +19,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($detail_penilaians as $review)
+                {{-- @foreach($detail_penilaians as $review)
                 <tr id="review-row-{{ $review->id }}">
                     <td class="centered-column">{{ $loop->iteration }}</td>
                     <td class="centered-column">{{ $review->mahasiswa->nim }}</td>
@@ -47,7 +47,7 @@
                         @endif
                     </td>                    
                 </tr>
-                @endforeach
+                @endforeach --}}
             </tbody>
         </table>
     </div>
@@ -67,7 +67,7 @@
 </div>
 
 <!-- Dialog Modal Detail Review dan Penyelia -->
-@foreach($detail_penilaians as $review)
+{{-- @foreach($detail_penilaians as $review)
 <div class="modal fade" id="detailModal{{ $review->id }}" tabindex="-1" aria-labelledby="detailModalLabel{{ $review->id }}" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -120,7 +120,7 @@
         </div>
     </div>
 </div>
-@endforeach
+@endforeach --}}
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

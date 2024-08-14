@@ -2,21 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Mahasiswa;
 use App\Imports\DosenImport;
 use Illuminate\Http\Request;
-use App\Models\DosenPembimbing;
 use App\Models\DetailPenilaian;
+use App\Models\DosenPembimbing;
 use App\Exports\ExportMahasiswa;
 use App\Imports\MahasiswaImport;
+// use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Spatie\Activitylog\Models\Activity;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 
 class KoorController extends Controller
 {
+    public function dashboard()
+    {
+        // $role = Role::where('name', 'dosen')->first();
+        // $dosenIds = $role->users->pluck('id');
+
+        // $activities = Activity::whereIn('causer_id', $dosenIds)
+        //     ->with('causer.dosen')
+        //     ->get();
+
+        $user = User::where('email', auth()->user()->email)->first();
+
+        $activities = Activity::where('causer_id', $user->id)
+            ->get();
+
+        return view('koor.dashboard', compact('activities'));
+    }
+
     public function daftar_data_dosen()
     {
         // $dosens = DosenPembimbing::all();

@@ -207,6 +207,25 @@ class DosenPembimbingController extends Controller
         $dosen = Dosen::where('email', auth()->user()->email)->first();
         // $periode = Periode::where('status', true)->first();
         // $dsnPeriod = DosenPeriodik::where('id_dsn', $dosen->id)->where('id_periode', $periode->id)->with('status')->first();
+
+        // Get the DosenPembimbing related to the Dosen
+        $dosenPembimbing = $dosen->dosen;
+        
+        // Mendapatkan data Mahasiswa KP
+        $jumlahAjuan = Pengajuan::where('id_dsn', $dosenPembimbing->id)->count();
+        
+        
+        // Menghitung jumlah ajuan yang diterima
+        $ajuanDiterima = Pengajuan::where('id_dsn', $dosenPembimbing->id)
+            ->where('status', 'ACC') // Filter by accepted status
+            ->count();
+
+        // Mengurangi sisa kuota berdasarkan jumlah ajuan yang diterima
+        $dosenPembimbing->sisa_kuota = $dosenPembimbing->kuota - $ajuanDiterima;
+
+        // Simpan perubahan pada DosenPembimbing
+        $dosenPembimbing->save();
+
         $logbook = LogbookBimbingan::with('mahasiswa')->where('id_dsn', $dosen->id)->get();
         $status = StatusMahasiswa::all();
         $mhs = Mahasiswa::all();
@@ -218,18 +237,24 @@ class DosenPembimbingController extends Controller
 
         // Mendapatkan data dari tabel logbook dan mengelompokkan berdasarkan bab
         $logbooks = LogbookBimbingan::select('bab', \DB::raw('count(*) as total'))
+            // ->where('dosen_id', $dosen->id_dsn)
             ->groupBy('bab')
             ->get();
 
-        // Get the DosenPembimbing related to the Dosen
-        $dosenPembimbing = $dosen->dosen;
-        
-        // Mendapatkan data Mahasiswa KP
-        $jumlahAjuan = Pengajuan::where('id_dsn', $dosenPembimbing->id)->count();
+        // Mendapatkan data Mahasiswa TA1 & TA2
+        $kpCount = StatusMahasiswa::where('bab_terakhir', '>', 0)->count();
 
-        // $foto = ProfileController::lecture($dosen->npp);
-
-        return view('dosen.dashboard', compact('dosen', 'logbook', 'status', 'mhs', 'logbooks', 'activities', 'jumlahAjuan'));
+        return view('dosen.dashboard', compact(
+            'dosen', 
+            'logbook', 
+            'status', 
+            'mhs', 
+            'logbooks', 
+            'kpCount',
+            'activities', 
+            'jumlahAjuan',
+            'ajuanDiterima'
+        ));
     }
 
     public function daftarPengajuanSidang()

@@ -1,147 +1,129 @@
 @extends('koor.layouts.main')
 @section('title', 'Dashboard Koor')
 @section('content')
-
-    {{--    <nav class="sb-topnav navbar navbar-expand">--}}
-    {{--        <!-- Navbar Search-->--}}
-    {{--        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">--}}
-    {{--            <div class="input-group">--}}
-    {{--                <input class="form-control" type="text" placeholder="Search here..." aria-label="Search for..."--}}
-    {{--                       aria-describedby="btnNavbarSearch"/>--}}
-    {{--                <button class="btn" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>--}}
-    {{--            </div>--}}
-    {{--        </form>--}}
-    {{--        <!-- Navbar-->--}}
-    {{--        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">--}}
-    {{--            <li class="nav-item dropdown">--}}
-    {{--                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"--}}
-    {{--                   aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>--}}
-    {{--                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">--}}
-    {{--                    <li><a class="dropdown-item" href="#!">Settings</a></li>--}}
-    {{--                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>--}}
-    {{--                    <li>--}}
-    {{--                        <hr class="dropdown-divider"/>--}}
-    {{--                    </li>--}}
-    {{--                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>--}}
-    {{--                </ul>--}}
-    {{--            </li>--}}
-    {{--        </ul>--}}
-    {{--    </nav>--}}
-
     <main>
-        <div class="container-fluid px-4">
-            <h1 class="mt-4"><b>Dashboard</b></h1>
-            {{--            <ol class="breadcrumb mb-4">--}}
-            {{--                <li class="breadcrumb-item active">Dashboard</li>--}}
-            {{--            </ol>--}}
-            <!-- Data Mahasiswa Table -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-table me-1"></i>
-                    Data Mahasiswa
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover" id="dataTableMahasiswa" width="100%"
-                               cellspacing="0">
-                            <thead class="table-primary">
-                            <tr>
-                                <th>NIM</th>
-                                <th>Nama</th>
-                                <th>Dosen Wali</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {{-- @foreach($mahasiswa as $mhs)
-                                <tr>
-                                    <td>{{ $mhs->nim }}</td>
-                                    <td>{{ $mhs->nama }}</td>
-                                    <td>{{ $mhs->dosen_wali }}</td>
-                                </tr>
-                            @endforeach --}}
-                            </tbody>
-                        </table>
+        <div class="wrapper d-flex flex-column min-vh-100">
+            <nav class="sb-topnav navbar navbar-expand">
+                <!-- Navbar Search-->
+                <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                    <div class="input-group">
+                        <input class="form-control" type="text" placeholder="Search here..." aria-label="Search for..."
+                            aria-describedby="btnNavbarSearch" />
+                        <button class="btn" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                </form>
+                <!-- Notification -->
+                <div class="navbar-nav px-1">
+                    <div class="nav-item dropdown">
+                        <a class="nav-link" id="navbarDropdown" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-bell"></i>
+                            <span id="notificationCount" class="badge bg-danger">3</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end mt-2" aria-labelledby="notificationDropdown">
+                            <li class="dropdown-header d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-bold">Notifications</span>
+                                <div class="markAsRead" id="markAsRead" onclick="markAsRead(this)">Sudah dibaca</div>
+                            </li>
+                            <li class="dropdown-item d-flex justify-content-between align-items-center">
+                                <span>New logbook entry from John Doe</span>
+                            </li>
+                            <li class="dropdown-item d-flex justify-content-between align-items-center">
+                                <span>Jane Smith submitted her final report</span>
+                            </li>
+                            <li class="dropdown-item d-flex justify-content-between align-items-center">
+                                <span>Meeting reminder with your students</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </div>
-
-            <!-- Data Dosen Pembimbing Table -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-table me-1"></i>
-                    Data Dosen Pembimbing
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover" id="dataTableDosen" width="100%"
-                               cellspacing="0">
-                            <thead class="table-success">
-                            <tr>
-                                <th>NPP</th>
-                                <th>Nama</th>
-                                <th>Bidang Kajian</th>
-                                <th>Kuota Mhs Kerja Praktek (Baru)</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {{-- @foreach($dosen as $ds)
-                                <tr>
-                                    <td>{{ $ds->npp }}</td>
-                                    <td>{{ $ds->nama }}</td>
-                                    <td>{{ $ds->bidang_kajian }}</td>
-                                    <td>{{ $ds->kuota_mhs_ta }}</td>
-                                </tr>
-                            @endforeach --}}
-                            </tbody>
-                        </table>
+                <!-- Navbar Profile-->
+                <div class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                    <div class="nav-item">
+                        <a class="nav-link" id="navbarDropdown" href="/profile" role="button" aria-expanded="false">
+                            <img src="https://via.placeholder.com/200x200" alt="Profile Picture" class="rounded-circle" width="30" height="30">
+                        </a>
                     </div>
                 </div>
-            </div>
-
-            <!-- Data Logbook Bimbingan Table -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-table me-1"></i>
-                    Data Logbook Bimbingan
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover" id="dataTableLogbook" width="100%"
-                               cellspacing="0">
-                            <thead class="table-info">
-                            <tr>
-                                <th>Nama Mahasiswa</th>
-                                <th>Tanggal Bimbingan</th>
-                                <th>Uraian Bimbingan</th>
-                                <th>Dokumen</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {{-- @foreach($logbookBimbingan as $logbook)
-                                <tr>
-                                    <td>{{ $logbook->mahasiswa->mahasiswa->nama }}</td>
-                                    <td>{{ $logbook->tanggal_bimbingan }}</td>
-                                    <td>{{ $logbook->uraian_bimbingan }}</td>
-                                    <td><a href="{{ $logbook->dokumen }}" target="_blank">Dokumen</a></td>
-                                </tr>
-                            @endforeach --}}
-                            </tbody>
-                        </table>
+            </nav>
+            <main>
+                <div class="container-fluid px-4">
+                    
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card text-white mb-4" id="card-view">
+                                <div class="card-body"><b>Data Dosen</b></div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="{{ route('HalamanKoorDosen') }}">See Details</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card text-white mb-4" id="card-view">
+                                <div class="card-body"><b>Data Mahasiswa</b></div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="{{ route('halamanKoorMhs') }}">See Details</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card text-white mb-4" id="card-view">
+                                <div class="card-body"><b>Review Penyelia</b></div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="{{ route('penyeliaMhs') }}">See Details</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Log Aktivitas -->
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fa-regular fa-calendar-check"></i>
+                                    Log Aktivitas
+                                </div>
+                                <div class="card-body" style="max-height: 137px; overflow-y: auto;">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Tanggal</th>
+                                            <th>Aktivitas</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="centered-column">
+                                        @foreach($activities as $act)
+                                            <tr>
+                                                <td>{{ $act->created_at->format('d/m/Y') }}</td>
+                                                <td>{{ $act->description }}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </main>
+            <footer class="py-4 mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Bimbingan Online</div>
+                        <div>
+                            <a href="#" class="text-secondary">Privacy Policy</a>
+                            &middot;
+                            <a href="#" class="text-secondary">Terms & Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
     </main>
 @endsection
-
-{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#dataTableMahasiswa').DataTable();
-        $('#dataTableDosen').DataTable();
-        $('#dataTableLogbook').DataTable();
-    });
-</script> --}}
