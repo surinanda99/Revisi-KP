@@ -22,7 +22,8 @@ class DetailPenilaian extends Model
         'score',
         'file_path',
         'mahasiswa_id',
-        'penyelia_id'
+        'penyelia_id',
+        'status',
     ];
 
     public function mahasiswa()

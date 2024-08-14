@@ -56,12 +56,23 @@ class ReviewController extends Controller
         return redirect()->back()->with('success', 'Review submitted successfully.');
     }
 
-    public function updateReview(Request $request, $id)
-{
-    $review = MahasiswaPenyelia::findOrFail($id);
-    $review->status = $request->status;
-    $review->save();
+    // public function updateReview(Request $request, $id)
+    // {
+    //     $review = MahasiswaPenyelia::findOrFail($id);
+    //     $review->status = $request->status;
+    //     $review->save();
 
-    return response()->json(['message' => 'Review updated successfully']);
-}
+    //     // return response()->json(['message' => 'Review updated successfully']);
+    //     return redirect()->back()->with('success', 'Review updated successfully.');
+    // }
+
+    public function updateReview(Request $request, $id)
+    {
+        $review = DetailPenilaian::findOrFail($id); // Pastikan ini adalah model yang benar
+        $review->status = $request->status;
+        $review->save();
+
+        return redirect()->back()->with('success', 'Review berhasil diperbarui.');
+    }
+
 }

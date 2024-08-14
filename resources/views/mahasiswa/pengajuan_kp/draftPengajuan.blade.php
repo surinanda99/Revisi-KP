@@ -119,11 +119,13 @@
                             <thead class="table-header">
                             <th>Tanggal Pengajuan</th>
                             <th>Dosen Ajuan</th>
+                            <th>Alasan</th>
                             </thead>
                             @foreach ($history as $hs)
                                 <tr>
                                     <td class="centered-column">{{ $hs->created_at }}</td>
-                                    <td class="alasan-column">{{ $hs->dosen->nama }}</td>
+                                    <td class="centered-column">{{ $hs->dosen->nama }}</td>
+                                    <td class="centered-column">{{ $hs->alasan }}</td>
                                 </tr>
                             @endforeach
                         </table>

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('kesimpulan_saran');
             $table->float('score');
             $table->string('file_path')->nullable();
+            $table->string('status')->default('PENDING');
             $table->timestamps();
         });
     }

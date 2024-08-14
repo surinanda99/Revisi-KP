@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DetailPenilaian;
-use App\Models\PengajuanSidang;
-use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Dosen;
+use App\Models\Mahasiswa;
+use App\Models\Pengajuan;
+use Illuminate\Http\Request;
+use App\Models\DetailPenilaian;
+use App\Models\DosenPembimbing;
+use App\Models\PengajuanSidang;
 use App\Models\StatusMahasiswa;
 use App\Models\LogbookBimbingan;
-use App\Models\Mahasiswa;
-use App\Models\DosenPembimbing;
-use App\Models\Pengajuan;
+use Spatie\Activitylog\Models\Activity;
 
 class DosenPembimbingController extends Controller
 {
@@ -166,6 +168,20 @@ class DosenPembimbingController extends Controller
         return view('dosen.review_penyelia_mhs.review_penyelia_mhs', compact('detail_penilaians'));
     }
 
+    // public function updateReview(Request $request, $id)
+    // {
+    //     $review = DetailPenilaian::find($id);
+    
+    //     if ($review) {
+    //         $review->status = $request->input('status');
+    //         $review->save();
+            
+    //         return response()->json(['success' => true, 'status' => $review->status]);
+    //     }
+        
+    //     return response()->json(['success' => false], 404);
+    // }
+
     public function Pengajuan_sidang_mhs()
     {
         $pengajuan_sidangs = PengajuanSidang::all();
@@ -174,16 +190,46 @@ class DosenPembimbingController extends Controller
 
     public function dash()
     {
-        $user = auth()->user();
-        $dosen = Dosen::where('email', $user->email)->first();
+        // $user = auth()->user();
+        // $dosen = Dosen::where('email', $user->email)->first();
+
+        // // Get the DosenPembimbing related to the Dosen
+        // $dosenPembimbing = $dosen->dosen;
+
+        // // Count the number of submissions for the DosenPembimbing
+        // $jumlahAjuan = Pengajuan::where('id_dsn', $dosenPembimbing->id)->count();
+
+        // return view('dosen.dashboard', compact('dosen', 'jumlahAjuan'));
+
+
+
+        // Mengambil id dosen yang sedang login
+        $dosen = Dosen::where('email', auth()->user()->email)->first();
+        // $periode = Periode::where('status', true)->first();
+        // $dsnPeriod = DosenPeriodik::where('id_dsn', $dosen->id)->where('id_periode', $periode->id)->with('status')->first();
+        $logbook = LogbookBimbingan::with('mahasiswa')->where('id_dsn', $dosen->id)->get();
+        $status = StatusMahasiswa::all();
+        $mhs = Mahasiswa::all();
+
+        $user = User::where('email', auth()->user()->email)->first();
+
+        $activities = Activity::where('causer_id', $user->id)
+            ->get();
+
+        // Mendapatkan data dari tabel logbook dan mengelompokkan berdasarkan bab
+        $logbooks = LogbookBimbingan::select('bab', \DB::raw('count(*) as total'))
+            ->groupBy('bab')
+            ->get();
 
         // Get the DosenPembimbing related to the Dosen
         $dosenPembimbing = $dosen->dosen;
-
-        // Count the number of submissions for the DosenPembimbing
+        
+        // Mendapatkan data Mahasiswa KP
         $jumlahAjuan = Pengajuan::where('id_dsn', $dosenPembimbing->id)->count();
 
-        return view('dosen.dashboard', compact('dosen', 'jumlahAjuan'));
+        // $foto = ProfileController::lecture($dosen->npp);
+
+        return view('dosen.dashboard', compact('dosen', 'logbook', 'status', 'mhs', 'logbooks', 'activities', 'jumlahAjuan'));
     }
 
     public function daftarPengajuanSidang()
