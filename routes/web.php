@@ -6,15 +6,15 @@ use App\Http\Controllers\DosenPembimbingController;
 use App\Http\Controllers\KoorController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BimbinganController;
 use App\Http\Controllers\DetailLogbookController;
 use App\Http\Controllers\LogbookController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PengajuanSidangController;
 use App\Http\Controllers\PenyeliaController;
-use App\Http\Controllers\BimbinganController;
-use App\Http\Controllers\MahasiswaBimbinganControlller;
 use App\Http\Controllers\DospemBimbinganController;
 use App\Http\Controllers\MahasiswaBimbinganController;
+use App\Http\Controllers\MahasiswaBimbinganControlller;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
