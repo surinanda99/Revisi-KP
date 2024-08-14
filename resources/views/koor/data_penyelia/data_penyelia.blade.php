@@ -1,13 +1,10 @@
-@extends('dosen.layouts.main')
-@section('title', 'Daftar Review Penyelia')
+@extends('koor.layouts.main')
+@section('title', 'Daftar Data Penyelia')
 @section('content')
 <div class="container">
     <h4 class="mb-4">Review Penilaian Penyelia Mahasiswa Kerja Praktek</h4>
 
     <p class="mb-2 d-flex justify-content-between align-items-center">
-        {{-- <blockquote class="blockquote-primary">
-            <p class="mb-3">Klik tombol <button type="button" class="btn btn-primary"><i class="lni lni-empty-file"></i></button> untuk melihat detail Review Penyelia mahasiswa</p>
-        </blockquote> --}}
         Berikut merupakan daftar Detail Penilaian Mahasiswa
     </p>
     <div class="table-container table-logbook">
@@ -32,11 +29,6 @@
                             Lihat Detail
                         </button>
                     </td>
-                    {{-- <td class="centered-column">
-                        <button type="button" class="btn btn-success acc-btn" data-review-id="{{ $review->id }}">
-                            <i class="fa-regular fa-circle-check"></i> Selesai
-                        </button>
-                    </td> --}}
                     <td class="centered-column">
                         @if ($review->status == 'ACC')
                             <button class="btn btn-success" disabled>
@@ -132,80 +124,28 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    // $(document).ready(function() {
-    //     $('.acc-btn, .tolak-btn').on('click', function() {
-    //         var reviewId = $(this).data('review-id');
-    //         var status = $(this).hasClass('acc-btn') ? 'ACC' : 'TOLAK';
-    //         $.ajax({
-    //             url: '{{ route('updateReview', '') }}/' + reviewId,
-    //             type: 'POST',
-    //             data: {
-    //                 _token: '{{ csrf_token() }}',
-    //                 status: status
-    //             },
-    //             success: function(response) {
-    //                 $('#review-row-' + reviewId).fadeOut();
-    //             },
-    //             error: function(xhr) {
-    //                 console.log(xhr.responseText);
-    //             }
-    //         });
-    //     });
-    // });
-//     $(document).ready(function() {
-//     $('.acc-btn').on('click', function() {
-//         var reviewId = $(this).data('review-id');
-//         var button = $(this);
-        
-//         $.ajax({
-//             url: '{{ route('updateReview', '') }}/' + reviewId,
-//             type: 'POST',
-//             data: {
-//                 _token: '{{ csrf_token() }}',
-//                 status: 'Diterima'
-//             },
-//             success: function(response) {
-//                 if (response.success) {
-//                     button.text('Diterima').removeClass('acc-btn').prop('disabled', true);
-//                     $('#review-row-' + reviewId).fadeOut();
-//                 }
-//             },
-//             error: function(xhr) {
-//                 console.log(xhr.responseText);
-//             }
-//         });
-//     });
-// });
-
-
-$(document).ready(function() {
-    $('.acc-btn').on('click', function() {
-        var reviewId = $(this).data('review-id');
-        var button = $(this);
-        
-        $.ajax({
-            url: '{{ route('updateReviewKoor', '') }}/' + reviewId,
-            type: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                status: 'ACC'
-            },
-            success: function(response) {
-                console.log(response); // Untuk debug, lihat respon di console
-                if (response.message) {
-                    // Ubah teks tombol menjadi 'Selesai' dan disable tombol
-                    button.text('Selesai').removeClass('acc-btn').prop('disabled', true);
+    $(document).ready(function() {
+        $('.acc-btn').on('click', function() {
+            var reviewId = $(this).data('review-id');
+            var button = $(this);
+            
+            $.ajax({
+                url: '{{ route('updateReviewKoor', '') }}/' + reviewId,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    status: 'ACC'
+                },
+                success: function(response) {
+                    if (response.message) {
+                        button.text('Selesai').removeClass('acc-btn').prop('disabled', true);
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
                 }
-            },
-            error: function(xhr) {
-                console.log(xhr.responseText); // Tampilkan error jika ada
-            }
+            });
         });
     });
-});
-
-
-
-
 </script>
 @endsection

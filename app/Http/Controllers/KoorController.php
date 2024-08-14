@@ -7,6 +7,7 @@ use App\Models\Mahasiswa;
 use App\Imports\DosenImport;
 use Illuminate\Http\Request;
 use App\Models\DosenPembimbing;
+use App\Models\DetailPenilaian;
 use App\Exports\ExportMahasiswa;
 use App\Imports\MahasiswaImport;
 use Illuminate\Support\Facades\DB;
@@ -248,11 +249,22 @@ class KoorController extends Controller
 
     public function penyeliaMhs()
     {
-
+        return view('koor.data_penyelia.data_penyelia');
     }
 
     public function dashboard()
     {
         return view('koor.dashboard');
     }
+
+    public function showReviewPenilaian()
+    {
+        $detail_penilaians = DetailPenilaian::with('mahasiswa', 'penyelia')->get();
+
+        return view('koor.data_penyelia.data_penyelia', compact('detail_penilaians'));
+    }
+
+
+    
+
 }
