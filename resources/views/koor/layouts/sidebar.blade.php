@@ -29,7 +29,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="/Review" class="sidebar-link">
+                <a href="{{ route('penyeliaMhs') }}" class="sidebar-link">
                     <i class="fas fa-chalkboard-teacher me-1"></i>
                     <span>Review Penyelia</span>
                 </a>
