@@ -75,7 +75,7 @@
                             <div class="card text-white mb-4" id="card-view">
                                 <div class="card-body"><b>Review Penyelia</b></div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    {{-- <a class="small text-white stretched-link" href="/about">See Details</a> --}}
+                                    <a class="small text-white stretched-link" href="{{ route('penyeliaMhs') }}">See Details</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>
@@ -98,12 +98,12 @@
                                         </tr>
                                         </thead>
                                         <tbody class="centered-column">
-                                        {{-- @foreach($activities as $act)
+                                        @foreach($activities as $act)
                                             <tr>
                                                 <td>{{ $act->created_at->format('d/m/Y') }}</td>
                                                 <td>{{ $act->description }}</td>
                                             </tr>
-                                        @endforeach --}}
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
