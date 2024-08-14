@@ -74,7 +74,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     // Route::get('/draft_review', [MahasiswaController::class, 'draft_review'])->name('draft_review');
     Route::post('/submit_draft_review', [MahasiswaController::class, 'submit_review'])->name('submit_review');
     Route::get('/form-sidang', [PengajuanSidangController::class, 'form_sidang'])->name('form_pengajuan');
-    Route::get('/draft-sidang', [PengajuanSidangController::class, 'draft_sidang'])->name('draft_sidang');  
+    Route::get('/draft-sidang', [PengajuanSidangController::class, 'draft_sidang'])->name('draft_sidang');
     Route::post('/submit-sidang', [PengajuanSidangController::class, 'pengajuan_sidang'])->name('submit_sidang');
 });
 
@@ -91,14 +91,15 @@ Route::middleware(['auth', 'role:dosen'])->group(function () {
     Route::post('/accLogbook', [DosenPembimbingController::class, 'update'])->name('update-dosbing-logbook');
 
     Route::get('/review_mhs', [DosenPembimbingController::class, 'review_penyelia'])->name('pageReviewPenyelia');
-    Route::get('/pengajuan_mhs', [DosenPembimbingController::class, 'pengajuan_sidang_mhs'])->name('pagePengajuanSidang'); 
-    Route::get('/logbookBimbingan', [DospemBimbinganController::class, 'index'])->name('dosbing-logbook');  
+    Route::get('/pengajuan_mhs', [DosenPembimbingController::class, 'pengajuan_sidang_mhs'])->name('pagePengajuanSidang');
+    Route::get('/logbookBimbingan', [DospemBimbinganController::class, 'index'])->name('dosbing-logbook');
     Route::get('/dosen/review_penyelia', [DosenPembimbingController::class, 'review_penyelia'])->name('review_penyelia');
     Route::post('/review/update/{id}', [ReviewController::class, 'updateReview'])->name('updateReview');
     Route::post('/dosen/review_penyelia/hapus/{id}', [DosenPembimbingController::class, 'hapusMhs'])->name('hapusMhs');
     Route::post('/update-nilai-pembimbing/{id}', [PengajuanSidangController::class, 'updateNilaiPembimbing'])->name('updateNilaiPembimbing');
     Route::post('/pengajuan-sidang/update/{id}', [PengajuanSidangController::class, 'update'])->name('updatePengajuanSidang');
     Route::post('/update-pengajuan-sidang/{id}', [PengajuanSidangController::class, 'updatePengajuanSidang'])->name('updatePengajuanSidang');
+    Route::post('/updateACCSidang/{id}', [PengajuanSidangController::class, 'updateStatus'])->name('updateACCSidang');
     Route::post('/update-pengajuan', [BimbinganController::class, 'update'])->name('update-bimbingan-mhs');
     Route::post('/update-magang', [BimbinganController::class, 'selesaiMagang'])->name('update-selesai-magang');
 
@@ -125,9 +126,7 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     Route::get('/penyelia-mhs', [KoorController::class, 'penyeliaMhs'])->name('penyeliaMhs');
 
     // koor untuk penyelia
-    Route::post('/update-review-koor/{id}', [KoorController::class, 'updateReviewKoor'])->name('updateReviewKoor');
-    Route::get('/koor/penilaian_penyelia', [KoorController::class, 'penilaian'])->name('penilaian_penyelia');
-    Route::get('/koor/data-penyelia', [KoorController::class, 'daftar_penyelia'])->name('daftar_penyelia');
+    Route::post('/update-review-koor/{id}', [ReviewController::class, 'showReviewPenilaian'])->name('updateReviewKoor');
 
     // dashboard
     Route::get('/dashboardKoordinator', [KoorController::class, 'dashboard'])->name('dashboardKoor');

@@ -26,11 +26,11 @@ class PengajuanSidangController extends Controller
             'nilaiPenyelia' => 'required|string',
             'nilaiPembimbing' => 'nullable|string',
         ]);
-    
+
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-    
+
         $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
         $pengajuanSidang = PengajuanSidang::where('id_mhs', $mahasiswa->id)->first();
 
@@ -123,15 +123,17 @@ class PengajuanSidangController extends Controller
         return redirect()->back()->with('success', 'Nilai Pembimbing berhasil diperbarui.');
     }
 
-    public function update(Request $request, $id)
+    public function updateStatus(Request $request, $id)
     {
-        $pengajuanSidang = PengajuanSidang::find($id);
-        if ($pengajuanSidang) {
-            $pengajuanSidang->status = $request->status;
-            $pengajuanSidang->save();
-            return response()->json(['success' => 'Status updated successfully.']);
+        $pengajuan = PengajuanSidang::find($id);
+
+        if ($pengajuan) {
+            $pengajuan->statusPengajuan = $request->input('status');
+            $pengajuan->save();
+
+            return redirect()->back()->with('success', 'Status updated successfully.');
         } else {
-            return response()->json(['error' => 'Pengajuan not found.'], 404);
+            return redirect()->back()->with('error', 'Pengajuan not found.');
         }
     }
 
