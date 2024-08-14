@@ -1,5 +1,5 @@
 @extends('koor.layouts.main')
-@section('title', 'Daftar Data Penyelia')
+@section('title', 'Daftar Review Penyelia')
 @section('content')
 <div class="container">
     <h4 class="mb-4">Review Penilaian Penyelia Mahasiswa Kerja Praktek</h4>
