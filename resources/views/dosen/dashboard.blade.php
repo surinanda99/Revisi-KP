@@ -137,7 +137,8 @@
                                         <tr>
                                             <td>{{ $dosen->dosen->kuota }}</td>
                                             <td>{{ $jumlahAjuan }}</td>
-                                            <td>{{ $dosen->dosen->ajuan_diterima }}</td>
+                                            <td>{{ $ajuanDiterima }}</td>
+                                            {{-- <td>{{ $dosen->dosen->ajuan_diterima }}</td> --}}
                                             <td>{{ $dosen->dosen->sisa_kuota }}</td>
                                         </tr>
                                     </table>

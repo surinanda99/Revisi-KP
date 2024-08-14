@@ -207,6 +207,25 @@ class DosenPembimbingController extends Controller
         $dosen = Dosen::where('email', auth()->user()->email)->first();
         // $periode = Periode::where('status', true)->first();
         // $dsnPeriod = DosenPeriodik::where('id_dsn', $dosen->id)->where('id_periode', $periode->id)->with('status')->first();
+
+        // Get the DosenPembimbing related to the Dosen
+        $dosenPembimbing = $dosen->dosen;
+        
+        // Mendapatkan data Mahasiswa KP
+        $jumlahAjuan = Pengajuan::where('id_dsn', $dosenPembimbing->id)->count();
+        
+        
+        // Menghitung jumlah ajuan yang diterima
+        $ajuanDiterima = Pengajuan::where('id_dsn', $dosenPembimbing->id)
+            ->where('status', 'ACC') // Filter by accepted status
+            ->count();
+
+        // Mengurangi sisa kuota berdasarkan jumlah ajuan yang diterima
+        $dosenPembimbing->sisa_kuota = $dosenPembimbing->kuota - $ajuanDiterima;
+
+        // Simpan perubahan pada DosenPembimbing
+        $dosenPembimbing->save();
+
         $logbook = LogbookBimbingan::with('mahasiswa')->where('id_dsn', $dosen->id)->get();
         $status = StatusMahasiswa::all();
         $mhs = Mahasiswa::all();
@@ -225,24 +244,6 @@ class DosenPembimbingController extends Controller
         // Mendapatkan data Mahasiswa TA1 & TA2
         $kpCount = StatusMahasiswa::where('bab_terakhir', '>', 0)->count();
 
-        // Mengubah data menjadi format yang bisa digunakan oleh chart
-        // $logbookLabels = $logbooks->pluck('bab'); // Mendapatkan label bab
-        // $logbookData = $logbooks->pluck('total'); // Mendapatkan jumlah entri per bab
-
-        // Get the DosenPembimbing related to the Dosen
-        $dosenPembimbing = $dosen->dosen;
-        
-        // Mendapatkan data Mahasiswa KP
-        $jumlahAjuan = Pengajuan::where('id_dsn', $dosenPembimbing->id)->count();
-
-        //  // Menyiapkan data untuk grafik
-        // $logbookData = $logbooks->pluck('total');
-        // $logbookLabels = $logbooks->pluck('bab');
-        
-        // Data Mahasiswa KP
-        // $mahasiswaKPData = Mahasiswa::all()->pluck('jumlah_bimbingan'); // Contoh: ambil jumlah bimbingan mahasiswa
-        // $mahasiswaKPLabels = Mahasiswa::all()->pluck('nama'); // Contoh: ambil nama mahasiswa
-
         return view('dosen.dashboard', compact(
             'dosen', 
             'logbook', 
@@ -251,7 +252,8 @@ class DosenPembimbingController extends Controller
             'logbooks', 
             'kpCount',
             'activities', 
-            'jumlahAjuan'
+            'jumlahAjuan',
+            'ajuanDiterima'
         ));
     }
 

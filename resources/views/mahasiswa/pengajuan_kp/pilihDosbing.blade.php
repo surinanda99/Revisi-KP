@@ -48,7 +48,7 @@
                                 <td class="centered-column">{{ $dos->npp }}</td>
                                 <td class="centered-column">{{ $dos->nama }}</td>
                                 <td class="centered-column">{{ $dos->dosen->sisa_kuota ?? 0 }}</td>
-                                <td class="centered-column">{{ $dos->dosen->jumlah_ujian ?? 0 }}</td>
+                                <td class="centered-column">{{ $dos->dosen->jumlah_ajuan ?? 0 }}</td>
 
                             <form action="{{ route('form-pengajuan-mahasiswa') }}" method="GET">
                                 @csrf
