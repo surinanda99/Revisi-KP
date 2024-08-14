@@ -32,11 +32,6 @@
                             Lihat Detail
                         </button>
                     </td>
-                    {{-- <td class="centered-column">
-                        <button type="button" class="btn btn-success acc-btn" data-review-id="{{ $review->id }}">
-                            <i class="fa-regular fa-circle-check"></i> Selesai
-                        </button>
-                    </td> --}}
                     <td class="centered-column">
                         @if ($review->status == 'ACC')
                             <button class="btn btn-success" disabled>
@@ -132,80 +127,25 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    // $(document).ready(function() {
-    //     $('.acc-btn, .tolak-btn').on('click', function() {
-    //         var reviewId = $(this).data('review-id');
-    //         var status = $(this).hasClass('acc-btn') ? 'ACC' : 'TOLAK';
-    //         $.ajax({
-    //             url: '{{ route('updateReview', '') }}/' + reviewId,
-    //             type: 'POST',
-    //             data: {
-    //                 _token: '{{ csrf_token() }}',
-    //                 status: status
-    //             },
-    //             success: function(response) {
-    //                 $('#review-row-' + reviewId).fadeOut();
-    //             },
-    //             error: function(xhr) {
-    //                 console.log(xhr.responseText);
-    //             }
-    //         });
-    //     });
-    // });
-//     $(document).ready(function() {
-//     $('.acc-btn').on('click', function() {
-//         var reviewId = $(this).data('review-id');
-//         var button = $(this);
-        
-//         $.ajax({
-//             url: '{{ route('updateReview', '') }}/' + reviewId,
-//             type: 'POST',
-//             data: {
-//                 _token: '{{ csrf_token() }}',
-//                 status: 'Diterima'
-//             },
-//             success: function(response) {
-//                 if (response.success) {
-//                     button.text('Diterima').removeClass('acc-btn').prop('disabled', true);
-//                     $('#review-row-' + reviewId).fadeOut();
-//                 }
-//             },
-//             error: function(xhr) {
-//                 console.log(xhr.responseText);
-//             }
-//         });
-//     });
-// });
-
-
-$(document).ready(function() {
-    $('.acc-btn').on('click', function() {
-        var reviewId = $(this).data('review-id');
-        var button = $(this);
-        
-        $.ajax({
-            url: '{{ route('updateReviewKoor', '') }}/' + reviewId,
-            type: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                status: 'ACC'
-            },
-            success: function(response) {
-                console.log(response); // Untuk debug, lihat respon di console
-                if (response.message) {
-                    // Ubah teks tombol menjadi 'Selesai' dan disable tombol
-                    button.text('Selesai').removeClass('acc-btn').prop('disabled', true);
+    $(document).ready(function() {
+        $('.acc-btn, .tolak-btn').on('click', function() {
+            var reviewId = $(this).data('review-id');
+            var status = $(this).hasClass('acc-btn') ? 'ACC' : 'TOLAK';
+            $.ajax({
+                url: '{{ route('updateReview', '') }}/' + reviewId,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    status: status
+                },
+                success: function(response) {
+                    $('#review-row-' + reviewId).fadeOut();
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
                 }
-            },
-            error: function(xhr) {
-                console.log(xhr.responseText); // Tampilkan error jika ada
-            }
+            });
         });
     });
-});
-
-
-
-
 </script>
 @endsection

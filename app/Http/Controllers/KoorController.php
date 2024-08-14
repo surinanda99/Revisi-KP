@@ -286,14 +286,39 @@ class KoorController extends Controller
         return view('koor.data_penyelia.data_penyelia', compact('detail_penilaians'));
     }
 
-    public function showReviewPenilaian()
-    {
-        $detail_penilaians = DetailPenilaian::with('mahasiswa', 'penyelia')->get();
+    // public function dashboard()
+    // {
+    //     return view('koor.dashboard');
+    // }
 
+    public function updateReviewKoor(Request $request, $id)
+    {
+        $penilaian = DetailPenilaian::findOrFail($id); // Pastikan ini adalah model yang benar
+        $penilaian->status = $request->status;
+        $penilaian->save();
+
+        return redirect()->back()->with('success', 'Review berhasil diperbarui.');
+    }
+
+    public function penilaian()
+    {
+        $detail_penilaians = DetailPenilaian::all();
+        return view('koor.data_penyelia.data_penyelia', compact('detail_penilaians'));
+    }
+
+    public function daftar_penyelia()
+    {
+        // Fetch the penilaian data along with mahasiswa and penyelia relations
+        $detail_penilaians = DetailPenilaian::with(['mahasiswa', 'penyelia'])->get();
+        dd($detail_penilaians); // Check if the data is being fetched
+
+        // Pass the data to the view
         return view('koor.data_penyelia.data_penyelia', compact('detail_penilaians'));
     }
 
 
+
+    
     
 
 }

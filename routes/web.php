@@ -125,7 +125,9 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     Route::get('/penyelia-mhs', [KoorController::class, 'penyeliaMhs'])->name('penyeliaMhs');
 
     // koor untuk penyelia
-    Route::post('/update-review-koor/{id}', [ReviewController::class, 'showReviewPenilaian'])->name('updateReviewKoor');
+    Route::post('/update-review-koor/{id}', [KoorController::class, 'updateReviewKoor'])->name('updateReviewKoor');
+    Route::get('/koor/penilaian_penyelia', [KoorController::class, 'penilaian'])->name('penilaian_penyelia');
+    Route::get('/koor/data-penyelia', [KoorController::class, 'daftar_penyelia'])->name('daftar_penyelia');
 
     // dashboard
     Route::get('/dashboardKoordinator', [KoorController::class, 'dashboard'])->name('dashboardKoor');
