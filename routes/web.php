@@ -14,6 +14,7 @@ use App\Http\Controllers\PengajuanSidangController;
 use App\Http\Controllers\PenyeliaController;
 use App\Http\Controllers\DospemBimbinganController;
 use App\Http\Controllers\MahasiswaBimbinganController;
+use App\Http\Controllers\MahasiswaBimbinganControlller;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -56,7 +57,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::post('/updateFolder', [LogbookController::class, 'updateFolder'])->name('mahasiswa-logbook-folder');
     Route::get('/logbook/{id}', [DetailLogbookController::class,'show'])->name('mahasiswa-logbook-detail');
     Route::post('/logbook/{id}', [DetailLogbookController::class,'update'])->name('mahasiswa-logbook-update');
-    Route::post('/updatePengajuan', [MahasiswaBimbinganControlller::class, 'update'])->name('update-mahasiswa-bimbingan');
+    Route::post('/updatePengajuan', [MahasiswaBimbinganController::class, 'update'])->name('update-mahasiswa-bimbingan');
 
     // Route::get('/draft', [MahasiswaController::class, 'draft_penilaian']);
     Route::get('/Profil/{id}', [MahasiswaController::class, 'profil'])->name('halamanProfil');

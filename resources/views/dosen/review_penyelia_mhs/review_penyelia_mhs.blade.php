@@ -34,10 +34,7 @@
                     </td>
                     {{-- <td class="centered-column">
                         <button type="button" class="btn btn-success acc-btn" data-review-id="{{ $review->id }}">
-                            <i class="fa-regular fa-circle-check"></i> ACC
-                        </button>
-                        <button type="button" class="btn btn-danger tolak-btn" data-review-id="{{ $review->id }}">
-                            <i class="fa-regular fa-circle-xmark"></i> TOLAK
+                            <i class="fa-regular fa-circle-check"></i> Selesai
                         </button>
                     </td> --}}
                     <td class="centered-column">

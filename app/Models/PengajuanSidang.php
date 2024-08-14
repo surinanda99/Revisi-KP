@@ -17,6 +17,7 @@ class PengajuanSidang extends Model
         'dokumen',
         'validasi',
         'nilaiPenyelia',
+        'statusPengajuan',
     ];
 
     public function mahasiswa()
