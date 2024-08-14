@@ -272,10 +272,10 @@ class KoorController extends Controller
         return view('koor.data_penyelia.data_penyelia');
     }
 
-    public function dashboard()
-    {
-        return view('koor.dashboard');
-    }
+    // public function dashboard()
+    // {
+    //     return view('koor.dashboard');
+    // }
 
     public function updateReviewKoor(Request $request, $id)
     {
