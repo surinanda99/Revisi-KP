@@ -155,8 +155,9 @@ class KoorController extends Controller
         $validator = Validator::make($request->all(), [
             'nim' => 'required|unique:mahasiswas',
             'nama' => 'required|string',
-            // 'ipk' => 'required',
-            // 'telp_mhs' => 'required',
+            'ipk' => 'required',
+            'transkrip_nilai' => 'required',
+            'telp_mhs' => 'required',
             'email' => 'required|email|unique:mahasiswas',
             'dosen_wali' => 'required|string',
         ]);
@@ -168,8 +169,9 @@ class KoorController extends Controller
         Mahasiswa::create([
             'nim' => $request->nim,
             'nama' => $request->nama,
-            // 'ipk' => $request->ipk,
-            // 'telp_mhs' => $request->telp_mhs,
+            'ipk' => $request->ipk,
+            'transkrip_nilai' => $request->transkrip_nilai,
+            'telp_mhs' => $request->telp_mhs,
             'email' => $request->email,
             'dosen_wali' => $request->dosen_wali,
         ]);

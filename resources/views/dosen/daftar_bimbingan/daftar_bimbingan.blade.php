@@ -2,47 +2,46 @@
 @section('title', 'Daftar Bimbingan Kerja Praktek')
 @section('content')
 
-@if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
-
-@if (session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
-
-<div class="wrapper d-flex flex-column min-vh-100">
-    <div class="container flex-grow-1">
-        <h3 class="mb-3"><b>Daftar Pengajuan Mahasiswa Bimbingan</b></h3>
-        <p class="mb-2">Berikut ini adalah daftar pengajuan mahasiswa bimbingan</p>
-        <div class="input-group justify-content-end mb-3">
-            <input class="form-control" type="text" placeholder="Search here..." aria-label="Search for..."
-                   aria-describedby="btnNavbarSearch" />
-            <button class="btn" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
         </div>
-        <div class="table-container table-dosbing">
-            <table class="table table-bordered mb-1">
-                <thead class="table-header">
-                <th>No</th>
-                <th>NIM</th>
-                <th>Nama Mahasiswa</th>
-                <th>Foto</th>
-                <th>IPK</th>
-                <th>Judul</th>
-                <th>Status</th>
-                <th>Status Magang</th>
-                </thead>
-                @foreach ($pengajuan as $pj)
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <div class="wrapper d-flex flex-column min-vh-100">
+        <div class="container flex-grow-1">
+            <h3 class="mb-3"><b>Daftar Pengajuan Mahasiswa Bimbingan</b></h3>
+            <p class="mb-2">Berikut ini adalah daftar pengajuan mahasiswa bimbingan</p>
+            {{-- <div class="input-group justify-content-end mb-3">
+                <input class="form-control" type="text" placeholder="Search here..." aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+            </div> --}}
+            <div class="table-container table-dosbing">
+                <table class="table table-bordered mb-1" id="table-log">
+                    <thead class="table-header">
+                        <th>No</th>
+                        <th>NIM</th>
+                        <th>Nama Mahasiswa</th>
+                        <th>Foto</th>
+                        <th>IPK</th>
+                        <th>Judul</th>
+                        <th>Status</th>
+                        <th>Status Magang</th>
+                    </thead>
+                    @foreach ($pengajuan as $pj)
                         <tr class="centered-column">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $pj->mahasiswa->nim }}</td>
                             <td>{{ $pj->mahasiswa->nama }}</td>
                             <td>
-                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                        data-bs-target="{{ $pj->mahasiswa->id }}">
+                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="{{ $pj->mahasiswa->id }}">
                                     <i class="fa-solid fa-images"></i>
                                 </button>
                             </td>
@@ -54,18 +53,23 @@
                                         Status Diterima
                                     </button>
                                 @elseif ($pj->status == 'TOLAK')
-                                    Status Ditolak
+                                    {{-- Status Ditolak --}}
+                                    <button class="btn btn-danger" value="TOLAK">
+                                        Status Ditolak
+                                    </button>
                                 @else
-                                    <form action="{{ route('update-mahasiswa-bimbingan') }}" method="post" enctype="multipart/form-data">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{ $pj->id }}">
-                                        <button type="submit" name="status" class="btn btn-success" value="ACC">
-                                            <i class="fa-regular fa-circle-check"></i> ACC
-                                        </button>
-                                    </form>
-                                        <button type="submit" name="status" class="btn btn-danger delete-button" value="TOLAK" id="rejectButton_{{ $pj->id }}">
-                                            <i class="fa-regular fa-circle-xmark"></i> TOLAK
-                                        </button>
+                                    <div class="d-flex justify-content-center">
+                                        <form action="{{ route('update-mahasiswa-bimbingan') }}" method="post" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $pj->id }}">
+                                            <button type="submit" name="status" class="btn btn-success" value="ACC">
+                                                <i class="fa-regular fa-circle-check"></i> ACC
+                                            </button>
+                                        </form>
+                                            <button type="submit" name="status" class="btn btn-danger delete-button ms-2" value="TOLAK" id="rejectButton_{{ $pj->id }}">
+                                                <i class="fa-regular fa-circle-xmark"></i> TOLAK
+                                            </button>
+                                    </div>
                                 @endif
                             </td>
                             <td>
@@ -82,154 +86,181 @@
                                         </button>
                                     </form>
                                 @endif
-                                
                             </td>
                         </tr>
                     @endforeach
-            </table>
+                </table>
+            </div>
         </div>
-
-         <!-- Modal Alasan Penolakan -->
-            <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="rejectModalLabel">Alasan Penolakan</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form method="post" id="rejectForm">
-                                <input type="hidden" name="id" id="rejectId">
-                                <div class="mb-3">
-                                    <label for="reason" class="form-label">Keterangan</label>
-                                    <textarea class="form-control" id="reason" name="alasan" rows="3" required></textarea>
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-danger">Submit</button>
-                                </div>
-                            </form>
-                        </div>
+        <footer class="py-4 mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Kerja Praktek</div>
+                    <div>
+                        <a href="#" class="text-secondary">Privacy Policy</a>
+                        &middot;
+                        <a href="#" class="text-secondary">Terms &amp; Conditions</a>
                     </div>
                 </div>
             </div>
+        </footer>
+    </div>
 
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    var deleteButtons = document.querySelectorAll('.delete-button');
-                    var rejectModal = new bootstrap.Modal(document.getElementById('rejectModal'));
-                    var rejectForm = document.getElementById('rejectForm');
-        
-                    deleteButtons.forEach(function (button) {
-                        button.addEventListener('click', function (event) {
-                            event.preventDefault();
-                            var id = this.id.split('_')[1]; // Ambil ID pengajuan dari ID tombol
-                            document.getElementById('rejectId').value = id;
-                            rejectModal.show();
-                        });
+    <!-- Modal Alasan Penolakan -->
+    <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rejectModalLabel">Alasan Penolakan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="rejectForm">
+                        <input type="hidden" name="id" id="rejectId">
+                        <div class="mb-3">
+                            <label for="reason" class="form-label">Keterangan</label>
+                            <textarea class="form-control" id="reason" name="alasan" rows="3" required></textarea>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-danger">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var deleteButtons = document.querySelectorAll('.delete-button');
+            var rejectModal = new bootstrap.Modal(document.getElementById('rejectModal'));
+            var rejectForm = document.getElementById('rejectForm');
+
+            deleteButtons.forEach(function (button) {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    var id = this.id.split('_')[1]; // Ambil ID pengajuan dari ID tombol
+                    document.getElementById('rejectId').value = id;
+                    rejectModal.show();
+                });
+            });
+
+            rejectForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                var id = document.getElementById('rejectId').value;
+                var reason = document.getElementById('reason').value;
+
+                if (reason) {
+                    Swal.fire({
+                        title: 'Apakah Anda yakin?',
+                        text: "Alasan penolakan: " + reason,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, tolak!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            console.log({id: id, status: 'TOLAK', alasan: reason})
+                            fetch('/update-pengajuan', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({id: id, status: 'TOLAK', alasan: reason})
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.status === 'success') {
+                                        Swal.fire('Success!', 'Pengajuan berhasil ditolak', 'success');
+                                        // Lakukan tindakan tambahan setelah berhasil (misalnya, refresh tabel)
+                                        location.reload(); // Contoh: Refresh halaman setelah berhasil
+                                    } else {
+                                        Swal.fire('Error!', 'Terjadi kesalahan saat menolak pengajuan.', 'error');
+                                    }
+                                });
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            Swal.fire('Canceled!', 'Pengajuan gagal ditolak', 'error');
+                        }
                     });
-        
-                    rejectForm.addEventListener('submit', function (event) {
-                        event.preventDefault();
-                        var id = document.getElementById('rejectId').value;
-                        var reason = document.getElementById('reason').value;
-        
-                        if (reason) {
-                            Swal.fire({
-                                title: 'Apakah Anda yakin?',
-                                text: "Alasan penolakan: " + reason,
-                                icon: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#3085d6',
-                                cancelButtonColor: '#d33',
-                                confirmButtonText: 'Ya, tolak!',
-                                cancelButtonText: 'Batal'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    console.log({id: id, status: 'TOLAK', alasan: reason})
-                                    fetch('/update-pengajuan', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                        },
-                                        body: JSON.stringify({id: id, status: 'TOLAK', alasan: reason})
-                                    })
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            if (data.status === 'success') {
-                                                Swal.fire('Success!', 'Pengajuan berhasil ditolak', 'success');
-                                                // Lakukan tindakan tambahan setelah berhasil (misalnya, refresh tabel)
-                                                location.reload(); // Contoh: Refresh halaman setelah berhasil
-                                            } else {
-                                                Swal.fire('Error!', 'Terjadi kesalahan saat menolak pengajuan.', 'error');
-                                            }
-                                        });
-                                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                                    Swal.fire('Canceled!', 'Pengajuan gagal ditolak', 'error');
-                                }
-                            });
-                        } else {
-                            Swal.fire('Error!', 'Alasan penolakan harus diisi.', 'error');
+                } else {
+                    Swal.fire('Error!', 'Alasan penolakan harus diisi.', 'error');
+                }
+            });
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        // Inisialisasi DataTables
+        $(document).ready(function () {
+            $('#table-log').DataTable();
+        });
+    </script>
+
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl1KUsJf1w73p4Clb2l1ftPb2iY9hbGGnKHBQ+hI6VH4fRPw8K5n5pHjtAN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+            integrity="sha384-cVKIPhGWi2+M2K9K8+6eR6KAOU6zY9Cw5f6zGFLVuAl1FUd8p3jZKf06M9gE6yLg"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+            integrity="sha512-dN5BUoGJ+HJo3ImzdoECQQicIC4Z9GyD6qtuibkCwK6uykIC0mI0sRCufU68o2XmZpJfRIOnjFuWwvG+DnGF6g=="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
+
+    {{-- {{ $pengajuan->links() }} --}}
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var deleteButtons = document.querySelectorAll('.delete-button');
+            deleteButtons.forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    Swal.fire({
+                        title: 'Pengajuan ingin ditolak?',
+                        text: "Pengajuan ditolak tidak dapat dikembalikan!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, tolak!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Proses penghapusan data di sini
+                            Swal.fire(
+                                'Success!',
+                                'Pengajuan berhasil ditolak',
+                                'success'
+                            );
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            // Batalkan penghapusan
+                            Swal.fire(
+                                'Canceled!',
+                                'Pengajuan gagal ditolak',
+                                'error'
+                            );
                         }
                     });
                 });
-        
-            </script>
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-                    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-                    integrity="sha384-IQsoLXl1KUsJf1w73p4Clb2l1ftPb2iY9hbGGnKHBQ+hI6VH4fRPw8K5n5pHjtAN"
-                    crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-                    integrity="sha384-cVKIPhGWi2+M2K9K8+6eR6KAOU6zY9Cw5f6zGFLVuAl1FUd8p3jZKf06M9gE6yLg"
-                    crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
-                    integrity="sha512-dN5BUoGJ+HJo3ImzdoECQQicIC4Z9GyD6qtuibkCwK6uykIC0mI0sRCufU68o2XmZpJfRIOnjFuWwvG+DnGF6g=="
-                    crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
-        {{-- {{ $pengajuan->links() }} --}}
-        {{-- <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var deleteButtons = document.querySelectorAll('.delete-button');
-                deleteButtons.forEach(function(button) {
-                    button.addEventListener('click', function(event) {
-                        Swal.fire({
-                            title: 'Pengajuan ingin ditolak?',
-                            text: "Pengajuan ditolak tidak dapat dikembalikan!",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Ya, tolak!',
-                            cancelButtonText: 'Batal'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // Proses penghapusan data di sini
-                                Swal.fire(
-                                    'Success!',
-                                    'Pengajuan berhasil ditolak',
-                                    'success'
-                                );
-                            } else if (result.dismiss === Swal.DismissReason.cancel) {
-                                // Batalkan penghapusan
-                                Swal.fire(
-                                    'Canceled!',
-                                    'Pengajuan gagal ditolak',
-                                    'error'
-                                );
-                            }
-                        });
-                    });
-                });
             });
-        </script> --}}
-    @endsection
+        });
+    </script> --}}
+@endsection
 
 
 
 
-{{-- @extends('dosen.layouts.main')
+
+
+
+
+
+    {{-- @extends('dosen.layouts.main')
 @section('title', 'Daftar Bimbingan Kerja Praktek')
 @section('content')
 <div class="container">

@@ -85,6 +85,11 @@ Route::middleware(['auth', 'role:dosen'])->group(function () {
     Route::get('/daftar_bimbingan', [DosenPembimbingController::class, 'daftar_mhs_bimbingan'])->name('pageDaftarMhsBimbingan');
     Route::post('/updatePengajuan', [DosenPembimbingController::class, 'update_pengajuan'])->name('update-mahasiswa-bimbingan');
     Route::get('/logbook_mhs', [DosenPembimbingController::class, 'logbook_bimbingan_mhs'])->name('pageLogbook');
+    Route::get('/logbookBimbinganList/{id}', [DosenPembimbingController::class, 'detail'])->name('dosbing-logbook-list');
+    // Route::post('/update-dosbing-logbook', [DosenPembimbingController::class, 'update'])->name('update-dosbing-logbook');
+    Route::get('/logbook_mhs/{id}', [DosenPembimbingController::class, 'show'])->name('dosbing-logbook-detail');
+    Route::post('/accLogbook', [DosenPembimbingController::class, 'update'])->name('update-dosbing-logbook');
+
     Route::get('/review_mhs', [DosenPembimbingController::class, 'review_penyelia'])->name('pageReviewPenyelia');
     Route::get('/pengajuan_mhs', [DosenPembimbingController::class, 'pengajuan_sidang_mhs'])->name('pagePengajuanSidang'); 
     Route::get('/logbookBimbingan', [DospemBimbinganController::class, 'index'])->name('dosbing-logbook');  
