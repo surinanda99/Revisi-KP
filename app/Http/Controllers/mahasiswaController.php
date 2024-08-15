@@ -172,10 +172,15 @@ class MahasiswaController extends Controller
         return view('mahasiswa.profil_mhs.profil_mhs', compact('mahasiswa'));
     }
 
-    public function profile_penyelia()
+    public function profile_penyelia(Request $request)
     {
         $user = Auth::user();
         $mahasiswa = Mahasiswa::where('email', $user->email)->with('statusMahasiswa')->first();
+        $penyelia = DetailPenilaian::where('mahasiswa_id', $mahasiswa->id)->with('penyelia')->latest()->first();
+        $data = $request->all();
+        if($penyelia){
+            return view('mahasiswa.review_penyelia.draft_penilaian', compact('data', 'penyelia'));
+        }
         return view('mahasiswa.review_penyelia.tambah_penyelia',compact('mahasiswa'));
     }
 
@@ -229,27 +234,11 @@ class MahasiswaController extends Controller
         ]);
 
         $data = $request->all();
+        $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
+        $penyelia = DetailPenilaian::where('mahasiswa_id', $mahasiswa->id)->with('penyelia')->latest()->first();
 
-        // dd($request);
 
-        // Check if file is uploaded
-        // if ($request->hasFile('file')) {
-        //     $file = $request->file('file');
-        //     $fileName = time() . '_' . $file->getClientOriginalName();
-        //     $filePath = 'storage/penilaian';
-            
-        //     // Create directory if it doesn't exist
-        //     if (!file_exists($filePath)) {
-        //         mkdir($filePath, 0777, true);
-        //     }
-            
-        //     $file->move($filePath, $fileName);
-        //     $fileFullPath = '/' . $filePath . '/' . $fileName;
-        // } else {
-        //     $fileFullPath = null;
-        // }
-
-        return view('mahasiswa.review_penyelia.draft_penilaian', compact('data'));
+        return view('mahasiswa.review_penyelia.draft_penilaian', compact('data', 'penyelia'));
     }
 
     // public function draft_review()
@@ -302,7 +291,7 @@ class MahasiswaController extends Controller
             'penyeliaId' => $request->penyelia,
         ]);
 
-        return redirect()->route('dashboardMahasiswa');
+        return redirect()->route('profile_penyelia');
     }
     
     public function riwayat()

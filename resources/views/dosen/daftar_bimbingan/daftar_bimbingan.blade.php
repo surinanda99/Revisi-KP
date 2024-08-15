@@ -73,19 +73,25 @@
                                 @endif
                             </td>
                             <td>
-                                @if($pj->mahasiswa->statusMahasiswa->status_magang == 'SELESAI')
-                                    <button type="button" class="btn btn-success" disabled>
-                                        <i class="fa-regular fa-circle-check"></i> Selesai
-                                    </button>
+                                @if($pj->status=='PENDING' || $pj->status=='TOLAK')
+                                <button type="button" class="btn btn-success" disabled>
+                                    <i class="fa-regular fa-circle-check"></i> Selesai
+                                </button>
                                 @else
-                                    <form action="{{ route('update-selesai-magang') }}" method="post" enctype="multipart/form-data">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{ $pj->id_mhs }}">
-                                        <button type="submit" name="status_magang" class="btn btn-success" value="SELESAI">
-                                            <i class="fa-regular fa-circle-check"></i> selesai
+                                    @if($pj->mahasiswa->statusMahasiswa->status_magang == 'SELESAI')
+                                        <button type="button" class="btn btn-success" disabled>
+                                            <i class="fa-regular fa-circle-check"></i> Selesai
                                         </button>
-                                    </form>
-                                @endif
+                                    @else
+                                        <form action="{{ route('update-selesai-magang') }}" method="post" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $pj->id_mhs }}">
+                                            <button type="submit" name="status_magang" class="btn btn-success" value="SELESAI">
+                                                <i class="fa-regular fa-circle-check"></i> selesai
+                                            </button>
+                                        </form>
+                                    @endif
+                                @endif 
                             </td>
                         </tr>
                     @endforeach
