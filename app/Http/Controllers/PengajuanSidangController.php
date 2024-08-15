@@ -61,6 +61,14 @@ class PengajuanSidangController extends Controller
     {
         $data = $request->all();
         // dd($data);
+        $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
+        $sidang = PengajuanSidang::where('id_mhs', $mahasiswa->id)->latest()->first();  
+        if ($sidang){
+            return view('mahasiswa.pengajuan_sidang.draft_sidang', [
+                'sidang' => $sidang,
+                'data' => $data, 
+            ]);
+        }   
 
         return view('mahasiswa.pengajuan_sidang.pengajuan_sidang', compact('data'));
     }

@@ -33,10 +33,10 @@
                             </button>
                         </td>
                         <td class="centered-column">
-                            @if ($ps->status == 'ACC')
-                                <button class="btn btn-success" disabled>Status Diterima</button>
-                            @elseif ($ps->status == 'TOLAK')
-                                <button class="btn btn-danger" disabled>Status Ditolak</button>
+                            @if ($ps->statusPengajuan == 'ACC')
+                                <button class="btn btn-success" >Status Diterima</button>
+                            @elseif ($ps->statusPengajuan == 'TOLAK')
+                                <button class="btn btn-danger" >Status Ditolak</button>
                             @else
                                 <div class="btn-group">
                                     <form action="{{ route('updateACCSidang', $ps->id) }}" method="post" enctype="multipart/form-data">

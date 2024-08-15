@@ -13,6 +13,7 @@ use App\Models\PengajuanSidang;
 use App\Models\StatusMahasiswa;
 use App\Models\LogbookBimbingan;
 use Spatie\Activitylog\Models\Activity;
+use Illuminate\Support\Facades\DB;
 
 class DosenPembimbingController extends Controller
 {
@@ -236,7 +237,7 @@ class DosenPembimbingController extends Controller
             ->get();
 
         // Mendapatkan data dari tabel logbook dan mengelompokkan berdasarkan bab
-        $logbooks = LogbookBimbingan::select('bab', \DB::raw('count(*) as total'))
+        $logbooks = LogbookBimbingan::select('bab', DB::raw('count(*) as total'))
             // ->where('dosen_id', $dosen->id_dsn)
             ->groupBy('bab')
             ->get();

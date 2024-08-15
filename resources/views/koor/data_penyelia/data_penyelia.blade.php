@@ -2,7 +2,7 @@
 @section('title', 'Daftar Review Penyelia')
 @section('content')
 <div class="container">
-    <h4 class="mb-4">Review Penilaian Penyelia Mahasiswa Kerja Praktek</h4>
+    <h4 class="mb-4">Penilaian Penyelia Mahasiswa Kerja Praktek</h4>
 
     <p class="mb-2 d-flex justify-content-between align-items-center">
         Berikut merupakan daftar Detail Penilaian Mahasiswa
