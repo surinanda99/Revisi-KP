@@ -29,7 +29,7 @@
                 <h4 class="mb-4">Pengajuan Kerja Praktek Ke-1</h4>
                 @if ($data)
                     <blockquote class="blockquote-primary">
-                        <p class="mb-3"><b>Status: Draft</b> - Untuk mengajukan tugas akhir ke dosen pembimbing,
+                        <p class="mb-3"><b>Status: Draft</b> - Untuk mengajukan Kerja Praktek ke dosen pembimbing,
                             klik
                             tombol Ajukan di bawah</p>
                     </blockquote>
@@ -113,7 +113,7 @@
                 @endif
 
                 @if (count($history) > 0)
-                    <p class="mb-2">Histori Penolakan Pengajuan Tugas Akhir</p>
+                    <p class="mb-2">Histori Penolakan Pengajuan Kerja Praktek</p>
                     <div class="table-container table-tolak">
                         <table class="table table-bordered">
                             <thead class="table-header">
