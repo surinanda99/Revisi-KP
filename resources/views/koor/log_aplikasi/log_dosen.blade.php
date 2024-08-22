@@ -14,38 +14,17 @@
                         <th>Waktu</th>
                         <th>Nama Dosen</th>
                         <th>Aktivitas</th>
-                        <th>Target Log</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="centered-column">1</td>
-                        <td class="centered-column">dd-MM-yyyy HH:mm</td>
-                        <td>DANANG WAHYU UTOMO, M.Kom</td>
-                        <td class="centered-column">Sedang melakukan bimbingan</td>
-                        <td class="centered-column">null</td>
-                    </tr>
-                    <tr>
-                        <td class="centered-column">2</td>
-                        <td class="centered-column">dd-MM-yyyy HH:mm</td>
-                        <td>EGIA ROSI SUBHIYAKTO, M.Kom</td>
-                        <td class="centered-column">Sedang melakukan bimbingan</td>
-                        <td class="centered-column">null</td>
-                    </tr>
-                    <tr>
-                        <td class="centered-column">3</td>
-                        <td class="centered-column">dd-MM-yyyy HH:mm</td>
-                        <td>FAHRI FIRDAUSILLAH, S.Kom, M.CS</td>
-                        <td class="centered-column">Sedang melakukan bimbingan</td>
-                        <td class="centered-column">null</td>
-                    </tr>
-                    <tr>
-                        <td class="centered-column">4</td>
-                        <td class="centered-column">dd-MM-yyyy HH:mm</td>
-                        <td>JUNTA ZENIARJA, M.Kom</td>
-                        <td class="centered-column">Sedang melakukan bimbingan</td>
-                        <td class="centered-column">null</td>
-                    </tr>
+                    @foreach($activities as $act)
+                        <tr>
+                            <td class="centered-column">{{ $loop->iteration }}</td>
+                            <td class="centered-column">{{ $act->created_at }}</td>
+                            <td>{{ $act->causer->dosens->nama }}</td>
+                            <td class="centered-column">{{ $act->description }}</td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
@@ -56,45 +35,8 @@
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script>
-        // Inisialisasi DataTables
         $(document).ready(function () {
             $('#table-log').DataTable();
         });
     </script>
-
-{{--    <script>--}}
-{{--        document.addEventListener('DOMContentLoaded', function() {--}}
-{{--            var deleteButtons = document.querySelectorAll('.delete-button');--}}
-{{--            deleteButtons.forEach(function(button) {--}}
-{{--                button.addEventListener('click', function(event) {--}}
-{{--                    Swal.fire({--}}
-{{--                        title: 'Apakah data ingin dihapus?',--}}
-{{--                        text: "Data yang dihapus tidak dapat dikembalikan!",--}}
-{{--                        icon: 'warning',--}}
-{{--                        showCancelButton: true,--}}
-{{--                        confirmButtonColor: '#3085d6',--}}
-{{--                        cancelButtonColor: '#d33',--}}
-{{--                        confirmButtonText: 'Ya, hapus!',--}}
-{{--                        cancelButtonText: 'Batal'--}}
-{{--                    }).then((result) => {--}}
-{{--                        if (result.isConfirmed) {--}}
-{{--                            // Proses penghapusan data di sini--}}
-{{--                            Swal.fire(--}}
-{{--                                'Deleted!',--}}
-{{--                                'Data berhasil dihapus.',--}}
-{{--                                'success'--}}
-{{--                            );--}}
-{{--                        } else if (result.dismiss === Swal.DismissReason.cancel) {--}}
-{{--                            // Batalkan penghapusan--}}
-{{--                            Swal.fire(--}}
-{{--                                'Canceled!',--}}
-{{--                                'Data gagal dihapus',--}}
-{{--                                'error'--}}
-{{--                            );--}}
-{{--                        }--}}
-{{--                    });--}}
-{{--                });--}}
-{{--            });--}}
-{{--        });--}}
-{{--    </script>--}}
 @endsection

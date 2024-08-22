@@ -53,4 +53,11 @@ class DospemBimbinganController extends Controller
         $logbook = LogbookBimbingan::where('id_mhs', $id)->get();
         return response()->json($logbook);
     }
+
+    public function profileDospem()
+    {
+        $dosen = Dosen::where('email', auth()->user()->email)->first();
+        return view('dosen.profile', compact('dosen'));
+    
+    }
 }

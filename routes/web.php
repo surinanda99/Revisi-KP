@@ -106,6 +106,8 @@ Route::middleware(['auth', 'role:dosen'])->group(function () {
     Route::post('/updateACCSidang/{id}', [PengajuanSidangController::class, 'updateStatus'])->name('updateACCSidang');
     Route::post('/update-pengajuan', [BimbinganController::class, 'update'])->name('update-bimbingan-mhs');
     Route::post('/update-magang', [BimbinganController::class, 'selesaiMagang'])->name('update-selesai-magang');
+    Route::get('/profile', [DospemBimbinganController::class, 'profileDospem']);
+
 
 
 });

@@ -17,24 +17,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="centered-column">1</td>
-                        <td class="centered-column">dd-MM-yyyy HH:mm</td>
-                        <td>Surinanda</td>
-                        <td class="centered-column">Sedang melakukan bimbingan</td>
-                    </tr>
-                    <tr>
-                        <td class="centered-column">2</td>
-                        <td class="centered-column">dd-MM-yyyy HH:mm</td>
-                        <td>Nikolas Adi Kurniatmaja Sijabat</td>
-                        <td class="centered-column">Sedang melakukan bimbingan</td>
-                    </tr>
-                    <tr>
-                        <td class="centered-column">3</td>
-                        <td class="centered-column">dd-MM-yyyy HH:mm</td>
-                        <td>Yoga Adi Pratama</td>
-                        <td class="centered-column">Sedang melakukan bimbingan</td>
-                    </tr>
+                        @foreach($activities as $act)
+                        <tr>
+                            <td class="centered-column">{{ $loop->iteration }}</td>
+                            <td class="centered-column">{{ $act->created_at }}</td>
+                            <td>{{ $act->causer->mahasiswa->nama }}</td>
+                            <td class="centered-column">{{ $act->description }}</td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
