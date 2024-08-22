@@ -309,4 +309,9 @@ class MahasiswaController extends Controller
     {
         return view('mahasiswa.pengajuan_sidang.pengajuan_sidang');
     }
+
+    public function tentang()
+    {
+        return view('mahasiswa.tentang');
+    }    
 }
