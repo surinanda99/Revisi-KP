@@ -1,21 +1,22 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\MahasiswaController;
-use App\Http\Controllers\DosenPembimbingController;
 use App\Http\Controllers\KoorController;
-use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\BimbinganController;
-use App\Http\Controllers\DetailLogbookController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\LogbookController;
-use App\Http\Controllers\PengajuanController;
-use App\Http\Controllers\PengajuanSidangController;
 use App\Http\Controllers\PenyeliaController;
+use App\Http\Controllers\BimbinganController;
+use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\DetailLogbookController;
+use App\Http\Controllers\DosenPembimbingController;
 use App\Http\Controllers\DospemBimbinganController;
+use App\Http\Controllers\PengajuanSidangController;
 use App\Http\Controllers\MahasiswaBimbinganController;
 use App\Http\Controllers\MahasiswaBimbinganControlller;
-use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -130,6 +131,10 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
 
     // dashboard
     Route::get('/dashboardKoordinator', [KoorController::class, 'dashboard'])->name('dashboardKoor');
+    Route::get('/koor-pengumuman', [PengumumanController::class, 'index'])->name('koor-pengumuman');
+    Route::post('/koor-pengumuman', [PengumumanController::class, 'store'])->name('koor-pengumuman.store');
+    Route::post('/koor-pengumuman/{id}', [PengumumanController::class, 'update'])->name('koor-pengumuman.update');
+    Route::delete('/koor-pengumuman/{id}', [PengumumanController::class, 'destroy'])->name('koor-pengumuman.destroy');
 });
 
 // Admin

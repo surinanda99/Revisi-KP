@@ -34,12 +34,24 @@
                     <span>Review Penyelia</span>
                 </a>
             </li>
-            {{-- <li class="sidebar-item">
-                <a href="/Profil" class="sidebar-link">
-                    <i class="lni lni-user"></i>
-                    <span>Profil Mahasiswa</span>
+            <li class="sidebar-item">
+                <a href="{{ route('koor-pengumuman') }}" class="sidebar-link">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Pengumuman</span>
                 </a>
-            </li> --}}
+            </li>
+            <li class="sidebar-item">
+                <a href="{{ route('DataDosbing') }}" class="sidebar-link">
+                    <i class="lni lni-users"></i>
+                    <span>Log Dosen</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{{ route('DataMahasiswa') }}" class="sidebar-link">
+                    <i class="lni lni-users"></i>
+                    <span>Log Mahasiswa</span>
+                </a>
+            </li>
         </ul>
         <div class="sidebar-footer">
             <a href="/tentang" class="sidebar-link">
