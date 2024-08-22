@@ -76,6 +76,8 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::get('/form-sidang', [PengajuanSidangController::class, 'form_sidang'])->name('form_pengajuan');
     Route::get('/draft-sidang', [PengajuanSidangController::class, 'draft_sidang'])->name('draft_sidang');
     Route::post('/submit-sidang', [PengajuanSidangController::class, 'pengajuan_sidang'])->name('submit_sidang');
+
+    Route::get('/tentang', [MahasiswaController::class, 'tentang'])->name('halamanTentang');
 });
 
 // Dosen

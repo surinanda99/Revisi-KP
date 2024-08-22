@@ -62,6 +62,12 @@
             </a>
         </div>
         <div class="sidebar-footer">
+            <a href="{{ route('halamanTentang') }}" class="sidebar-link">
+                <i class="lni lni-code-alt"></i>
+                <span>Tentang</span>
+            </a>
+        </div>
+        <div class="sidebar-footer">
             <a href="{{ route('logout') }}" class="sidebar-link">
                 <i class="lni lni-exit"></i>
                 <span>Logout</span>
