@@ -15,7 +15,7 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            <li class="sidebar-item">
+            {{-- <li class="sidebar-item">
                 <a href="{{ route('DataDosbing') }}" class="sidebar-link">
                     <i class="lni lni-folder"></i>
                     <span>Data Dosen</span>
@@ -27,7 +27,7 @@
                     <i class="lni lni-notepad"></i>
                     <span>Data Mahasiswa </span>
                 </a>
-            </li>
+            </li> --}}
             {{-- <li class="sidebar-item">
                 <a href="{{ route('dataKoor') }}" class="sidebar-link">
                     <i class="lni lni-library"></i>

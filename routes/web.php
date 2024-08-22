@@ -14,6 +14,7 @@ use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\DetailLogbookController;
 use App\Http\Controllers\DosenPembimbingController;
 use App\Http\Controllers\DospemBimbinganController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\PengajuanSidangController;
 use App\Http\Controllers\MahasiswaBimbinganController;
 use App\Http\Controllers\MahasiswaBimbinganControlller;
@@ -137,13 +138,16 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     Route::post('/koor-pengumuman', [PengumumanController::class, 'store'])->name('koor-pengumuman.store');
     Route::post('/koor-pengumuman/{id}', [PengumumanController::class, 'update'])->name('koor-pengumuman.update');
     Route::delete('/koor-pengumuman/{id}', [PengumumanController::class, 'destroy'])->name('koor-pengumuman.destroy');
+
+    Route::get('/log-dosen', [LogController::class, 'LogDosen'])->name('log_dosen');
+    Route::get('/log-mhs', [LogController::class, 'LogMahasiswa'])->name('log_mhs');
 });
 
 // Admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard-Admin', [AdminController::class, 'index'])->name('dashboardAdmin');
-    Route::get('/user_mhs', [AdminController::class, 'log_mhs'])->name('DataMahasiswa');
-    Route::get('/user_dosen', [AdminController::class, 'log_dosbing'])->name('DataDosbing');
+    // Route::get('/user_mhs', [AdminController::class, 'log_mhs'])->name('DataMahasiswa');
+    // Route::get('/user_dosen', [AdminController::class, 'log_dosbing'])->name('DataDosbing');
     // Route::get('/data_user_mhs', [AdminController::class, 'user_mhs'])->name('dataMhs');
     // Route::get('/data_user_dosen', [AdminController::class, 'user_dosen'])->name('dataDosen');
     // Route::get('/data_user_koor', [AdminController::class, 'user_koor'])->name('dataKoor');

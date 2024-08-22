@@ -41,13 +41,13 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="{{ route('DataDosbing') }}" class="sidebar-link">
+                <a href="{{ route('log_dosen') }}" class="sidebar-link">
                     <i class="lni lni-users"></i>
                     <span>Log Dosen</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="{{ route('DataMahasiswa') }}" class="sidebar-link">
+                <a href="{{ route('log_mhs') }}" class="sidebar-link">
                     <i class="lni lni-users"></i>
                     <span>Log Mahasiswa</span>
                 </a>
