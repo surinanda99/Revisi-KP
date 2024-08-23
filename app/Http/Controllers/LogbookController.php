@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LogbookBimbingan;
+use App\Events\Logbook;
 use App\Models\Mahasiswa;
-use App\Models\StatusMahasiswa;
+use App\Events\PengajuanKP;
+use App\Models\Dosen;
 use Illuminate\Http\Request;
+use App\Models\StatusMahasiswa;
+use App\Models\LogbookBimbingan;
 use Spatie\Activitylog\Models\Activity;
 
 
@@ -64,7 +67,8 @@ class LogbookController extends Controller
             ->performedOn($logbook)
             ->withProperties(['id_mhs' => $mahasiswa->id, 'id_dsn' => $status->id_dsn])
             ->log('Menambahkan logbook');
-        // return redirect()->route('mahasiswa-logbook');
+        $dosen = Dosen::where('id', $status->id_dsn)->first();
+        event(new Logbook($mahasiswa, $dosen));   
         return redirect()->back()->with('success', 'Logbook Berhasil Ditambahkan.');
     }
 

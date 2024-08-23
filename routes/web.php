@@ -86,6 +86,9 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
 Route::middleware(['auth', 'role:dosen'])->group(function () {
     // Route::get('/dosen', [DosenPembimbingController::class, 'index'])->name('dashboardDosen');
     Route::get('/dosen', [DosenPembimbingController::class, 'dash'])->name('dashboardDosen');
+    Route::get('/load-notifikasi', [DosenPembimbingController::class, 'loadNotif'])->name('dosen-dashboard-notif');
+    Route::post('/notifikasi/{id}/mark-as-read', [DosenPembimbingController::class, 'markAsRead'])->name('dosen-dashboard-notif-mark');
+    Route::post('/notifikasi/mark-all-read', [DosenPembimbingController::class, 'markAllRead'])->name('dosen-dashboard-notif-mark-all');
     Route::get('/daftar_bimbingan', [DosenPembimbingController::class, 'daftar_mhs_bimbingan'])->name('pageDaftarMhsBimbingan');
     Route::post('/updatePengajuan', [DosenPembimbingController::class, 'update_pengajuan'])->name('update-mahasiswa-bimbingan');
     Route::get('/logbook_mhs', [DosenPembimbingController::class, 'logbook_bimbingan_mhs'])->name('pageLogbook');

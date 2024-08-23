@@ -12,6 +12,7 @@ use App\Models\DosenPembimbing;
 use App\Models\PengajuanSidang;
 use App\Models\StatusMahasiswa;
 use App\Models\LogbookBimbingan;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Support\Facades\DB;
 
@@ -191,23 +192,9 @@ class DosenPembimbingController extends Controller
 
     public function dash()
     {
-        // $user = auth()->user();
-        // $dosen = Dosen::where('email', $user->email)->first();
-
-        // // Get the DosenPembimbing related to the Dosen
-        // $dosenPembimbing = $dosen->dosen;
-
-        // // Count the number of submissions for the DosenPembimbing
-        // $jumlahAjuan = Pengajuan::where('id_dsn', $dosenPembimbing->id)->count();
-
-        // return view('dosen.dashboard', compact('dosen', 'jumlahAjuan'));
-
-
 
         // Mengambil id dosen yang sedang login
         $dosen = Dosen::where('email', auth()->user()->email)->first();
-        // $periode = Periode::where('status', true)->first();
-        // $dsnPeriod = DosenPeriodik::where('id_dsn', $dosen->id)->where('id_periode', $periode->id)->with('status')->first();
 
         // Get the DosenPembimbing related to the Dosen
         $dosenPembimbing = $dosen->dosen;
@@ -263,5 +250,20 @@ class DosenPembimbingController extends Controller
         $pengajuan_sidangs = PengajuanSidang::with('mahasiswa')->get();
 
         return view('dosen.pengajuan_sidang.pengajuan_sidang_mhs', compact('pengajuan_sidangs'));
+    }
+
+    public function loadNotif(){
+        $notifications = auth()->user()->unreadNotifications;
+        return response()->json($notifications);
+    }
+
+    public function markAsRead($id){
+        auth()->user()->notifications()->findOrFail($id)->markAsRead();
+        return response()->json(['success' => true]);
+    }
+
+    public function markAllRead(){
+        auth()->user()->unreadNotifications->markAsRead();
+        return response()->json(['success' => true]);
     }
 }
