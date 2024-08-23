@@ -78,6 +78,13 @@ class PengajuanController extends Controller
 
         $pengajuan->save();
 
+        activity()
+            ->inLog('Pengajuan')
+            ->causedBy(auth()->user())
+            ->performedOn($pengajuan)
+            ->withProperties(['id_dsn' => $data['id_dsn'], 'id_mhs' => $status->id_mhs])
+            ->log('Melakukan pengajuan tugas akhir');
+
         if (isset($data['id_dsn'])) {
             $dosen = DosenPembimbing::where('id_dsn',$data['id_dsn'])->first();
             if ($dosen) {

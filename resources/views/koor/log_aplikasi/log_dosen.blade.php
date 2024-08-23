@@ -21,7 +21,7 @@
                         <tr>
                             <td class="centered-column">{{ $loop->iteration }}</td>
                             <td class="centered-column">{{ $act->created_at }}</td>
-                            <td>{{ $act->causer->dosens->nama }}</td>
+                            <td>{{ $act->causer->dosen->nama }}</td>
                             <td class="centered-column">{{ $act->description }}</td>
                         </tr>
                     @endforeach

@@ -63,7 +63,7 @@ class LogbookController extends Controller
             ->causedBy(auth()->user())
             ->performedOn($logbook)
             ->withProperties(['id_mhs' => $mahasiswa->id, 'id_dsn' => $status->id_dsn])
-            ->log('menambahkan logbook');
+            ->log('Menambahkan logbook');
         // return redirect()->route('mahasiswa-logbook');
         return redirect()->back()->with('success', 'Logbook Berhasil Ditambahkan.');
     }
@@ -80,7 +80,7 @@ class LogbookController extends Controller
             ->inLog('logbook')
             ->causedBy(auth()->user())
             ->withProperties(['id_mhs' => $mahasiswa->id, 'id_dsn' => $status->id_dsn])
-            ->log('mengupdate folder logbook');
+            ->log('Mengupdate folder logbook');
         // return redirect()->route('mahasiswa-logbook');
         return redirect()->back()->with('success', 'Folder Link KP Berhasil Ditambahkan.');
     }
