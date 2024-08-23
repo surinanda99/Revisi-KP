@@ -52,4 +52,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Dosen::class, 'email', 'email');
     }
+
+    /**
+     * The channels the user receives notification broadcasts on.
+     */
+    public function receivesBroadcastNotificationsOn(): string
+    {
+        return 'App.Models.User.'.$this->id;
+    }
 }

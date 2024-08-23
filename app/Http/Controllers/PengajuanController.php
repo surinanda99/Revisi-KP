@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PengajuanKP;
 use App\Models\Dosen;
 use App\Models\DosenPembimbing;
 use Illuminate\Http\Request;
@@ -83,9 +84,9 @@ class PengajuanController extends Controller
             ->causedBy(auth()->user())
             ->performedOn($pengajuan)
             ->withProperties(['id_dsn' => $data['id_dsn'], 'id_mhs' => $status->id_mhs])
-            ->log('Melakukan pengajuan tugas akhir');
+            ->log('Melakukan pengajuan Kerja Praktek');
 
-        if (isset($data['id_dsn'])) {
+            if (isset($data['id_dsn'])) {
             $dosen = DosenPembimbing::where('id_dsn',$data['id_dsn'])->first();
             if ($dosen) {
                 $dosen->jumlah_ajuan = $dosen->jumlah_ajuan + 1;
@@ -97,7 +98,8 @@ class PengajuanController extends Controller
         // $dosen->jml_ajuan = $dosen->jml_ajuan + 1;
 
         // $dosen->update();
-
+        $dsn = Dosen::where('id', $data['id_dsn'])->first();
+        event(new PengajuanKP($mahasiswa, $dsn));
         return redirect()->route('pengajuan-mahasiswa');
     }
 

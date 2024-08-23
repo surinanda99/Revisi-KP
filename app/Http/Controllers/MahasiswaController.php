@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ReviewPenyelia;
 use App\Models\Penyelia;
 use App\Models\Mahasiswa;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
 use App\Models\DetailPenilaian;
+use App\Models\Dosen;
 use App\Models\DosenPembimbing;
 use App\Models\StatusMahasiswa;
 use App\Models\MahasiswaPenyelia;
@@ -237,7 +239,9 @@ class MahasiswaController extends Controller
         $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
         $penyelia = DetailPenilaian::where('mahasiswa_id', $mahasiswa->id)->with('penyelia')->latest()->first();
 
-
+        $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
+        $dosen = Dosen::where('id', $status->id_dsn)->first(); 
+        event(new ReviewPenyelia($mahasiswa, $dosen));
         return view('mahasiswa.review_penyelia.draft_penilaian', compact('data', 'penyelia'));
     }
 
