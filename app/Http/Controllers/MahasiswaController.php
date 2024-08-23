@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Penyelia;
 use App\Models\Mahasiswa;
 use App\Models\Pengajuan;
+use App\Models\Pengumuman;
 use Illuminate\Http\Request;
 use App\Models\DetailPenilaian;
 use App\Models\DosenPembimbing;
@@ -18,19 +19,11 @@ class MahasiswaController extends Controller
     public function index()
     {
         $mahasiswa = Auth::user()->mahasiswa;
-        // dd($mahasiswa);
         $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
         $pengajuans = Pengajuan::where('id_mhs', $mahasiswa->id)->get();
-        // $pengajuans = $mahasiswa->pengajuans()->get();
-        // dd($pengajuans);
-        // $pengajuans = $mahasiswa->pengajuans()->get();
-        // dd($mahasiswa->id_mhs, $pengajuans);
-        // $isCompleted = $mahasiswa->ipk && $mahasiswa->telp_mhs && $mahasiswa->transkrip_nilai;
-        // $pengajuans = Pengajuan::where('id_mhs', $mahasiswa->id_mhs)->with('dosen')->get();
-        // $pengajuans = $mahasiswa->pengajuan()->with('dosen')->get();
-        // $pengajuans = $mahasiswa->pengajuans()->orderBy('created_at', 'desc')->get();
-        // dd($pengajuans); 
-        return view('mahasiswa.dashboard', compact('mahasiswa', 'status', 'pengajuans'));
+        $pengumumans = Pengumuman::orderBy('published_at', 'asc')->get();
+
+        return view('mahasiswa.dashboard', compact('mahasiswa', 'status', 'pengajuans', 'pengumumans'));
     }
 
     public function update(Request $request, $id)

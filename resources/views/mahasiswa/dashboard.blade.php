@@ -22,26 +22,19 @@
 
     <main class="container-border">
         <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <i class="fas fa-info-circle"></i> Informasi Kerja Praktek
-                    </div>
-                    <div class="card-body">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore atque consequuntur asperiores cupiditate vel quam esse voluptatibus, veniam explicabo vero sit eos.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <i class="fas fa-info-circle"></i> Informasi Penyelia
-                    </div>
-                    <div class="card-body">
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quia voluptate voluptatibus unde libero doloremque ratione a minus blanditiis eveniet, inventore obcaecati.</p>
+            @foreach ($pengumumans as $info)
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-info-circle"></i> {{ $info->judul }}
+                        </div>
+                        <div class="card-body">
+                            <p>{{ $info->isi }}</p>
+                            <small>Published by: {{ $info->user }} on {{ \Carbon\Carbon::parse($info->published_at)->format('d M Y, H:i') }}</small>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
         </div>
         <hr>
         @if($status->id_dsn == 0)
