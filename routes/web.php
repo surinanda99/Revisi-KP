@@ -114,6 +114,9 @@ Route::middleware(['auth', 'role:dosen'])->group(function () {
 
 // Koordinator
 Route::middleware(['auth', 'role:koor'])->group(function () {
+    // dashboard
+    Route::get('/koor', [KoorController::class, 'index'])->name('dashboardKoor');
+
     // Koor untuk Dosen
     Route::get('/data_dosen', [KoorController::class, 'daftar_data_dosen'])->name('HalamanKoorDosen');
     Route::post('/import-dosen', [KoorController::class, 'importDosen'])->name('importDosen');
@@ -134,13 +137,13 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     // koor untuk penyelia
     Route::post('/update-review-koor/{id}', [ReviewController::class, 'showReviewPenilaian'])->name('updateReviewKoor');
 
-    // dashboard
-    Route::get('/dashboardKoordinator', [KoorController::class, 'dashboard'])->name('dashboardKoor');
+    // koor pengumuman
     Route::get('/koor-pengumuman', [PengumumanController::class, 'index'])->name('koor-pengumuman');
     Route::post('/koor-pengumuman', [PengumumanController::class, 'store'])->name('koor-pengumuman.store');
-    Route::post('/koor-pengumuman/{id}', [PengumumanController::class, 'update'])->name('koor-pengumuman.update');
+    Route::put('/koor-pengumuman/{id}', [PengumumanController::class, 'update'])->name('koor-pengumuman.update');
     Route::delete('/koor-pengumuman/{id}', [PengumumanController::class, 'destroy'])->name('koor-pengumuman.destroy');
 
+    // koor log mahasiswa dan dosen
     Route::get('/log-dosen', [LogController::class, 'LogDosen'])->name('log_dosen');
     Route::get('/log-mhs', [LogController::class, 'LogMahasiswa'])->name('log_mhs');
 });

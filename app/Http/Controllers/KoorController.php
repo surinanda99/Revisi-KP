@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Validator;
 
 class KoorController extends Controller
 {
-    public function dashboard()
+    public function index()
     {
         // $role = Role::where('name', 'dosen')->first();
         // $dosenIds = $role->users->pluck('id');
