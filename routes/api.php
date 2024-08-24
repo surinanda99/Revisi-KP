@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/pengumuman', [PengumumanController::class, 'index']);
+Route::get('/pengumuman/{id}', [PengumumanController::class, 'show']);
