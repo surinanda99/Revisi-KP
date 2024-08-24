@@ -14,15 +14,25 @@ class PengajuanController extends Controller
 {
     public function index()
     {
+        // Get the list of Dosen with their DosenPembimbing details
         $dosen = Dosen::with('dosen')->get();
-        $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
-        $status = StatusMahasiswa::where('id_mhs', $mhs->id)->first();
-        $history = Pengajuan::where('id_mhs', $status->id_mhs)->where('status', 'TOLAK')->get();
-        $data = false;
         
+        // Fetch the current Mahasiswa based on logged-in user's email
+        $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
+        
+        // Fetch the status of the Mahasiswa
+        $status = StatusMahasiswa::where('id_mhs', $mhs->id)->first();
+        
+        // Fetch the history of Pengajuan that have been rejected
+        $history = Pengajuan::where('id_mhs', $status->id_mhs)->where('status', 'TOLAK')->get();
+        
+        $data = false;
+
+        // Check if there is an existing Pengajuan for the student
         if (Pengajuan::where('id_mhs', $status->id_mhs)->first() != null) {
             $pengajuan = Pengajuan::where('id_mhs', $status->id_mhs)
                 ->whereIn('status', ['ACC', 'PENDING'])->first();
+            
             if ($pengajuan) {
                 $dospil = Dosen::where('id', $pengajuan->id_dsn)->first();
                 return view('mahasiswa.pengajuan_kp.draftPengajuan', compact(
@@ -36,6 +46,28 @@ class PengajuanController extends Controller
             }
         }
         
+        // Iterate through each Dosen to update the DosenPembimbing details
+        foreach ($dosen as $dos) {
+            // Retrieve the related DosenPembimbing record
+            $dosenPembimbing = $dos->dosen;
+            
+            if ($dosenPembimbing) {
+                // Calculate the total number of Pengajuan for the current Dosen
+                $jumlahAjuan = Pengajuan::where('id_dsn', $dosenPembimbing->id)->count();
+                
+                // Calculate the number of Pengajuan that have been accepted
+                $ajuanDiterima = Pengajuan::where('id_dsn', $dosenPembimbing->id)
+                    ->where('status', 'ACC') // Filter by accepted status
+                    ->count();
+                
+                // Update the sisa_kuota based on the number of accepted ajuan
+                $dosenPembimbing->sisa_kuota = $dosenPembimbing->kuota - $ajuanDiterima;
+                $dosenPembimbing->jumlah_ajuan = $jumlahAjuan; // Update the total number of ajuan
+                $dosenPembimbing->save(); // Save the updated DosenPembimbing record
+            }
+        }
+        
+        // Return the view for choosing a Dosen Pembimbing
         return view('mahasiswa.pengajuan_kp.pilihDosbing', compact('status', 'dosen'));
     }
 
