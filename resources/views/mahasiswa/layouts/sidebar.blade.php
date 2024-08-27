@@ -16,6 +16,12 @@
                 </a>
             </li>
             <li class="sidebar-item">
+                <a href="{{ route('dashboardMahasiswa') }}" class="sidebar-link">
+                    <i class="lni lni-information"></i>
+                    <span>Pengumuman</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
                 <a href="{{ route('pengajuan-mahasiswa') }}" class="sidebar-link">
                     <i class="lni lni-pencil-alt"></i>
                     <span>Pengajuan kerja praktek</span>

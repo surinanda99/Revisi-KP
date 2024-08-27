@@ -13,26 +13,30 @@
             </div>
         @endif
 
-        <button class="btn btn-primary mb-4" data-toggle="modal" data-target="#tambahPengumumanModal">Tambah Pengumuman Baru</button>
+        <button class="btn btn-primary mb-4" data-toggle="modal" data-target="#tambahPengumumanModal">
+            <i class="fa-solid fa-plus"></i>Tambah Pengumuman
+        </button>
 
         <div class="table-responsive">
             <table id="tabelPengumuman" class="table table-bordered table-striped table-hover">
                 <thead class="table-header">
                     <tr>
-                        <th style="width: 5%">No</th>
-                        <th style="width: 20%">Judul</th>
-                        <th style="width: 60%">Isi Pengumuman</th>
-                        <th style="width: 15%">Aksi</th>
+                        <th style="width: 2%">No</th>
+                        <th style="width: 25%">Judul</th>
+                        <th style="width: 10%">Sender</th>
+                        <th style="width: 10%">Tanggal dan Waktu</th>
+                        <th style="width: 5%">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($pengumuman as $p)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $p->judul }}</td>
-                            <td>{{ $p->isi }}</td>
-                            <td style="text-align: center">
-                                <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editPengumumanModal{{ $p->id }}">Edit</button>
+                            <td class="text-center">Koordinator KP TI-S1</td>
+                            <td class="text-center">{{ $p->formatted_date }}</td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editPengumumanModal{{ $p->id }}">View</button>
 
                                 <form action="{{ route('koor-pengumuman.destroy', $p->id) }}" method="POST" style="display: inline">
                                     @csrf
@@ -91,6 +95,6 @@
         });
     </script>
 
-    <!-- Include Modal Tambah Pengajuan -->
+    <!-- Include Modal CRUD Pengajuan -->
     @include('koor.pengumuman.crud_pengumuman');
 @endsection
