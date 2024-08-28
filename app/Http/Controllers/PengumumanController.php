@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Pengumuman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -10,7 +11,11 @@ class PengumumanController extends Controller
 {
     public function index()
     {
-        $pengumuman = Pengumuman::all();
+        $pengumuman = Pengumuman::all()->map(function($p){
+            $p->formatted_date = Carbon::parse($p->created_at)->format('d-m-Y H:i:s');
+            return $p;
+        });
+        
         return view('koor.pengumuman.pengumuman', compact('pengumuman'));
     }
 

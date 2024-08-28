@@ -29,7 +29,7 @@
     </div>
 </div>
 
-<!-- Modal Tambah Pengumuman -->
+<!-- Modal Edit Pengumuman -->
 @foreach ($pengumuman as $p)
 <div class="modal fade" id="editPengumumanModal{{ $p->id }}" tabindex="-1" role="dialog" aria-labelledby="editPengumumanModalLabel{{ $p->id }}" aria-hidden="true">
     <div class="modal-dialog" role="document">

@@ -21,7 +21,7 @@
     @endif
 
     <main class="container-border">
-        <div class="row">
+        {{-- <div class="row">
             @foreach ($pengumumans as $info)
                 <div class="col-md-6">
                     <div class="card">
@@ -35,7 +35,31 @@
                     </div>
                 </div>
             @endforeach
+        </div> --}}
+        <div class="row">
+            @if ($pengumumans->isEmpty())
+                <div class="col-md-12">
+                    <div class="alert alert-warning mt-1">
+                       Belum ada informasi pengumuman, silahkan tunggu pengumuman dari koordinator kerja praktek.
+                    </div>
+                </div>
+            @else
+                @foreach ($pengumumans as $info)
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <i class="fas fa-info-circle"></i> {{ $info->judul }}
+                            </div>
+                            <div class="card-body">
+                                <p>{{ $info->isi }}</p>
+                                <small>Published by: {{ $info->user }} on {{ \Carbon\Carbon::parse($info->published_at)->format('d M Y, H:i') }}</small>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
         </div>
+        
         <hr>
         @if($status->id_dsn == 0)
             <div class="alert alert-warning mt-1">

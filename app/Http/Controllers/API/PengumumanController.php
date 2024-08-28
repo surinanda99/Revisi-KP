@@ -9,11 +9,16 @@ use Illuminate\Http\Request;
 class PengumumanController extends Controller
 {
     public function index(){
-        $pengumuman = Pengumuman::whereNotNull('published_at')->orderBy('published_at', 'desc')->get();
+        $pengumuman = Pengumuman::whereNotNull('published_at')
+            ->orderBy('published_at', 'desc')
+            ->get();
+
         $response = [];
+
         foreach ($pengumuman as $item) {
             $response[] = $this->formattedJson($item);
         }
+        
         return response()->json($response);
     }
 
