@@ -316,6 +316,10 @@ class KoorController extends Controller
         return view('koor.data_penyelia.data_penyelia', compact('detail_penilaians'));
     }
 
+    public function plotting(){
+        return view('koor.plotting.plotting_dosen');
+    }
+
 
 
     

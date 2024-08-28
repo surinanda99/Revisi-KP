@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KoorController;
 use App\Http\Controllers\AdminController;
@@ -14,10 +15,10 @@ use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\DetailLogbookController;
 use App\Http\Controllers\DosenPembimbingController;
 use App\Http\Controllers\DospemBimbinganController;
-use App\Http\Controllers\LogController;
 use App\Http\Controllers\PengajuanSidangController;
 use App\Http\Controllers\MahasiswaBimbinganController;
 use App\Http\Controllers\MahasiswaBimbinganControlller;
+use App\Http\Controllers\KoorMonitoringSidangController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -149,6 +150,9 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     // koor log mahasiswa dan dosen
     Route::get('/log-dosen', [LogController::class, 'LogDosen'])->name('log_dosen');
     Route::get('/log-mhs', [LogController::class, 'LogMahasiswa'])->name('log_mhs');
+    Route::get('/koor-monitoring-sidang', [KoorMonitoringSidangController::class, 'index'])->name('koor-monitoring-sidang');
+    Route::post('/koor-monitoring-sidang/update', [KoorMonitoringSidangController::class, 'updateStatus'])->name('koor-monitoring-sidang-update');
+    Route::get('/plotting-dosen',[KoorController::class, 'plotting'])->name('koor-plotting');
 });
 
 // Admin

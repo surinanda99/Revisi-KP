@@ -34,24 +34,24 @@
                         </td>
                         <td class="centered-column">
                             @if ($ps->statusPengajuan == 'ACC')
-                                <button class="btn btn-success" >Status Diterima</button>
+                                <button class="btn btn-success">Status Diterima</button>
                             @elseif ($ps->statusPengajuan == 'TOLAK')
-                                <button class="btn btn-danger" >Status Ditolak</button>
+                                <button class="btn btn-danger">Status Ditolak</button>
                             @else
-                                <div class="btn-group">
-                                    <form action="{{ route('updateACCSidang', $ps->id) }}" method="post" enctype="multipart/form-data">
-                                        @csrf
-                                        <button type="submit" name="status" class="btn btn-success" value="ACC">
-                                            <i class="fa-regular fa-circle-check"></i> ACC
-                                        </button>
-                                    </form>
-                                    <form action="{{ route('updateACCSidang', $ps->id) }}" method="post" enctype="multipart/form-data">
-                                        @csrf
-                                        <button type="submit" name="status" class="btn btn-danger" value="TOLAK">
-                                            <i class="fa-regular fa-circle-xmark"></i> TOLAK
-                                        </button>
-                                    </form>
-                                </div>
+                            <div class="btn-group">
+                                <form action="{{ route('updateACCSidang', $ps->id) }}" method="post">
+                                    @csrf
+                                    <button type="submit" name="status" class="btn btn-success me-2" value="ACC">
+                                        <i class="fa-regular fa-circle-check"></i> ACC
+                                    </button>
+                                </form>
+                                <form action="{{ route('updateACCSidang', $ps->id) }}" method="post">
+                                    @csrf
+                                    <button type="submit" name="status" class="btn btn-danger" value="TOLAK">
+                                        <i class="fa-regular fa-circle-xmark"></i> TOLAK
+                                    </button>
+                                </form>
+                            </div>                            
                             @endif
                         </td>
                     </tr>
@@ -101,6 +101,26 @@
 </div>
 @endforeach
 
+<!-- Modal Pesan Sukses -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-3 shadow-lg">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="successModalLabel">Berhasil</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                <p>Nilai pembimbing berhasil diperbarui.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script untuk menampilkan modal -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -109,7 +129,6 @@
             var pengajuanId = $this.data('pengajuan-id');
             var nilaiPembimbing = $('#nilaiPembimbing' + pengajuanId).val();
 
-            // Nonaktifkan tombol untuk mencegah klik ganda
             $this.prop('disabled', true);
 
             $.ajax({
@@ -120,14 +139,13 @@
                     nilaiPembimbing: nilaiPembimbing
                 },
                 success: function(response) {
-                    alert('Nilai pembimbing updated successfully');
+                    $('#successModal').modal('show');
                     $('#detailModal' + pengajuanId).modal('hide');
                 },
                 error: function(xhr) {
                     console.log(xhr.responseText);
                 },
                 complete: function() {
-                    // Aktifkan kembali tombol setelah permintaan selesai
                     $this.prop('disabled', false);
                 }
             });

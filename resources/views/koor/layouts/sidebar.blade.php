@@ -36,19 +36,31 @@
             </li>
             <li class="sidebar-item">
                 <a href="{{ route('koor-pengumuman') }}" class="sidebar-link">
-                    <i class="fas fa-exclamation-circle"></i>
+                    <i class="fas fa-newspaper"></i>
                     <span>Pengumuman</span>
                 </a>
             </li>
             <li class="sidebar-item">
+                <a href="{{ route('koor-monitoring-sidang') }}" class="sidebar-link">
+                    <i class="lni lni-dashboard"></i>
+                    <span>Monitoring Sidang Kp</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{{ route('koor-plotting') }}" class="sidebar-link">
+                    <i class="lni lni-dashboard"></i>
+                    <span>Plotting Dosen</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
                 <a href="{{ route('log_dosen') }}" class="sidebar-link">
-                    <i class="lni lni-users"></i>
+                    <i class="fas fa-user-tie"></i>
                     <span>Log Dosen</span>
                 </a>
             </li>
             <li class="sidebar-item">
                 <a href="{{ route('log_mhs') }}" class="sidebar-link">
-                    <i class="lni lni-users"></i>
+                    <i class="fas fa-user-graduate"></i>
                     <span>Log Mahasiswa</span>
                 </a>
             </li>
