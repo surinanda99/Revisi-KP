@@ -18,7 +18,7 @@
                         <th class="align-middle">NIM</th>
                         <th class="align-middle">Nama</th>
                         <th class="align-middle">File</th>
-                        <th class="align-middle">Aksi</th>
+                        <th class="align-middle">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,7 +32,16 @@
                                 Lihat Detail
                             </button>
                         </td>
-                        <td class="centered-column">
+                        <td>
+                            <button class="btn 
+                                @if($ps->statusPengajuan == 'ACC') btn-success
+                                @elseif($ps->statusPengajuan == 'TOLAK') btn-danger
+                                @elseif($ps->statusPengajuan == 'PROSES') btn-warning
+                                @endif">
+                                {{ ucfirst($ps->statusPengajuan) }}
+                            </button>
+                        </td>
+                        {{-- <td class="centered-column">
                             @if ($ps->statusPengajuan == 'ACC')
                                 <button class="btn btn-success">Status Diterima</button>
                             @elseif ($ps->statusPengajuan == 'TOLAK')
@@ -53,7 +62,7 @@
                                 </form>
                             </div>                            
                             @endif
-                        </td>
+                        </td> --}}
                     </tr>
                 @endforeach
                 </tbody>
