@@ -69,6 +69,12 @@
             padding: 12px;
             vertical-align: middle;
         }
+
+        label {
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
     </style>
 
     <!-- Include Modal CRUD Pengajuan -->

@@ -419,10 +419,10 @@ input.form-control:focus {
     background-color: rgb(240, 245, 255);
     border-radius: 10px;
 }
-/* 
-.modal-xl {
+
+/* .modal-xl {
     max-width: 70%;
-}
+} */
 .table-responsive {
     overflow-x: auto;
 }
@@ -432,7 +432,7 @@ input.form-control:focus {
 .centered-column {
     text-align: center;
     vertical-align: middle;
-} */
+}
 
 .custom-left-shift {
     justify-content: start;
