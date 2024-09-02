@@ -40,8 +40,9 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 // Mahasiswa
 Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('dashboardMahasiswa');
-    Route::get('/pengumuman', [MahasiswaController::class, 'index'])->name('dashboardMahasiswa');
-    Route::post('/update-mhs/{id}', [MahasiswaController::class, 'update'])->name('updateMhs');
+    // Route::get('/pengumuman', [MahasiswaController::class, 'index'])->name('dashboardMahasiswa');
+    // Route::post('/update-mhs/{id}', [MahasiswaController::class, 'update'])->name('updateMhs');
+    Route::post('/update-mhs', [MahasiswaController::class, 'update'])->name('updateDataMhs');
     Route::get('/pengajuanKP', [MahasiswaController::class, 'pengajuan_kp'])->name('halamanPengajuan');
     Route::get('/pilih-dosbing', [MahasiswaController::class, 'pilih_dosbing'])->name('pilihDosbingPage');
     Route::get('/form-pengajuan', [MahasiswaController::class, 'formPengajuan'])->name('formPengajuan');
@@ -134,7 +135,7 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     Route::get('/data_mhs', [KoorController::class, 'daftar_mhs'])->name('halamanKoorMhs');
     Route::post('/import-mhs', [KoorController::class, 'importMhs'])->name('importMhs');
     Route::post('/store-mhs', [KoorController::class, 'storeMhs'])->name('simpanMhs');
-    Route::get('/edit-mhs/{id}', [KoorController::class, 'editMhs'])->name('editMhs');
+    // Route::get('/edit-mhs/{id}', [KoorController::class, 'editMhs'])->name('editMhs');
     Route::put('/update-mhs/{id}', [KoorController::class, 'updateMhs'])->name('updateMhs');
     Route::post('delete-mhs/{id}', [KoorController::class, 'deleteMhs'])->name('hapusMhs');
     Route::get('/penyelia-mhs', [KoorController::class, 'penyeliaMhs'])->name('penyeliaMhs');
@@ -145,7 +146,8 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     // koor pengumuman
     Route::get('/koor-pengumuman', [PengumumanController::class, 'index'])->name('koor-pengumuman');
     Route::post('/koor-pengumuman', [PengumumanController::class, 'store'])->name('koor-pengumuman.store');
-    Route::put('/koor-pengumuman/{id}', [PengumumanController::class, 'update'])->name('koor-pengumuman.update');
+    Route::get('/detail-pengumuman/{id}', [PengumumanController::class, 'show'])->name('koor-pengumuman.show');
+    // Route::put('/koor-pengumuman/{id}', [PengumumanController::class, 'update'])->name('koor-pengumuman.update');
     Route::delete('/koor-pengumuman/{id}', [PengumumanController::class, 'destroy'])->name('koor-pengumuman.destroy');
 
     // koor log mahasiswa dan dosen

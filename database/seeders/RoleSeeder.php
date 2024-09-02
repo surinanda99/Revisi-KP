@@ -48,11 +48,11 @@ class RoleSeeder extends Seeder
         $mhs = Mahasiswa::create([
             'nim' => 'A11.2021.13472',
             'nama' => 'Yoga Adi Pratama',
-            'ipk' => 4.00,
-            'telp_mhs' => '082110778946',
+            // 'ipk' => 4.00,
+            // 'telp_mhs' => '082110778946',
             'email' => '111202113472@mhs.dinus.ac.id',
             'dosen_wali' => 'GALUH WILUJENG SARASWATI, M.CS',
-            'transkrip_nilai' => 'https://www.google.com',
+            // 'transkrip_nilai' => 'https://www.google.com',
         ]);
 
         StatusMahasiswa::create([
@@ -61,13 +61,13 @@ class RoleSeeder extends Seeder
         ]);
 
         $mhs2 = Mahasiswa::create([
-            'nim' => '111202113489',
+            'nim' => 'A11.2021.13489',
             'nama' => 'Surinanda',
-            'ipk' => 4.00,
-            'telp_mhs' => '082243539209',
+            // 'ipk' => 4.00,
+            // 'telp_mhs' => '082243539209',
             'email' => '111202113489@mhs.dinus.ac.id',
             'dosen_wali' => 'ADHITYA NUGRAHA, S.Kom, M.CS',
-            'transkrip_nilai' => 'https://www.google.com',
+            // 'transkrip_nilai' => 'https://www.google.com',
         ]);
 
         StatusMahasiswa::create([

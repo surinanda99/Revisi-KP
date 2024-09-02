@@ -21,97 +21,126 @@
     @endif
 
     <main class="container-border">
-        {{-- <div class="row">
-            @foreach ($pengumumans as $info)
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header bg-primary text-white">
-                            <i class="fas fa-info-circle"></i> {{ $info->judul }}
-                        </div>
-                        <div class="card-body">
-                            <p>{{ $info->isi }}</p>
-                            <small>Published by: {{ $info->user }} on {{ \Carbon\Carbon::parse($info->published_at)->format('d M Y, H:i') }}</small>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div> --}}
-        <div class="row">
-            @if ($pengumumans->isEmpty())
-                <div class="col-md-12">
-                    <div class="alert alert-warning mt-1">
-                       Belum ada informasi pengumuman, silahkan tunggu pengumuman dari koordinator kerja praktek.
-                    </div>
-                </div>
-            @else
-                @foreach ($pengumumans as $info)
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header bg-primary text-white">
-                                <i class="fas fa-info-circle"></i> {{ $info->judul }}
-                            </div>
-                            <div class="card-body">
-                                <p>{{ $info->isi }}</p>
-                                <small>Published by: {{ $info->user }} on {{ \Carbon\Carbon::parse($info->published_at)->format('d M Y, H:i') }}</small>
-                            </div>
+        @if ($checkNull)
+            <div class="container">
+                <form action="{{ route('updateDataMhs') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <h4 class="text-center">Lengkapi Data Diri</h4>
+                    <hr>
+                    <div class="form-group row mb-3">
+                        <label for="inputTelp" class="col-sm-2 col-form-label">Nomor Telepon <span class="required">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="tel" class="form-control @error('telp_mhs') is-invalid @enderror" name="telp_mhs" id="inputTelp" placeholder="Masukkan Nomor Telepon" value="{{ old('telp_mhs') ? old('telp_mhs') : $mahasiswa->telp_mhs }}">
+                            @error('telp_mhs')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
-                @endforeach
-            @endif
-        </div>
-        
-        <hr>
-        @if($status->id_dsn == 0)
-            <div class="alert alert-warning mt-1">
-                Anda belum memiliki dosen pembimbing. Silahkan melakukan pengajuan KP terlebih dahulu.
-            </div>
-            <div class="mb-4">
-                <a href="{{ route('pengajuan-mahasiswa') }}" class="btn btn-primary w-100">
-                    <i class="fas fa-angle-right"></i>
-                    Pengajuan Dosen Pembimbing
-                </a>
+                    <div class="form-group row mb-3">
+                        <label for="inputIPK" class="col-sm-2 col-form-label">IPK <span class="required">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control @error('ipk') is-invalid @enderror" name="ipk" id="inputIPK" placeholder="Masukkan IPK" value="{{ old('ipk') ? old('ipk') : $mahasiswa->ipk }}">
+                            @error('ipk')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="inputTranskrip" class="col-sm-2 col-form-label">Upload Link Transkrip Nilai <span class="required">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control @error('transkrip_nilai') is-invalid @enderror" name="transkrip_nilai" id="inputTranskrip" placeholder="Masukkan Link Transkrip" value="{{ old('transkrip_nilai') ? old('transkrip_nilai') : $mahasiswa->transkrip_nilai }}">
+                            @error('transkrip_nilai')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <div class="col-sm-10 offset-sm-2 text-end">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         @else
-            <div class="row">
-                <div class="col-md-8">
-                    <h1><i class="far fa-calendar-check"></i> Aktivitas Terbaru</h1>
-                    <div class="table-container table-aktivitas">
-                        <table class="table table-bordered">
-                            <thead class="table-header">
-                                <tr>
-                                    <th class="align-middle">No.</th>
-                                    <th class="align-middle">Aktivitas</th>
-                                    <th class="align-middle">Tanggal Pengajuan</th>
-                                    <th class="align-middle">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($pengajuans as $index => $pengajuan)
-                                    <tr>
-                                        <td class="centered-column">{{ $index + 1 }}</td>
-                                        <td class="content-column">Pengajuan Bimbingan Kerja Praktek</td>
-                                        <td class="centered-column">{{ $pengajuan->created_at->format('d M Y') }}</td>
-                                        <td class="centered-column">
-                                            @if ($pengajuan->status == 'ACC')
-                                                <button type="status" class="btn btn-success rounded-5">Diterima
-                                                    <i class="fas icon-dark-acc"></i>
-                                                </button>
-                                            @elseif ($pengajuan->status == 'TOLAK')
-                                                <button type="status" class="btn btn-danger rounded-5">Ditolak
-                                                    <i class="fas icon-dark-no"></i>
-                                                </button>
-                                            @else
-                                                <button type="status" class="btn btn-warning rounded-5">Belum ACC
-                                                    <i class="fas icon-dark-pending"></i>
-                                                </button>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+            @foreach ($pengumumans as $info)
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <i class="fas fa-info-circle"></i> {{ $info->judul }}
                     </div>
-                </div>  
+                    <div class="card-body">
+                        <p>{{ $info->isi }}</p>
+                        <small>Published by: {{ $info->user }} on {{ \Carbon\Carbon::parse($info->published_at)->format('d M Y, H:i') }}</small>
+                    </div>
+                </div>
+            @endforeach   
+            <hr>
+            <div class="row">
+                @if($status->id_dsn == 0)
+                    <div class="alert alert-warning mt-1">
+                        Anda belum memiliki dosen pembimbing. Silahkan melakukan pengajuan KP terlebih dahulu.
+                    </div>
+                    <div class="mb-4">
+                        <a href="{{ route('pengajuan-mahasiswa') }}" class="btn btn-primary w-100">
+                            <i class="fas fa-angle-right"></i>
+                            Pengajuan Dosen Pembimbing
+                        </a>
+                    </div>
+                @else
+                    <div class="col-md-8">
+                        <h1><i class="far fa-calendar-check"></i> Aktivitas Terbaru</h1>
+                        <div class="table-container table-aktivitas">
+                            <table class="table table-bordered">
+                                <thead class="table-header">
+                                    <tr>
+                                        <th class="align-middle">No.</th>
+                                        <th class="align-middle">Aktivitas</th>
+                                        <th class="align-middle">Tanggal Pengajuan</th>
+                                        <th class="align-middle">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($pengajuans as $index => $pengajuan)
+                                        <tr>
+                                            <td class="centered-column">{{ $index + 1 }}</td>
+                                            <td class="content-column">Pengajuan Bimbingan Kerja Praktek</td>
+                                            <td class="centered-column">{{ $pengajuan->created_at->format('d M Y') }}</td>
+                                            <td class="centered-column">
+                                                @if ($pengajuan->status == 'ACC')
+                                                    <button type="status" class="btn btn-success rounded-5">Diterima
+                                                        <i class="fas icon-dark-acc"></i>
+                                                    </button>
+                                                @elseif ($pengajuan->status == 'TOLAK')
+                                                    <button type="status" class="btn btn-danger rounded-5">Ditolak
+                                                        <i class="fas icon-dark-no"></i>
+                                                    </button>
+                                                @else
+                                                    <button type="status" class="btn btn-warning rounded-5">Belum ACC
+                                                        <i class="fas icon-dark-pending"></i>
+                                                    </button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>  
+                    <div class="col-md-4 py-5">
+                        <h1><i class="fas fa-bell"></i> Notifikasi</h1>
+                        <p>Dosen Pembimbing telah menerima topikmu! Silahkan ke halaman Logbook untuk mengisi catatan
+                            bimbingan.
+                        </p>
+                        <a href="{{ route('mahasiswa-logbook') }}" class="btn btn-primary"><i
+                                class="fas fa-chevron-right"></i>Menuju ke
+                            Halaman</a>
+                    </div>
+                @endif
             </div>
         @endif
     </main>

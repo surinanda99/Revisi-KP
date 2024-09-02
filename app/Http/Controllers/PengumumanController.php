@@ -11,10 +11,12 @@ class PengumumanController extends Controller
 {
     public function index()
     {
-        $pengumuman = Pengumuman::all()->map(function($p){
-            $p->formatted_date = Carbon::parse($p->created_at)->format('d-m-Y H:i:s');
-            return $p;
-        });
+        // $pengumuman = Pengumuman::all()->map(function($p){
+        //     $p->formatted_date = Carbon::parse($p->created_at)->format('d-m-Y H:i:s');
+        //     return $p;
+        // });
+
+        $pengumuman = Pengumuman::all();
         
         return view('koor.pengumuman.pengumuman', compact('pengumuman'));
     }
@@ -23,6 +25,7 @@ class PengumumanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'judul' => 'required|string|max:255',
+            'sender' => 'required|string',
             'isi' => 'required|string',
         ]);
 
@@ -32,7 +35,7 @@ class PengumumanController extends Controller
 
         Pengumuman::create([
             'judul' => $request->judul,
-            'user' => "Koordinator KP",
+            'user' => $request->sender,
             'isi' => $request->isi,
             'published_at' => now(),
         ]);
@@ -59,6 +62,14 @@ class PengumumanController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Pengumuman berhasil diperbarui.');
+    }
+
+    public function show($id)
+    {
+        $pengumuman = Pengumuman::where('id', $id)->first();
+        return response()->json([
+            'pengumuman' => $pengumuman
+        ]);
     }
 
     public function destroy($id)

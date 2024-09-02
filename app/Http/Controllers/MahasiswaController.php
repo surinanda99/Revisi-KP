@@ -2,33 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ReviewPenyelia;
+use App\Models\Dosen;
 use App\Models\Penyelia;
 use App\Models\Mahasiswa;
 use App\Models\Pengajuan;
 use App\Models\Pengumuman;
 use Illuminate\Http\Request;
+use App\Events\ReviewPenyelia;
 use App\Models\DetailPenilaian;
-use App\Models\Dosen;
 use App\Models\DosenPembimbing;
 use App\Models\StatusMahasiswa;
 use App\Models\MahasiswaPenyelia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 
 class MahasiswaController extends Controller
 {
     public function index()
     {
-        $mahasiswa = Auth::user()->mahasiswa;
+        // $mahasiswa = Auth::user()->mahasiswa;
+        $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
         $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
         $pengajuans = Pengajuan::where('id_mhs', $mahasiswa->id)->get();
+        $checkNull = false;
+        if ($mahasiswa) {
+            $columns = Schema::getColumnListing('mahasiswas');
+
+            foreach ($columns as $column) {
+                if (is_null($mahasiswa->$column)) {
+                    $checkNull = true;
+                    break;
+                }
+            }
+        }
+
         $pengumumans = Pengumuman::orderBy('published_at', 'asc')->get();
 
-        return view('mahasiswa.dashboard', compact('mahasiswa', 'status', 'pengajuans', 'pengumumans'));
+        return view('mahasiswa.dashboard', compact('mahasiswa', 'status', 'pengajuans', 'checkNull' ,'pengumumans'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'telp_mhs' => 'required',
@@ -40,13 +54,21 @@ class MahasiswaController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $mahasiswa = Mahasiswa::findOrFail($id);
+        $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
         $mahasiswa->telp_mhs = $request->telp_mhs;
         $mahasiswa->ipk = $request->ipk;
         $mahasiswa->transkrip_nilai = $request->transkrip_nilai;
         $mahasiswa->save();
 
-        return redirect()->back()->with('success', 'Data Mahasiswa Berhasil Diperbarui.');
+        activity()
+            ->inLog('Pengajuan')
+            ->causedBy(auth()->user())
+            ->performedOn($mahasiswa)
+            ->withProperties(['id_mhs' => $mahasiswa->id])
+            ->log('Melengkapi data diri');
+
+        return redirect()->route('dashboardMahasiswa')->with('success', 'Data berhasil diperbarui');
+        // return redirect()->back()->with('success', 'Data Mahasiswa Berhasil Diperbarui.');
     }
 
     public function pengajuan_kp()
