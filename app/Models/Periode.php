@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Periode extends Model
 {
     use HasFactory;
-    protected $table = 'periode';
+    protected $table = 'periodes';
     protected $fillable = [
         'tahun_ajaran',
+        'tgl_awal',
+        'tgl_akhir',
         'status',
     ];
     public function dosenPeriodik()
