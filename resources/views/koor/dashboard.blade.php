@@ -241,9 +241,10 @@
 <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 <script>
     window.mahasiswaData = @json($mahasiswa);
+    window.dosenData = @json($dosen);
     window.logbookData = @json($logbooks);
 </script>
 <script src="{{ asset('js/koor-mahasiswaChart.js') }}"></script>
-{{-- <script src="{{ asset('js/koor-dosenChart.js') }}"></script> --}}
+<script src="{{ asset('js/koor-dosenChart.js') }}"></script>
 <script src="{{ asset('js/koor-logbookChart.js') }}"></script>
 @endsection

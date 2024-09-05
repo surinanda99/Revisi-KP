@@ -37,6 +37,7 @@ class KoorController extends Controller
         //     ->get();
 
         $mahasiswa = Mahasiswa::all();
+        $dosen = Dosen::with('dosen')->get();
         // $dosen = Dosen::with('dosenPeriodik.status')->get();
 
         // Menghitung jumlah mahasiswa yang telah menyelesaikan setiap bab
@@ -46,7 +47,7 @@ class KoorController extends Controller
             ->get()
             ->keyBy('bab');
 
-        return view('koor.dashboard', compact('mahasiswa', 'logbooks'));
+        return view('koor.dashboard', compact('mahasiswa', 'dosen', 'logbooks'));
     }
 
     public function daftar_data_dosen()
