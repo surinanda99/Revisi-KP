@@ -13,14 +13,8 @@ return new class extends Migration
     {
         Schema::create('dosen_periodiks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_periode');
-            $table->unsignedBigInteger('id_dsn');
             $table->timestamps();
-        
-            $table->foreign('id_periode')->references('id')->on('periodes')->cascadeOnDelete();
-            $table->foreign('id_dsn')->references('id')->on('dosens')->cascadeOnDelete();
         });
-        
     }
 
     /**

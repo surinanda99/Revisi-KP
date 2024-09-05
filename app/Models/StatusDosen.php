@@ -10,16 +10,14 @@ class StatusDosen extends Model
     use HasFactory;
     protected $table = 'status_dosens';
     protected $fillable = [
-        'id_period',
+        'id_dsn',
         'kuota',
         'ajuan',
         'diterima',
-        'sisa',
         'status',
     ];
-
     public function periode()
     {
-        return $this->belongsTo(DosenPeriodik::class, 'id_period', 'id');
+        return $this->belongsTo(DosenPeriodik::class, 'id_dsn', 'id');
     }
 }

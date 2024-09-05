@@ -13,10 +13,6 @@ return new class extends Migration
     {
         Schema::create('periodes', function (Blueprint $table) {
             $table->id();
-            $table->string('tahun_ajaran');
-            $table->dateTime('tgl_awal')->nullable();
-            $table->dateTime('tgl_akhir')->nullable();
-            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
