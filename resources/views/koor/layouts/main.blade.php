@@ -23,6 +23,88 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="../css/layout-main.css">
     <title>@yield('title')</title>
+    <style>
+        .card-custom {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card-custom:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header-custom {
+            background-color: #007bff;
+            /* Original blue color */
+            color: #fff;
+            border-bottom: none;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            padding: 1rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-header-custom i {
+            font-size: 1.5rem;
+        }
+
+        .card-body-custom {
+            padding: 1rem;
+            background-color: #f8f9fa;
+            /* Light gray */
+        }
+
+        .card-body-custom a {
+            display: block;
+            text-align: right;
+            text-decoration: none;
+            color: #007bff;
+            /* Original blue color */
+            font-weight: bold;
+        }
+
+        .card-body-custom a:hover {
+            text-decoration: underline;
+        }
+
+        .main {
+            flex-grow: 1;
+            background-color: #f8f9fa;
+            /* Light gray */
+            padding: 20px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .sidebar {
+            background-color: #007bff;
+            /* Original blue color */
+        }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .sidebar .active {
+            background-color: #0056b3;
+            /* Darker blue for active link */
+        }
+    </style>
 </head>
 
 <body>
@@ -33,7 +115,7 @@
     <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js"></script>
     <!--table-->
     <script src="../js/layout-main.js"></script>
-    {{-- @yield('scripts') --}}
+    @yield('scripts')
 </body>
 
 </html>

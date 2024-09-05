@@ -1,7 +1,106 @@
 @extends('koor.layouts.main')
 @section('title', 'Dashboard Koor')
 @section('content')
+
     <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4"><b>Dashboard</b></h1>
+            <div class="row mb-4">
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card card-custom">
+                        <div class="card-header card-header-custom">
+                            <span>Data Mahasiswa</span>
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="card-body card-body-custom">
+                            <a href="{{ route('halamanKoorMhs') }}">See Details <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card card-custom">
+                        <div class="card-header card-header-custom">
+                            <span>Data Dosen Pembimbing</span>
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="card-body card-body-custom">
+                            <a href="{{ route('HalamanKoorDosen') }}">See Details <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card card-custom">
+                        <div class="card-header card-header-custom">
+                            <span>Plotting Dosen</span>
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="card-body card-body-custom">
+                            <a href="{{ route('koor-plotting') }}">See Details <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card card-custom">
+                        <div class="card-header card-header-custom">
+                            <span>Pengumuman</span>
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="card-body card-body-custom">
+                            <a href="{{ route('koor-pengumuman') }}">See Details <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-chart-line"></i> Chart Logbook Mahasiswa
+                        </div>
+                        <div class="card-body">
+                            <div id="logbookChart" class="chart-container"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-chart-bar"></i> Chart Mahasiswa KP
+                        </div>
+                        <div class="card-body">
+                            <div id="mahasiswaChart" class="chart-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-chart-pie"></i> Chart Data Dosen Pembimbing
+                        </div>
+                        <div class="card-body">
+                            <div id="dosenChart" class="chart-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-4 mt-auto">
+        <div class="container-fluid px-4">
+            <div class="d-flex align-items-center justify-content-between small">
+                <div class="text-muted">Copyright &copy; Kerja Praktek</div>
+                <div>
+                    <a href="#" class="text-secondary">Privacy Policy</a>&middot;
+                    <a href="#" class="text-secondary">Terms & Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    {{-- <main>
         <div class="wrapper d-flex flex-column min-vh-100">
             <nav class="sb-topnav navbar navbar-expand">
                 <!-- Navbar Search-->
@@ -134,5 +233,17 @@
                 </div>
             </footer>
         </div>
-    </main>
+    </main> --}}
+@endsection
+
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script>
+    window.mahasiswaData = @json($mahasiswa);
+    window.logbookData = @json($logbooks);
+</script>
+<script src="{{ asset('js/koor-mahasiswaChart.js') }}"></script>
+{{-- <script src="{{ asset('js/koor-dosenChart.js') }}"></script> --}}
+<script src="{{ asset('js/koor-logbookChart.js') }}"></script>
 @endsection

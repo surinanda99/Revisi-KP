@@ -13,6 +13,7 @@ use App\Models\DosenPembimbing;
 use App\Exports\ExportMahasiswa;
 // use Spatie\Permission\Models\Role;
 use App\Imports\MahasiswaImport;
+use App\Models\LogbookBimbingan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
@@ -30,12 +31,22 @@ class KoorController extends Controller
         //     ->with('causer.dosen')
         //     ->get();
 
-        $user = User::where('email', auth()->user()->email)->first();
+        // $user = User::where('email', auth()->user()->email)->first();
 
-        $activities = Activity::where('causer_id', $user->id)
-            ->get();
+        // $activities = Activity::where('causer_id', $user->id)
+        //     ->get();
 
-        return view('koor.dashboard', compact('activities'));
+        $mahasiswa = Mahasiswa::all();
+        // $dosen = Dosen::with('dosenPeriodik.status')->get();
+
+        // Menghitung jumlah mahasiswa yang telah menyelesaikan setiap bab
+        $logbooks = LogbookBimbingan::selectRaw('bab, COUNT(*) as total')
+            ->groupBy('bab')
+            ->orderBy('bab')
+            ->get()
+            ->keyBy('bab');
+
+        return view('koor.dashboard', compact('mahasiswa', 'logbooks'));
     }
 
     public function daftar_data_dosen()
