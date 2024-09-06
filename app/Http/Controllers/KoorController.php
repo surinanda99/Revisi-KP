@@ -10,8 +10,9 @@ use App\Imports\DosenImport;
 use Illuminate\Http\Request;
 use App\Models\DetailPenilaian;
 use App\Models\DosenPembimbing;
-use App\Exports\ExportMahasiswa;
+use App\Models\StatusMahasiswa;
 // use Spatie\Permission\Models\Role;
+use App\Exports\ExportMahasiswa;
 use App\Imports\MahasiswaImport;
 use App\Models\LogbookBimbingan;
 use Illuminate\Support\Facades\DB;
@@ -103,6 +104,14 @@ class KoorController extends Controller
             'id_dsn' => $dosen->id,
             'kuota' => $request->kuota,
         ]);
+
+        $user = User::create([
+            'name' => $request->nama,
+            'email' => $request->email,
+            'password' => bcrypt($request->npp)
+        ]);
+
+        $user->assignRole('dosen');
 
         return redirect()->back()->with('success', 'Data Dosen Pembimbing Berhasil Ditambahkan.');
     }
@@ -217,6 +226,20 @@ class KoorController extends Controller
             // 'telp_mhs' => $request->telp_mhs,
             'email' => $request->email,
             'dosen_wali' => $request->dosen_wali,
+        ]);
+
+        $user = User::create([
+            'name' => $request->nama,
+            'email' => $request->email,
+            'password' => bcrypt($request->nim)
+        ]);
+
+        $user->assignRole('mahasiswa');
+
+        // Buat entri StatusMahasiswa
+        StatusMahasiswa::create([
+            'id_mhs' => $mahasiswa->id,
+            'pengajuan' => 0,
         ]);
 
         return redirect()->route('halamanKoorMhs')->with('success', 'Data Mahasiswa Berhasil Ditambahkan');

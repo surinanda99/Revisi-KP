@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\User;
 use App\Models\Dosen;
 use App\Models\DosenPembimbing;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -25,5 +26,15 @@ class DosenImport implements ToModel, WithHeadingRow
             'id_dsn' => $dosen->id,
             'kuota' => $row['kuota'],
         ]);
+
+        $user = User::create([
+            'name' => $row['nama'],
+            'email' => $row['email'],
+            'password' => bcrypt($row['npp'])
+        ]);
+
+        $user->assignRole('dosen');
+
+        return $dosen;
     }
 }
