@@ -218,7 +218,7 @@ class KoorController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        Mahasiswa::create([
+        $mahasiswa = Mahasiswa::create([
             'nim' => $request->nim,
             'nama' => $request->nama,
             // 'ipk' => $request->ipk,
