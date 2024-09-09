@@ -4,7 +4,7 @@
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="dialogDetailDataDosen_{{ $dosen->id }}Label">Detail Dosen Pembimbing: {{ $dosen->nama }}</h5>
+                    <h5 class="modal-title" id="dialogDetailDataDosen_{{ $dosen->id }}Label">Detail Dosen Pembimbing: {{ $dosen->dosen->nama }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="table-responsive">
@@ -20,17 +20,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="centered-column">1</td>
-                                <td class="centered-column">A11.2021.13489</td>
-                                <td class="centered-column">Surinanda</td>
-                                <td class="centered-column">3</td>
-                                <td class="centered-column">5</td>
-                                <td class="centered-column">Revisi</td>
-                            </tr>
+                            @forelse($dosen->dosen->mahasiswa as $index => $mahasiswa)
+                                <tr>
+                                    <td class="centered-column">{{ $index + 1 }}</td>
+                                    <td class="centered-column">{{ $mahasiswa->nim }}</td>
+                                    <td class="centered-column">{{ $mahasiswa->nama }}</td>
+                                    <td class="centered-column">{{ $mahasiswa->bab_terakhir }}</td>
+                                    <td class="centered-column">{{ $mahasiswa->jml_bimbingan }}</td>
+                                    <td class="centered-column">{{ $mahasiswa->status }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center">Tidak ada mahasiswa yang terdaftar</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
+                <!-- Pagination, if needed -->
                 <nav aria-label="pageNavigationLogbook">
                     <ul class="pagination custom-left-shift">
                         <li class="page-item disabled">
@@ -43,7 +50,7 @@
                             <a class="page-link" href="#">Next</a>
                         </li>
                     </ul>
-                </nav>            
+                </nav>
             </div>
         </div>
     </div>
