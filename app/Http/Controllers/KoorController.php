@@ -59,7 +59,7 @@ class KoorController extends Controller
         foreach ($dosens as $dosen) {
             // Calculate the number of accepted applications for each DosenPembimbing
             $dosen->ajuan_diterima = $dosen->dosen->pengajuan()->where('status', 'ACC')->count();
-    
+
             // Calculate the remaining quota
             $dosen->sisa_kuota = $dosen->kuota - $dosen->dosen->pengajuan->count();
         }
@@ -355,9 +355,14 @@ class KoorController extends Controller
         return view('koor.plotting.plotting_dosen');
     }
 
+    public function showDetailMhs()
+    {
+        $mahasiswas = Mahasiswa::with('statusMahasiswa.dospem')->get();
+
+        return view('koor.detail_mhs', compact('mahasiswas'));
+    }
 
 
-    
-    
+
 
 }

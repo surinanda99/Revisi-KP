@@ -1,4 +1,4 @@
-@foreach($mahasiswas as $mahasiswa)    
+@foreach($mahasiswas as $mahasiswa)
     <div class="modal fade" id="dialogDetailDataMahasiswa_{{ $mahasiswa->id }}" tabindex="-1" aria-labelledby="dialogDetailDataMahasiswa_{{ $mahasiswa->id }}Label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
@@ -11,36 +11,29 @@
                         <thead class="table-header">
                             <tr>
                                 <th class="align-middle">No.</th>
-                                <th class="align-middle">NPP </th>
+                                <th class="align-middle">NPP</th>
                                 <th class="align-middle">Dosen Pembimbing</th>
                                 <th class="align-middle">Email</th>
                                 <th class="align-middle">Telepon</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="centered-column">1</td>
-                                <td class="centered-column">0686.11.2012.444</td>
-                                <td class="centered-column">ADHITYA NUGRAHA, S.Kom, M.CS</td>
-                                <td class="centered-column">adhitya@dsn.dinus.ac.id</td>
-                                <td class="centered-column">0000000000</td>
-                            </tr>
+                            @if($mahasiswa->statusMahasiswa && $mahasiswa->statusMahasiswa->dospem)
+                                <tr>
+                                    <td class="centered-column">1</td>
+                                    <td class="centered-column">{{ $mahasiswa->statusMahasiswa->dospem->npp }}</td>
+                                    <td class="centered-column">{{ $mahasiswa->statusMahasiswa->dospem->nama }}</td>
+                                    <td class="centered-column">{{ $mahasiswa->statusMahasiswa->dospem->email }}</td>
+                                    <td class="centered-column">{{ $mahasiswa->statusMahasiswa->dospem->telp }}</td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td colspan="5" class="text-center">Tidak ada dosen pembimbing untuk mahasiswa ini.</td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
-                <nav aria-label="pageNavigationLogbook">
-                    <ul class="pagination custom-left-shift">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
             </div>
         </div>
     </div>
