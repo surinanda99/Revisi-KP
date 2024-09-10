@@ -130,6 +130,7 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     Route::get('/edit-dosen/{id}', [KoorController::class, 'editDosen'])->name('editDosen');
     Route::put('/update-dosen/{id}', [KoorController::class, 'updateDosen'])->name('updateDosen');
     Route::post('delete-dosen/{id}', [KoorController::class, 'deleteDosen'])->name('hapusDosen');
+    Route::post('/update-kuota/{id}', [KoorController::class, 'updateKuota'])->name('updateKuota');
 
     // Koor untuk Mahasiswa
     Route::get('/data_mhs', [KoorController::class, 'daftar_mhs'])->name('halamanKoorMhs');
@@ -156,6 +157,7 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     Route::get('/koor-monitoring-sidang', [KoorMonitoringSidangController::class, 'index'])->name('koor-monitoring-sidang');
     Route::post('/koor-monitoring-sidang/update', [KoorMonitoringSidangController::class, 'updateStatus'])->name('koor-monitoring-sidang-update');
     Route::get('/plotting-dosen',[KoorController::class, 'plotting'])->name('koor-plotting');
+
 });
 
 // Admin

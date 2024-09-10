@@ -34,7 +34,7 @@
                         @csrf
                         <input type="hidden" name="id_dospem" value="{{ $data['id_dsn'] }}">
                         <!-- jalur KP -->
-                        <div class="form-group row mb-3">
+                        {{-- <div class="form-group row mb-3">
                             <label for="inputBidang" class="col-sm-2 col-form-label">Kategori Bidang <span
                                     class="required">*</span></label>
                             <div class="col-sm-3">
@@ -85,7 +85,7 @@
                                     @endif
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="form-group row mb-3">
                             <label for="inputJudul" class="col-sm-2 col-form-label">Judul<span
                                     class="required">*</span></label>
@@ -95,27 +95,27 @@
                             </div>
                         </div>
                         <div class="form-group row mb-3">
-                            <label for="inputPerusahaan" class="col-sm-2 col-form-label">Perusahaan</label>
+                            <label for="inputPerusahaan" class="col-sm-2 col-form-label">Nama Perusahaan</label>
                             <div class="col-sm-10">
                                 <input type="perusahaan" name="perusahaan" class="form-control" id="inputPerusahaan"
                                     placeholder="Masukkan Nama Perusahaan" value="{{ $data['perusahaan'] }}">
                             </div>
                         </div>
                         <div class="form-group row mb-3">
-                            <label for="inputPosisi" class="col-sm-2 col-form-label">Posisi</label>
+                            <label for="inputPosisi" class="col-sm-2 col-form-label">Jobdesk</label>
                             <div class="col-sm-10">
                                 <input type="posisi" name="posisi" class="form-control" id="inputPosisi"
                                     placeholder="Masukkan Posisi" value="{{ $data['posisi'] }}">
                             </div>
                         </div>
-                        <div class="form-group row mb-3">
+                        {{-- <div class="form-group row mb-3">
                             <label for="inputDeskripsi" class="col-sm-2 col-form-label">Deskripsi<span
                                     class="required">*</span></label>
                             <div class="col-sm-10">
                                 <input type="deskripsi" name="deskripsi" class="form-control" id="inputDeskripsi"
                                     placeholder="Masukkan Deskripsi" value="{{ $data['deskripsi'] }}">
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="form-group row mb-3">
                             <label for="inputDurasi" class="col-sm-2 col-form-label">Durasi</label>
                             <div class="col-sm-10">

@@ -101,11 +101,11 @@ class PengajuanController extends Controller
 
         $pengajuan = new Pengajuan();
         $pengajuan->id_mhs = $status->id_mhs;
-        $pengajuan->kategori_bidang = $data['kategori_bidang'];
+        // $pengajuan->kategori_bidang = $data['kategori_bidang'];
         $pengajuan->judul = $data['judul'];
         $pengajuan->perusahaan = $data['perusahaan'];
         $pengajuan->posisi = $data['posisi'];
-        $pengajuan->deskripsi = $data['deskripsi'];
+        // $pengajuan->deskripsi = $data['deskripsi'];
         $pengajuan->durasi = $data['durasi'];
         $pengajuan->id_dsn = $data['id_dsn'];
 

@@ -61,7 +61,7 @@
                 <th class="align-middle">Transkip</th>
                 <th class="align-middle">Telp Mhs</th>
                 <th class="align-middle">Email</th>
-                <th class="align-middle">Dosen Wali</th>
+                {{-- <th class="align-middle">Dosen Wali</th> --}}
                 <th class="align-middle">Aksi</th>
             </thead>
             <tbody>
@@ -76,7 +76,7 @@
                     <td class="centered-column">{{ $mahasiswa->transkrip_nilai }}</td>
                     <td class="centered-column">{{ $mahasiswa->telp_mhs }}</td>
                     <td class="centered-column">{{ $mahasiswa->email }}</td>
-                    <td class="centered-column">{{ $mahasiswa->dosen_wali }}</td>
+                    {{-- <td class="centered-column">{{ $mahasiswa->dosen_wali }}</td> --}}
                     <td class="centered-column">
                         <button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataMahasiswa_{{ $mahasiswa->id }}">
                             <i class="fas fa-info-circle"></i>
