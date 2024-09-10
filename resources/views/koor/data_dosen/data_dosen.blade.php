@@ -72,9 +72,16 @@
                     <td class="centered-column">{{ $dosen->dosen->npp }}</td>
                     <td class="centered-column">{{ $dosen->dosen->nama }}</td>
                     <td class="centered-column">{{ $dosen->dosen->bidang_kajian }}</td>
+<<<<<<< HEAD
                     <td class="centered-column">
                         <input type="number" class="form-control kuota-edit" data-id="{{ $dosen->id }}" value="{{ $dosen->kuota }}" style="width: 80px; text-align: center; margin: 0 auto;"/>
                     </td>                    
+=======
+                    <td class="centered-column text-center">
+                        <input type="number" class="form-control" name="kuota" value="{{ $dosen->kuota }}" min="0" style="width: 60px; margin: 0 auto;">
+                    </td>
+                    {{-- <td class="centered-column">{{ $dosen->kuota }}</td> --}}
+>>>>>>> ca8e84aee9b913016ba26bf4afd7a314cbc3268c
                     <td class="centered-column">{{ $dosen->dosen->pengajuan->count() }}</td>
                     <td class="centered-column">{{ $dosen->ajuan_diterima }}</td>
                     <td class="centered-column" id="sisa-kuota-{{ $dosen->id }}">{{ $dosen->sisa_kuota }}</td>

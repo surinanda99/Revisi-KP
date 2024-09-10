@@ -428,6 +428,37 @@ class KoorController extends Controller
         return view('koor.detail_mhs', compact('mahasiswas'));
     }
 
+    public function updateKuota(Request $request, $id)
+    {
+        // Validasi input
+        $validated = $request->validate([
+            'kuota' => 'required|integer|min:0',
+        ]);
+
+        // Temukan dosen berdasarkan ID
+        $dosen = DosenPembimbing::findOrFail($id);
+
+        // Update kuota
+        $dosen->kuota = $validated['kuota'];
+
+        // Simpan perubahan
+        $dosen->save();
+
+        // Hitung jumlah ajuan diterima
+        $dosen->ajuan_diterima = $dosen->dosen->pengajuan()->where('status', 'ACC')->count();
+
+        // Hitung sisa kuota
+        $dosen->sisa_kuota = $dosen->kuota - $dosen->ajuan_diterima;
+
+        // Simpan perubahan sisa kuota
+        $dosen->save();
+
+        // Kembalikan ke view dengan pesan sukses
+        return redirect()->route('daftar_data_dosen')->with('success', 'Kuota berhasil diupdate.');
+    }
+
+    
+
 
 
 

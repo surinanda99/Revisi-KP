@@ -35,26 +35,26 @@
                     </blockquote>
                     <table class="table table-bordered mb-5">
                         <tbody>
-                        <tr>
+                        {{-- <tr>
                             <td>Bidang Kajian</td>
                             <td>{{ $data['kategori_bidang'] }}</td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td>Judul</td>
                             <td>{{ $data['judul'] }}</td>
                         </tr>
                         <tr>
-                            <td>Perusahaan</td>
+                            <td>Nama Perusahaan</td>
                             <td>{{ $data['perusahaan'] }}</td>
                         </tr>
                         <tr>
-                            <td>Posisi</td>
+                            <td>Jobdesk</td>
                             <td>{{ $data['posisi'] }}</td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td>Deskripsi</td>
                             <td>{{ $data['deskripsi'] }}</td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td>Durasi</td>
                             <td>{{ $data['durasi'] }}</td>
@@ -80,26 +80,26 @@
                     @endif
                     <table class="table table-bordered mb-5">
                         <tbody>
-                        <tr>
+                        {{-- <tr>
                             <td>Bidang Kajian</td>
                             <td>{{ $pengajuan->kategori_bidang }}</td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td>Judul</td>
                             <td>{{ $pengajuan->judul }}</td>
                         </tr>
                         <tr>
-                            <td>Perusahaan</td>
+                            <td>Nama Perusahaan</td>
                             <td>{{ $pengajuan->perusahaan }}</td>
                         </tr>
                         <tr>
-                            <td>Posisi</td>
+                            <td>Jobdesk</td>
                             <td>{{ $pengajuan->posisi }}</td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td>Deskripsi</td>
                             <td>{{ $pengajuan->deskripsi }}</td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td>Durasi</td>
                             <td>{{ $pengajuan->durasi }}</td>
@@ -139,22 +139,22 @@
                         <a href="{{ route('pengajuan-mahasiswa') }}" class="btn btn-danger me-2">Hapus</a>
                         <form action="{{ route('form-pengajuan-mahasiswa') }}" method="GET">
                             @csrf
-                            <input type="hidden" name="kategori_bidang" value="{{ $data['kategori_bidang'] }}">
+                            {{-- <input type="hidden" name="kategori_bidang" value="{{ $data['kategori_bidang'] }}"> --}}
                             <input type="hidden" name="judul" value="{{ $data['judul'] }}">
                             <input type="hidden" name="perusahaan" value="{{ $data['perusahaan'] }}">
                             <input type="hidden" name="posisi" value="{{ $data['posisi'] }}">
-                            <input type="hidden" name="deskripsi" value="{{ $data['deskripsi'] }}">
+                            {{-- <input type="hidden" name="deskripsi" value="{{ $data['deskripsi'] }}"> --}}
                             <input type="hidden" name="durasi" value="{{ $data['durasi'] }}">
                             <input type="hidden" name="id_dsn" value="{{ $data['id_dospem'] }}">
                             <button type="submit" class="btn btn-warning me-2">Edit</button>
                         </form>
                         <form action="{{ route('mahasiswa-pengajuan-submit') }}" method="POST">
                             @csrf
-                            <input type="hidden" name="kategori_bidang" value="{{ $data['kategori_bidang'] }}">
+                            {{-- <input type="hidden" name="kategori_bidang" value="{{ $data['kategori_bidang'] }}"> --}}
                             <input type="hidden" name="judul" value="{{ $data['judul'] }}">
                             <input type="hidden" name="perusahaan" value="{{ $data['perusahaan'] }}">
                             <input type="hidden" name="posisi" value="{{ $data['posisi'] }}">
-                            <input type="hidden" name="deskripsi" value="{{ $data['deskripsi'] }}">
+                            {{-- <input type="hidden" name="deskripsi" value="{{ $data['deskripsi'] }}"> --}}
                             <input type="hidden" name="durasi" value="{{ $data['durasi'] }}">
                             <input type="hidden" name="id_dsn" value="{{ $data['id_dospem'] }}">
                             <button type="submit" class="btn btn-primary me-2">Ajukan</button>

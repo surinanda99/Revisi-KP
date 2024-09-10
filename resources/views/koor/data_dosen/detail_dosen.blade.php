@@ -14,8 +14,8 @@
                                 <th class="align-middle">No.</th>
                                 <th class="align-middle">NIM</th>
                                 <th class="align-middle">Nama Mahasiswa</th>
-                                <th class="align-middle">Bab Terakhir</th>
-                                <th class="align-middle">Jumlah Bimbingan</th>
+                                {{-- <th class="align-middle">Bab Terakhir</th>
+                                <th class="align-middle">Jumlah Bimbingan</th> --}}
                                 <th class="align-middle">Status</th>
                             </tr>
                         </thead>
@@ -25,8 +25,8 @@
                                     <td class="centered-column">{{ $index + 1 }}</td>
                                     <td class="centered-column">{{ $mahasiswa->nim }}</td>
                                     <td class="centered-column">{{ $mahasiswa->nama }}</td>
-                                    <td class="centered-column">{{ $mahasiswa->bab_terakhir }}</td>
-                                    <td class="centered-column">{{ $mahasiswa->jml_bimbingan }}</td>
+                                    {{-- <td class="centered-column">{{ $mahasiswa->bab_terakhir }}</td>
+                                    <td class="centered-column">{{ $mahasiswa->jml_bimbingan }}</td> --}}
                                     <td class="centered-column">{{ $mahasiswa->status }}</td>
                                 </tr>
                             @empty
