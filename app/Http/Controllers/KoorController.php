@@ -188,39 +188,6 @@ class KoorController extends Controller
         return redirect()->back()->with('success', 'Data Dosen Pembimbing Berhasil Diperbarui.');
     }
 
-    // public function updateKuota(Request $request, $id)
-    // {
-    //     // Validasi kuota
-    //     $validator = Validator::make($request->all(), [
-    //         'kuota' => 'required|integer',
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         return back()->withErrors($validator)->withInput();
-    //     }
-
-    //     // Temukan dosen pembimbing yang akan diperbarui
-    //     $dosen = DosenPembimbing::findOrFail($id);
-
-    //     // Update kuota dosen
-    //     $dosen->update([
-    //         'kuota' => $request->input('kuota'),
-    //     ]);
-
-    //     // Hitung sisa kuota berdasarkan mahasiswa diterima
-    //     $mahasiswaDiterima = $dosen->dosen->pengajuan()->where('status', 'diterima')->count();
-    //     $sisa_kuota = $dosen->kuota - $mahasiswaDiterima;
-
-    //     // Update sisa kuota
-    //     $dosen->update(['sisa_kuota' => $sisa_kuota]);
-
-    //     // Redirect dengan pesan sukses
-    //     return response()->json([
-    //         'success' => 'Kuota berhasil diperbarui',
-    //         'sisa_kuota' => $sisa_kuota,
-    //     ]);
-    // }
-
     public function updateKuota(Request $request, $id)
     {
         // Validasi kuota
@@ -427,39 +394,4 @@ class KoorController extends Controller
 
         return view('koor.detail_mhs', compact('mahasiswas'));
     }
-
-    public function updateKuota(Request $request, $id)
-    {
-        // Validasi input
-        $validated = $request->validate([
-            'kuota' => 'required|integer|min:0',
-        ]);
-
-        // Temukan dosen berdasarkan ID
-        $dosen = DosenPembimbing::findOrFail($id);
-
-        // Update kuota
-        $dosen->kuota = $validated['kuota'];
-
-        // Simpan perubahan
-        $dosen->save();
-
-        // Hitung jumlah ajuan diterima
-        $dosen->ajuan_diterima = $dosen->dosen->pengajuan()->where('status', 'ACC')->count();
-
-        // Hitung sisa kuota
-        $dosen->sisa_kuota = $dosen->kuota - $dosen->ajuan_diterima;
-
-        // Simpan perubahan sisa kuota
-        $dosen->save();
-
-        // Kembalikan ke view dengan pesan sukses
-        return redirect()->route('daftar_data_dosen')->with('success', 'Kuota berhasil diupdate.');
-    }
-
-    
-
-
-
-
 }

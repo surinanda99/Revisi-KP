@@ -131,7 +131,6 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     Route::put('/update-dosen/{id}', [KoorController::class, 'updateDosen'])->name('updateDosen');
     Route::post('/update-kuota/{id}', [KoorController::class, 'updateKuota'])->name('updateKuota');
     Route::post('delete-dosen/{id}', [KoorController::class, 'deleteDosen'])->name('hapusDosen');
-    Route::post('/update-kuota/{id}', [KoorController::class, 'updateKuota'])->name('updateKuota');
 
     // Koor untuk Mahasiswa
     Route::get('/data_mhs', [KoorController::class, 'daftar_mhs'])->name('halamanKoorMhs');

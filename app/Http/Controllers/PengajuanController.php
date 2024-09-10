@@ -15,6 +15,10 @@ class PengajuanController extends Controller
     public function index()
     {
         // Get the list of Dosen with their DosenPembimbing details
+        // $dosen = Dosen::whereHas('dosen', function($query) {
+        //     $query->where('sisa_kuota', '>', 0);
+        // })->with('dosen')->get();
+
         $dosen = Dosen::with('dosen')->get();
         
         // Fetch the current Mahasiswa based on logged-in user's email
@@ -46,29 +50,29 @@ class PengajuanController extends Controller
             }
         }
         
-        // Iterate through each Dosen to update the DosenPembimbing details
+        // Update the sisa_kuota for all Dosen and filter out those with sisa_kuota <= 0
         foreach ($dosen as $dos) {
-            // Retrieve the related DosenPembimbing record
             $dosenPembimbing = $dos->dosen;
             
             if ($dosenPembimbing) {
-                // Calculate the total number of Pengajuan for the current Dosen
                 $jumlahAjuan = Pengajuan::where('id_dsn', $dosenPembimbing->id)->count();
-                
-                // Calculate the number of Pengajuan that have been accepted
                 $ajuanDiterima = Pengajuan::where('id_dsn', $dosenPembimbing->id)
-                    ->where('status', 'ACC') // Filter by accepted status
+                    ->where('status', 'ACC')
                     ->count();
                 
-                // Update the sisa_kuota based on the number of accepted ajuan
                 $dosenPembimbing->sisa_kuota = $dosenPembimbing->kuota - $ajuanDiterima;
-                $dosenPembimbing->jumlah_ajuan = $jumlahAjuan; // Update the total number of ajuan
-                $dosenPembimbing->save(); // Save the updated DosenPembimbing record
+                $dosenPembimbing->jumlah_ajuan = $jumlahAjuan;
+                $dosenPembimbing->save();
             }
         }
+
+        // Filter out Dosen with sisa_kuota <= 0
+        $filteredDosen = $dosen->filter(function($dos) {
+            return $dos->dosen->sisa_kuota > 0;
+        });
         
         // Return the view for choosing a Dosen Pembimbing
-        return view('mahasiswa.pengajuan_kp.pilihDosbing', compact('status', 'dosen'));
+        return view('mahasiswa.pengajuan_kp.pilihDosbing', compact('status', 'filteredDosen'));
     }
 
     public function form(Request $request)

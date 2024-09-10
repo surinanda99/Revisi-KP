@@ -42,7 +42,7 @@
                                 <th>Jumlah Ajuan</th>
                                 <th>Aksi</th>
                             </thead>
-                            @foreach($dosen as $dos)
+                            @foreach($filteredDosen as $dos)
                             <tr>
                                 <td class="centered-column">{{ $loop->iteration }}</td>
                                 <td class="centered-column">{{ $dos->npp }}</td>
