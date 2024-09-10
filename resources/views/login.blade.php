@@ -27,6 +27,13 @@
                     </div>
                     <form action="{{ route('loginPost') }}" method="POST">
                         @csrf
+                        
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                {{ $errors->first('email') }}
+                            </div>
+                        @endif
+
                         <div class="input-group mb-3">
                             <label for="email" class="visually-hidden">Email</label>
                             <input type="text" id="email" name="email" class="form-control form-control-lg bg-light fs-6" placeholder="Masukkan Email">
