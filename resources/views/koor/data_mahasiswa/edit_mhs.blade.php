@@ -45,6 +45,17 @@
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
+                                <label for="transkrip_nilai" class="col-sm-2 col-form-label">Transkrip Nilai</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control @error('transkrip_nilai') is-invalid @enderror" name="transkrip_nilai" id="transkrip_nilai" value="{{ old('transkrip_nilai') ? old('transkrip_nilai') : $mahasiswa->transkrip_nilai }}">
+                                    @error('transkrip_nilai')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
                                 <label for="telp_mhs" class="col-sm-2 col-form-label">Telp Mahasiswa</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control @error('telp_mhs') is-invalid @enderror" name="telp_mhs" id="telp_mhs" value="{{ old('telp_mhs') ? old('telp_mhs') : $mahasiswa->telp_mhs }}">
@@ -66,7 +77,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="form-group row mb-3">
+                            {{-- <div class="form-group row mb-3">
                                 <label for="dosen_wali" class="col-sm-2 col-form-label">Dosen Wali</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control @error('dosen_wali') is-invalid @enderror" name="dosen_wali" id="dosen_wali" value="{{ old('dosen_wali') ? old('dosen_wali') : $mahasiswa->dosen_wali }}">
@@ -76,7 +87,7 @@
                                     </span>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                                 <button type="submit" class="btn btn-primary">Simpan</button>

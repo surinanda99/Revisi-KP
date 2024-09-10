@@ -16,7 +16,7 @@ class MahasiswaImport implements ToModel, WithHeadingRow
             'nim' => $row['nim'],
             'nama' => $row['nama'],
             'email' => $row['email'],
-            'dosen_wali' => $row['dosen_wali'],
+            // 'dosen_wali' => $row['dosen_wali'],
         ]);
 
         $mahasiswa->save();

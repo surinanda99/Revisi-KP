@@ -47,7 +47,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group row mb-3">
+                        {{-- <div class="form-group row mb-3">
                             <label for="inputKuota_{{ $dosen->id }}" class="col-sm-2 col-form-label">Kuota Mhs TA (Baru) <span class="required">*</span></label>
                             <div class="col-sm-10">
                                 <input type="number" class="form-control @error('kuota') is-invalid @enderror" name="kuota" id="inputKuota_{{ $dosen->id }}" value="{{ old('kuota') ? old('kuota') : $dosen->kuota }}">
@@ -57,7 +57,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="form-group row mb-3">
                             <label for="inputEmail_{{ $dosen->id }}" class="col-sm-2 col-form-label">Email Dosen<span class="required">*</span></label>
                             <div class="col-sm-10">

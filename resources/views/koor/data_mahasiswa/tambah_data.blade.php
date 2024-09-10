@@ -38,21 +38,21 @@
                             <label for="inputIPK" class="col-sm-2 col-form-label">IPK <span
                                     class="required">*</span></label>
                             <div class="col-sm-10">
-                                <input type="topik" name="ipk" class="form-control" id="inputIPK">
+                                <input type="number" name="ipk" class="form-control" id="inputIPK">
                             </div>
                         </div>
                         <div class="form-group row mb-3">
                             <label for="inputTranskrip" class="col-sm-2 col-form-label">Transkrip Nilai <span
                                     class="required">*</span></label>
                             <div class="col-sm-10">
-                                <input type="topik" name="transkrip_nilai" class="form-control" id="inputTranskrip" />
+                                <input type="text" name="transkrip_nilai" class="form-control" id="inputTranskrip" />
                             </div>
                         </div>
                         <div class="form-group row mb-3">
                             <label for="inputTelp" class="col-sm-2 col-form-label">Telp Mhs <span
                                     class="required">*</span></label>
                             <div class="col-sm-10">
-                                <input type="topik" name="telp_mhs" class="form-control" id="inputTelp">
+                                <input type="tel" name="telp_mhs" class="form-control" id="inputTelp">
                             </div>
                         </div>
                         <div class="form-group row mb-3">
@@ -66,7 +66,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group row mb-3">
+                        {{-- <div class="form-group row mb-3">
                             <label for="inputDoswal" class="col-sm-2 col-form-label">Dosen Wali <span class="required">*</span></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control @error('dosen_wali') is-invalid @enderror" name="dosen_wali" id="inputDoswal" value="{{ old('dosen_wali') }}">
@@ -76,7 +76,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                             <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Tambah</button>

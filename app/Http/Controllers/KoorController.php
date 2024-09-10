@@ -61,7 +61,7 @@ class KoorController extends Controller
             $dosen->ajuan_diterima = $dosen->dosen->pengajuan()->where('status', 'ACC')->count();
 
             // Calculate the remaining quota
-            $dosen->sisa_kuota = $dosen->kuota - $dosen->dosen->pengajuan->count();
+            $dosen->sisa_kuota = $dosen->kuota - $dosen->ajuan_diterima;
         }
 
         return view('koor.data_dosen.data_dosen', compact('dosens'));
@@ -149,7 +149,7 @@ class KoorController extends Controller
             'npp' => 'required|string',
             'nama' => 'required|string',
             'bidang_kajian' => 'required|in:RPLD,SC',
-            'kuota' => 'required|integer',
+            // 'kuota' => 'required|integer',
             'email' => 'nullable|email',
             'telp' => 'nullable|string',
         ]);
@@ -172,9 +172,9 @@ class KoorController extends Controller
         ]);
 
         // Update data dosen pembimbing
-        $dosen->update([
-            'kuota' => $request->input('kuota'),
-        ]);
+        // $dosen->update([
+        //     'kuota' => $request->input('kuota'),
+        // ]);
 
         // Perbarui data dosen
         // $dosen->update([
@@ -186,6 +186,72 @@ class KoorController extends Controller
 
         // Redirect kembali dengan pesan sukses
         return redirect()->back()->with('success', 'Data Dosen Pembimbing Berhasil Diperbarui.');
+    }
+
+    // public function updateKuota(Request $request, $id)
+    // {
+    //     // Validasi kuota
+    //     $validator = Validator::make($request->all(), [
+    //         'kuota' => 'required|integer',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return back()->withErrors($validator)->withInput();
+    //     }
+
+    //     // Temukan dosen pembimbing yang akan diperbarui
+    //     $dosen = DosenPembimbing::findOrFail($id);
+
+    //     // Update kuota dosen
+    //     $dosen->update([
+    //         'kuota' => $request->input('kuota'),
+    //     ]);
+
+    //     // Hitung sisa kuota berdasarkan mahasiswa diterima
+    //     $mahasiswaDiterima = $dosen->dosen->pengajuan()->where('status', 'diterima')->count();
+    //     $sisa_kuota = $dosen->kuota - $mahasiswaDiterima;
+
+    //     // Update sisa kuota
+    //     $dosen->update(['sisa_kuota' => $sisa_kuota]);
+
+    //     // Redirect dengan pesan sukses
+    //     return response()->json([
+    //         'success' => 'Kuota berhasil diperbarui',
+    //         'sisa_kuota' => $sisa_kuota,
+    //     ]);
+    // }
+
+    public function updateKuota(Request $request, $id)
+    {
+        // Validasi kuota
+        $validator = Validator::make($request->all(), [
+            'kuota' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        // Temukan dosen pembimbing yang akan diperbarui
+        $dosen = DosenPembimbing::findOrFail($id);
+
+        // Update kuota dosen
+        $dosen->kuota = $request->input('kuota');
+        
+        // Hitung jumlah aplikasi diterima
+        $ajuan_diterima = $dosen->dosen->pengajuan()->where('status', 'ACC')->count();
+
+        // Update sisa kuota
+        $sisa_kuota = max(0, $dosen->kuota - $ajuan_diterima); // Pastikan sisa kuota tidak negatif
+        $dosen->sisa_kuota = $sisa_kuota;
+
+        $dosen->save(); // Simpan perubahan
+
+        // Redirect dengan pesan sukses
+        return response()->json([
+            'success' => 'Kuota berhasil diperbarui',
+            'sisa_kuota' => $sisa_kuota,
+        ]);
     }
 
     public function deleteDosen($id)
@@ -211,7 +277,7 @@ class KoorController extends Controller
             // 'transkrip_nilai' => 'required',
             // 'telp_mhs' => 'required',
             'email' => 'required|email|unique:mahasiswas',
-            'dosen_wali' => 'required|string',
+            // 'dosen_wali' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -225,7 +291,7 @@ class KoorController extends Controller
             // 'transkrip_nilai' => $request->transkrip_nilai,
             // 'telp_mhs' => $request->telp_mhs,
             'email' => $request->email,
-            'dosen_wali' => $request->dosen_wali,
+            // 'dosen_wali' => $request->dosen_wali,
         ]);
 
         $user = User::create([
@@ -276,10 +342,10 @@ class KoorController extends Controller
         $validator = Validator::make($request->all(), [
             'nim' => 'required',
             'nama' => 'required',
-            'ipk' => 'required',
-            'telp_mhs' => 'required',
+            // 'ipk' => 'required',
+            // 'telp_mhs' => 'required',
             'email' => 'required',
-            'dosen_wali' => 'required',
+            // 'dosen_wali' => 'required',
         ]);
 
         // Jika validasi gagal, kembalikan respons dengan pesan kesalahan
@@ -294,10 +360,10 @@ class KoorController extends Controller
         $mahasiswas->update([
             'nim' => $request->input('nim'),
             'nama' => $request->input('nama'),
-            'ipk' => $request->input('ipk'),
-            'telp_mhs' => $request->input('telp_mhs'),
+            // 'ipk' => $request->input('ipk'),
+            // 'telp_mhs' => $request->input('telp_mhs'),
             'email' => $request->input('email'),
-            'dosen_wali' => $request->input('dosen_wali'),
+            // 'dosen_wali' => $request->input('dosen_wali'),
         ]);
 
         // Redirect kembali dengan pesan sukses
