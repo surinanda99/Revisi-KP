@@ -16,7 +16,7 @@
                                 <th class="align-middle">Nama Mahasiswa</th>
                                 {{-- <th class="align-middle">Bab Terakhir</th>
                                 <th class="align-middle">Jumlah Bimbingan</th> --}}
-                                <th class="align-middle">Status</th>
+                                <th class="align-middle">Status KP</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -27,7 +27,7 @@
                                     <td class="centered-column">{{ $mahasiswa->mahasiswa->nama }}</td>
                                     {{-- <td class="centered-column">{{ $mahasiswa->bab_terakhir }}</td>
                                     <td class="centered-column">{{ $mahasiswa->jml_bimbingan }}</td> --}}
-                                    <td class="centered-column">{{ $mahasiswa->status }}</td>
+                                    <td class="centered-column">{{ $mahasiswa->mahasiswa->status_kp }}</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -37,8 +37,11 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogTambahDataMhs"><i class="fas fa-plus"></i>Tambah Data Mahasiswa</a>
+                </div>
                 <!-- Pagination, if needed -->
-                <nav aria-label="pageNavigationLogbook">
+                {{-- <nav aria-label="pageNavigationLogbook">
                     <ul class="pagination custom-left-shift">
                         <li class="page-item disabled">
                             <a class="page-link" href="#" tabindex="-1">Previous</a>
@@ -50,8 +53,10 @@
                             <a class="page-link" href="#">Next</a>
                         </li>
                     </ul>
-                </nav>
+                </nav> --}}
             </div>
         </div>
     </div>
+<!-- Include the modal for adding mahasiswa -->
+@include('koor.data_dosen.tambah_data_mhs')
 @endforeach
