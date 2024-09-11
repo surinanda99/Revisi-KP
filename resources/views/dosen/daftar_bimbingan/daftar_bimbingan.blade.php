@@ -2,20 +2,27 @@
 @section('title', 'Daftar Bimbingan Kerja Praktek')
 @section('content')
 
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
-
     <div class="wrapper d-flex flex-column min-vh-100">
         <div class="container flex-grow-1">
+
+            @if(session('success'))
+                <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
             <h3 class="mb-3"><b>Daftar Pengajuan Mahasiswa Bimbingan</b></h3>
             <p class="mb-2">Berikut ini adalah daftar pengajuan mahasiswa bimbingan</p>
             {{-- <div class="input-group justify-content-end mb-3">
@@ -195,6 +202,18 @@
                     Swal.fire('Error!', 'Alasan penolakan harus diisi.', 'error');
                 }
             });
+
+            setTimeout(function() {
+                var successAlert = document.getElementById('success-alert');
+                if (successAlert) {
+                    successAlert.style.display = 'none';
+                }
+
+                var errorAlert = document.getElementById('error-alert');
+                if (errorAlert) {
+                    errorAlert.style.display = 'none';
+                }
+            }, 3000);
         });
     </script>
 

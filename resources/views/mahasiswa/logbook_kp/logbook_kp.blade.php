@@ -2,19 +2,44 @@
 @section('title', 'Logbook Bimbingan Kerja Praktek')
 @section('content')
 
-    @if (Session::get('success'))
-        <div class="alert alert-success mt-3">
-            {{ Session::get('success') }}
+    {{-- @if(session('success'))
+        <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
     @endif
 
-    @if (Session::get('error'))
-        <div class="alert alert-danger mt-3">
-            {{ Session::get('error') }}
+    @if(session('error'))
+        <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-    @endif
+    @endif --}}
     
     <div class="container">
+        
+        @if(session('success'))
+            <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
         <h4 class="mb-4">Bimbingan Kerja Praktek</h4>
         @if($status->id_dsn == 0)
             <div class="alert alert-warning" role="alert">
@@ -143,6 +168,18 @@
                     })
                     .catch(error => console.error('Error:', error));
             });
+
+            setTimeout(function() {
+                var successAlert = document.getElementById('success-alert');
+                if (successAlert) {
+                    successAlert.style.display = 'none';
+                }
+
+                var errorAlert = document.getElementById('error-alert');
+                if (errorAlert) {
+                    errorAlert.style.display = 'none';
+                }
+            }, 3000);
         });
     </script>
 @endsection

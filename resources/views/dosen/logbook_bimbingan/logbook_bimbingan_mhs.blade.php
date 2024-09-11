@@ -6,20 +6,26 @@
     @include('dosen.logbook_bimbingan.detail_logbook')
 
     <div class="wrapper d-flex flex-column min-vh-100">
-
-        @if (Session::get('success'))
-            <div class="alert alert-success mt-3">
-                {{ Session::get('success') }}
-            </div>
-        @endif
-
-        @if (Session::get('error'))
-            <div class="alert alert-danger mt-3">
-                {{ Session::get('error') }}
-            </div>
-        @endif
-
         <div class="container flex-grow-1">
+
+            @if(session('success'))
+                <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
             <h3 class="mb-3"><b>Daftar Logbook Mahasiswa Bimbingan</b></h3>
             <p class="mb-5 d-flex justify-content-between align-items-center">
                 Berikut merupakan daftar logbook mahasiswa bimbingan
@@ -133,6 +139,20 @@
                 });
             }
         );
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var successAlert = document.getElementById('success-alert');
+                if (successAlert) {
+                    successAlert.style.display = 'none';
+                }
+
+                var errorAlert = document.getElementById('error-alert');
+                if (errorAlert) {
+                    errorAlert.style.display = 'none';
+                }
+            }, 3000);
+        });
     </script>
 
     <script>
