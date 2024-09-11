@@ -137,7 +137,6 @@
 @include('koor.data_mahasiswa.hapus')
 
 <script>
-<<<<<<< HEAD
     document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
             var successAlert = document.getElementById('success-alert');
@@ -151,21 +150,18 @@
             }
         }, 3000);
     });
+
+    function searchTable() {
+        const input = document.getElementById('searchBar').value.toLowerCase();
+        const rows = document.querySelectorAll('#tableBody tr');
+        rows.forEach(row => {
+            const nameCell = row.cells[2].textContent.toLowerCase();
+            if (nameCell.includes(input)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
 </script>
 @endsection
-=======
-function searchTable() {
-    const input = document.getElementById('searchBar').value.toLowerCase();
-    const rows = document.querySelectorAll('#tableBody tr');
-    rows.forEach(row => {
-        const nameCell = row.cells[2].textContent.toLowerCase();
-        if (nameCell.includes(input)) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
-        }
-    });
-}
-</script>
-@endsection
->>>>>>> 14ffb4c80ad67fbb599c0cec00d9961501b0312d

@@ -240,21 +240,6 @@
             });
         });
 
-<<<<<<< HEAD
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                var successAlert = document.getElementById('success-alert');
-                if (successAlert) {
-                    successAlert.style.display = 'none';
-                }
-
-                var errorAlert = document.getElementById('error-alert');
-                if (errorAlert) {
-                    errorAlert.style.display = 'none';
-                }
-            }, 3000);
-        });
-=======
         function searchTable() {
             var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById("searchBar");
@@ -275,7 +260,19 @@
             }
         }
 
->>>>>>> 14ffb4c80ad67fbb599c0cec00d9961501b0312d
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var successAlert = document.getElementById('success-alert');
+                if (successAlert) {
+                    successAlert.style.display = 'none';
+                }
+
+                var errorAlert = document.getElementById('error-alert');
+                if (errorAlert) {
+                    errorAlert.style.display = 'none';
+                }
+            }, 3000);
+        });
 
     </script>
 @endsection
