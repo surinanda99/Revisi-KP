@@ -13,6 +13,7 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\DetailLogbookController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\DosenPembimbingController;
 use App\Http\Controllers\DospemBimbinganController;
 use App\Http\Controllers\PengajuanSidangController;
@@ -36,6 +37,11 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('loginPost');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/forgot-password', [PasswordResetController::class, 'requestForm'])->name('password.request');
+Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink'])->name('password.email');
+Route::get('/reset-password/{token}', [PasswordResetController::class, 'resetForm'])->name('password.reset');
+Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])->name('password.update');
 
 // Mahasiswa
 Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
