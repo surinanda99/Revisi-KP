@@ -32,7 +32,7 @@
                     <div class="col-md-6">
                         <p class="card-text"><strong>Telepon: {{ $mhs['telp_mhs'] }}</strong> </p>
                         <p class="card-text"><strong>Email: {{ $mhs['email'] }}</strong> </p>
-                        <p class="card-text"><strong>Dosen Wali: {{ $mhs['dosen_wali'] }}</strong></p>
+                        {{-- <p class="card-text"><strong>Dosen Wali: {{ $mhs['dosen_wali'] }}</strong></p> --}}
                     </div>
                 </div>
 

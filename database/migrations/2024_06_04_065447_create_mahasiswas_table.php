@@ -16,12 +16,12 @@ return new class extends Migration
             $table->id();
             $table->string('nim')->unique();
             $table->string('nama');
-            //$table->double('ipk')->nullable();
-            // $table->string('telp_mhs')->nullable()->unique();
+            $table->double('ipk')->nullable();
+            $table->string('telp_mhs')->nullable()->unique();
             $table->string('email')->unique();
             $table->enum('status_kp', ['BARU', 'ULANG'])->default('BARU');
             // $table->string('dosen_wali');
-            //$table->longText('transkrip_nilai')->nullable();
+            $table->longText('transkrip_nilai')->nullable();
             $table->timestamps();
         });
     }

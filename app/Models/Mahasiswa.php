@@ -15,11 +15,11 @@ class Mahasiswa extends Model
         'id_mhs',
         'nim',
         'nama',
-        //'ipk',
-        // 'telp_mhs',
+        'ipk',
+        'telp_mhs',
         'email',
         // 'dosen_wali',
-        //'transkrip_nilai'
+        'transkrip_nilai',
         'status_kp'
     ];
 

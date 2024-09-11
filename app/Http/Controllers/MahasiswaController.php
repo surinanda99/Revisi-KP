@@ -67,7 +67,7 @@ class MahasiswaController extends Controller
             ->withProperties(['id_mhs' => $mahasiswa->id])
             ->log('Melengkapi data diri');
 
-        return redirect()->route('dashboardMahasiswa')->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('dashboardMahasiswa')->with('success', 'Data Mahasiswa Berhasil Diperbarui');
         // return redirect()->back()->with('success', 'Data Mahasiswa Berhasil Diperbarui.');
     }
 
