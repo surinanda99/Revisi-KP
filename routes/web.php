@@ -126,6 +126,7 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     // Koor untuk Dosen
     Route::get('/data_dosen', [KoorController::class, 'daftar_data_dosen'])->name('HalamanKoorDosen');
     Route::post('/import-dosen', [KoorController::class, 'importDosen'])->name('importDosen');
+    Route::get('/template-dosen', [KoorController::class, 'downloadTemplateDosen'])->name('templateDosen');
     Route::post('/store-dosen', [KoorController::class, 'storeDosen'])->name('simpanDosen');
     Route::get('/edit-dosen/{id}', [KoorController::class, 'editDosen'])->name('editDosen');
     Route::put('/update-dosen/{id}', [KoorController::class, 'updateDosen'])->name('updateDosen');
@@ -135,6 +136,7 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     // Koor untuk Mahasiswa
     Route::get('/data_mhs', [KoorController::class, 'daftar_mhs'])->name('halamanKoorMhs');
     Route::post('/import-mhs', [KoorController::class, 'importMhs'])->name('importMhs');
+    Route::get('/template-mahasiswa', [KoorController::class, 'downloadTemplateMahasiswa'])->name('templateMahasiswa');
     Route::post('/store-mhs', [KoorController::class, 'storeMhs'])->name('simpanMhs');
     // Route::get('/edit-mhs/{id}', [KoorController::class, 'editMhs'])->name('editMhs');
     Route::put('/update-mhs/{id}', [KoorController::class, 'updateMhs'])->name('updateMhs');

@@ -17,8 +17,10 @@ use App\Imports\MahasiswaImport;
 use App\Models\LogbookBimbingan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Exports\TemplateDosenExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Activitylog\Models\Activity;
+use App\Exports\TemplateMahasiswaExport;
 use Illuminate\Support\Facades\Validator;
 
 class KoorController extends Controller
@@ -133,6 +135,11 @@ class KoorController extends Controller
             Log::error('Import Error: ' . $e->getMessage());
             return redirect()->route('HalamanKoorDosen')->with('error', 'Data Dosen Gagal Diimport. Error: ' . $e->getMessage());
         }
+    }
+
+    public function downloadTemplateDosen()
+    {
+        return Excel::download(new TemplateDosenExport, 'template_dosen.xlsx');
     }
 
     public function editDosen($id)
@@ -295,6 +302,11 @@ class KoorController extends Controller
             Log::error('Import Error: ' . $e->getMessage());
             return redirect()->route('halamanKoorMhs')->with('error', 'Data Mahasiswa Gagal Diimport. Error: ' . $e->getMessage());
         }
+    }
+
+    public function downloadTemplateMahasiswa()
+    {
+        return Excel::download(new TemplateMahasiswaExport, 'template_mahasiswa.xlsx');
     }
 
     // public function editMhs($id)

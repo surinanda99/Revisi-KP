@@ -20,8 +20,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <div class="mb-3">
+                            <a href="{{ route('templateMahasiswa') }}" class="btn btn-info">
+                                <i class="fas fa-download"></i> Download Template Excel
+                            </a>
+                        </div>
                         <div>
-                            <label for="exampleFormControlInput1" class="form-label fw-semibold">Data Excel</label>
+                            <label for="import" class="form-label fw-semibold">Data Excel</label>
                             <input type="file" class="form-control @error('import') is-invalid @enderror" name="import" placeholder="Masukkan data excel" value="{{ old('import') }}">
                             @error('import')
                                 <span class="invalid-feedback" role="alert">
