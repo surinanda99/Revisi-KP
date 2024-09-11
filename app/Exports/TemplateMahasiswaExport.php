@@ -12,6 +12,7 @@ class TemplateMahasiswaExport implements WithHeadings
             'nim',
             'nama',
             'email',
+            'status_kp'
         ];
     }
 }
