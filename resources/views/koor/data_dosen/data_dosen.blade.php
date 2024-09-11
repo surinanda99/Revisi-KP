@@ -9,6 +9,14 @@
                 <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogTambah"><i class="fas fa-plus"></i>Tambah Data</a>
                 <button class="btn btn-success ms-1" data-bs-toggle="modal" data-bs-target="#dialogImport"><i class="fas fa-file-import"></i>&nbsp;Import</button>
             </div>
+            
+            <!-- Search Bar -->
+            <div class="col-md d-flex justify-content-end">
+                <div class="input-group" style="width: 400px;">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    <input type="text" id="searchBar" class="form-control form-control-sm" placeholder="Cari Nama Dosen" onkeyup="searchTable()">
+                </div>
+            </div>
 
             <!-- Import Dosen Modal -->
             <div class="modal fade" id="dialogImport" tabindex="-1" aria-labelledby="dialogImportLabel" aria-hidden="true">
@@ -225,6 +233,27 @@
                 $('#dialogHapusDosen_' + id).modal('show');
             });
         });
+
+        function searchTable() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchBar");
+            filter = input.value.toUpperCase();
+            table = document.querySelector(".table");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2]; // Kolom nama dosen (kolom ke-3)
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
 
     </script>
 @endsection
