@@ -1,5 +1,5 @@
 @extends('koor.layouts.main')
-@section('title', 'Daftar Data Mahasiwa')
+@section('title', 'Daftar Data Mahasiswa')
 @section('content')
 <div class="container-koor">
     <h4 class="mb-4">Data Mahasiswa</h4>
@@ -10,6 +10,14 @@
             <button class="btn btn-success ms-1" data-bs-toggle="modal" data-bs-target="#dialogImport"><i class="fas fa-file-import"></i>&nbsp;Import</button>
         </div>
 
+        <!-- Search Bar -->
+        <div class="col-md d-flex justify-content-end">
+            <div class="input-group" style="width: 400px;">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <input type="text" id="searchBar" class="form-control form-control-sm" placeholder="Cari Nama Mahasiswa" onkeyup="searchTable()">
+            </div>
+        </div>
+        
          <!-- Import Mahasiswa Modal -->
          <div class="modal fade" id="dialogImport" tabindex="-1" aria-labelledby="dialogImportLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -68,15 +76,11 @@
                 <th class="align-middle">No.</th>
                 <th class="align-middle">NIM</th>
                 <th class="align-middle">Nama Mahasiswa</th>
-                {{-- <th class="align-middle">IPK</th> --}}
-                {{-- <th class="align-middle">Transkip</th> --}}
-                {{-- <th class="align-middle">Telp Mhs</th> --}}
                 <th class="align-middle">Email</th>
                 <th class="align-middle">Status KP</th>
-                {{-- <th class="align-middle">Dosen Wali</th> --}}
                 <th class="align-middle">Aksi</th>
             </thead>
-            <tbody>
+            <tbody id="tableBody">
 
                 <!-- Loop untuk Menampilkan Setiap Data Mahasiswa -->
                 @foreach($mahasiswas as $mahasiswa)
@@ -84,12 +88,8 @@
                     <td class="centered-column">{{ $loop->iteration }}</td>
                     <td class="centered-column">{{ $mahasiswa->nim }}</td>
                     <td class="centered-column">{{ $mahasiswa->nama }}</td>
-                    {{-- <td class="centered-column">{{ $mahasiswa->ipk }}</td> --}}
-                    {{-- <td class="centered-column">{{ $mahasiswa->transkrip_nilai }}</td> --}}
-                    {{-- <td class="centered-column">{{ $mahasiswa->telp_mhs }}</td> --}}
                     <td class="centered-column">{{ $mahasiswa->email }}</td>
                     <td class="centered-column">{{ $mahasiswa->status_kp }}</td>
-                    {{-- <td class="centered-column">{{ $mahasiswa->dosen_wali }}</td> --}}
                     <td class="centered-column">
                         <button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataMahasiswa_{{ $mahasiswa->id }}">
                             <i class="fas fa-info-circle"></i>
@@ -137,6 +137,7 @@
 @include('koor.data_mahasiswa.hapus')
 
 <script>
+<<<<<<< HEAD
     document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
             var successAlert = document.getElementById('success-alert');
@@ -152,3 +153,19 @@
     });
 </script>
 @endsection
+=======
+function searchTable() {
+    const input = document.getElementById('searchBar').value.toLowerCase();
+    const rows = document.querySelectorAll('#tableBody tr');
+    rows.forEach(row => {
+        const nameCell = row.cells[2].textContent.toLowerCase();
+        if (nameCell.includes(input)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+</script>
+@endsection
+>>>>>>> 14ffb4c80ad67fbb599c0cec00d9961501b0312d

@@ -48,7 +48,7 @@
             </li>
             <li class="sidebar-item">
                 <a href="{{ route('koor-plotting') }}" class="sidebar-link">
-                    <i class="lni lni-dashboard"></i>
+                    <i class="fa fa-chart-bar"></i>
                     <span>Plotting Dosen</span>
                 </a>
             </li>

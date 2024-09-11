@@ -16,7 +16,7 @@
             <form id="plotting-form">
                 @csrf
                 <table class="table table-hover align-middle">
-                    <thead class="table-dark">
+                    <thead class="table-header">
                         <tr>
                             <th></th>
                             <th>Nama Dosen</th>
@@ -72,6 +72,19 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        // Search dosen function
+        document.getElementById('search-dosen').addEventListener('keyup', function () {
+            const searchValue = this.value.toLowerCase();
+            document.querySelectorAll('.dosen-row').forEach(function (row) {
+                const dosenName = row.getAttribute('data-dosen-name');
+                if (dosenName.includes(searchValue)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+        
         // Toggle display of mahasiswa rows
         document.querySelectorAll('.dosen-row').forEach(function (row) {
             row.addEventListener('click', function () {
