@@ -34,32 +34,48 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group row mb-3">
+                        {{-- <div class="form-group row mb-3">
                             <label for="inputIPK" class="col-sm-2 col-form-label">IPK <span
                                     class="required">*</span></label>
                             <div class="col-sm-10">
                                 <input type="number" name="ipk" class="form-control" id="inputIPK">
                             </div>
-                        </div>
-                        <div class="form-group row mb-3">
+                        </div> --}}
+                        {{-- <div class="form-group row mb-3">
                             <label for="inputTranskrip" class="col-sm-2 col-form-label">Transkrip Nilai <span
                                     class="required">*</span></label>
                             <div class="col-sm-10">
                                 <input type="text" name="transkrip_nilai" class="form-control" id="inputTranskrip" />
                             </div>
-                        </div>
-                        <div class="form-group row mb-3">
+                        </div> --}}
+                        {{-- <div class="form-group row mb-3">
                             <label for="inputTelp" class="col-sm-2 col-form-label">Telp Mhs <span
                                     class="required">*</span></label>
                             <div class="col-sm-10">
                                 <input type="tel" name="telp_mhs" class="form-control" id="inputTelp">
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="form-group row mb-3">
                             <label for="inputEmail" class="col-sm-2 col-form-label">Email <span class="required">*</span></label>
                             <div class="col-sm-10">
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="inputEmail" value="{{ old('email') }}">
                                 @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label for="inputStatusKP" class="col-sm-2 col-form-label">Status KP <span
+                                    class="required">*</span></label>
+                            <div class="col-sm-10">
+                                <select class="form-select @error('status_kp') is-invalid @enderror" name="status_kp" id="inputStatusKP" aria-label="Status KP">
+                                    <option disabled selected hidden>Pilih Status Kerja Praktek</option>
+                                    <option value="BARU" {{ old('status_kp') === 'BARU' ? 'selected' : '' }}>BARU</option>
+                                    <option value="ULANG" {{ old('status_kp') === 'ULANG' ? 'selected' : '' }}>ULANG</option>
+                                </select>
+                                @error('status_kp')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

@@ -33,7 +33,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="form-group row mb-3">
+                            {{-- <div class="form-group row mb-3">
                                 <label for="ipk" class="col-sm-2 col-form-label">IPK</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control @error('ipk') is-invalid @enderror" name="ipk" id="ipk" value="{{ old('ipk') ? old('ipk') : $mahasiswa->ipk }}">
@@ -43,8 +43,8 @@
                                     </span>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="form-group row mb-3">
+                            </div> --}}
+                            {{-- <div class="form-group row mb-3">
                                 <label for="transkrip_nilai" class="col-sm-2 col-form-label">Transkrip Nilai</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control @error('transkrip_nilai') is-invalid @enderror" name="transkrip_nilai" id="transkrip_nilai" value="{{ old('transkrip_nilai') ? old('transkrip_nilai') : $mahasiswa->transkrip_nilai }}">
@@ -54,8 +54,8 @@
                                     </span>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="form-group row mb-3">
+                            </div> --}}
+                            {{-- <div class="form-group row mb-3">
                                 <label for="telp_mhs" class="col-sm-2 col-form-label">Telp Mahasiswa</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control @error('telp_mhs') is-invalid @enderror" name="telp_mhs" id="telp_mhs" value="{{ old('telp_mhs') ? old('telp_mhs') : $mahasiswa->telp_mhs }}">
@@ -65,7 +65,7 @@
                                     </span>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-group row mb-3">
                                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                                 <div class="col-sm-10">
@@ -74,6 +74,20 @@
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="status_kp" class="col-sm-2 col-form-label">Status KP</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select @error('status_kp') is-invalid @enderror" name="status_kp" id="inputStatusKP_{{ $mahasiswa->id }}">
+                                        <option value="BARU" {{ (old('status_kp') === 'BARU' || $mahasiswa->status_kp == 'BARU') ? 'selected' : '' }}>BARU</option>
+                                        <option value="ULANG" {{ (old('status_kp') === 'ULANG' || $mahasiswa->status_kp == 'ULANG') ? 'selected' : '' }}>ULANG</option>
+                                    </select>
+                                    @error('status_kp')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>

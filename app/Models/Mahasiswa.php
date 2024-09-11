@@ -13,13 +13,14 @@ class Mahasiswa extends Model
 
     protected $fillable = [
         'id_mhs',
-        'nim', 
-        'nama', 
-        'ipk', 
-        'telp_mhs', 
-        'email', 
+        'nim',
+        'nama',
+        //'ipk',
+        // 'telp_mhs',
+        'email',
         // 'dosen_wali',
-        'transkrip_nilai'
+        //'transkrip_nilai'
+        'status_kp'
     ];
 
     public function user()

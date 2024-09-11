@@ -211,7 +211,7 @@ class KoorController extends Controller
 
         // Update kuota dosen
         $dosen->kuota = $request->input('kuota');
-        
+
         // Hitung jumlah aplikasi diterima
         $ajuan_diterima = $dosen->dosen->pengajuan()->where('status', 'ACC')->count();
 
@@ -252,6 +252,7 @@ class KoorController extends Controller
             // 'telp_mhs' => 'required',
             'email' => 'required|email|unique:mahasiswas',
             // 'dosen_wali' => 'required|string',
+            'status_kp' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -266,6 +267,7 @@ class KoorController extends Controller
             // 'telp_mhs' => $request->telp_mhs,
             'email' => $request->email,
             // 'dosen_wali' => $request->dosen_wali,
+            'status_kp' => $request->status_kp,
         ]);
 
         $user = User::create([
@@ -325,6 +327,7 @@ class KoorController extends Controller
             // 'telp_mhs' => 'required',
             'email' => 'required',
             // 'dosen_wali' => 'required',
+            'status_kp' => 'required',
         ]);
 
         // Jika validasi gagal, kembalikan respons dengan pesan kesalahan
@@ -343,6 +346,7 @@ class KoorController extends Controller
             // 'telp_mhs' => $request->input('telp_mhs'),
             'email' => $request->input('email'),
             // 'dosen_wali' => $request->input('dosen_wali'),
+            'status_kp' => $request->input('status_kp'),
         ]);
 
         // Redirect kembali dengan pesan sukses

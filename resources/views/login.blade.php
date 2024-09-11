@@ -42,13 +42,8 @@
                             <label for="password" class="visually-hidden">Password</label>
                             <input type="password" id="password" name="password" class="form-control form-control-lg bg-light fs-6" placeholder="Masukkan Password">
                         </div>
-                        <div class="input-group mb-5 d-flex justify-content-between">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="formCheck">
-                                <label for="formCheck" class="form-check-label text-secondary"><small>Remember Me</small></label>
-                            </div>
-                        </div>
-                        <div class="input-group mb-3">
+                        <a href="{{ route('password.request') }}" class="text-secondary"><small>Reset Password</small></a>
+                        <div class="input-group mb-3 mt-3">
                             <button type="submit" class="btn btn-lg btn-primary w-100 fs-6">Log in</button>
                         </div>
                     </form>
