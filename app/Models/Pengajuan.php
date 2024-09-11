@@ -17,11 +17,16 @@ class Pengajuan extends Model
         'judul',
         'perusahaan',
         'posisi',
-        'deskripsi',
-        'durasi',
+        // 'deskripsi',
+        'tanggal_mulai', 
+        'tanggal_selesai',
+        // 'durasi',
         'status',
         'alasan',
     ];
+
+    // Jika perlu format tanggal
+    protected $dates = ['tanggal_mulai', 'tanggal_selesai'];
 
     public function dosen()
     {

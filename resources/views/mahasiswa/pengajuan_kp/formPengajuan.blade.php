@@ -105,7 +105,7 @@
                             <label for="inputPosisi" class="col-sm-2 col-form-label">Jobdesk</label>
                             <div class="col-sm-10">
                                 <input type="posisi" name="posisi" class="form-control" id="inputPosisi"
-                                    placeholder="Masukkan Posisi" value="{{ $data['posisi'] }}">
+                                    placeholder="Masukkan Jobdesk" value="{{ $data['posisi'] }}">
                             </div>
                         </div>
                         {{-- <div class="form-group row mb-3">
@@ -116,13 +116,35 @@
                                     placeholder="Masukkan Deskripsi" value="{{ $data['deskripsi'] }}">
                             </div>
                         </div> --}}
+
                         <div class="form-group row mb-3">
+                            <label for="tanggal_mulai" class="col-sm-2 col-form-label">Tanggal Mulai Magang</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" name="tanggal_mulai" id="tanggal_mulai"
+                                    placeholder="Masukkan Durasi Kerja Praktek" value="{{ $data['tanggal_mulai'] }}">
+                            </div>
+
+                            {{-- <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" value="{{ old('tanggal_mulai') }}" required> --}}
+                        </div>
+                        
+                        <div class="form-group row mb-3">
+                            <label for="tanggal_selesai" class="col-sm-2 col-form-label">Tanggal Selesai Magang</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" name="tanggal_selesai" id="tanggal_selesai"
+                                    placeholder="Masukkan Durasi Kerja Praktek" value="{{ $data['tanggal_selesai'] }}">
+                            </div>
+
+                            {{-- <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" value="{{ old('tanggal_selesai') }}" required> --}}
+                        </div>
+                        
+
+                        {{-- <div class="form-group row mb-3">
                             <label for="inputDurasi" class="col-sm-2 col-form-label">Durasi</label>
                             <div class="col-sm-10">
                                 <input type="durasi" name="durasi" class="form-control" id="inputDurasi"
                                     placeholder="Masukkan Durasi Kerja Praktek" value="{{ $data['durasi'] }}">
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="form-group row mb-3 justify-content-end">
                             <div class="col-sm-1 d-flex justify-content-end">
                                 <a href="{{ route('pengajuan-mahasiswa') }}" class="btn btn-secondary me-2">Kembali</a>

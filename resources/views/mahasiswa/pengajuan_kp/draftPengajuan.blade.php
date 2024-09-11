@@ -56,8 +56,12 @@
                             <td>{{ $data['deskripsi'] }}</td>
                         </tr> --}}
                         <tr>
-                            <td>Durasi</td>
-                            <td>{{ $data['durasi'] }}</td>
+                            <td>Tanggal Mulai</td>
+                            <td>{{ $data['tanggal_mulai'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal Selesai</td>
+                            <td>{{ $data['tanggal_selesai'] }}</td>
                         </tr>
                         <tr>
                             <td>Usulan Dosen Pembimbing</td>
@@ -101,8 +105,12 @@
                             <td>{{ $pengajuan->deskripsi }}</td>
                         </tr> --}}
                         <tr>
-                            <td>Durasi</td>
-                            <td>{{ $pengajuan->durasi }}</td>
+                            <td>Tanggal Mulai</td>
+                            <td>{{ $pengajuan->tanggal_mulai }}</td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal Selesai</td>
+                            <td>{{ $pengajuan->tanggal_selesai }}</td>
                         </tr>
                         <tr>
                             <td>Usulan Dosen Pembimbing</td>
@@ -144,7 +152,9 @@
                             <input type="hidden" name="perusahaan" value="{{ $data['perusahaan'] }}">
                             <input type="hidden" name="posisi" value="{{ $data['posisi'] }}">
                             {{-- <input type="hidden" name="deskripsi" value="{{ $data['deskripsi'] }}"> --}}
-                            <input type="hidden" name="durasi" value="{{ $data['durasi'] }}">
+                            {{-- <input type="hidden" name="durasi" value="{{ $data['durasi'] }}"> --}}
+                            <input type="hidden" name="tanggal_mulai" value="{{ $data['tanggal_mulai'] }}">
+                            <input type="hidden" name="tanggal_selesai" value="{{ $data['tanggal_selesai'] }}">
                             <input type="hidden" name="id_dsn" value="{{ $data['id_dospem'] }}">
                             <button type="submit" class="btn btn-warning me-2">Edit</button>
                         </form>
@@ -155,7 +165,9 @@
                             <input type="hidden" name="perusahaan" value="{{ $data['perusahaan'] }}">
                             <input type="hidden" name="posisi" value="{{ $data['posisi'] }}">
                             {{-- <input type="hidden" name="deskripsi" value="{{ $data['deskripsi'] }}"> --}}
-                            <input type="hidden" name="durasi" value="{{ $data['durasi'] }}">
+                            {{-- <input type="hidden" name="durasi" value="{{ $data['durasi'] }}"> --}}
+                            <input type="hidden" name="tanggal_mulai" value="{{ $data['tanggal_mulai'] }}">
+                            <input type="hidden" name="tanggal_selesai" value="{{ $data['tanggal_selesai'] }}">
                             <input type="hidden" name="id_dsn" value="{{ $data['id_dospem'] }}">
                             <button type="submit" class="btn btn-primary me-2">Ajukan</button>
                         </form>

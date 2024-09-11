@@ -78,6 +78,8 @@ class PengajuanController extends Controller
     public function form(Request $request)
     {
         $data = $request->all();
+        $data['tanggal_mulai'] = $data['tanggal_mulai'] ?? ''; 
+        $data['tanggal_selesai'] = $data['tanggal_selesai'] ?? ''; 
         return view('mahasiswa.pengajuan_kp.formPengajuan', compact('data'));
     }
 
@@ -110,7 +112,9 @@ class PengajuanController extends Controller
         $pengajuan->perusahaan = $data['perusahaan'];
         $pengajuan->posisi = $data['posisi'];
         // $pengajuan->deskripsi = $data['deskripsi'];
-        $pengajuan->durasi = $data['durasi'];
+        // $pengajuan->durasi = $data['durasi'];
+        $pengajuan->tanggal_mulai = $data['tanggal_mulai'];
+        $pengajuan->tanggal_selesai = $data['tanggal_selesai'];
         $pengajuan->id_dsn = $data['id_dsn'];
 
         $pengajuan->save();
