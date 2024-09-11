@@ -1,225 +1,137 @@
-{{-- @extends('koor.layouts.main')
+@extends('koor.layouts.main')
 @section('title', 'Data Dosen Pembimbing')
+
 @section('content')
-    <div class="container">
-        <h2 class="mb-4">Plotting Dosen Pembimbing</h2>
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <h4 class="mb-4">Dosen Yang Tersedia</h4>
-                <input type="text" id="search-dosen" class="form-control mb-3" placeholder="Cari Nama Dosen...">
-                <form id="plotting-form" class="text-left">
-                    @csrf
-                    <table class="table table-striped table-bordered table-hover">
-                        <thead>
+<div class="container py-5">
+    <h2 class="text-center mb-5">Plotting Dosen Pembimbing</h2>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <h4 class="mb-4">Dosen Yang Tersedia</h4>
+            <div class="input-group mb-4">
+                <input type="text" id="search-dosen" class="form-control" placeholder="Cari Nama Dosen">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+            </div>
+
+            <form id="plotting-form">
+                @csrf
+                <table class="table table-hover align-middle">
+                    <thead class="table-dark">
                         <tr>
                             <th></th>
                             <th>Nama Dosen</th>
-                            <th>Kuota Tersedia</th>
+                            <th class="text-center">Kuota Tersedia</th>
                         </tr>
-                        </thead>
-                        <tbody id="dosen-list">
-                        @foreach($dsnPeriod as $dosen)
-                            <tr class="dosen-row" data-dosen-id="{{ $dosen->id }}"
-                                data-dosen-name="{{ strtolower($dosen->dosen->nama) }}" style="cursor: pointer;">
+                    </thead>
+                    <tbody id="dosen-list">
+                        @foreach($dsnStatus as $dosen)
+                            <tr class="dosen-row" data-dosen-id="{{ $dosen->dosen->id }}" data-dosen-name="{{ strtolower($dosen->dosen->nama) }}">
                                 <td class="text-center">
-                                    <span class="toggle-icon" data-dosen-id="{{ $dosen->id }}">></span>
+                                    <span class="toggle-icon" data-dosen-id="{{ $dosen->dosen->id }}" style="cursor:pointer;">&#9654;</span>
                                 </td>
                                 <td>{{ $dosen->dosen->nama }}</td>
-                                <td class="text-center">{{ $dosen->status->sisa }}</td>
+                                <td class="text-center">{{ $dosen->sisa_kuota }}</td>
                             </tr>
-                            <tr id="mahasiswa-list-{{ $dosen->id }}" class="mahasiswa-list-row" style="display: none;">
+                            <tr id="mahasiswa-list-{{ $dosen->dosen->id }}" class="mahasiswa-list-row" style="display: none;">
                                 <td colspan="4">
-                                    <table class="table table-striped table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th>Nama Mahasiswa</th>
-                                            <th>NIM</th>
-                                            <th class="text-center">
-                                                Pilih
-                                                <input type="checkbox" class="select-all"
-                                                       data-dosen-id="{{ $dosen->id }}">
-                                            </th>
-                                            <th class="text-right">
-                                                <button type="button" class="btn btn-success plot-dosen"
-                                                        data-dosen-id="{{ $dosen->id }}">
-                                                    Plotting
-                                                </button>
-                                            </th>
-                                        </tr>
+                                    <table class="table table-sm table-striped">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Nama Mahasiswa</th>
+                                                <th>NIM</th>
+                                                <th class="text-center">Pilih</th>
+                                                <th class="text-end">
+                                                    <button type="button" class="btn btn-success plot-dosen" data-dosen-id="{{ $dosen->dosen->id }}">
+                                                        Plotting
+                                                    </button>
+                                                </th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($mahasiswa as $mhs)
-                                            <tr>
-                                                <td>{{ $mhs->mahasiswa->nama }}</td>
-                                                <td>{{ $mhs->mahasiswa->nim }}</td>
-                                                <td class="text-center">
-                                                    <input type="checkbox" name="mhs_id[{{ $dosen->id }}][]"
-                                                           value="{{ $mhs->id_mhs }}"
-                                                           class="select-mhs-{{ $dosen->id }}">
-                                                </td>
-                                                <td></td> <!-- Empty column to maintain structure -->
-                                            </tr>
-                                        @endforeach
+                                            @foreach($mahasiswa as $mhs)
+                                                <tr>
+                                                    <td>{{ $mhs->mahasiswa->nama }}</td>
+                                                    <td>{{ $mhs->mahasiswa->nim }}</td>
+                                                    <td class="text-center">
+                                                        <input type="checkbox" name="mhs_id[{{ $dosen->dosen->id }}][]" value="{{ $mhs->id_mhs }}" class="form-check-input select-mhs-{{ $dosen->dosen->id }}">
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </td>
                             </tr>
                         @endforeach
-                        </tbody>
-                    </table>
-                </form>
-            </div>
+                    </tbody>
+                </table>
+            </form>
         </div>
     </div>
+</div>
 
-    <style>
-        .text-center {
-            text-align: center;
-        }
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Toggle display of mahasiswa rows
+        document.querySelectorAll('.dosen-row').forEach(function (row) {
+            row.addEventListener('click', function () {
+                const dosenId = this.dataset.dosenId;
+                const mahasiswaRow = document.getElementById('mahasiswa-list-' + dosenId);
+                const toggleIcon = this.querySelector('.toggle-icon');
 
-        .text-left {
-            text-align: left;
-        }
-
-        .text-right {
-            text-align: right;
-        }
-
-        .table {
-            margin: 0 auto;
-        }
-
-        .toggle-icon {
-            display: inline-block;
-            transform: rotate(90deg);
-            transition: transform 0.3s;
-        }
-
-        .mahasiswa-list-row.show .toggle-icon {
-            transform: rotate(0deg);
-        }
-
-        .container {
-            margin-top: 20px;
-        }
-
-        .row.justify-content-center {
-            display: flex;
-            justify-content: center;
-        }
-
-        .col-md-10 {
-            max-width: 80%;
-        }
-
-        .plot-dosen {
-            margin-left: 10px;
-        }
-    </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Toggle mahasiswa list
-            document.querySelectorAll('.dosen-row').forEach(function (row) {
-                row.addEventListener('click', function () {
-                    const dosenId = this.dataset.dosenId;
-                    const mahasiswaRow = document.getElementById('mahasiswa-list-' + dosenId);
-                    const toggleIcon = document.querySelector('.toggle-icon[data-dosen-id="' + dosenId + '"]');
-
-                    if (mahasiswaRow.style.display === 'none' || mahasiswaRow.style.display === '') {
-                        mahasiswaRow.style.display = 'table-row';
-                        toggleIcon.style.transform = 'rotate(0deg)';
-                    } else {
-                        mahasiswaRow.style.display = 'none';
-                        toggleIcon.style.transform = 'rotate(90deg)';
-                    }
-                });
+                mahasiswaRow.style.display = (mahasiswaRow.style.display === 'none' || mahasiswaRow.style.display === '') 
+                    ? 'table-row' 
+                    : 'none';
+                
+                toggleIcon.innerHTML = (mahasiswaRow.style.display === 'none') ? '&#9654;' : '&#9660;';
             });
+        });
 
-            // Select all mahasiswa
-            document.querySelectorAll('.select-all').forEach(function (selectAllCheckbox) {
-                selectAllCheckbox.addEventListener('change', function () {
-                    const dosenId = this.dataset.dosenId;
-                    const checkboxes = document.querySelectorAll('.select-mhs-' + dosenId);
-                    checkboxes.forEach(checkbox => checkbox.checked = this.checked);
-                });
-            });
+        // Plotting action
+        document.querySelectorAll('.plot-dosen').forEach(function (button) {
+            button.addEventListener('click', function () {
+                const dosenId = this.dataset.dosenId;
+                const selectedMahasiswa = Array.from(document.querySelectorAll('.select-mhs-' + dosenId + ':checked')).map(checkbox => checkbox.value);
 
-            // Plotting dosen
-            document.querySelectorAll('.plot-dosen').forEach(function (plotButton) {
-                plotButton.addEventListener('click', function () {
-                    const dosenId = this.dataset.dosenId;
-                    const checkboxes = document.querySelectorAll('.select-mhs-' + dosenId + ':checked');
-                    const mahasiswaIds = Array.from(checkboxes).map(cb => cb.value);
+                if (selectedMahasiswa.length === 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Tidak ada mahasiswa yang dipilih',
+                        text: 'Pilih setidaknya satu mahasiswa.',
+                    });
+                    return;
+                }
 
-                    if (mahasiswaIds.length === 0) {
-                        alert('Pilih setidaknya satu mahasiswa untuk di-plotting.');
-                        return;
-                    }
-
-                    if (confirm('Apakah Anda yakin ingin melakukan plotting untuk ' + mahasiswaIds.length + ' mahasiswa?')) {
-                        $.ajax({
-                            url: '{{ route("koor-plotting-dosbing-post") }}',
-                            method: 'POST',
-                            data: {
-                                _token: '{{ csrf_token() }}',
-                                dosenId: dosenId,
-                                mhs_id: mahasiswaIds
-                            },
-                            success: function (response) {
-                                alert(response.message);
-                                updateAfterPlotting(dosenId, mahasiswaIds);
-                                setTimeout(function () {
-                                    location.reload();
-                                }, 100);
-                            },
-                            error: function (xhr) {
-                                const errors = xhr.responseJSON.errors ? Object.values(xhr.responseJSON.errors).join('\n') : xhr.responseJSON.error;
-                                alert('Terjadi kesalahan: ' + (errors || 'Error tidak terdeteksi.'));
-                            }
+                $.ajax({
+                    url: '{{ route("koor-plotting-dosbing-post") }}',
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        dosenId: dosenId,
+                        mhs_id: selectedMahasiswa
+                    },
+                    success: function (response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        }).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function (xhr) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Terjadi kesalahan',
+                            text: xhr.responseText,
                         });
                     }
                 });
             });
-
-            function updateAfterPlotting(dosenId, mahasiswaIds) {
-                // Update kuota tersedia
-                const kuotaCell = document.querySelector('.dosen-row[data-dosen-id="' + dosenId + '"] td:nth-child(3)');
-                if (kuotaCell) {
-                    const currentKuota = parseInt(kuotaCell.textContent, 10);
-                    kuotaCell.textContent = currentKuota - mahasiswaIds.length;
-                }
-
-                // Hapus mahasiswa yang sudah di-plotting dari daftar
-                mahasiswaIds.forEach(function (mhsId) {
-                    const row = document.querySelector('input[name="mhs_id[' + dosenId + '][]"][value="' + mhsId + '"]').closest('tr');
-                    if (row) {
-                        row.remove();
-                    }
-                });
-
-                // Reset checkbox "Select All"
-                const selectAllCheckbox = document.querySelector('.select-all[data-dosen-id="' + dosenId + '"]');
-                if (selectAllCheckbox) {
-                    selectAllCheckbox.checked = false;
-                }
-            }
-
-            // Improved search functionality
-            document.getElementById('search-dosen').addEventListener('input', function () {
-                const searchValue = this.value.toLowerCase();
-                document.querySelectorAll('.dosen-row').forEach(function (row) {
-                    const dosenName = row.dataset.dosenName;
-                    const mahasiswaList = document.getElementById('mahasiswa-list-' + row.dataset.dosenId);
-                    if (dosenName.includes(searchValue)) {
-                        row.style.display = '';
-                        mahasiswaList.style.display = 'none';
-                    } else {
-                        row.style.display = 'none';
-                        mahasiswaList.style.display = 'none';
-                    }
-                });
-            });
         });
-    </script>
-@endsection --}}
+    });
+</script>
+
+@endsection

@@ -19,6 +19,7 @@ use App\Http\Controllers\PengajuanSidangController;
 use App\Http\Controllers\MahasiswaBimbinganController;
 use App\Http\Controllers\MahasiswaBimbinganControlller;
 use App\Http\Controllers\KoorMonitoringSidangController;
+use App\Http\Controllers\PlottingDosbingController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -158,8 +159,8 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     Route::get('/log-mhs', [LogController::class, 'LogMahasiswa'])->name('log_mhs');
     Route::get('/koor-monitoring-sidang', [KoorMonitoringSidangController::class, 'index'])->name('koor-monitoring-sidang');
     Route::post('/koor-monitoring-sidang/update', [KoorMonitoringSidangController::class, 'updateStatus'])->name('koor-monitoring-sidang-update');
-    Route::get('/plotting-dosen',[KoorController::class, 'plotting'])->name('koor-plotting');
-
+    Route::get('/plotting', [PlottingDosbingController::class, 'index'])->name('koor-plotting');
+    Route::post('/plotting-dosbing', [PlottingDosbingController::class, 'setDosbing'])->name('koor-plotting-dosbing-post');
 });
 
 // Admin
