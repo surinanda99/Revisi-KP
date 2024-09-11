@@ -62,10 +62,11 @@
                 <th class="align-middle">No.</th>
                 <th class="align-middle">NIM</th>
                 <th class="align-middle">Nama Mahasiswa</th>
-                <th class="align-middle">IPK</th>
-                <th class="align-middle">Transkip</th>
-                <th class="align-middle">Telp Mhs</th>
+                {{-- <th class="align-middle">IPK</th> --}}
+                {{-- <th class="align-middle">Transkip</th> --}}
+                {{-- <th class="align-middle">Telp Mhs</th> --}}
                 <th class="align-middle">Email</th>
+                <th class="align-middle">Status KP</th>
                 {{-- <th class="align-middle">Dosen Wali</th> --}}
                 <th class="align-middle">Aksi</th>
             </thead>
@@ -77,10 +78,11 @@
                     <td class="centered-column">{{ $loop->iteration }}</td>
                     <td class="centered-column">{{ $mahasiswa->nim }}</td>
                     <td class="centered-column">{{ $mahasiswa->nama }}</td>
-                    <td class="centered-column">{{ $mahasiswa->ipk }}</td>
-                    <td class="centered-column">{{ $mahasiswa->transkrip_nilai }}</td>
-                    <td class="centered-column">{{ $mahasiswa->telp_mhs }}</td>
+                    {{-- <td class="centered-column">{{ $mahasiswa->ipk }}</td> --}}
+                    {{-- <td class="centered-column">{{ $mahasiswa->transkrip_nilai }}</td> --}}
+                    {{-- <td class="centered-column">{{ $mahasiswa->telp_mhs }}</td> --}}
                     <td class="centered-column">{{ $mahasiswa->email }}</td>
+                    <td class="centered-column">{{ $mahasiswa->status_kp }}</td>
                     {{-- <td class="centered-column">{{ $mahasiswa->dosen_wali }}</td> --}}
                     <td class="centered-column">
                         <button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataMahasiswa_{{ $mahasiswa->id }}">
