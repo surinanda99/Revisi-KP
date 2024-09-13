@@ -56,7 +56,7 @@ class DospemBimbinganController extends Controller
 
     public function profileDospem()
     {
-        $dosen = Dosen::where('email', auth()->user()->email)->first();
+        $dosen = Dosen::where('npp', auth()->user()->npp)->first();
         return view('dosen.profile', compact('dosen'));
     
     }

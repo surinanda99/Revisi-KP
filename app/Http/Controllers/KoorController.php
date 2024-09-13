@@ -108,9 +108,9 @@ class KoorController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $request->nama,
-            'email' => $request->email,
-            'password' => bcrypt($request->npp)
+            'nim' => null,
+            'npp' => $request->npp,
+            'password' => bcrypt('Dinus-123')
         ]);
 
         $user->assignRole('dosen');
@@ -270,14 +270,6 @@ class KoorController extends Controller
             'status_kp' => $request->status_kp,
         ]);
 
-        $user = User::create([
-            'name' => $request->nama,
-            'email' => $request->email,
-            'password' => bcrypt($request->nim)
-        ]);
-
-        $user->assignRole('mahasiswa');
-
         // Buat entri StatusMahasiswa
         StatusMahasiswa::create([
             'id_mhs' => $mahasiswa->id,
@@ -286,10 +278,18 @@ class KoorController extends Controller
         ]);
 
         // Update kuota dosen setelah menambah mahasiswa baru pada Koor
-        $dosenPembimbing = DosenPembimbing::find($request->id_dsn);
-        $dosenPembimbing->jumlah_ajuan += 1; // Tambah jumlah ajuan
-        $dosenPembimbing->sisa_kuota = $dosenPembimbing->kuota - $dosenPembimbing->jumlah_ajuan;
-        $dosenPembimbing->save();
+        // $dosenPembimbing = DosenPembimbing::find($request->id_dsn);
+        // $dosenPembimbing->jumlah_ajuan += 1; // Tambah jumlah ajuan
+        // $dosenPembimbing->sisa_kuota = $dosenPembimbing->kuota - $dosenPembimbing->jumlah_ajuan;
+        // $dosenPembimbing->save();
+
+        $user = User::create([
+            'nim' => $request->nim,
+            'npp' => null,
+            'password' => bcrypt('Dinus-123')
+        ]);
+
+        $user->assignRole('mahasiswa');
 
         return redirect()->route('halamanKoorMhs')->with('success', 'Data Mahasiswa Berhasil Ditambahkan');
     }

@@ -22,7 +22,7 @@ class MahasiswaController extends Controller
     public function index()
     {
         // $mahasiswa = Auth::user()->mahasiswa;
-        $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
+        $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
         $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
         $pengajuans = Pengajuan::where('id_mhs', $mahasiswa->id)->get();
         $checkNull = false;
@@ -54,7 +54,7 @@ class MahasiswaController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
+        $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
         $mahasiswa->telp_mhs = $request->telp_mhs;
         $mahasiswa->ipk = $request->ipk;
         $mahasiswa->transkrip_nilai = $request->transkrip_nilai;
@@ -192,7 +192,7 @@ class MahasiswaController extends Controller
     public function profile_penyelia(Request $request)
     {
         $user = Auth::user();
-        $mahasiswa = Mahasiswa::where('email', $user->email)->with('statusMahasiswa')->first();
+        $mahasiswa = Mahasiswa::where('nim', $user->nim)->with('statusMahasiswa')->first();
         $penyelia = DetailPenilaian::where('mahasiswa_id', $mahasiswa->id)->with('penyelia')->latest()->first();
         $data = $request->all();
         if($penyelia){
@@ -225,7 +225,7 @@ class MahasiswaController extends Controller
 
         // dd($data);
 
-        $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
+        $mhs = Mahasiswa::where('nim', auth()->user()->nim)->first();
         $penyelia = Penyelia::where('nama', $request->nama)->first();
 
         return view('mahasiswa.review_penyelia.detail_penilaian', compact('data', 'mhs', 'penyelia'));
@@ -251,7 +251,7 @@ class MahasiswaController extends Controller
         ]);
 
         $data = $request->all();
-        $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
+        $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
         $penyelia = DetailPenilaian::where('mahasiswa_id', $mahasiswa->id)->with('penyelia')->latest()->first();
 
         $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
@@ -320,7 +320,7 @@ class MahasiswaController extends Controller
 
     public function datadiri()
     {
-        $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
+        $mhs = Mahasiswa::where('nim', auth()->user()->nim)->first();
         return view('mahasiswa.profil', compact('mhs'));
     }
 

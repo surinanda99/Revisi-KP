@@ -54,7 +54,7 @@ class DosenPembimbingController extends Controller
     public function daftar_mhs_bimbingan()
     {
         $user = auth()->user();
-        $dosen = Dosen::where('email', $user->email)->first();
+        $dosen = Dosen::where('npp', $user->npp)->first();
         $pengajuan = Pengajuan::where('id_dsn', $dosen->id)->with('mahasiswa')->get();
         return view('dosen.daftar_bimbingan.daftar_bimbingan', compact('pengajuan'));
     }
@@ -88,7 +88,7 @@ class DosenPembimbingController extends Controller
 
     public function logbook_bimbingan_mhs()
     {
-        $dosen = Dosen::where('email', auth()->user()->email)->first();
+        $dosen = Dosen::where('npp', auth()->user()->npp)->first();
         $status = StatusMahasiswa::with('mahasiswa')->where('id_dsn', $dosen->id)->get();
 
         return view(
@@ -194,7 +194,7 @@ class DosenPembimbingController extends Controller
     {
 
         // Mengambil id dosen yang sedang login
-        $dosen = Dosen::where('email', auth()->user()->email)->first();
+        $dosen = Dosen::where('npp', auth()->user()->npp)->first();
 
         // Get the DosenPembimbing related to the Dosen
         $dosenPembimbing = $dosen->dosen;
@@ -222,7 +222,7 @@ class DosenPembimbingController extends Controller
         $status = StatusMahasiswa::all();
         $mhs = Mahasiswa::all();
 
-        $user = User::where('email', auth()->user()->email)->first();
+        $user = User::where('npp', auth()->user()->npp)->first();
 
         $activities = Activity::where('causer_id', $user->id)
             ->get();

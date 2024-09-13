@@ -29,7 +29,7 @@ class Dosen extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class, 'email', 'email');
+        return $this->hasOne(User::class, 'npp', 'npp');
     }
 
     public function dosen(){

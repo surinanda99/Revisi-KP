@@ -22,19 +22,19 @@ class MahasiswaImport implements ToModel, WithHeadingRow
 
         $mahasiswa->save();
 
-        $user = User::create([
-            'name' => $row['nama'],
-            'email' => $row['email'],
-            'password' => bcrypt($row['nim'])
-        ]);
-
-        $user->assignRole('mahasiswa');
-
         // Buat entri StatusMahasiswa
         StatusMahasiswa::create([
             'id_mhs' => $mahasiswa->id,
             'pengajuan' => 0,
         ]);
+
+        $user = User::create([
+            'nim' => $row['nim'],
+            'npp' => null,
+            'password' => bcrypt('Dinus-123')
+        ]);
+
+        $user->assignRole('mahasiswa');
 
         return $mahasiswa;
 

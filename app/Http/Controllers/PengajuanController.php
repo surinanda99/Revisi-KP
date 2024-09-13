@@ -22,7 +22,7 @@ class PengajuanController extends Controller
         $dosen = Dosen::with('dosen')->get();
         
         // Fetch the current Mahasiswa based on logged-in user's email
-        $mhs = Mahasiswa::where('email', auth()->user()->email)->first();
+        $mhs = Mahasiswa::where('nim', auth()->user()->nim)->first();
         
         // Fetch the status of the Mahasiswa
         $status = StatusMahasiswa::where('id_mhs', $mhs->id)->first();
@@ -86,7 +86,7 @@ class PengajuanController extends Controller
     public function draft(Request $request)
     {
         $data = $request->all();
-        $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
+        $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
         $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
         $dospil = Dosen::where('id', $data['id_dospem'])->first();
         $history = Pengajuan::with('dosen')->where('id_mhs', $status->id_mhs)->where('status', 'TOLAK')->get();
@@ -102,7 +102,7 @@ class PengajuanController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
+        $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
         $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
 
         $pengajuan = new Pengajuan();

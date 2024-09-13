@@ -30,17 +30,18 @@
                         
                         @if ($errors->any())
                             <div class="alert alert-danger">
-                                {{ $errors->first('email') }}
+                                {{ $errors->first('nim_npp') }}
                             </div>
                         @endif
 
-                        <div class="input-group mb-3">
-                            <label for="email" class="visually-hidden">Email</label>
-                            <input type="text" id="email" name="email" class="form-control form-control-lg bg-light fs-6" placeholder="Masukkan Email">
+                        <div class="form-group mb-3">
+                            <label for="nim_npp" class="visually-hidden">NIM/NPP</label>
+                            <input type="text" class="form-control form-control-lg bg-light fs-6" name="nim_npp" id="nim_npp" placeholder="Masukkan NIM/NPP" required autofocus>
                         </div>
-                        <div class="input-group mb-1">
+                        
+                        <div class="form-group mb-1">
                             <label for="password" class="visually-hidden">Password</label>
-                            <input type="password" id="password" name="password" class="form-control form-control-lg bg-light fs-6" placeholder="Masukkan Password">
+                            <input type="password"  class="form-control form-control-lg bg-light fs-6" name="password" id="password"  placeholder="Dinus-123" required>
                         </div>
                         <a href="{{ route('password.request') }}" class="text-secondary"><small>Reset Password</small></a>
                         <div class="input-group mb-3 mt-3">

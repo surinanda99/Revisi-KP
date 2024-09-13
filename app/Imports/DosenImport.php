@@ -17,7 +17,7 @@ class DosenImport implements ToModel, WithHeadingRow
             'npp' => $row['npp'],
             'nama' => $row['nama'],
             'bidang_kajian' => $row['bidang_kajian'],
-            'email' => $row['email'],
+            // 'email' => $row['email'],
             'telp' => $row['telp'],
         ]);
 
@@ -28,9 +28,9 @@ class DosenImport implements ToModel, WithHeadingRow
         ]);
 
         $user = User::create([
-            'name' => $row['nama'],
-            'email' => $row['email'],
-            'password' => bcrypt($row['npp'])
+            'nim' => null,
+            'npp' => $row['npp'],
+            'password' => bcrypt('Dinus-123')
         ]);
 
         $user->assignRole('dosen');

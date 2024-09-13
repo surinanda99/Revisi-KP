@@ -31,7 +31,7 @@ class PengajuanSidangController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
+        $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
         $pengajuanSidang = PengajuanSidang::where('id_mhs', $mahasiswa->id)->first();
 
         if ($pengajuanSidang) {
@@ -61,7 +61,7 @@ class PengajuanSidangController extends Controller
     {
         $data = $request->all();
         // dd($data);
-        $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
+        $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
         $sidang = PengajuanSidang::where('id_mhs', $mahasiswa->id)->latest()->first();  
         if ($sidang){
             return view('mahasiswa.pengajuan_sidang.draft_sidang', [
@@ -77,7 +77,7 @@ class PengajuanSidangController extends Controller
     {
         $data = $request->query();
         // dd($data);
-        $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
+        $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
         $sidang = PengajuanSidang::where('id_mhs', $mahasiswa->id)->first(); // Ambil data pengajuan sidang
         $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
         // return view('mahasiswa.pengajuan_sidang.draft_sidang', compact(
@@ -94,7 +94,7 @@ class PengajuanSidangController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
+        $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
         $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
 
         $sidang = new PengajuanSidang();

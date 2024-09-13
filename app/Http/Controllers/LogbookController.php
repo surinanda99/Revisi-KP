@@ -30,7 +30,7 @@ class LogbookController extends Controller
     public function index()
     {
         // Menampilkan data logbook dari tabel logbook dan paginate 10 data per halaman. data logbook sesuai dengan user yang login saat ini
-        $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
+        $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
         $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
         $logbook = LogbookBimbingan::where('id_mhs', $status->id_mhs)->get();
 
@@ -40,7 +40,7 @@ class LogbookController extends Controller
     public function store(Request $request)
     {
         // Menyimpan data logbook yang diinputkan dari form ke dalam tabel logbook
-        $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
+        $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
         $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
         $logbook = new LogbookBimbingan();
         $logbook->id_mhs = $status->id_mhs;
@@ -74,7 +74,7 @@ class LogbookController extends Controller
 
     public function updateFolder(Request $request)
     {
-        $mahasiswa = Mahasiswa::where('email', auth()->user()->email)->first();
+        $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
         $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
         $status->logbook = $request->logbook;
 

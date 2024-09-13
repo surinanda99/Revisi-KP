@@ -25,7 +25,7 @@ class Mahasiswa extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class, 'email', 'email');
+        return $this->hasOne(User::class, 'nim', 'nim');
     }
 
     // public function pengajuan()
