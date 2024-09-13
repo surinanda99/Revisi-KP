@@ -208,6 +208,10 @@ class DosenPembimbingController extends Controller
             ->where('status', 'ACC') // Filter by accepted status
             ->count();
 
+        $ajuanDitolak = Pengajuan::where('id_dsn', $dosenPembimbing->id)
+            ->where('status', 'TOLAK')
+            ->count();
+
         // Mengurangi sisa kuota berdasarkan jumlah ajuan yang diterima
         $dosenPembimbing->sisa_kuota = $dosenPembimbing->kuota - $ajuanDiterima;
 
@@ -241,7 +245,8 @@ class DosenPembimbingController extends Controller
             'kpCount',
             'activities', 
             'jumlahAjuan',
-            'ajuanDiterima'
+            'ajuanDiterima',
+            'ajuanDitolak'
         ));
     }
 

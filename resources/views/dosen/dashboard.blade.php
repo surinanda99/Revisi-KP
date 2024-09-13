@@ -116,23 +116,25 @@
                                     Informasi Kuota Bimbingan
                                 </div>
                                 <div class="card-body">
-                                    <table class="table table-striped">
+                                    <table class="table table-striped table-bordered text-center" style="width: 100%; table-layout: fixed; font-size: 0.9vw;">
                                         <thead>
-                                        <tr>
-                                            <th>Total Kuota</th>
-                                            <th>Jumlah Ajuan</th>
-                                            <th>Jumlah Diterima</th>
-                                            <th>Sisa Kuota</th>
-                                        </tr>
+                                            <tr>
+                                                <th style="padding: 5px; white-space: nowrap;">Total Kuota</th>
+                                                <th style="padding: 5px; white-space: nowrap;">Jumlah Ajuan</th>
+                                                <th style="padding: 5px; white-space: nowrap;">Jumlah Diterima</th>
+                                                <th style="padding: 5px; white-space: nowrap;">Jumlah Ditolak</th>
+                                                <th style="padding: 5px; white-space: nowrap;">Sisa Kuota</th>
+                                            </tr>
                                         </thead>
-                                        <tbody class="centered-column">
-                                        <tr>
-                                            <td>{{ $dosen->dosen->kuota }}</td>
-                                            <td>{{ $jumlahAjuan }}</td>
-                                            <td>{{ $ajuanDiterima }}</td>
-                                            {{-- <td>{{ $dosen->dosen->ajuan_diterima }}</td> --}}
-                                            <td>{{ $dosen->dosen->sisa_kuota }}</td>
-                                        </tr>
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding: 5px;">{{ $dosen->dosen->kuota }}</td>
+                                                <td style="padding: 5px;">{{ $jumlahAjuan }}</td>
+                                                <td style="padding: 5px;">{{ $ajuanDiterima }}</td>
+                                                <td style="padding: 5px;">{{ $ajuanDitolak }}</td>
+                                                <td style="padding: 5px;">{{ $dosen->dosen->sisa_kuota }}</td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
