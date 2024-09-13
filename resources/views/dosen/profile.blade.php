@@ -7,12 +7,26 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
+            position: relative; 
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #000;
         }
     </style>
 
     <div class="wrapper d-flex flex-column min-vh-100">
         <div class="container flex-grow-1">
             {{-- <img src="{{$foto}}" alt="Image" class="image mt-5"> --}}
+            <button class="close-btn" onclick="window.close()">&times;</button>
+
             <div class="form">
                 <form class="">
                     <div class="form-group">
@@ -56,4 +70,13 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Add this script to handle the close button click if window.close() doesn't work
+        document.querySelector('.close-btn').addEventListener('click', function() {
+            if (!window.close()) {
+                window.history.back();
+            }
+        });
+    </script>
 @endsection

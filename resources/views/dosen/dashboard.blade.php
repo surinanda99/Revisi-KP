@@ -44,130 +44,176 @@
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
-                    <div class="row">
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card text-white mb-4" id="card-view">
-                                <div class="card-body"><b>Mahasiswa Bimbingan</b></div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="{{ route('pageDaftarMhsBimbingan') }}">See Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+
+                    @if(session('success'))
+                        <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+
+                    @if(session('error'))
+                        <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+
+                    @if ($checkNull)
+                        <div class="container">
+                            <form action="{{ route('updateDataDosen') }}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                <h4 class="text-center">Lengkapi Data Diri</h4>
+                                <hr>
+                                <div class="form-group row mb-3">
+                                    <label for="inputEmail" class="col-sm-2 col-form-label">Email<span class="required">*</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="inputEmail" placeholder="Masukkan Email Anda" value="{{ old('email') ? old('email') : $dosen->email }}">
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <div class="col-sm-10 offset-sm-2 text-end">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    @else
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card text-white mb-4" id="card-view">
+                                    <div class="card-body"><b>Mahasiswa Bimbingan</b></div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="{{ route('pageDaftarMhsBimbingan') }}">See Details</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card text-white mb-4" id="card-view">
+                                    <div class="card-body"><b>Logbook Mahasiswa</b></div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="{{ route('dosbing-logbook') }}">See Details</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card text-white mb-4" id="card-view">
+                                    <div class="card-body"><b>Mahasiswa Sidang</b></div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="{{ route('pagePengajuanSidang') }}">See Details</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card text-white mb-4" id="card-view">
+                                    <div class="card-body"><b>Tentang Kami</b></div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="/about">See Details</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card text-white mb-4" id="card-view">
-                                <div class="card-body"><b>Logbook Mahasiswa</b></div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="{{ route('dosbing-logbook') }}">See Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        <!-- Chart Mahasiswa KP -->
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-area me-1"></i>
+                                        Chart Logbook Mahasiswa
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="logbookChart" class="chart-canvas" width="100%" height="40"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-area me-1"></i>
+                                        Chart Mahasiswa KP
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="chartMahasiswaKP" class="chart-canvas" width="100%" height="40"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card text-white mb-4" id="card-view">
-                                <div class="card-body"><b>Mahasiswa Sidang</b></div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="{{ route('pagePengajuanSidang') }}">See Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        <!-- Informasi Kuota Bimbingan -->
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-regular fa-address-book me-1"></i>
+                                        Informasi Kuota Bimbingan
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-striped table-bordered text-center" style="width: 100%; table-layout: fixed; font-size: 0.9vw;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="padding: 5px; white-space: nowrap;">Total Kuota</th>
+                                                    <th style="padding: 5px; white-space: nowrap;">Jumlah Ajuan</th>
+                                                    <th style="padding: 5px; white-space: nowrap;">Jumlah Diterima</th>
+                                                    <th style="padding: 5px; white-space: nowrap;">Jumlah Ditolak</th>
+                                                    <th style="padding: 5px; white-space: nowrap;">Sisa Kuota</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding: 5px;">{{ $dosen->dosen->kuota }}</td>
+                                                    <td style="padding: 5px;">{{ $jumlahAjuan }}</td>
+                                                    <td style="padding: 5px;">{{ $ajuanDiterima }}</td>
+                                                    <td style="padding: 5px;">{{ $ajuanDitolak }}</td>
+                                                    <td style="padding: 5px;">{{ $dosen->dosen->sisa_kuota }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card text-white mb-4" id="card-view">
-                                <div class="card-body"><b>Tentang Kami</b></div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="/about">See Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Chart Mahasiswa KP -->
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-chart-area me-1"></i>
-                                    Chart Logbook Mahasiswa
-                                </div>
-                                <div class="card-body">
-                                    <div id="logbookChart" class="chart-canvas" width="100%" height="40"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-chart-area me-1"></i>
-                                    Chart Mahasiswa KP
-                                </div>
-                                <div class="card-body">
-                                    <div id="chartMahasiswaKP" class="chart-canvas" width="100%" height="40"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Informasi Kuota Bimbingan -->
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-regular fa-address-book me-1"></i>
-                                    Informasi Kuota Bimbingan
-                                </div>
-                                <div class="card-body">
-                                    <table class="table table-striped table-bordered text-center" style="width: 100%; table-layout: fixed; font-size: 0.9vw;">
-                                        <thead>
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fa-regular fa-calendar-check"></i>
+                                        Log Aktivitas
+                                    </div>
+                                    <div class="card-body" style="max-height: 137px; overflow-y: auto;">
+                                        <table class="table table-striped">
+                                            <thead>
                                             <tr>
-                                                <th style="padding: 5px; white-space: nowrap;">Total Kuota</th>
-                                                <th style="padding: 5px; white-space: nowrap;">Jumlah Ajuan</th>
-                                                <th style="padding: 5px; white-space: nowrap;">Jumlah Diterima</th>
-                                                <th style="padding: 5px; white-space: nowrap;">Jumlah Ditolak</th>
-                                                <th style="padding: 5px; white-space: nowrap;">Sisa Kuota</th>
+                                                <th>Tanggal</th>
+                                                <th>Aktivitas</th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td style="padding: 5px;">{{ $dosen->dosen->kuota }}</td>
-                                                <td style="padding: 5px;">{{ $jumlahAjuan }}</td>
-                                                <td style="padding: 5px;">{{ $ajuanDiterima }}</td>
-                                                <td style="padding: 5px;">{{ $ajuanDitolak }}</td>
-                                                <td style="padding: 5px;">{{ $dosen->dosen->sisa_kuota }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody class="centered-column">
+                                            @foreach($activities as $act)
+                                                <tr>
+                                                    <td>{{ $act->created_at->format('d/m/Y') }}</td>
+                                                    <td>{{ $act->description }}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-6">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fa-regular fa-calendar-check"></i>
-                                    Log Aktivitas
-                                </div>
-                                <div class="card-body" style="max-height: 137px; overflow-y: auto;">
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>Tanggal</th>
-                                            <th>Aktivitas</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="centered-column">
-                                        @foreach($activities as $act)
-                                            <tr>
-                                                <td>{{ $act->created_at->format('d/m/Y') }}</td>
-                                                <td>{{ $act->description }}</td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
                 </div>
             </main>
+
             <footer class="py-4 mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
@@ -228,6 +274,18 @@
 
             // Load notifikasi yang sudah ada saat halaman dimuat
             loadExistingNotifications();
+
+            setTimeout(function() {
+                var successAlert = document.getElementById('success-alert');
+                if (successAlert) {
+                    successAlert.style.display = 'none';
+                }
+
+                var errorAlert = document.getElementById('error-alert');
+                if (errorAlert) {
+                    errorAlert.style.display = 'none';
+                }
+            }, 3000);
         });
 
         function addNotification(notification) {
@@ -406,5 +464,3 @@
         });
     </script>
 @endsection
-
-

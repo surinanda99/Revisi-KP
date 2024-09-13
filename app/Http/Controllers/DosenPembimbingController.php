@@ -12,9 +12,11 @@ use App\Models\DosenPembimbing;
 use App\Models\PengajuanSidang;
 use App\Models\StatusMahasiswa;
 use App\Models\LogbookBimbingan;
-use Illuminate\Support\Facades\Auth;
-use Spatie\Activitylog\Models\Activity;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
+use Spatie\Activitylog\Models\Activity;
+use Illuminate\Support\Facades\Validator;
 
 class DosenPembimbingController extends Controller
 {
@@ -192,16 +194,20 @@ class DosenPembimbingController extends Controller
 
     public function dash()
     {
-
         // Mengambil id dosen yang sedang login
         $dosen = Dosen::where('npp', auth()->user()->npp)->first();
+
+        $checkNull = false;
+
+        if ($dosen && (is_null($dosen->email) || $dosen->email === '')) {
+            $checkNull = true;
+        }
 
         // Get the DosenPembimbing related to the Dosen
         $dosenPembimbing = $dosen->dosen;
         
         // Mendapatkan data Mahasiswa KP
         $jumlahAjuan = Pengajuan::where('id_dsn', $dosenPembimbing->id)->count();
-        
         
         // Menghitung jumlah ajuan yang diterima
         $ajuanDiterima = Pengajuan::where('id_dsn', $dosenPembimbing->id)
@@ -238,6 +244,7 @@ class DosenPembimbingController extends Controller
 
         return view('dosen.dashboard', compact(
             'dosen', 
+            'checkNull',
             'logbook', 
             'status', 
             'mhs', 
@@ -248,6 +255,30 @@ class DosenPembimbingController extends Controller
             'ajuanDiterima',
             'ajuanDitolak'
         ));
+    }
+
+    public function updateDosen(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $dosen = Dosen::where('npp', auth()->user()->npp)->first();
+        $dosen->email = $request->email;
+        $dosen->save();
+
+        activity()
+            ->inLog('Pengajuan')
+            ->causedBy(auth()->user())
+            ->performedOn($dosen)
+            ->withProperties(['id_dsn' => $dosen->id])
+            ->log('Melengkapi data diri');
+
+        return redirect()->route('dashboardDosen')->with('success', 'Data Dosen Berhasil Diperbarui');
     }
 
     public function daftarPengajuanSidang()
