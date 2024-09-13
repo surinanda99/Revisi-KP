@@ -281,8 +281,15 @@ class KoorController extends Controller
         // Buat entri StatusMahasiswa
         StatusMahasiswa::create([
             'id_mhs' => $mahasiswa->id,
+            'id_dsn' => $request->id_dsn,
             'pengajuan' => 0,
         ]);
+
+        // Update kuota dosen setelah menambah mahasiswa baru pada Koor
+        $dosenPembimbing = DosenPembimbing::find($request->id_dsn);
+        $dosenPembimbing->jumlah_ajuan += 1; // Tambah jumlah ajuan
+        $dosenPembimbing->sisa_kuota = $dosenPembimbing->kuota - $dosenPembimbing->jumlah_ajuan;
+        $dosenPembimbing->save();
 
         return redirect()->route('halamanKoorMhs')->with('success', 'Data Mahasiswa Berhasil Ditambahkan');
     }
