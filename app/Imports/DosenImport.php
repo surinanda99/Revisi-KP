@@ -12,28 +12,40 @@ class DosenImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-        // Create the Dosen record
-        $dosen = Dosen::create([
-            'npp' => $row['npp'],
-            'nama' => $row['nama'],
-            'bidang_kajian' => $row['bidang_kajian'],
-            'telp' => $row['telp'],
-        ]);
+        // Lakukan upsert untuk dosen agar tidak ada duplikat berdasarkan npp
+        $dosen = Dosen::updateOrCreate(
+            ['npp' => $row['npp']],
+            [
+                'nama' => $row['nama'],
+                'bidang_kajian' => $row['bidang_kajian'],
+                'telp' => $row['telp'],
+            ]
+        );
 
-        // Create the DosenPembimbing record
-        DosenPembimbing::create([
-            'id_dsn' => $dosen->id,
-            'kuota' => $row['kuota'],
-        ]);
+        // Jika dosen baru dibuat, tambahkan juga data Dosen Pembimbing
+        if ($dosen->wasRecentlyCreated) {
+            DosenPembimbing::create([
+                'id_dsn' => $dosen->id,
+                'kuota' => $row['kuota'],
+            ]);
+        }
 
-        $user = User::create([
-            'nim' => null,
-            'npp' => $row['npp'],
-            'password' => bcrypt('Dinus-123')
-        ]);
+        // Lakukan pengecekan apakah user sudah ada berdasarkan npp
+        $user = User::firstOrCreate(
+            ['npp' => $row['npp']],
+            [
+                'nim' => null,
+                'email' => $row['email'] ?? null,
+                'password' => bcrypt('Dinus-123'),
+            ]
+        );
 
-        $user->assignRole('dosen');
+        // Assign role jika user baru dibuat
+        if ($user->wasRecentlyCreated) {
+            $user->assignRole('dosen');
+        }
 
+        // Kembalikan instance dosen
         return $dosen;
     }
 }

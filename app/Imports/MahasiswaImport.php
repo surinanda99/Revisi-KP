@@ -12,41 +12,40 @@ class MahasiswaImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-        $mahasiswa = new Mahasiswa([
-            'nim' => $row['nim'],
-            'nama' => $row['nama'],
-            'email' => $row['email'],
-            'status_kp' => $row['status_kp'],
-            // 'dosen_wali' => $row['dosen_wali'],
-        ]);
+        // Lakukan upsert untuk mahasiswa agar tidak ada duplikat berdasarkan nim
+        $mahasiswa = Mahasiswa::updateOrCreate(
+            ['nim' => $row['nim']],
+            [
+                'nama' => $row['nama'],
+                'email' => $row['email'],
+                'status_kp' => $row['status_kp'],
+            ]
+        );
 
-        $mahasiswa->save();
+        // Jika mahasiswa baru dibuat, tambahkan juga data StatusMahasiswa
+        if ($mahasiswa->wasRecentlyCreated) {
+            StatusMahasiswa::create([
+                'id_mhs' => $mahasiswa->id,
+                'pengajuan' => 0,
+            ]);
+        }
 
-        // Buat entri StatusMahasiswa
-        StatusMahasiswa::create([
-            'id_mhs' => $mahasiswa->id,
-            'pengajuan' => 0,
-        ]);
+        // Lakukan pengecekan apakah user sudah ada berdasarkan nim
+        $user = User::firstOrCreate(
+            ['nim' => $row['nim']],
+            [
+                'npp' => null,
+                'email' => $row['email'],
+                'password' => bcrypt('Dinus-123'),
+            ]
+        );
 
-        $user = User::create([
-            'nim' => $row['nim'],
-            'npp' => null,
-            'email' => $row['email'],
-            'password' => bcrypt('Dinus-123')
-        ]);
+        // Assign role jika user baru dibuat
+        if ($user->wasRecentlyCreated) {
+            $user->assignRole('mahasiswa');
+        }
 
-        $user->assignRole('mahasiswa');
-
+        // Kembalikan instance mahasiswa
         return $mahasiswa;
-
-        // return new Mahasiswa([
-        //     'nim' => $row['nim'],
-        //     'nama' => $row['nama'],
-        //     // 'ipk' => $row['ipk'],
-        //     // 'transkrip_nilai' => $row['transkrip_nilai'],
-        //     // 'telp_mhs' => $row['telp_mhs'],
-        //     'email' => $row['email'],
-        //     'dosen_wali' => $row['dosen_wali'],
-        // ]);
     }
 }
