@@ -91,18 +91,9 @@
                         <td class="centered-column">{{ $dosen->dosen->npp }}</td>
                         <td class="centered-column">{{ $dosen->dosen->nama }}</td>
                         <td class="centered-column">{{ $dosen->dosen->bidang_kajian }}</td>
-                        {{-- <td class="centered-column">
-                            <input type="number" class="form-control kuota-edit" data-id="{{ $dosen->id }}" value="{{ $dosen->kuota }}" style="width: 80px; text-align: center; margin: 0 auto;"/>
-                        </td>                     --}}
                         <td class="centered-column">
-                            <input 
-                                type="number" 
-                                class="form-control kuota-edit" 
-                                data-id="{{ $dosen->id }}" 
-                                value="{{ $dosen->kuota }}" 
-                                style="width: 80px; text-align: center; margin: 0 auto;"
-                                {{ $dosen->sisa_kuota == 0 ? 'readonly' : '' }} 
-                            />
+                            {{-- <input type="number" class="form-control kuota-edit" data-id="{{ $dosen->id }}" value="{{ $dosen->kuota }}" style="width: 80px; text-align: center; margin: 0 auto;"{{ $dosen->sisa_kuota == 0 ? 'readonly' : '' }} /> --}}
+                            <input type="number" class="form-control kuota-edit" data-id="{{ $dosen->id }}" value="{{ $dosen->kuota }}" style="width: 80px; text-align: center; margin: 0 auto;"/>
                         </td>
                         <td class="centered-column">{{ $dosen->dosen->pengajuan->count() }}</td>
                         <td class="centered-column">{{ $dosen->ajuan_diterima }}</td>
@@ -193,11 +184,11 @@
                         // Update the status of the dosen (full or available)
                         if (response.sisa_kuota == 0) {
                             $('#status-dosen-' + id).html('<span class="badge bg-danger">Penuh</span>');
-                            $('.kuota-edit[data-id="' + id + '"]').attr('readonly', true); // Make kuota field readonly
+                            // $('.kuota-edit[data-id="' + id + '"]').attr('readonly', true); // Make kuota field readonly
                             $('#row-' + id).addClass('bg-light text-muted'); // Add class to the row
                         } else {
                             $('#status-dosen-' + id).html('<span class="badge bg-success">Tersedia</span>');
-                            $('.kuota-edit[data-id="' + id + '"]').attr('readonly', false); // Make kuota field editable
+                            // $('.kuota-edit[data-id="' + id + '"]').attr('readonly', false); // Make kuota field editable
                             $('#row-' + id).removeClass('bg-light text-muted'); // Remove class from the row
                         }
                     },
