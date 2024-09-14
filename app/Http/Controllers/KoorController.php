@@ -246,10 +246,30 @@ class KoorController extends Controller
 
     public function deleteDosen($id)
     {
-        $dosen = DosenPembimbing::find($id);
-        $dosen->delete();
+        $dosen = Dosen::find($id);
 
-        return redirect()->back()->with('success', 'Dosen Berhasil Dihapus');
+        if ($dosen) {
+            // Temukan data user yang terkait dengan dosen tersebut berdasarkan NPP
+            $user = User::where('npp', $dosen->npp)->first();
+
+            // Hapus data dosen pembimbing
+            $dosenPembimbing = DosenPembimbing::where('id_dsn', $dosen->id)->first();
+            if ($dosenPembimbing) {
+                $dosenPembimbing->delete();
+            }
+
+            // Hapus data dosen
+            $dosen->delete();
+
+            // Jika data user ditemukan, hapus data user juga
+            if ($user) {
+                $user->delete();
+            }
+
+            return redirect()->back()->with('success', 'Dosen Berhasil Dihapus');
+        }
+
+        return redirect()->back()->with('error', 'Dosen Gagal Dihapus');
     }
 
     public function daftar_mhs()
@@ -396,9 +416,24 @@ class KoorController extends Controller
     public function deleteMhs($id)
     {
         $mahasiswas = Mahasiswa::find($id);
-        $mahasiswas->delete();
 
-        return redirect()->back()->with('success', 'Mahasiswa Berhasil Dihapus');
+        if ($mahasiswas) {
+            // Temukan data user yang terkait dengan mahasiswa tersebut berdasarkan NIM
+            $user = User::where('nim', $mahasiswas->nim)->first();
+
+            // Hapus data mahasiswa
+            $mahasiswas->delete();
+
+            // Jika data user ditemukan, hapus data user juga
+            if ($user) {
+                $user->delete();
+            }
+
+            return redirect()->back()->with('success', 'Mahasiswa Berhasil Dihapus');
+
+        }
+
+        return redirect()->back()->with('error', 'Mahasiswa tidak ditemukan.');
     }
 
     public function penyeliaMhs()
