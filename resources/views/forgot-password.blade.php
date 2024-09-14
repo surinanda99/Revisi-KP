@@ -44,7 +44,7 @@
 <body>
     <div class="reset-card">
         <h2>Reset Password</h2>
-        <form method="POST" action="{{ route('password.email') }}">
+        {{-- <form method="POST" action="{{ route('password.email') }}">
             @csrf
             <div class="form-group">
                 <label for="email">Email Address</label>
@@ -56,6 +56,19 @@
                 @enderror
             </div>
             <button type="submit" class="btn btn-primary btn-reset">Email Password Reset Link</button>
+        </form> --}}
+        <form method="POST" action="{{ route('password.email') }}">
+            @csrf
+            <div class="form-group">
+                <label for="nim_npp">NIM/NPP</label>
+                <input type="text" class="form-control @error('nim_npp') is-invalid @enderror" id="nim_npp" name="nim_npp" value="{{ old('nim_npp') }}" required>
+                @error('nim_npp')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+            <button type="submit" class="btn btn-primary btn-reset">Kirim Tautan Reset Password</button>
         </form>
         @if (session('status'))
             <div class="alert alert-success mt-3" role="alert">

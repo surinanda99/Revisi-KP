@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nim')->unique()->nullable();
             $table->string('npp')->unique()->nullable();
+            $table->string('email')->unique()->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

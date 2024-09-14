@@ -76,7 +76,7 @@ class KoorController extends Controller
             'nama' => 'required|string',
             'bidang_kajian' => 'required|in:RPLD,SC',
             'kuota' => 'required|integer',
-            'email' => 'required|nullable|email',
+            // 'email' => 'required|nullable|email',
             'telp' => 'required|nullable|string',
         ]);
 
@@ -88,7 +88,7 @@ class KoorController extends Controller
         $dosen = Dosen::create([
             'nama' => $request->nama,
             'npp' => $request->npp,
-            'email' => $request->email, // Pastikan email dosen ada jika diperlukan
+            // 'email' => $request->email, // Pastikan email dosen ada jika diperlukan
             'bidang_kajian' => $request->bidang_kajian,
             'telp' => $request->telp, // Pastikan nomor telepon ada jika diperlukan
         ]);
@@ -157,7 +157,7 @@ class KoorController extends Controller
             'nama' => 'required|string',
             'bidang_kajian' => 'required|in:RPLD,SC',
             // 'kuota' => 'required|integer',
-            'email' => 'nullable|email',
+            // 'email' => 'nullable|email',
             'telp' => 'nullable|string',
         ]);
 
@@ -169,6 +169,8 @@ class KoorController extends Controller
         // Temukan dosen yang akan diperbarui
         $dosen = DosenPembimbing::findOrFail($id);
 
+        $nppLama = $dosen->dosen->npp;
+
         // Perbarui data dosen
         $dosen->dosen->update([
             'nama' => $request->input('nama'),
@@ -177,6 +179,20 @@ class KoorController extends Controller
             'bidang_kajian' => $request->input('bidang_kajian'),
             'telp' => $request->input('telp'),
         ]);
+
+        // Temukan user yang akan diperbarui
+        $user = User::where('npp', $nppLama)->first();
+
+        // Jika user ditemukan, perbarui data user
+        if ($user) {
+            $user->update([
+                'npp' => $request->input('npp'),
+                'email' => $request->input('email'),
+            ]);
+        } else {
+            // Jika user tidak ditemukan, tambahkan pesan kesalahan
+            return redirect()->back()->with('error', 'User dengan NPP tersebut tidak ditemukan.');
+        }
 
         // Update data dosen pembimbing
         // $dosen->update([
@@ -273,7 +289,6 @@ class KoorController extends Controller
         // Buat entri StatusMahasiswa
         StatusMahasiswa::create([
             'id_mhs' => $mahasiswa->id,
-            'id_dsn' => $request->id_dsn,
             'pengajuan' => 0,
         ]);
 
@@ -286,6 +301,7 @@ class KoorController extends Controller
         $user = User::create([
             'nim' => $request->nim,
             'npp' => null,
+            'email' => $request->email,
             'password' => bcrypt('Dinus-123')
         ]);
 
@@ -345,6 +361,9 @@ class KoorController extends Controller
         // Temukan dosen yang akan diperbarui
         $mahasiswas = Mahasiswa::findOrFail($id);
 
+        // Simpan nim lama untuk referensi pencarian user sebelum mengupdate mahasiswa
+        $nimLama = $mahasiswas->nim;
+
         // Perbarui data dosen
         $mahasiswas->update([
             'nim' => $request->input('nim'),
@@ -355,6 +374,20 @@ class KoorController extends Controller
             // 'dosen_wali' => $request->input('dosen_wali'),
             'status_kp' => $request->input('status_kp'),
         ]);
+
+        // Temukan user yang terkait berdasarkan nim lama
+        $user = User::where('nim', $nimLama)->first();
+
+        // Jika user ditemukan, perbarui data user
+        if ($user) {
+            $user->update([
+                'nim' => $request->input('nim'), // Update NIM baru
+                'email' => $request->input('email'), // Update email baru
+            ]);
+        } else {
+            // Jika user tidak ditemukan, tambahkan pesan kesalahan
+            return redirect()->back()->with('error', 'User dengan NIM tersebut tidak ditemukan.');
+        }
 
         // Redirect kembali dengan pesan sukses
         return redirect()->back()->with('success', 'Data Mahasiswa berhasil diperbarui.');

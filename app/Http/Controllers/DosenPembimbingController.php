@@ -257,7 +257,7 @@ class DosenPembimbingController extends Controller
         ));
     }
 
-    public function updateDosen(Request $request)
+    public function updateDataDiri(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required'
@@ -270,6 +270,19 @@ class DosenPembimbingController extends Controller
         $dosen = Dosen::where('npp', auth()->user()->npp)->first();
         $dosen->email = $request->email;
         $dosen->save();
+
+        // Temukan user yang terkait dengan dosen
+        $user = User::where('npp', auth()->user()->npp)->first();
+
+        // Jika user tidak ditemukan, mungkin perlu menangani kasus ini
+        if ($user) {
+            // Perbarui email di tabel user
+            $user->email = $request->email;
+            $user->save();
+        } else {
+            // Tambahkan penanganan jika user tidak ditemukan
+            return redirect()->back()->withErrors(['error' => 'User tidak ditemukan.']);
+        }
 
         activity()
             ->inLog('Pengajuan')

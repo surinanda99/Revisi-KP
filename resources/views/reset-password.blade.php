@@ -50,13 +50,23 @@
             <input type="hidden" name="token" value="{{ $token }}">
 
             <div class="form-group">
+                <label for="nim_npp">NIM/NPP</label>
+                <input type="text" class="form-control" id="nim_npp" name="nim_npp" value="{{ old('nim_npp') }}" required autofocus>
+            </div>
+
+            {{-- <div class="form-group">
                 <label for="email">Email Address</label>
                 <input type="email" class="form-control" id="email" name="email"
                     value="{{ $request->email ?? old('email') }}" required autofocus>
+            </div> --}}
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
             </div>
 
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password">Password Baru</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
 

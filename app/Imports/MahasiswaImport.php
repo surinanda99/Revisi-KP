@@ -31,6 +31,7 @@ class MahasiswaImport implements ToModel, WithHeadingRow
         $user = User::create([
             'nim' => $row['nim'],
             'npp' => null,
+            'email' => $row['email'],
             'password' => bcrypt('Dinus-123')
         ]);
 

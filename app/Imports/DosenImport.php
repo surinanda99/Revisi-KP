@@ -17,7 +17,6 @@ class DosenImport implements ToModel, WithHeadingRow
             'npp' => $row['npp'],
             'nama' => $row['nama'],
             'bidang_kajian' => $row['bidang_kajian'],
-            // 'email' => $row['email'],
             'telp' => $row['telp'],
         ]);
 

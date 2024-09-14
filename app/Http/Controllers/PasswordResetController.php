@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +18,25 @@ class PasswordResetController extends Controller
 
     public function sendResetLink(Request $request)
     {
-        $request->validate(['email' => 'required|email']);
+        $request->validate([
+            // 'email' => 'required|email'
+            'nim_npp' => 'required|string'
+        ]);
 
-        $status = Password::sendResetLink($request->only('email'));
+        // Cari user berdasarkan NIM atau NPP
+        $user = User::where('nim', $request->nim_npp)->orWhere('npp', $request->nim_npp)->first();
+
+        if (!$user) {
+            return back()->withErrors(['nim_npp' => 'NIM/NPP tidak ditemukan.']);
+        }
+
+        if (is_null($user->email)) {
+            return back()->withErrors(['nim_npp' => 'Pengguna tidak memiliki email terdaftar.']);
+        }
+
+        $status = Password::sendResetLink(
+            ['email' => $user->email]
+        );
 
         return $status === Password::RESET_LINK_SENT
                     ? back()->with(['status' => __($status)])
@@ -34,10 +51,18 @@ class PasswordResetController extends Controller
     public function resetPassword(Request $request) 
     {
         $request->validate([
-            'email' => 'required|email',
             'token' => 'required',
-            'password' => 'required|confirmed|min:8',
+            'nim_npp' => 'required|string',
+            'email' => 'required|email',
+            'password' => 'required|string|confirmed|min:8',
         ]);
+
+        // Cari user berdasarkan NIM atau NPP
+        $user = User::where('nim', $request->nim_npp)->orWhere('npp', $request->nim_npp)->first();
+
+        if (!$user || $user->email !== $request->email) {
+            return back()->withErrors(['nim_npp' => 'NIM/NPP atau Email tidak sesuai.']);
+        }
 
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
@@ -46,14 +71,14 @@ class PasswordResetController extends Controller
                     'password' => Hash::make($password),
                 ])->save();
 
-                $user->setRememberToken(Str::random(60));
+                // $user->setRememberToken(Str::random(60));
 
-                Auth::login($user);
+                // Auth::login($user);
             }
         );
 
         return $status === Password::PASSWORD_RESET
-                    ? redirect()->route('dashboardMahasiswa')->with('status', __($status))
+                    ? redirect()->route('login')->with('status', __($status))
                     : back()->withErrors(['email' => [__($status)]]);
     }
 }
