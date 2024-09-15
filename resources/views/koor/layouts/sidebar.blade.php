@@ -64,6 +64,12 @@
                     <span>Log Mahasiswa</span>
                 </a>
             </li>
+            <li class="sidebar-item">
+                <a href="{{ route('koor-list-mhs') }}" class="sidebar-link">
+                    <i class="fas fa-chalkboard-teacher me-1"></i>
+                    <span>Daftar Mahasiswa Pengajuan</span>
+                </a>
+            </li>
         </ul>
         <div class="sidebar-footer">
             <a href="/tentang" class="sidebar-link">
