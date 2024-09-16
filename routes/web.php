@@ -172,7 +172,7 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
 
     // koor pengajuan mhs
     Route::get('/daftar-mhs', [KoorPengajuanMhsController::class, 'index'])->name('koor-list-mhs');
-    Route::post('/update-mhs', [KoorPengajuanMhsController::class, 'update'])->name('update-list');
+    Route::post('/update-mahasiswa', [KoorPengajuanMhsController::class, 'update'])->name('update-list');
 
 });
 
