@@ -147,6 +147,8 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     Route::post('/import-mhs', [KoorController::class, 'importMhs'])->name('importMhs');
     Route::get('/template-mahasiswa', [KoorController::class, 'downloadTemplateMahasiswa'])->name('templateMahasiswa');
     Route::post('/store-mhs', [KoorController::class, 'storeMhs'])->name('simpanMhs');
+    Route::post('/simpan-mhs-ke-dosen', [KoorController::class, 'simpanMhsKeDosen'])->name('simpanMhsKeDosen');
+
     // Route::get('/edit-mhs/{id}', [KoorController::class, 'editMhs'])->name('editMhs');
     Route::put('/update-mhs/{id}', [KoorController::class, 'updateMhs'])->name('updateMhs');
     Route::post('delete-mhs/{id}', [KoorController::class, 'deleteMhs'])->name('hapusMhs');

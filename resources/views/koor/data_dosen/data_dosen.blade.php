@@ -9,7 +9,7 @@
                 <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogTambah"><i class="fas fa-plus"></i>Tambah Data</a>
                 <button class="btn btn-success ms-1" data-bs-toggle="modal" data-bs-target="#dialogImport"><i class="fas fa-file-import"></i>&nbsp;Import</button>
             </div>
-            
+
             <!-- Search Bar -->
             <div class="col-md d-flex justify-content-end">
                 <div class="input-group" style="width: 400px;">
@@ -69,7 +69,7 @@
                 </button>
             </div>
         @endif
-        
+
         <div class="table-container table-logbook">
             <table class="table table-bordered">
                 <thead class="table-header">
@@ -104,7 +104,7 @@
                             @else
                                 <span class="badge bg-success">Tersedia</span>
                             @endif
-                        </td>                                 
+                        </td>
                         <td class="centered-column">
                             <div class="d-inline">
                                 <button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataDosen_{{ $dosen->id }}">
@@ -139,7 +139,7 @@
     </div>
 
     <!--Dialog tambah Dosen-->
-    @include('koor.data_dosen.tambah') 
+    @include('koor.data_dosen.tambah')
 
     <!--Dialog Detail Dosen-->
     @include('koor.data_dosen.detail_dosen')
@@ -148,7 +148,7 @@
     @include('koor.data_dosen.edit')
 
     <!--Dialog Hapus Dosen-->
-    @include('koor.data_dosen.hapus') 
+    @include('koor.data_dosen.hapus')
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

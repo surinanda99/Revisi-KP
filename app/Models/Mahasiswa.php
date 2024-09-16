@@ -57,4 +57,9 @@ class Mahasiswa extends Model
     {
         return $this->hasOne(StatusMahasiswa::class, 'id_mhs', 'id');
     }
+
+    public function dospem()
+    {
+        return $this->hasOne(StatusMahasiswa::class, 'id_mhs', 'id');
+    }
 }
