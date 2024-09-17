@@ -27,7 +27,7 @@ class StatusMahasiswa extends Model
         return $this->belongsTo(Dosen::class, 'id_dsn', 'id');
     }
 
-    public function pengajuan()
+    public function pengajuans()
     {
         return $this->hasMany(Pengajuan::class, 'id_mhs', 'id_mhs');
     }

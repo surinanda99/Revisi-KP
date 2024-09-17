@@ -56,14 +56,35 @@ class KoorController extends Controller
     public function daftar_data_dosen()
     {
         // $dosens = DosenPembimbing::all();
-        $dosens = DosenPembimbing::with(['dosen', 'dosen.pengajuan'])->get();
+        // $dosens = DosenPembimbing::with(['dosen', 'dosen.pengajuan'])->get();
+
+        // foreach ($dosens as $dosen) {
+        //     // Hitung ajuan_diterima dan sisa_kuota
+        //     $ajuanDiterima = $dosen->dosen->pengajuan()->where('status', 'ACC')->count();
+        //     $sisaKuota = $dosen->kuota - $ajuanDiterima;
+
+        //     // Perbarui data di database
+        //     $dosen->ajuan_diterima = $ajuanDiterima;
+        //     $dosen->sisa_kuota = $sisaKuota;
+        //     $dosen->save();
+        // }
+
+        // Ambil semua data DosenPembimbing dengan relasi Dosen
+        $dosens = DosenPembimbing::with('dosen')->get();
 
         foreach ($dosens as $dosen) {
-            // Calculate the number of accepted applications for each DosenPembimbing
-            $dosen->ajuan_diterima = $dosen->dosen->pengajuan()->where('status', 'ACC')->count();
+            // Hitung jumlah ajuan diterima berdasarkan mahasiswa yang statusnya ACC
+            $ajuanDiterima = StatusMahasiswa::where('id_dsn', $dosen->dosen->id)
+                ->where('status', 'ACC')
+                ->count();
+            
+            // Hitung sisa kuota
+            $sisaKuota = $dosen->kuota - $ajuanDiterima;
 
-            // Calculate the remaining quota
-            $dosen->sisa_kuota = $dosen->kuota - $dosen->ajuan_diterima;
+            // Perbarui data di DosenPembimbing
+            $dosen->ajuan_diterima = $ajuanDiterima;
+            $dosen->sisa_kuota = $sisaKuota;
+            $dosen->save();
         }
 
         return view('koor.data_dosen.data_dosen', compact('dosens'));
@@ -222,26 +243,51 @@ class KoorController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        // Temukan dosen pembimbing yang akan diperbarui
-        $dosen = DosenPembimbing::findOrFail($id);
+        $dosenPembimbing = DosenPembimbing::findOrFail($id);
+        
+        // Debugging: Catat nilai saat ini sebelum pembaruan
+        \Log::info("Sebelum pembaruan - Kuota: {$dosenPembimbing->kuota}, Ajuan diterima: {$dosenPembimbing->ajuan_diterima}");
 
-        // Update kuota dosen
-        $dosen->kuota = $request->input('kuota');
+        $dosenPembimbing->kuota = $request->input('kuota');
 
-        // Hitung jumlah aplikasi diterima
-        $ajuan_diterima = $dosen->dosen->pengajuan()->where('status', 'ACC')->count();
+        // Calculate sisa kuota and status
+        $dosenPembimbing->sisa_kuota = $dosenPembimbing->kuota - $dosenPembimbing->ajuan_diterima;
+        $dosenPembimbing->status = $dosenPembimbing->sisa_kuota > 0 ? 'tersedia' : 'penuh';
 
-        // Update sisa kuota
-        $sisa_kuota = max(0, $dosen->kuota - $ajuan_diterima); // Pastikan sisa kuota tidak negatif
-        $dosen->sisa_kuota = $sisa_kuota;
+        $dosenPembimbing->save();
 
-        $dosen->save(); // Simpan perubahan
+        // Debugging: Catat nilai setelah penyimpanan
+        \Log::info("Setelah pembaruan - Kuota: {$dosenPembimbing->kuota}, Ajuan diterima: {$dosenPembimbing->ajuan_diterima}, Sisa kuota: {$dosenPembimbing->sisa_kuota}, Status: {$dosenPembimbing->status}");
 
-        // Redirect dengan pesan sukses
         return response()->json([
             'success' => 'Kuota berhasil diperbarui',
-            'sisa_kuota' => $sisa_kuota,
+            'sisa_kuota' => $dosenPembimbing->sisa_kuota
         ]);
+
+        // // Temukan dosen pembimbing yang akan diperbarui
+        // $dosen = DosenPembimbing::findOrFail($id);
+
+        // // Update kuota dosen
+        // $dosen->kuota = $request->input('kuota');
+
+        // // Hitung jumlah aplikasi diterima
+        // $ajuan_diterima = $dosen->dosen->pengajuan()->where('status', 'ACC')->count();
+
+        // // Update sisa kuota
+        // $sisa_kuota = max(0, $dosen->kuota - $ajuan_diterima); // Pastikan sisa kuota tidak negatif
+        // $dosen->sisa_kuota = $sisa_kuota;
+
+        // // Update status dosen
+        // $dosen->status = $sisa_kuota == 0 ? 'Penuh' : 'Tersedia';
+
+        // $dosen->save(); // Simpan perubahan
+
+        // // Redirect dengan pesan sukses
+        // return response()->json([
+        //     'success' => 'Kuota berhasil diperbarui',
+        //     'sisa_kuota' => $sisa_kuota,
+        //     'status' => $dosen->status
+        // ]);
     }
 
     public function deleteDosen($id)

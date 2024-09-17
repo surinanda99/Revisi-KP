@@ -41,4 +41,9 @@ class Pengajuan extends Model
     {
         return $this->belongsTo(Mahasiswa::class, 'id_mhs', 'id');
     }
+
+    public function statusMahasiswa()
+    {
+        return $this->belongsTo(StatusMahasiswa::class, 'id_mhs', 'id_mhs');
+    }
 }

@@ -62,6 +62,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::get('/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan-mahasiswa');
     Route::get('/pengajuan-form', [PengajuanController::class, 'form'])->name('form-pengajuan-mahasiswa');
     Route::get('/pengajuan-draft', [PengajuanController::class, 'draft'])->name('draft-pengajuan-mahasiswa');
+    Route::post('/pengajuan-save-draft', [PengajuanController::class, 'saveDraft'])->name('save-draft-pengajuan-mahasiswa');
     Route::post('/pengajuan-submit', [PengajuanController::class, 'store'])->name('mahasiswa-pengajuan-submit');
     Route::get('/dosen/{id}', [PengajuanController::class, 'show'])->name('mahasiswa-pengajuan-detail-dosen');
     Route::get('/logbook', [LogbookController::class, 'index'])->name('mahasiswa-logbook');

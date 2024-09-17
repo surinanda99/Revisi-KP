@@ -48,17 +48,60 @@ class DosenPembimbingController extends Controller
     //     return view('dosen.dashboard');
     // }
 
-    public function dashboard_dsn()
-    {
-        return view('dosen.dashboard');
-    }
+    // public function dashboard_dsn()
+    // {
+    //     return view('dosen.dashboard');
+    // }
 
+    // public function daftar_mhs_bimbingan()
+    // {
+    //     $user = auth()->user();
+    //     $dosen = Dosen::where('npp', $user->npp)->first();
+
+    //     // if ($dosen) {
+    //         // Ambil status mahasiswa yang terkait dengan dosen dan status ACC
+    //         $statusMahasiswa = StatusMahasiswa::where('id_dsn', $dosen->id)
+    //             ->where('status', 'ACC')
+    //             ->with('mahasiswa', 'pengajuans') // Eager load mahasiswa
+    //             ->get();
+
+    //         // dd($statusMahasiswa);
+
+    //         // Kirim data mahasiswa yang sudah ACC ke view
+    //         return view('dosen.daftar_bimbingan.daftar_bimbingan', compact('statusMahasiswa'));
+    //     // }
+
+    //     return view('dosen.daftar_bimbingan.daftar_bimbingan')->with('message', 'Dosen tidak ditemukan.');
+    // }
+
+    //coba menampilkan 2 model dalam 1 view
     public function daftar_mhs_bimbingan()
     {
         $user = auth()->user();
         $dosen = Dosen::where('npp', $user->npp)->first();
-        $pengajuan = Pengajuan::where('id_dsn', $dosen->id)->with('mahasiswa')->get();
-        return view('dosen.daftar_bimbingan.daftar_bimbingan', compact('pengajuan'));
+        
+        if ($dosen) {
+            // Ambil status mahasiswa yang terkait dengan dosen dan status ACC
+            $statusMahasiswa = StatusMahasiswa::where('id_dsn', $dosen->id)
+                ->where('status', 'ACC')
+                ->with('mahasiswa', 'pengajuans')
+                ->get();
+
+            // Ambil pengajuan mahasiswa yang belum memiliki dosen pembimbing
+            $pengajuan = Pengajuan::where('id_dsn', $dosen->id)
+                ->whereDoesntHave('statusMahasiswa', function($query) {
+                    $query->where('status', 'ACC');
+                })
+                ->with('mahasiswa')
+                ->get();
+
+            // Gabungkan kedua koleksi
+            $combinedData = $statusMahasiswa->concat($pengajuan);
+
+            return view('dosen.daftar_bimbingan.daftar_bimbingan', compact('combinedData'));
+        }
+
+        return view('dosen.daftar_bimbingan.daftar_bimbingan')->with('message', 'Dosen tidak ditemukan.');
     }
 
     public function update_pengajuan(Request $request)
@@ -73,8 +116,27 @@ class DosenPembimbingController extends Controller
         $pengajuan->save();
         
         $status = StatusMahasiswa::where('id_mhs', $pengajuan->id_mhs)->first();
-        $status->id_dsn = $pengajuan->id_dsn;
-        $status->save();
+        // code awal
+        // $status->id_dsn = $pengajuan->id_dsn;
+        // $status->save();
+
+        if ($status) {
+            $status->id_dsn = $pengajuan->id_dsn;
+            $status->status = $request->status; // Pastikan juga status ini di-update
+            $status->save();
+        }
+
+        $mahasiswa = Mahasiswa::where('id', $pengajuan->id_mhs);
+        $mahasiswa->update([
+            'id_dsn' => $pengajuan->id_dsn
+        ]);
+
+        $dosenPembimbing = DosenPembimbing::where('id_dsn', $pengajuan->id_dsn)->first();
+        if ($dosenPembimbing) {
+            $dosenPembimbing->ajuan_diterima = $dosenPembimbing->ajuan_diterima+1;
+            $dosenPembimbing->sisa_kuota = $dosenPembimbing->sisa_kuota-1;
+            $dosenPembimbing->save();
+        }
 
         return redirect()->back()->with('success', 'Status pengajuan berhasil diperbarui.');
     }
@@ -204,7 +266,8 @@ class DosenPembimbingController extends Controller
         }
 
         // Get the DosenPembimbing related to the Dosen
-        $dosenPembimbing = $dosen->dosen;
+        // $dosenPembimbing = $dosen->dosen;
+        $dosenPembimbing = DosenPembimbing::where('id_dsn', $dosen->id)->first();
         
         // Mendapatkan data Mahasiswa KP
         $jumlahAjuan = Pengajuan::where('id_dsn', $dosenPembimbing->id)->count();
@@ -220,6 +283,7 @@ class DosenPembimbingController extends Controller
 
         // Mengurangi sisa kuota berdasarkan jumlah ajuan yang diterima
         $dosenPembimbing->sisa_kuota = $dosenPembimbing->kuota - $ajuanDiterima;
+        $dosenPembimbing->status = $dosenPembimbing->sisa_kuota > 0 ? 'tersedia' : 'penuh';
 
         // Simpan perubahan pada DosenPembimbing
         $dosenPembimbing->save();

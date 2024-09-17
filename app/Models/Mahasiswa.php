@@ -20,7 +20,8 @@ class Mahasiswa extends Model
         'email',
         // 'dosen_wali',
         'transkrip_nilai',
-        'status_kp'
+        'status_kp',
+        'id_dsn'
     ];
 
     public function user()
@@ -56,5 +57,10 @@ class Mahasiswa extends Model
     public function statusMahasiswa()
     {
         return $this->hasOne(StatusMahasiswa::class, 'id_mhs', 'id');
+    }
+
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class, 'id_dsn');
     }
 }

@@ -305,9 +305,9 @@
                                 <i class="fas fa-chevron-right"></i>Lanjutkan
                             </a>
                             {{-- <button type="submit" class="btn btn-primary"><i class="fas fa-chevron-right"></i>Lanjutkan</button> --}}
-                        </div>
+                        {{-- </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Modal Pilih Dosbing -->
                 {{-- <div class="modal fade" id="pilihDosbingModal" tabindex="-1" aria-labelledby="pilihDosbingModalLabel" aria-hidden="true">

@@ -3,8 +3,11 @@
 namespace App\Imports;
 
 use App\Models\User;
+use App\Models\Dosen;
 use App\Models\Mahasiswa;
+use App\Models\DosenPembimbing;
 use App\Models\StatusMahasiswa;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -12,6 +15,12 @@ class MahasiswaImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
+        // Cari dosen berdasarkan npp
+        $dosen = null;
+        if (!empty($row['npp'])) {
+            $dosen = Dosen::where('npp', $row['npp'])->first();
+        }
+
         // Lakukan upsert untuk mahasiswa agar tidak ada duplikat berdasarkan nim
         $mahasiswa = Mahasiswa::updateOrCreate(
             ['nim' => $row['nim']],
@@ -19,11 +28,27 @@ class MahasiswaImport implements ToModel, WithHeadingRow
                 'nama' => $row['nama'],
                 'email' => $row['email'],
                 'status_kp' => $row['status_kp'],
+                'id_dsn' => $dosen ? $dosen->id : null
             ]
         );
 
-        // Jika mahasiswa baru dibuat, tambahkan juga data StatusMahasiswa
-        if ($mahasiswa->wasRecentlyCreated) {
+        // Jika mahasiswa baru dibuat dan memiliki dosen pembimbing, tambahkan data StatusMahasiswa
+        if ($mahasiswa->wasRecentlyCreated && $dosen) {
+            StatusMahasiswa::create([
+                'id_mhs' => $mahasiswa->id,
+                'id_dsn' => $dosen->id,
+                'status' => 'ACC',
+                'pengajuan' => 0,
+            ]);
+
+            // Update table dosen_pembimbings
+            $dosenPembimbing = DosenPembimbing::where('id_dsn', $dosen->id)->first();
+            if ($dosenPembimbing) {
+                $dosenPembimbing->increment('ajuan_diterima');
+                $dosenPembimbing->decrement('sisa_kuota');
+                $dosenPembimbing->status = $dosenPembimbing->sisa_kuota > 0 ? 'Tersedia' : 'Penuh';
+            }
+        } else {
             StatusMahasiswa::create([
                 'id_mhs' => $mahasiswa->id,
                 'pengajuan' => 0,
