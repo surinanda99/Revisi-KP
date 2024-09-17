@@ -77,7 +77,11 @@ class KoorPengajuanMhsController extends Controller
                 $pengajuan->status = $request->status;
                 $pengajuan->save();
 
-                $dsnStatus->jumlah_ajuan--;
+
+                if ($dsnStatus->jumlah_ajuan != 0)
+                {
+                    $dsnStatus->jumlah_ajuan--;
+                } 
                 $dsnStatus->save();
   
                 activity()
