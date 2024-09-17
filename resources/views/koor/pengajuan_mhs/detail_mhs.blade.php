@@ -1,5 +1,5 @@
-@extends('dosen.layouts.main')
-@section('title', 'Detail Mahasiswa Bimbingan')
+@extends('koor.layouts.main')
+@section('title', 'Detail Pengajuan Mahasiswa')
 @section('content')
     <style>
         /* Add some basic styling to make the form look good */
@@ -15,7 +15,7 @@
             <img src="https://via.placeholder.com/200x200" alt="Profile" class="image mt-5">
             <div class="form">
                 <h2 class="mb-4">Detail Mahasiswa</h2>
-                <form action="{{ route('update-mahasiswa-bimbingan', ['id' => $pengajuan->id]) }}" method="POST">
+                <form action="{{ route('update-list', ['id' => $pengajuan->id]) }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="nama">Nama Lengkap</label>

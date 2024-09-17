@@ -59,8 +59,14 @@ class Mahasiswa extends Model
         return $this->hasOne(StatusMahasiswa::class, 'id_mhs', 'id');
     }
 
+<<<<<<< HEAD
     public function dosen()
     {
         return $this->belongsTo(Dosen::class, 'id_dsn');
+=======
+    public function dospem()
+    {
+        return $this->hasOne(StatusMahasiswa::class, 'id_mhs', 'id');
+>>>>>>> e22a6e4afb99111bf9afa24325320e3efdf7b25c
     }
 }

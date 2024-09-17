@@ -23,4 +23,9 @@ class DosenPembimbing extends Model
     public function dosen(){
         return $this->belongsTo(Dosen::class, 'id_dsn', 'id');
     }
+
+    public function pengajuan()
+    {
+        return $this->hasMany(Pengajuan::class, 'id_dsn', 'id');
+    }
 }

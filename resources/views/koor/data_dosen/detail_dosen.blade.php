@@ -21,19 +21,17 @@
                         </thead>
                         <tbody>
                             @forelse($dosen->dosen->mahasiswa as $index => $mahasiswa)
-                                <tr>
-                                    <td class="centered-column">{{ $index + 1 }}</td>
-                                    <td class="centered-column">{{ $mahasiswa->mahasiswa->nim }}</td>
-                                    <td class="centered-column">{{ $mahasiswa->mahasiswa->nama }}</td>
-                                    {{-- <td class="centered-column">{{ $mahasiswa->bab_terakhir }}</td>
-                                    <td class="centered-column">{{ $mahasiswa->jml_bimbingan }}</td> --}}
-                                    <td class="centered-column">{{ $mahasiswa->mahasiswa->status_kp }}</td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6" class="text-center">Tidak ada mahasiswa yang terdaftar</td>
-                                </tr>
-                            @endforelse
+                            <tr>
+                                <td class="centered-column">{{ $index + 1 }}</td>
+                                <td class="centered-column">{{ $mahasiswa->nim }}</td>
+                                <td class="centered-column">{{ $mahasiswa->nama }}</td>
+                                <td class="centered-column">{{ $mahasiswa->status_kp }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center">Tidak ada mahasiswa yang terdaftar</td>
+                            </tr>
+                        @endforelse
                         </tbody>
                     </table>
                 </div>

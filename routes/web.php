@@ -20,6 +20,7 @@ use App\Http\Controllers\PengajuanSidangController;
 use App\Http\Controllers\MahasiswaBimbinganController;
 use App\Http\Controllers\MahasiswaBimbinganControlller;
 use App\Http\Controllers\KoorMonitoringSidangController;
+use App\Http\Controllers\KoorPengajuanMhsController;
 use App\Http\Controllers\PlottingDosbingController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -147,6 +148,8 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     Route::post('/import-mhs', [KoorController::class, 'importMhs'])->name('importMhs');
     Route::get('/template-mahasiswa', [KoorController::class, 'downloadTemplateMahasiswa'])->name('templateMahasiswa');
     Route::post('/store-mhs', [KoorController::class, 'storeMhs'])->name('simpanMhs');
+    Route::post('/simpan-mhs-ke-dosen', [KoorController::class, 'simpanMhsKeDosen'])->name('simpanMhsKeDosen');
+
     // Route::get('/edit-mhs/{id}', [KoorController::class, 'editMhs'])->name('editMhs');
     Route::put('/update-mhs/{id}', [KoorController::class, 'updateMhs'])->name('updateMhs');
     Route::post('delete-mhs/{id}', [KoorController::class, 'deleteMhs'])->name('hapusMhs');
@@ -169,6 +172,11 @@ Route::middleware(['auth', 'role:koor'])->group(function () {
     Route::post('/koor-monitoring-sidang/update', [KoorMonitoringSidangController::class, 'updateStatus'])->name('koor-monitoring-sidang-update');
     Route::get('/plotting', [PlottingDosbingController::class, 'index'])->name('koor-plotting');
     Route::post('/plotting-dosbing', [PlottingDosbingController::class, 'setDosbing'])->name('koor-plotting-dosbing-post');
+
+    // koor pengajuan mhs
+    Route::get('/daftar-mhs', [KoorPengajuanMhsController::class, 'index'])->name('koor-list-mhs');
+    Route::post('/update-mahasiswa', [KoorPengajuanMhsController::class, 'update'])->name('update-list');
+
 });
 
 // Admin
