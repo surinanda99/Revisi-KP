@@ -86,7 +86,6 @@
                 </thead>
                 <tbody>
                     @foreach($dosens as $dosen)
-<<<<<<< HEAD
                         <tr id="row-{{ $dosen->id }}" class="{{ $dosen->sisa_kuota == 0 ? 'bg-light text-muted' : '' }}">
                             <td class="centered-column">{{ $loop->iteration }}</td>
                             <td class="centered-column">{{ $dosen->dosen->npp }}</td>
@@ -119,41 +118,6 @@
                                 </div>
                             </td>
                         </tr>
-=======
-                    <tr id="row-{{ $dosen->id }}" class="{{ $dosen->sisa_kuota == 0 ? 'bg-light text-muted' : '' }}">
-                        <td class="centered-column">{{ $loop->iteration }}</td>
-                        <td class="centered-column">{{ $dosen->dosen->npp }}</td>
-                        <td class="centered-column">{{ $dosen->dosen->nama }}</td>
-                        <td class="centered-column">{{ $dosen->dosen->bidang_kajian }}</td>
-                        <td class="centered-column">
-                            {{-- <input type="number" class="form-control kuota-edit" data-id="{{ $dosen->id }}" value="{{ $dosen->kuota }}" style="width: 80px; text-align: center; margin: 0 auto;"{{ $dosen->sisa_kuota == 0 ? 'readonly' : '' }} /> --}}
-                            <input type="number" class="form-control kuota-edit" data-id="{{ $dosen->id }}" value="{{ $dosen->kuota }}" style="width: 80px; text-align: center; margin: 0 auto;"/>
-                        </td>
-                        <td class="centered-column">{{ $dosen->dosen->pengajuan->count() }}</td>
-                        <td class="centered-column">{{ $dosen->ajuan_diterima }}</td>
-                        <td class="centered-column" id="sisa-kuota-{{ $dosen->id }}">{{ $dosen->sisa_kuota }}</td>
-                        <td class="centered-column" id="status-dosen-{{ $dosen->id }}">
-                            @if($dosen->sisa_kuota == 0)
-                                <span class="badge bg-danger">Penuh</span>
-                            @else
-                                <span class="badge bg-success">Tersedia</span>
-                            @endif
-                        </td>
-                        <td class="centered-column">
-                            <div class="d-inline">
-                                <button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataDosen_{{ $dosen->id }}">
-                                    <i class="fas fa-info-circle"></i>
-                                </button>
-                                <button class="btn btn-warning me-1 btn-edit" data-id="{{ $dosen->id }}" data-bs-toggle="modal" data-bs-target="#dialogEditDosen_{{ $dosen->id }}">
-                                    <i class="far fa-edit"></i>
-                                </button>
-                                <button class="btn btn-danger btn-delete" data-id="{{ $dosen->id }}" data-bs-toggle="modal" data-bs-target="#dialogHapusDosen_{{ $dosen->id }}">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
->>>>>>> e22a6e4afb99111bf9afa24325320e3efdf7b25c
                     @endforeach
                 </tbody>
             </table>
