@@ -330,6 +330,46 @@ class KoorController extends Controller
         return redirect()->route('halamanKoorMhs')->with('success', 'Data Mahasiswa Berhasil Ditambahkan');
     }
 
+    public function simpanMhsKeDosen(Request $request)
+    {
+        $dosenId = $request->input('id_dsn');
+
+        // Lanjutkan jika ID dosen benar
+        $mahasiswaIds = $request->input('mahasiswa_id');
+        $dosenPembimbing = DosenPembimbing::findOrFail($dosenId);
+
+        foreach ($mahasiswaIds as $mahasiswaId) {
+            if ($mahasiswaId) {
+                // Cek apakah mahasiswa sudah ada di status_mahasiswas
+                $statusMahasiswa = StatusMahasiswa::where('id_mhs', $mahasiswaId)->first();
+
+                if ($statusMahasiswa) {
+                    // Update jika mahasiswa sudah ada
+                    $statusMahasiswa->update([
+                        'id_dsn' => $dosenId,
+                        'pengajuan' => 0, // Atur nilai lain yang sesuai
+                    ]);
+                } else {
+                    // Tambahkan data baru jika mahasiswa belum ada
+                    StatusMahasiswa::create([
+                        'id_mhs' => $mahasiswaId,
+                        'id_dsn' => $dosenId,
+                        'pengajuan' => 0, // Atau sesuai kebutuhan
+                    ]);
+
+                    // Tambahkan jumlah ajuan dosen
+                    $dosenPembimbing->jumlah_ajuan += 1;
+                }
+
+                // Kurangi sisa kuota
+                $dosenPembimbing->sisa_kuota -= 1;
+                $dosenPembimbing->save();
+            }
+        }
+
+        return redirect()->back()->with('success', 'Mahasiswa berhasil ditambahkan atau diperbarui pada dosen pembimbing.');
+    }
+
     public function importMhs(Request $request)
     {
         $request->validate([
@@ -484,5 +524,15 @@ class KoorController extends Controller
         $mahasiswas = Mahasiswa::with('statusMahasiswa.dospem')->get();
 
         return view('koor.detail_mhs', compact('mahasiswas'));
+    }
+
+    public function showDetailDosen($dosenId)
+    {
+        $dosen = DosenPembimbing::with('dosen')->findOrFail($dosenId);
+
+        // Ambil mahasiswa yang belum memiliki dosen pembimbing
+        $mahasiswas = Mahasiswa::doesntHave('statusMahasiswa')->get();
+
+        return view('koor.data_dosen.detail', compact('dosen', 'mahasiswas'));
     }
 }

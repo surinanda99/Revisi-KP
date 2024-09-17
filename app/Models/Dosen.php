@@ -19,12 +19,19 @@ class Dosen extends Model
 
     public function mahasiswa()
     {
-        return $this->hasMany(StatusMahasiswa::class, 'id_dsn', 'id');
+        return $this->hasManyThrough(
+            Mahasiswa::class,
+            StatusMahasiswa::class,
+            'id_dsn', // Foreign key di tabel status_mahasiswas
+            'id',     // Foreign key di tabel mahasiswas
+            'id',     // Local key di tabel dosens
+            'id_mhs'  // Local key di tabel status_mahasiswas
+        );
     }
 
     public function pengajuan()
     {
-        return $this->hasMany(Pengajuan::class, 'id_dsn', 'id');
+        return $this->hasMany(StatusMahasiswa::class, 'id_dsn', 'id');
     }
 
     public function user()
