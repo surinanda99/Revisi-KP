@@ -26,7 +26,7 @@ class Dosen extends Model
             'id',     // Foreign key di tabel mahasiswas
             'id',     // Local key di tabel dosens
             'id_mhs'  // Local key di tabel status_mahasiswas
-        );
+        )->orderBy('status_mahasiswas.created_at', 'desc'); // Urutkan berdasarkan `created_at` di status_mahasiswas
     }
 
     public function pengajuan()
