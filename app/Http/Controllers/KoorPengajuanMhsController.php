@@ -68,7 +68,7 @@ class KoorPengajuanMhsController extends Controller
     public function update(Request $request)
     {
         try {
-            dd($request->all());
+            // dd($request->all());
             $pengajuan = Pengajuan::findOrFail($request->id);
 
             $dsnStatus = DosenPembimbing::where('id_dsn', $pengajuan->id_dsn)->first();
@@ -77,9 +77,9 @@ class KoorPengajuanMhsController extends Controller
                 $pengajuan->status = $request->status;
                 $pengajuan->save();
 
-                $dsnStatus->ajuan--;
+                $dsnStatus->jumlah_ajuan--;
                 $dsnStatus->save();
-
+  
                 activity()
                     ->inLog('pengajuan')
                     ->causedBy(auth()->user())
@@ -95,9 +95,9 @@ class KoorPengajuanMhsController extends Controller
                 $pengajuan->status = $request->status;
                 $pengajuan->save();
 
-                $dsnStatus->ajuan--;
-                $dsnStatus->diterima++;
-                $dsnStatus->sisa = $dsnStatus->kuota - $dsnStatus->diterima;
+                // $dsnStatus->jumlah_ajuan--;
+                $dsnStatus->ajuan_diterima++;
+                $dsnStatus->sisa_kuota = $dsnStatus->kuota - $dsnStatus->ajuan_diterima;
 
                 $dsnStatus->save();
 
@@ -108,7 +108,7 @@ class KoorPengajuanMhsController extends Controller
                 //     ->withProperties(['id_mhs' => $pengajuan->id_mhs])
                 //     ->log('Update status pengajuan');
 
-                return redirect()->route('mahasiswa-bimbingan');
+                return redirect()->route('koor-list-mhs');
             }
         } catch (\Exception $e) {
             Log::error($e); // Logging error

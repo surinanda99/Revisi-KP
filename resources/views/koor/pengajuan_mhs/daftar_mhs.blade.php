@@ -115,7 +115,7 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             console.log({id: id, status: 'TOLAK'})
-                            fetch('/update-pengajuan', {
+                            fetch('/update-mahasiswa', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
