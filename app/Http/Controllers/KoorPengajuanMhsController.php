@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dosen;
+use App\Models\DosenPembimbing;
 use App\Models\Mahasiswa;
 use App\Models\Pengajuan;
 use App\Models\StatusDosen;
@@ -70,7 +71,7 @@ class KoorPengajuanMhsController extends Controller
             dd($request->all());
             $pengajuan = Pengajuan::findOrFail($request->id);
 
-            $dsnStatus = StatusDosen::where('id_dsn', $pengajuan->id_dsn)->first();
+            $dsnStatus = DosenPembimbing::where('id_dsn', $pengajuan->id_dsn)->first();
 
             if ($request->status == 'TOLAK') {
                 $pengajuan->status = $request->status;
@@ -79,12 +80,12 @@ class KoorPengajuanMhsController extends Controller
                 $dsnStatus->ajuan--;
                 $dsnStatus->save();
 
-                // activity()
-                //     ->inLog('pengajuan')
-                //     ->causedBy(auth()->user())
-                //     ->performedOn($pengajuan)
-                //     ->withProperties(['id_mhs' => $pengajuan->id_mhs])
-                //     ->log('Menolak pengajuan pengajuan');
+                activity()
+                    ->inLog('pengajuan')
+                    ->causedBy(auth()->user())
+                    ->performedOn($pengajuan)
+                    ->withProperties(['id_mhs' => $pengajuan->id_mhs])
+                    ->log('Menolak pengajuan pengajuan');
 
                 return response()->json(['status' => 'success', 'message' => 'Pengajuan berhasil ditolak']);
             } else {

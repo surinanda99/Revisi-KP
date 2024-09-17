@@ -29,25 +29,27 @@
                 <table class="table table-bordered mb-1" id="table-log">
                     <thead class="table-header">
                         <th>No</th>
+                        <th>Waktu Pengajuan</th>
                         <th>NIM</th>
                         <th>Nama Mahasiswa</th>
                         <th>Judul KP</th>
                         <th>Usulan Dosbing</th>
                         <th>Kuota Dosen</th>
-                        <th>Waktu Pengajuan</th>
                         <th>Status</th>
                         <th>Aksi</th>
                     </thead>
                     @foreach ($pengajuan as $pj)
                         <tr class="centered-column">
                             <td>{{ $loop->iteration }}</td>
+                            <td>{{ $pj->created_at }}</td>
                             <td>{{ $pj->mahasiswa->nim }}</td>
                             <td>{{ $pj->mahasiswa->nama }}</td>
                             <td>{{ $pj->judul }}</td>
                             <td>{{ $pj->dosen->nama }}</td>
                             <td>{{ $pj->dosen->dosen->sisa_kuota }}</td>
-                            <td>{{ $pj->created_at }}</td>
-                            <td>{{ $pj->status }}</td>
+                            <td>
+                                <button class="btn btn-warning">{{ $pj->status }}</button>
+                            </td>
                             <td class="centered-column">
                                 @if ($pj->status == 'ACC')
                                     <button class="btn btn-success" value="ACC">
