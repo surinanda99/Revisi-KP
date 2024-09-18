@@ -393,41 +393,69 @@
                                     {{ $item->judul }}
                                 @endif
                             </td>
+                            // Bagian dari table body
                             <td class="centered-column">
-                                @if($item instanceof \App\Models\StatusMahasiswa)
+                                @php
+                                    // Cek kuota dosen
+                                    $dosenPembimbing = \App\Models\DosenPembimbing::where('id_dsn', $item->id_dsn)->first();
+                                @endphp
+                                @if ($dosenPembimbing)
                                     @if ($item->status == 'ACC')
-                                        <button class="btn btn-success" value="ACC">Status Diterima</button>
-                                    @elseif ($item->status == 'TOLAK')
-                                        <button class="btn btn-danger" value="TOLAK">Status Ditolak</button>
+                                        <!-- Status sudah ACC, tampilkan status diterima tanpa perlu perubahan -->
+                                        <button class="btn btn-success" value="ACC" disabled>Status Diterima</button>
+                                    @elseif ($dosenPembimbing->sisa_kuota <= 0)
+                                        <!-- Jika kuota penuh, langsung tolak pengajuan -->
+                                        @php
+                                            // Update status pengajuan menjadi "TOLAK"
+                                            \App\Models\Pengajuan::where('id', $item->id)->update(['status' => 'TOLAK']);
+                                        @endphp
+                                        <button type="button" class="btn btn-secondary" disabled>
+                                            <i class="fa-regular fa-circle-check"></i> Kuota Penuh
+                                        </button>
                                     @else
-                                        <div class="d-flex justify-content-center">
-                                            <form action="{{ route('update-mahasiswa-bimbingan') }}" method="post">
-                                                @csrf
-                                                <input type="hidden" name="id" value="{{ $item->id }}">
-                                                <button type="submit" name="status" class="btn btn-success" value="ACC">
-                                                    <i class="fa-regular fa-circle-check"></i> ACC
+                                        <!-- Jika kuota masih tersedia -->
+                                        @if($item instanceof \App\Models\StatusMahasiswa)
+                                            @if ($item->status == 'ACC')
+                                                <button class="btn btn-success" value="ACC" disabled>Status Diterima</button>
+                                            @elseif ($item->status == 'TOLAK')
+                                                <button class="btn btn-danger" value="TOLAK" disabled>Status Ditolak</button>
+                                            @else
+                                                <div class="d-flex justify-content-center">
+                                                    <form action="{{ route('update-mahasiswa-bimbingan') }}" method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{ $item->id }}">
+                                                        <button type="submit" name="status" class="btn btn-success" value="ACC">
+                                                            <i class="fa-regular fa-circle-check"></i> ACC
+                                                        </button>
+                                                    </form>
+                                                    <button type="button" class="btn btn-danger ms-2 delete-button" data-id="{{ $item->id }}">
+                                                        <i class="fa-regular fa-circle-xmark"></i> TOLAK
+                                                    </button>
+                                                </div>
+                                            @endif
+                                        @else
+                                            <div class="d-flex justify-content-center">
+                                                <form action="{{ route('update-mahasiswa-bimbingan') }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{ $item->id }}">
+                                                    <button type="submit" name="status" class="btn btn-success" value="ACC">
+                                                        <i class="fa-regular fa-circle-check"></i> ACC
+                                                    </button>
+                                                </form>
+                                                <button type="button" class="btn btn-danger ms-2 delete-button" data-id="{{ $item->id }}">
+                                                    <i class="fa-regular fa-circle-xmark"></i> TOLAK
                                                 </button>
-                                            </form>
-                                            <button type="button" class="btn btn-danger ms-2 delete-button" data-id="{{ $item->id }}">
-                                                <i class="fa-regular fa-circle-xmark"></i> TOLAK
-                                            </button>
-                                        </div>
+                                            </div>
+                                        @endif
                                     @endif
                                 @else
-                                    <div class="d-flex justify-content-center">
-                                        <form action="{{ route('update-mahasiswa-bimbingan') }}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{ $item->id }}">
-                                            <button type="submit" name="status" class="btn btn-success" value="ACC">
-                                                <i class="fa-regular fa-circle-check"></i> ACC
-                                            </button>
-                                        </form>
-                                        <button type="button" class="btn btn-danger ms-2 delete-button" data-id="{{ $item->id }}">
-                                            <i class="fa-regular fa-circle-xmark"></i> TOLAK
-                                        </button>
-                                    </div>
+                                    <!-- Jika tidak ada data dosen -->
+                                    <button type="button" class="btn btn-secondary" disabled>
+                                        <i class="fa-regular fa-circle-check"></i> Tidak Ada Data Dosen
+                                    </button>
                                 @endif
-                            </td>
+                            </td>                            
+                            
                             <td>
                                 @if($item instanceof \App\Models\StatusMahasiswa)
                                     @if($item->status == 'PENDING' || $item->status == 'TOLAK')
