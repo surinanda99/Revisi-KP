@@ -254,7 +254,7 @@
                             <td>{{ $data['tanggal_selesai'] ?? 'Belum diisi' }}</td>
                         </tr>
                         <tr>
-                            <td>Usulan Dosen Pembimbing</td>
+                            <td>Dosen Pembimbing</td>
                             <td>{{ $dospil->nama }}</td>
                         </tr>
                         </tbody>
@@ -293,7 +293,7 @@
                             <td>{{ $pengajuan->tanggal_selesai ?? 'Belum diisi' }}</td>
                         </tr>
                         <tr>
-                            <td>Usulan Dosen Pembimbing</td>
+                            <td>Dosen Pembimbing</td>
                             <td>{{ $dospil->nama }}</td>
                         </tr>
                         </tbody>
