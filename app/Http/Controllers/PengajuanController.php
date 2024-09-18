@@ -97,7 +97,7 @@ class PengajuanController extends Controller
         if ($status->id_dsn != 0) {
             // Fetch dosen pembimbing
             $dospil = Dosen::where('id', $mahasiswa->id_dsn)->first();
-            dd($dospil);
+            // dd($dospil);
         } else {
             if ($pengajuan) {
                 $dospil = Dosen::where('id', $pengajuan->id_dsn)->first();

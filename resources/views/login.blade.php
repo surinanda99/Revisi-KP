@@ -30,13 +30,14 @@
                         
                         @if ($errors->any())
                             <div class="alert alert-danger">
-                                {{ $errors->first('nim_npp') }}
+                                {{-- {{ $errors->first('nim_npp') }} --}}
+                                {{ $errors->first('nim_npp') ?: $errors->first('email') }}
                             </div>
                         @endif
 
                         <div class="form-group mb-3">
-                            <label for="nim_npp" class="visually-hidden">NIM/NPP</label>
-                            <input type="text" class="form-control form-control-lg bg-light fs-6" name="nim_npp" id="nim_npp" placeholder="Masukkan NIM/NPP" required autofocus>
+                            <label for="nim_npp" class="visually-hidden">NIM/NPP/Email</label>
+                            <input type="text" class="form-control form-control-lg bg-light fs-6" name="nim_npp" id="nim_npp" placeholder="Masukkan NIM/NPP atau Email" required autofocus>
                         </div>
                         
                         <div class="form-group mb-1">
