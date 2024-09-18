@@ -77,7 +77,7 @@ class KoorController extends Controller
             $ajuanDiterima = StatusMahasiswa::where('id_dsn', $dosen->dosen->id)
                 ->where('status', 'ACC')
                 ->count();
-            
+
             // Hitung sisa kuota
             $sisaKuota = $dosen->kuota - $ajuanDiterima;
 
@@ -244,7 +244,7 @@ class KoorController extends Controller
         }
 
         $dosenPembimbing = DosenPembimbing::findOrFail($id);
-        
+
         // Debugging: Catat nilai saat ini sebelum pembaruan
         \Log::info("Sebelum pembaruan - Kuota: {$dosenPembimbing->kuota}, Ajuan diterima: {$dosenPembimbing->ajuan_diterima}");
 
@@ -378,12 +378,17 @@ class KoorController extends Controller
 
     public function simpanMhsKeDosen(Request $request)
     {
-        $dosenId = $request->input('id_dsn');
+        $dosenId = $request->input('id_dsn'); // Ambil id_dsn dari form
+        // Hanya ambil mahasiswa yang benar-benar dipilih (tidak kosong)
+        $mahasiswaIds = array_filter($request->input('mahasiswa_id'), function($value) {
+            return !is_null($value) && $value !== '';
+        });
 
-        // Lanjutkan jika ID dosen benar
-        $mahasiswaIds = $request->input('mahasiswa_id');
+        // Ambil data DosenPembimbing untuk dosen tersebut
         $dosenPembimbing = DosenPembimbing::findOrFail($dosenId);
-        // dd($dosenPembimbing->sisa_kuota -= 1);
+
+        // Tambahkan jumlah ajuan sesuai jumlah mahasiswa yang benar-benar dipilih
+        $dosenPembimbing->jumlah_ajuan += count($mahasiswaIds);
 
         foreach ($mahasiswaIds as $mahasiswaId) {
             if ($mahasiswaId) {
@@ -391,30 +396,44 @@ class KoorController extends Controller
                 $statusMahasiswa = StatusMahasiswa::where('id_mhs', $mahasiswaId)->first();
 
                 if ($statusMahasiswa) {
-                    // Update jika mahasiswa sudah ada
+                    // Jika sudah ada, update data dosen pembimbing dan status mahasiswa menjadi "ACC"
                     $statusMahasiswa->update([
                         'id_dsn' => $dosenId,
-                        'pengajuan' => 0, // Atur nilai lain yang sesuai
+                        'status' => 'ACC', // Otomatis terima
+                        'pengajuan' => 0, // Biarkan pengajuan tetap 0
                     ]);
-
-                    
                 } else {
-                    // Tambahkan data baru jika mahasiswa belum ada
+                    // Jika belum ada, buat entry baru di status_mahasiswas dengan status "ACC"
                     StatusMahasiswa::create([
                         'id_mhs' => $mahasiswaId,
                         'id_dsn' => $dosenId,
-                        'pengajuan' => 0, // Atau sesuai kebutuhan
+                        'status' => 'ACC', // Otomatis terima
+                        'pengajuan' => 0, // Biarkan pengajuan tetap 0
                     ]);
-
                 }
-
-                // Kurangi sisa kuota
-                $dosenPembimbing->sisa_kuota -= 1;
-                $dosenPembimbing->save();
             }
         }
 
-        return redirect()->back()->with('success', 'Mahasiswa berhasil ditambahkan atau diperbarui pada dosen pembimbing.');
+        // Hitung ulang ajuan diterima yang berstatus ACC
+        $ajuanDiterima = StatusMahasiswa::where('id_dsn', $dosenId)
+            ->where('status', 'ACC') // Hanya hitung mahasiswa yang statusnya ACC
+            ->count();
+
+        // Perbarui ajuan diterima dan sisa kuota
+        $dosenPembimbing->ajuan_diterima = $ajuanDiterima;
+        $dosenPembimbing->sisa_kuota = $dosenPembimbing->kuota - $ajuanDiterima;
+
+        // Periksa jika kuota penuh, ubah status menjadi 'penuh'
+        if ($dosenPembimbing->sisa_kuota <= 0) {
+            $dosenPembimbing->status = 'penuh';
+        } else {
+            $dosenPembimbing->status = 'tersedia';
+        }
+
+        // Simpan perubahan di tabel dosen_pembimbings
+        $dosenPembimbing->save();
+
+        return redirect()->back()->with('success', 'Mahasiswa berhasil ditambahkan dan sisa kuota diperbarui.');
     }
 
     public function importMhs(Request $request)
@@ -502,22 +521,23 @@ class KoorController extends Controller
 
     public function deleteMhs($id)
     {
+        // Cari data mahasiswa berdasarkan ID
         $mahasiswas = Mahasiswa::find($id);
 
         if ($mahasiswas) {
-            // Temukan data user yang terkait dengan mahasiswa tersebut berdasarkan NIM
-            $user = User::where('nim', $mahasiswas->nim)->first();
+            // Hapus data terkait pada tabel status_mahasiswas
+            StatusMahasiswa::where('id_mhs', $id)->delete();
 
-            // Hapus data mahasiswa
+            // Hapus data mahasiswa dari tabel mahasiswas
             $mahasiswas->delete();
 
-            // Jika data user ditemukan, hapus data user juga
+            // Jika data user terkait dengan mahasiswa ditemukan, hapus juga user
+            $user = User::where('nim', $mahasiswas->nim)->first();
             if ($user) {
                 $user->delete();
             }
 
-            return redirect()->back()->with('success', 'Mahasiswa Berhasil Dihapus');
-
+            return redirect()->back()->with('success', 'Mahasiswa dan data terkait berhasil dihapus.');
         }
 
         return redirect()->back()->with('error', 'Mahasiswa tidak ditemukan.');
@@ -575,10 +595,13 @@ class KoorController extends Controller
 
     public function showDetailDosen($dosenId)
     {
+        // Ambil data dosen
         $dosen = DosenPembimbing::with('dosen')->findOrFail($dosenId);
 
-        // Ambil mahasiswa yang belum memiliki dosen pembimbing
-        $mahasiswas = Mahasiswa::doesntHave('statusMahasiswa')->get();
+        // Ambil mahasiswa yang belum memiliki dosen pembimbing (id_dsn null atau 0)
+        $mahasiswas = Mahasiswa::whereNull('id_dsn')
+            ->orWhere('id_dsn', 0)  // Memastikan mahasiswa dengan id_dsn 0 juga diambil
+            ->get();
 
         return view('koor.data_dosen.detail', compact('dosen', 'mahasiswas'));
     }

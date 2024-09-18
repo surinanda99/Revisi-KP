@@ -36,7 +36,9 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogTambahDataMhs"><i class="fas fa-plus"></i>Tambah Data Mahasiswa</a>
+                    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogTambahDataMhs_{{ $dosen->id }}">
+                        <i class="fas fa-plus"></i>Tambah Data Mahasiswa
+                    </a>
                 </div>
                 <!-- Pagination, if needed -->
                 {{-- <nav aria-label="pageNavigationLogbook">
