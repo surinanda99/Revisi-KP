@@ -84,7 +84,7 @@ class KoorPengajuanMhsController extends Controller
                  // Update status juga di tabel StatusMahasiswa jika ditolak
                 $statusMahasiswa = StatusMahasiswa::where('id_mhs', $pengajuan->id_mhs)->first();
                 if ($statusMahasiswa) {
-                    $statusMahasiswa->status = 'TOLAK';
+                    $statusMahasiswa->status = 'REVISI';
                     $statusMahasiswa->save();
                 }
   
@@ -105,7 +105,7 @@ class KoorPengajuanMhsController extends Controller
                 $pengajuan->status = $request->status;
                 $pengajuan->save();
 
-                // $dsnStatus->jumlah_ajuan--;
+                $dsnStatus->jumlah_ajuan++;
                 $dsnStatus->ajuan_diterima++;
                 $dsnStatus->sisa_kuota = $dsnStatus->kuota - $dsnStatus->ajuan_diterima;
 
