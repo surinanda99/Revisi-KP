@@ -94,7 +94,7 @@
                             <td class="centered-column">
                                 <input type="number" class="form-control kuota-edit" data-id="{{ $dosen->id }}" value="{{ $dosen->kuota }}" style="width: 80px; text-align: center; margin: 0 auto;"/>
                             </td>
-                            <td class="centered-column">{{ $dosen->dosen->pengajuan->count() }}</td>
+                            <td class="centered-column">{{ $dosen->jumlah_ajuan }}</td>
                             <td class="centered-column">{{ $dosen->ajuan_diterima }}</td>
                             <td class="centered-column" id="sisa-kuota-{{ $dosen->id }}">{{ $dosen->sisa_kuota }}</td>
                             <td class="centered-column" id="status-dosen-{{ $dosen->id }}">
@@ -103,7 +103,7 @@
                                 @else
                                     <span class="badge bg-success">Tersedia</span>
                                 @endif
-                            </td>                                 
+                            </td>
                             <td class="centered-column">
                                 <div class="d-inline">
                                     <button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataDosen_{{ $dosen->id }}">

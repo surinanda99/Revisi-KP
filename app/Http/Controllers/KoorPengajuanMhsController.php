@@ -23,7 +23,6 @@ class KoorPengajuanMhsController extends Controller
 
         // Ambil data pengajuan yang belum ditolak
         $pengajuan = Pengajuan::with('mahasiswa.statusMahasiswa')
-            ->where('id_dsn', $dosen->id)
             ->where('status', 'PENDING')
             ->get();
 
@@ -76,13 +75,18 @@ class KoorPengajuanMhsController extends Controller
             if ($request->status == 'TOLAK') {
                 $pengajuan->status = $request->status;
                 $pengajuan->save();
-
-
-                if ($dsnStatus->jumlah_ajuan != 0)
-                {
+                
+                if ($dsnStatus->jumlah_ajuan !=0){
                     $dsnStatus->jumlah_ajuan--;
-                } 
+                }
                 $dsnStatus->save();
+
+                 // Update status juga di tabel StatusMahasiswa jika ditolak
+                $statusMahasiswa = StatusMahasiswa::where('id_mhs', $pengajuan->id_mhs)->first();
+                if ($statusMahasiswa) {
+                    $statusMahasiswa->status = 'TOLAK';
+                    $statusMahasiswa->save();
+                }
   
                 activity()
                     ->inLog('pengajuan')
@@ -95,7 +99,9 @@ class KoorPengajuanMhsController extends Controller
             } else {
                 $status = StatusMahasiswa::findOrFail($pengajuan->id_mhs);
                 $status->id_dsn = $pengajuan->id_dsn;
+                $status->status = 'ACC';
                 $status->save();
+                
                 $pengajuan->status = $request->status;
                 $pengajuan->save();
 

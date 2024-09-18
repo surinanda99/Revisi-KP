@@ -90,20 +90,20 @@
                     <td class="centered-column">{{ $mahasiswa->nim }}</td>
                     <td class="centered-column">{{ $mahasiswa->nama }}</td>
                     <td class="centered-column">{{ $mahasiswa->email }}</td>
-                    {{-- <td class="centered-column">
+                    <td class="centered-column">
                         @if($mahasiswa->statusMahasiswa && $mahasiswa->statusMahasiswa->dospem)
                             {{ $mahasiswa->statusMahasiswa->dospem->nama }}
                         @else
                             Belum ada dosen pembimbing untuk mahasiswa ini.
                         @endif
-                    </td> --}}
-                    <td class="centered-column">
+                    </td>
+                    {{-- <td class="centered-column">
                         @if($mahasiswa->dosen)
                             {{ $mahasiswa->dosen->nama }}
                         @else
                             Belum ada dosen pembimbing untuk mahasiswa ini.
                         @endif
-                    </td>                    
+                    </td>                     --}}
                     <td class="centered-column">{{ $mahasiswa->status_kp }}</td>
                     <td class="centered-column">
                         <button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataMahasiswa_{{ $mahasiswa->id }}">

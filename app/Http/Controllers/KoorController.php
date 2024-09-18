@@ -383,6 +383,7 @@ class KoorController extends Controller
         // Lanjutkan jika ID dosen benar
         $mahasiswaIds = $request->input('mahasiswa_id');
         $dosenPembimbing = DosenPembimbing::findOrFail($dosenId);
+        // dd($dosenPembimbing->sisa_kuota -= 1);
 
         foreach ($mahasiswaIds as $mahasiswaId) {
             if ($mahasiswaId) {
@@ -395,6 +396,8 @@ class KoorController extends Controller
                         'id_dsn' => $dosenId,
                         'pengajuan' => 0, // Atur nilai lain yang sesuai
                     ]);
+
+                    
                 } else {
                     // Tambahkan data baru jika mahasiswa belum ada
                     StatusMahasiswa::create([
@@ -403,8 +406,6 @@ class KoorController extends Controller
                         'pengajuan' => 0, // Atau sesuai kebutuhan
                     ]);
 
-                    // Tambahkan jumlah ajuan dosen
-                    $dosenPembimbing->jumlah_ajuan += 1;
                 }
 
                 // Kurangi sisa kuota

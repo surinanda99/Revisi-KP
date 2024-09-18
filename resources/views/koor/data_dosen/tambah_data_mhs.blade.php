@@ -9,7 +9,7 @@
                 <div class="container">
                     <form method="POST" action="{{ route('simpanMhsKeDosen') }}" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="id_dsn" value="{{ $dosen->id }}">
+                        <input type="hidden" name="id_dsn" value="{{ $dosen->id_dsn }}">
 
                         @for($i = 1; $i <= 5; $i++)
                         <div class="form-group row mb-3">
