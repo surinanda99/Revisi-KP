@@ -172,16 +172,16 @@ class PengajuanController extends Controller
         
         // Update dosen pembimbing data
         // if ($status->id_dsn != 0) {
-            if (isset($data['id_dsn'])) {
-                $dosen = DosenPembimbing::where('id_dsn', $data['id_dsn'])->first();
-                Log::info('Before Update:', ['id_dsn' => $data['id_dsn'], 'jumlah_ajuan' => $dosen->jumlah_ajuan]);
-                if ($dosen) {
-                    $dosen->jumlah_ajuan = $dosen->jumlah_ajuan + 1;
-                    $dosen->save();
+            // if (isset($data['id_dsn'])) {
+            //     $dosen = DosenPembimbing::where('id_dsn', $data['id_dsn'])->first();
+            //     Log::info('Before Update:', ['id_dsn' => $data['id_dsn'], 'jumlah_ajuan' => $dosen->jumlah_ajuan]);
+            //     if ($dosen) {
+            //         $dosen->jumlah_ajuan = $dosen->jumlah_ajuan + 1;
+            //         $dosen->save();
 
-                    Log::info('After Update:', ['id_dsn' => $data['id_dsn'], 'jumlah_ajuan' => $dosen->jumlah_ajuan]);
-                }
-            }
+            //         Log::info('After Update:', ['id_dsn' => $data['id_dsn'], 'jumlah_ajuan' => $dosen->jumlah_ajuan]);
+            //     }
+            // }
             
             // Trigger event
             $dsn = Dosen::where('id', $data['id_dsn'])->first();

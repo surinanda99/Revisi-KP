@@ -44,9 +44,11 @@ class MahasiswaImport implements ToModel, WithHeadingRow
             // Update table dosen_pembimbings
             $dosenPembimbing = DosenPembimbing::where('id_dsn', $dosen->id)->first();
             if ($dosenPembimbing) {
+                $dosenPembimbing->increment('jumlah_ajuan');
                 $dosenPembimbing->increment('ajuan_diterima');
                 $dosenPembimbing->decrement('sisa_kuota');
                 $dosenPembimbing->status = $dosenPembimbing->sisa_kuota > 0 ? 'Tersedia' : 'Penuh';
+                $dosenPembimbing->save();
             }
         } else {
             StatusMahasiswa::create([

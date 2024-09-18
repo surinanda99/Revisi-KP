@@ -41,7 +41,7 @@
                         
                         <div class="form-group mb-1">
                             <label for="password" class="visually-hidden">Password</label>
-                            <input type="password"  class="form-control form-control-lg bg-light fs-6" name="password" id="password"  placeholder="Dinus-123" required>
+                            <input type="password"  class="form-control form-control-lg bg-light fs-6" name="password" id="password"  placeholder="Masukkan Password" required>
                         </div>
                         <a href="{{ route('password.request') }}" class="text-secondary"><small>Reset Password</small></a>
                         <div class="input-group mb-3 mt-3">

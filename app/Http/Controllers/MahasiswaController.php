@@ -19,23 +19,52 @@ use Illuminate\Support\Facades\Validator;
 
 class MahasiswaController extends Controller
 {
+    // nyoba solving :)
+    // public function index()
+    // {
+    //     // Ambil data mahasiswa berdasarkan NIM
+    //     $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
+
+    //     // Jika mahasiswa ditemukan
+    //     if ($mahasiswa) {
+    //         // Cek kelengkapan data diri mahasiswa
+    //         $checkNull = is_null($mahasiswa->telp_mhs) || is_null($mahasiswa->ipk) || is_null($mahasiswa->transkrip_nilai);
+
+    //         // Ambil status mahasiswa, pengajuan, dan pengumuman
+    //         $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
+    //         $pengajuans = Pengajuan::where('id_mhs', $mahasiswa->id)->get();
+    //         $pengumumans = Pengumuman::orderBy('published_at', 'asc')->get();
+    //     } else {
+    //         // Jika mahasiswa tidak ditemukan, set variabel default
+    //         $checkNull = true;
+    //         $status = null;
+    //         $pengajuans = collect(); // Menggunakan koleksi kosong
+    //         $pengumumans = collect(); // Menggunakan koleksi kosong
+    //     }
+
+    //     // Kembalikan view dengan data yang dibutuhkan
+    //     return view('mahasiswa.dashboard', compact('mahasiswa', 'status', 'pengajuans', 'checkNull', 'pengumumans'));
+    // }
+
     public function index()
     {
         // $mahasiswa = Auth::user()->mahasiswa;
         $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
         $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
         $pengajuans = Pengajuan::where('id_mhs', $mahasiswa->id)->get();
-        $checkNull = false;
-        if ($mahasiswa) {
-            $columns = Schema::getColumnListing('mahasiswas');
+        // $checkNull = false;
+        // if ($mahasiswa) {
+        //     $columns = Schema::getColumnListing('mahasiswas');
 
-            foreach ($columns as $column) {
-                if (is_null($mahasiswa->$column)) {
-                    $checkNull = true;
-                    break;
-                }
-            }
-        }
+        //     foreach ($columns as $column) {
+        //         if (is_null($mahasiswa->$column)) {
+        //             $checkNull = true;
+        //             break;
+        //         }
+        //     }
+        // }
+
+        $checkNull = is_null($mahasiswa->telp_mhs) || is_null($mahasiswa->ipk) || is_null($mahasiswa->transkrip_nilai);
 
         $pengumumans = Pengumuman::orderBy('published_at', 'asc')->get();
 
