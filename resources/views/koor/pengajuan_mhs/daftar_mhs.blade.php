@@ -65,9 +65,15 @@
                                         <form action="{{ route('update-list') }}" method="post" enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $pj->id }}">
-                                            <button type="submit" name="status" class="btn btn-success" value="ACC">
-                                                <i class="fa-regular fa-circle-check"></i> 
-                                            </button>
+                                                @if ($pj->dosen->dosen->sisa_kuota > 0)
+                                                <button type="submit" name="status" class="btn btn-success" value="ACC">
+                                                    <i class="fa-regular fa-circle-check"></i> 
+                                                </button>
+                                            @else
+                                                <button type="button" class="btn btn-secondary" disabled>
+                                                    <i class="fa-regular fa-circle-check"></i> 
+                                                </button>
+                                            @endif
                                         </form>
                                         <button type="submit" name="status" class="btn btn-danger delete-button ms-2" value="TOLAK" id="rejectButton_{{ $pj->id }}">
                                             <i class="fa-regular fa-circle-xmark"></i>
