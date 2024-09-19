@@ -103,7 +103,7 @@ class MahasiswaImport implements ToModel, WithHeadingRow
                 'id_mhs' => $mahasiswa->id,
                 'id_dsn' => $dosen->id,
                 'status' => 'ACC',
-                'pengajuan' => 0,
+                'pengajuan' => 1,
             ]);
 
             // Update table dosen_pembimbings

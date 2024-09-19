@@ -13,7 +13,7 @@ class Pengajuan extends Model
     protected $fillable = [
         'id_mhs',
         'id_dsn',
-        'kategori_bidang',
+        // 'kategori_bidang',
         'judul',
         'perusahaan',
         'posisi',

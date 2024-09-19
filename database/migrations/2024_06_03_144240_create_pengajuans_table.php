@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_mhs');
             $table->unsignedBigInteger('id_dsn');
-            $table->enum('kategori_bidang', ['Web_Development', 'Application_Development', 'Game_Development', 'Data_Analysis', 'Artificial_Intelligence']);
+            // $table->enum('kategori_bidang', ['Web_Development', 'Application_Development', 'Game_Development', 'Data_Analysis', 'Artificial_Intelligence']);
             $table->string('judul')->nullable();
-            $table->string('perusahaan');
-            $table->string('posisi');
+            $table->string('perusahaan')->nullable();
+            $table->string('posisi')->nullable();
             // $table->longText('deskripsi')->nullable();
             $table->date('tanggal_mulai')->nullable(); 
             $table->date('tanggal_selesai')->nullable();

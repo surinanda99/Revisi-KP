@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\DosenPembimbing;
 use App\Models\StatusMahasiswa;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 
 class PengajuanController extends Controller
 {
@@ -33,13 +34,13 @@ class PengajuanController extends Controller
         }])->get();
 
         // Update jumlah_ajuan for each Dosen
-        foreach ($filteredDosen as $dosen) {
-            if ($dosen->dosen) {
-                // Count the number of Pengajuan related to the Dosen
-                $dosen->dosen->jumlah_ajuan = Pengajuan::where('id_dsn', $dosen->id)->count();
-                $dosen->dosen->save();
-            }
-        }
+        // foreach ($filteredDosen as $dosen) {
+        //     if ($dosen->dosen) {
+        //         // Count the number of Pengajuan related to the Dosen
+        //         $dosen->dosen->jumlah_ajuan = Pengajuan::where('id_dsn', $dosen->id)->count();
+        //         $dosen->dosen->save();
+        //     }
+        // }
 
         // Filter out Dosen with sisa_kuota <= 0
         $filteredDosen = $filteredDosen->filter(function($dosen) {
@@ -83,28 +84,43 @@ class PengajuanController extends Controller
             ->first();
     
         // Default data setup
-        $data = [
-            'id_dospem' => $mahasiswa->id_dsn ? $mahasiswa->id_dsn : $request->id_dospem,
-            'judul' => $pengajuan ? $pengajuan->judul : $request->judul,
-            'perusahaan' => $pengajuan ? $pengajuan->perusahaan : $request->perusahaan,
-            'posisi' => $pengajuan ? $pengajuan->posisi : $request->posisi,
-            'tanggal_mulai' => $pengajuan ? $pengajuan->tanggal_mulai : $request->tanggal_mulai,
-            'tanggal_selesai' => $pengajuan ? $pengajuan->tanggal_selesai : $request->tanggal_selesai,
-        ];
-
-        // dd($data);
+        if ($pengajuan) {
+            $data = [
+                'id_dospem' => $mahasiswa->id_dsn ? $mahasiswa->id_dsn : $request->id_dospem,
+                'judul' => $pengajuan->judul ? $pengajuan->judul : $request->judul,
+                'perusahaan' => $pengajuan->perusahaan ? $pengajuan->perusahaan : $request->perusahaan,
+                'posisi' => $pengajuan->perusahaan ? $pengajuan->posisi : $request->posisi,
+                'tanggal_mulai' => $pengajuan->tanggal_mulai ? $pengajuan->tanggal_mulai : $request->tanggal_mulai,
+                'tanggal_selesai' => $pengajuan->tanggal_selesai ? $pengajuan->tanggal_selesai : $request->tanggal_selesai,
+            ];
+        } else {
+            $data = [
+                'id_dospem' => $mahasiswa->id_dsn ? $mahasiswa->id_dsn : $request->id_dospem,
+                'judul' => $pengajuan ? $pengajuan->judul : $request->judul,
+                'perusahaan' => $pengajuan ? $pengajuan->perusahaan : $request->perusahaan,
+                'posisi' => $pengajuan ? $pengajuan->posisi : $request->posisi,
+                'tanggal_mulai' => $pengajuan ? $pengajuan->tanggal_mulai : $request->tanggal_mulai,
+                'tanggal_selesai' => $pengajuan ? $pengajuan->tanggal_selesai : $request->tanggal_selesai,
+            ];
+        }
 
         if ($status->id_dsn != 0) {
-            // Fetch dosen pembimbing
             $dospil = Dosen::where('id', $mahasiswa->id_dsn)->first();
-            // dd($dospil);
         } else {
-            if ($pengajuan) {
-                $dospil = Dosen::where('id', $pengajuan->id_dsn)->first();
-            } else {
-                $dospil = Dosen::where('id', $request->id_dospem)->first();
-            }
+            $dospil = $pengajuan ? Dosen::where('id', $pengajuan->id_dsn)->first() : Dosen::where('id', $request->id_dospem)->first();
         }
+
+        // if ($status->id_dsn != 0) {
+        //     // Fetch dosen pembimbing
+        //     $dospil = Dosen::where('id', $mahasiswa->id_dsn)->first();
+        //     // dd($dospil);
+        // } else {
+        //     if ($pengajuan) {
+        //         $dospil = Dosen::where('id', $pengajuan->id_dsn)->first();
+        //     } else {
+        //         $dospil = Dosen::where('id', $request->id_dospem)->first();
+        //     }
+        // }
     
         // Fetch history of rejected pengajuan
         $history = Pengajuan::with('dosen')
@@ -122,6 +138,17 @@ class PengajuanController extends Controller
     
         $checkDosen = $request->id_dospem;
 
+        $checkPengajuan = false;
+        if ($pengajuan) {
+            $columns = Schema::getColumnListing('pengajuans');
+            foreach ($columns as $column) {
+                if (is_null($pengajuan->$column) && $column !== 'alasan') {
+                    $checkPengajuan = true;
+                    break;
+                }
+            }
+        }
+
         // Return draft pengajuan view with necessary data
         return view('mahasiswa.pengajuan_kp.draftPengajuan', compact(
             'data',
@@ -131,7 +158,8 @@ class PengajuanController extends Controller
             'history',
             'statusMessage',
             'pengajuan',
-            'checkDosen' // Ensure $pengajuan is available in the view
+            'checkDosen',
+            'checkPengajuan' // Ensure $pengajuan is available in the view
         ));
     }
 
@@ -141,23 +169,36 @@ class PengajuanController extends Controller
         $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
         $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
         
-        $statusPengajuan = 'PENDING';
+        // $statusPengajuan = 'PENDING';
+        $statusPengajuan = $mahasiswa->id_dsn ? 'ACC' : 'PENDING';
 
-        if ($mahasiswa->id_dsn != null) {
-            $statusPengajuan = 'ACC';
-            
+        // if ($mahasiswa->id_dsn != null) {
+        //     $statusPengajuan = 'ACC';
+        // }
+
+        // Cek apakah ini adalah pengajuan baru atau edit
+        $pengajuan = Pengajuan::where('id_mhs', $status->id_mhs)->first();
+
+        if (!$pengajuan) {
+            // Jika tidak ada pengajuan sebelumnya, maka kita tambahkan 1 ke field pengajuan
+            $status->pengajuan = 1; // Tetap 1 untuk pengajuan baru
+            $status->save();
+        } else {
+            // Jika pengajuan sudah ada, pastikan pengajuan tetap 1
+            $status->pengajuan = 1;
+            $status->save();
         }
 
         // Save or update pengajuan
         $pengajuan = Pengajuan::updateOrCreate(
             ['id_mhs' => $status->id_mhs],
             [
-                'id_dsn' => $data['id_dsn'], // Menggunakan id_dospem yang dikirimkan dari form
-                'judul' => $data['judul'],
-                'perusahaan' => $data['perusahaan'],
-                'posisi' => $data['posisi'],
-                'tanggal_mulai' => $data['tanggal_mulai'],
-                'tanggal_selesai' => $data['tanggal_selesai'],
+                'id_dsn' => $data['id_dsn'],
+                'judul' => $data['judul'] ?? null,
+                'perusahaan' => $data['perusahaan'] ?? null,
+                'posisi' => $data['posisi'] ?? null,
+                'tanggal_mulai' => $data['tanggal_mulai'] ?? null,
+                'tanggal_selesai' => $data['tanggal_selesai'] ?? null,
                 'status' => $statusPengajuan,
             ]
         );
@@ -188,8 +229,12 @@ class PengajuanController extends Controller
             event(new PengajuanKP($mahasiswa, $dsn));    
         // }
 
-        $status->pengajuan++;
-        $status->save();
+        // $dosen = DosenPembimbing::where('id_dsn', $pengajuan->id_dsn)->first();
+        // $dosen->jumlah_ajuan++;
+        // $dosen->save();
+
+        // $status->pengajuan++;
+        // $status->save();
 
         return redirect()->route('pengajuan-mahasiswa');
     }

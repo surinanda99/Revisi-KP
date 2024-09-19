@@ -224,6 +224,10 @@
                             <blockquote class="blockquote-primary">
                                 <p class="mb-3"><b>Status: Draft</b> - Untuk mengajukan Kerja Praktek ke dosen pembimbing, klik tombol Ajukan di bawah</p>
                             </blockquote>
+                        @elseif ($checkPengajuan && $status->id_dsn != 0)
+                            <blockquote class="blockquote-primary">
+                                <p class="mb-3"><b>Status: Disetujui</b> - Silahkan Lengkapi Pengajuan Dengan Klik Edit </p>
+                            </blockquote>
                         @else
                             <blockquote class="blockquote-primary">
                                 <p class="mb-3"><b>Status: Disetujui</b> - Untuk tahap selanjutnya, silahkan melakukan bimbingan dengan dosen pembimbing dengan melakukan pengisian logbook bimbingan </p>
@@ -337,6 +341,34 @@
                                 <input type="hidden" name="id_dsn" value="{{ $data['id_dospem'] }}">
                                 <button type="submit" class="btn btn-warning me-2">Edit</button>
                             </form>
+                            @if ($checkDosen)
+                                <form action="{{ route('mahasiswa-pengajuan-submit') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="judul" value="{{ $data['judul'] }}">
+                                    <input type="hidden" name="perusahaan" value="{{ $data['perusahaan'] }}">
+                                    <input type="hidden" name="posisi" value="{{ $data['posisi'] }}">
+                                    <input type="hidden" name="tanggal_mulai" value="{{ $data['tanggal_mulai'] }}">
+                                    <input type="hidden" name="tanggal_selesai" value="{{ $data['tanggal_selesai'] }}">
+                                    <input type="hidden" name="id_dsn" value="{{ $data['id_dospem'] }}">
+                                    <button type="submit" class="btn btn-primary me-2">Ajukan</button>
+                                </form>
+                            @endif
+                        @else
+                            @if ($checkDosen)
+                                <a href="{{ route('pengajuan-mahasiswa') }}" class="btn btn-danger me-2">Hapus</a>
+                            @endif
+                            @if ($checkPengajuan)
+                                <form action="{{ route('form-pengajuan-mahasiswa') }}" method="GET">
+                                    @csrf
+                                    <input type="hidden" name="judul" value="{{ $data['judul'] }}">
+                                    <input type="hidden" name="perusahaan" value="{{ $data['perusahaan'] }}">
+                                    <input type="hidden" name="posisi" value="{{ $data['posisi'] }}">
+                                    <input type="hidden" name="tanggal_mulai" value="{{ $data['tanggal_mulai'] }}">
+                                    <input type="hidden" name="tanggal_selesai" value="{{ $data['tanggal_selesai'] }}">
+                                    <input type="hidden" name="id_dsn" value="{{ $data['id_dospem'] }}">
+                                    <button type="submit" class="btn btn-warning me-2">Edit</button>
+                                </form>
+                            @endif
                             @if ($checkDosen)
                                 <form action="{{ route('mahasiswa-pengajuan-submit') }}" method="POST">
                                     @csrf

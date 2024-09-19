@@ -393,7 +393,7 @@
                                     {{ $item->judul }}
                                 @endif
                             </td>
-                            // Bagian dari table body
+                            <!-- Bagian dari table body -->
                             <td class="centered-column">
                                 @php
                                     // Cek kuota dosen
