@@ -387,11 +387,19 @@ class KoorController extends Controller
         // Ambil data DosenPembimbing untuk dosen tersebut
         $dosenPembimbing = DosenPembimbing::findOrFail($dosenId);
 
-        // Tambahkan jumlah ajuan sesuai jumlah mahasiswa yang benar-benar dipilih
-        $dosenPembimbing->jumlah_ajuan += count($mahasiswaIds);
-
         foreach ($mahasiswaIds as $mahasiswaId) {
             if ($mahasiswaId) {
+                // Cek apakah mahasiswa sudah memiliki dosen pembimbing
+                $mahasiswa = Mahasiswa::find($mahasiswaId);
+
+                if ($mahasiswa && $mahasiswa->id_dsn != 0 && $mahasiswa->id_dsn != null) {
+                    // Jika mahasiswa sudah memiliki dosen pembimbing, tampilkan pesan error
+                    return redirect()->back()->with('error', 'Mahasiswa dengan NIM ' . $mahasiswa->nim . ' sudah memiliki dosen pembimbing.');
+                }
+
+                // Update id_dsn pada tabel mahasiswas untuk mencatat dosen pembimbing
+                $mahasiswa->update(['id_dsn' => $dosenId]);
+
                 // Cek apakah mahasiswa sudah ada di status_mahasiswas
                 $statusMahasiswa = StatusMahasiswa::where('id_mhs', $mahasiswaId)->first();
 
