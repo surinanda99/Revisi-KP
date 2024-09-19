@@ -43,6 +43,7 @@ class KoorController extends Controller
         $dosen = Dosen::with('dosen')->get();
         // $dosen = Dosen::with('dosenPeriodik.status')->get();
 
+      
         // Menghitung jumlah mahasiswa yang telah menyelesaikan setiap bab
         $logbooks = LogbookBimbingan::selectRaw('bab, COUNT(*) as total')
             ->groupBy('bab')
@@ -50,7 +51,10 @@ class KoorController extends Controller
             ->get()
             ->keyBy('bab');
 
-        return view('koor.dashboard', compact('mahasiswa', 'dosen', 'logbooks'));
+            
+
+            
+            return view('koor.dashboard', compact('mahasiswa', 'dosen', 'logbooks'));
     }
 
     public function daftar_data_dosen()

@@ -27,9 +27,9 @@
             <div id="nav-tab-pengajuan" class="tab-pane fade show active">
                 <div class="container">
                     <h4 class="mb-4">Pengajuan Kerja Praktek</h4>
-                    <blockquote class="blockquote-primary">
+                    {{-- <blockquote class="blockquote-primary">
                         <p class="mb-3">Form dengan tanda asterik (<span class="required">*</span>) wajib diisi.</p>
-                    </blockquote>
+                    </blockquote> --}}
                     <form action="{{ route('draft-pengajuan-mahasiswa') }}" method="GET">
                         @csrf
                         <input type="hidden" name="id_dospem" value="{{ $data['id_dsn'] }}">
@@ -88,7 +88,7 @@
                         </div> --}}
                         <div class="form-group row mb-3">
                             <label for="inputJudul" class="col-sm-2 col-form-label">Judul<span
-                                    class="required">*</span></label>
+                                    class="required"></span></label>
                             <div class="col-sm-10">
                                 <input type="judul" name="judul" class="form-control" id="inputJudul"
                                     placeholder="Masukkan Judul KP" value="{{ $data['judul'] }}">
