@@ -26,8 +26,8 @@ class BimbinganController extends Controller
                             $pengajuan->alasan = $request->alasan;
                             $pengajuan->save();
             
-                            $dsnStatus->jumlah_ajuan--;
-                            $dsnStatus->save();
+                            // $dsnStatus->jumlah_ajuan--;
+                            // $dsnStatus->save();
             
                             // activity()
                             //     ->inLog('pengajuan')

@@ -254,69 +254,122 @@ class DosenPembimbingController extends Controller
         return view('dosen.pengajuan_sidang.pengajuan_sidang_mhs', compact('pengajuan_sidangs'));
     }
 
+    // public function dash()
+    // {
+    //     // Mengambil id dosen yang sedang login
+    //     $dosen = Dosen::where('npp', auth()->user()->npp)->first();
+
+    //     $checkNull = false;
+
+    //     if ($dosen && (is_null($dosen->email) || $dosen->email === '')) {
+    //         $checkNull = true;
+    //     }
+
+    //     // Get the DosenPembimbing related to the Dosen
+    //     // $dosenPembimbing = $dosen->dosen;
+    //     $dosenPembimbing = DosenPembimbing::where('id_dsn', $dosen->id)->first();
+        
+    //     // Mendapatkan data Mahasiswa KP
+    //     $jumlahAjuan = Pengajuan::where('id_dsn', $dosenPembimbing->id)->count();
+        
+    //     // Menghitung jumlah ajuan yang diterima
+    //     $ajuanDiterima = Pengajuan::where('id_dsn', $dosenPembimbing->id)
+    //         ->where('status', 'ACC') // Filter by accepted status
+    //         ->count();
+
+    //     $ajuanDitolak = Pengajuan::where('id_dsn', $dosenPembimbing->id)
+    //         ->where('status', 'TOLAK')
+    //         ->count();
+
+    //     // Mengurangi sisa kuota berdasarkan jumlah ajuan yang diterima
+    //     $dosenPembimbing->sisa_kuota = $dosenPembimbing->kuota - $ajuanDiterima;
+    //     $dosenPembimbing->status = $dosenPembimbing->sisa_kuota > 0 ? 'tersedia' : 'penuh';
+
+    //     // Simpan perubahan pada DosenPembimbing
+    //     $dosenPembimbing->save();
+
+    //     $logbook = LogbookBimbingan::with('mahasiswa')->where('id_dsn', $dosen->id)->get();
+    //     $status = StatusMahasiswa::all();
+    //     $mhs = Mahasiswa::all();
+
+    //     $user = User::where('npp', auth()->user()->npp)->first();
+
+    //     $activities = Activity::where('causer_id', $user->id)
+    //         ->get();
+
+    //     // Mendapatkan data dari tabel logbook dan mengelompokkan berdasarkan bab
+    //     $logbooks = LogbookBimbingan::select('bab', DB::raw('count(*) as total'))
+    //         // ->where('dosen_id', $dosen->id_dsn)
+    //         ->groupBy('bab')
+    //         ->get();
+
+    //     // Mendapatkan data Mahasiswa TA1 & TA2
+    //     $kpCount = StatusMahasiswa::where('bab_terakhir', '>', 0)->count();
+
+    //     return view('dosen.dashboard', compact(
+    //         'dosen', 
+    //         'checkNull',
+    //         'logbook', 
+    //         'status', 
+    //         'mhs', 
+    //         'logbooks', 
+    //         'kpCount',
+    //         'activities', 
+    //         'jumlahAjuan',
+    //         'ajuanDiterima',
+    //         'ajuanDitolak'
+    //     ));
+    // }
+
     public function dash()
     {
         // Mengambil id dosen yang sedang login
         $dosen = Dosen::where('npp', auth()->user()->npp)->first();
-
+    
         $checkNull = false;
-
+    
         if ($dosen && (is_null($dosen->email) || $dosen->email === '')) {
             $checkNull = true;
         }
-
-        // Get the DosenPembimbing related to the Dosen
-        // $dosenPembimbing = $dosen->dosen;
+    
+        // Ambil DosenPembimbing untuk dosen yang sedang login
         $dosenPembimbing = DosenPembimbing::where('id_dsn', $dosen->id)->first();
-        
-        // Mendapatkan data Mahasiswa KP
-        $jumlahAjuan = Pengajuan::where('id_dsn', $dosenPembimbing->id)->count();
-        
-        // Menghitung jumlah ajuan yang diterima
-        $ajuanDiterima = Pengajuan::where('id_dsn', $dosenPembimbing->id)
-            ->where('status', 'ACC') // Filter by accepted status
-            ->count();
-
-        $ajuanDitolak = Pengajuan::where('id_dsn', $dosenPembimbing->id)
-            ->where('status', 'TOLAK')
-            ->count();
-
-        // Mengurangi sisa kuota berdasarkan jumlah ajuan yang diterima
-        $dosenPembimbing->sisa_kuota = $dosenPembimbing->kuota - $ajuanDiterima;
-        $dosenPembimbing->status = $dosenPembimbing->sisa_kuota > 0 ? 'tersedia' : 'penuh';
-
-        // Simpan perubahan pada DosenPembimbing
+    
+        // Hitung jumlah ajuan yang diterima
+        $ajuanDiterima = StatusMahasiswa::where('id_dsn', $dosen->id)->where('status', 'ACC')->count();
+    
+        // Hitung jumlah ajuan yang ditolak
+        $ajuanDitolak = Pengajuan::where('id_dsn', $dosen->id)->where('status', 'TOLAK')->count();
+    
+        // Hitung sisa kuota
+        $sisaKuota = $dosenPembimbing->kuota - $ajuanDiterima;
+    
+        // Perbarui data di DosenPembimbing
+        $dosenPembimbing->ajuan_diterima = $ajuanDiterima;
+        $dosenPembimbing->sisa_kuota = $sisaKuota;
         $dosenPembimbing->save();
-
+    
+        // Data lainnya
         $logbook = LogbookBimbingan::with('mahasiswa')->where('id_dsn', $dosen->id)->get();
         $status = StatusMahasiswa::all();
         $mhs = Mahasiswa::all();
-
         $user = User::where('npp', auth()->user()->npp)->first();
-
-        $activities = Activity::where('causer_id', $user->id)
-            ->get();
-
-        // Mendapatkan data dari tabel logbook dan mengelompokkan berdasarkan bab
+        $activities = Activity::where('causer_id', $user->id)->get();
         $logbooks = LogbookBimbingan::select('bab', DB::raw('count(*) as total'))
-            // ->where('dosen_id', $dosen->id_dsn)
             ->groupBy('bab')
             ->get();
-
-        // Mendapatkan data Mahasiswa TA1 & TA2
         $kpCount = StatusMahasiswa::where('bab_terakhir', '>', 0)->count();
-
+    
         return view('dosen.dashboard', compact(
             'dosen', 
             'checkNull',
+            'dosenPembimbing', // Pastikan ini dikirim ke view
             'logbook', 
             'status', 
             'mhs', 
             'logbooks', 
             'kpCount',
-            'activities', 
-            'jumlahAjuan',
-            'ajuanDiterima',
+            'activities',
             'ajuanDitolak'
         ));
     }
@@ -324,7 +377,9 @@ class DosenPembimbingController extends Controller
     public function updateDataDiri(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required'
+            'email' => 'required',
+            'bidang_kajian' => 'required',
+            'telp' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -333,6 +388,8 @@ class DosenPembimbingController extends Controller
 
         $dosen = Dosen::where('npp', auth()->user()->npp)->first();
         $dosen->email = $request->email;
+        $dosen->bidang_kajian = $request->bidang_kajian;
+        $dosen->telp = $request->telp;
         $dosen->save();
 
         // Temukan user yang terkait dengan dosen
@@ -342,6 +399,8 @@ class DosenPembimbingController extends Controller
         if ($user) {
             // Perbarui email di tabel user
             $user->email = $request->email;
+            // $user->bidang_kajian = $request->bidang_kajian;
+            // $user->telp = $request->telp;
             $user->save();
         } else {
             // Tambahkan penanganan jika user tidak ditemukan

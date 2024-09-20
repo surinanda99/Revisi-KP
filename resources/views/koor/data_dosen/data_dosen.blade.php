@@ -80,6 +80,7 @@
                     <th class="align-middle">Kuota Mhs KP baru</th>
                     <th class="align-middle">Jumlah Ajuan</th>
                     <th class="align-middle">Ajuan Diterima</th>
+                    <th class="align-middle">Ajuan Ditolak</th>
                     <th class="align-middle">Sisa Kuota</th>
                     <th class="align-middle">Status</th>
                     <th class="align-middle">Aksi</th>
@@ -96,6 +97,7 @@
                             </td>
                             <td class="centered-column">{{ $dosen->jumlah_ajuan }}</td>
                             <td class="centered-column">{{ $dosen->ajuan_diterima }}</td>
+                            <td class="centered-column">{{ $dosen->ajuan_ditolak }}</td>
                             <td class="centered-column" id="sisa-kuota-{{ $dosen->id }}">{{ $dosen->sisa_kuota }}</td>
                             <td class="centered-column" id="status-dosen-{{ $dosen->id }}">
                                 @if($dosen->sisa_kuota == 0)

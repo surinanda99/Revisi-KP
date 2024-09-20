@@ -17,8 +17,8 @@ class DosenImport implements ToModel, WithHeadingRow
             ['npp' => $row['npp']],
             [
                 'nama' => $row['nama'],
-                'bidang_kajian' => $row['bidang_kajian'],
-                'telp' => $row['telp'],
+                // 'bidang_kajian' => $row['bidang_kajian'],
+                // 'telp' => $row['telp'],
             ]
         );
 
@@ -26,7 +26,8 @@ class DosenImport implements ToModel, WithHeadingRow
         if ($dosen->wasRecentlyCreated) {
             DosenPembimbing::create([
                 'id_dsn' => $dosen->id,
-                'kuota' => $row['kuota'],
+                // 'kuota' => 0
+                // 'kuota' => $row['kuota'],
             ]);
         }
 
@@ -36,7 +37,7 @@ class DosenImport implements ToModel, WithHeadingRow
             [
                 'nim' => null,
                 'email' => $row['email'] ?? null,
-                'password' => bcrypt('Dinus-123'),
+                'password' => bcrypt('DSN_PmbNG+$&KP__357%'),
             ]
         );
 

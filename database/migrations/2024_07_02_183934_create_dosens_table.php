@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('nama');
             $table->string('npp')->unique();
             $table->string('email')->unique()->nullable();
-            $table->enum('bidang_kajian', ['SC', 'RPLD']);
+            // $table->enum('bidang_kajian', ['SC', 'RPLD']);
+            $table->string('bidang_kajian')->nullable();
             $table->string('telp')->nullable();
             $table->timestamps();
         });

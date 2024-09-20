@@ -32,8 +32,8 @@ class RoleSeeder extends Seeder
             // ['nim' => 'A11.2021.13472', 'password' => bcrypt('Dinus-123'), 'role' => 'mahasiswa'],
             // ['nim' => 'A11.2021.13489', 'password' => bcrypt('Dinus-123'), 'role' => 'mahasiswa'],
             // ['npp' => '0686.11.2012.444', 'password' => bcrypt('Dinus-123'), 'role' => 'dosen'],
-            ['npp' => '0686.11.2013.532', 'password' => bcrypt('Dinus-123'), 'role' => 'dosen'],
-            ['email' => 'koordinator@kerja.praktek', 'password' => bcrypt('kp-koor-123'), 'role' => 'koor'], // Koordinator login by email
+            // ['npp' => '0686.11.2013.532', 'password' => bcrypt('Dinus-123'), 'role' => 'dosen'],
+            ['email' => 'koordinator@kerja.praktek', 'password' => bcrypt('Koor_&KP_+TI-357'), 'role' => 'koor'], // Koordinator login by email
             // ['npp' => '000000000', 'password' => bcrypt('Dinus-123'), 'role' => 'admin'],
         ];
         

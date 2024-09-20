@@ -70,12 +70,17 @@ class KoorController extends Controller
         // }
 
         // Ambil semua data DosenPembimbing dengan relasi Dosen
-        $dosens = DosenPembimbing::with('dosen')->get();
+        $dosens = DosenPembimbing::with('dosen', 'dosen.pengajuan')->get();
 
         foreach ($dosens as $dosen) {
             // Hitung jumlah ajuan diterima berdasarkan mahasiswa yang statusnya ACC
             $ajuanDiterima = StatusMahasiswa::where('id_dsn', $dosen->dosen->id)
                 ->where('status', 'ACC')
+                ->count();
+
+            // Hitung jumlah ajuan ditolak
+            $ajuanDitolak = Pengajuan::where('id_dsn', $dosen->dosen->id)
+                ->where('status', 'TOLAK')
                 ->count();
 
             // Hitung sisa kuota
@@ -85,6 +90,8 @@ class KoorController extends Controller
             $dosen->ajuan_diterima = $ajuanDiterima;
             $dosen->sisa_kuota = $sisaKuota;
             $dosen->save();
+
+            $dosen->ajuan_ditolak = $ajuanDitolak;
         }
 
         return view('koor.data_dosen.data_dosen', compact('dosens'));

@@ -81,6 +81,28 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
+                                    <label for="inputBidangkajian" class="col-sm-2 col-form-label">Bidang Kajian<span class="required">*</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control @error('bidang_kajian') is-invalid @enderror" name="bidang_kajian" id="inputBidangkajian" placeholder="Masukkan Bidang Kajian Anda" value="{{ old('bidang_kajian') ? old('bidang_kajian') : $dosen->bidang_kajian }}">
+                                        @error('bidang_kajian')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label for="inputTelp" class="col-sm-2 col-form-label">Telepon<span class="required">*</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="tel" class="form-control @error('telp') is-invalid @enderror" name="telp" id="inputTelp" placeholder="Masukkan Nomor Telepon Anda" value="{{ old('telp') ? old('telp') : $dosen->telp }}">
+                                        @error('telp')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
                                     <div class="col-sm-10 offset-sm-2 text-end">
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
@@ -172,11 +194,11 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td style="padding: 5px;">{{ $dosen->dosen->kuota }}</td>
-                                                    <td style="padding: 5px;">{{ $jumlahAjuan }}</td>
-                                                    <td style="padding: 5px;">{{ $ajuanDiterima }}</td>
+                                                    <td style="padding: 5px;">{{ $dosenPembimbing->kuota }}</td>
+                                                    <td style="padding: 5px;">{{ $dosenPembimbing->jumlah_ajuan }}</td>
+                                                    <td style="padding: 5px;">{{ $dosenPembimbing->ajuan_diterima }}</td>
                                                     <td style="padding: 5px;">{{ $ajuanDitolak }}</td>
-                                                    <td style="padding: 5px;">{{ $dosen->dosen->sisa_kuota }}</td>
+                                                    <td style="padding: 5px;">{{ $dosenPembimbing->sisa_kuota }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>

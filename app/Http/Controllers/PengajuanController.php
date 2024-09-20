@@ -163,33 +163,207 @@ class PengajuanController extends Controller
         ));
     }
 
+    // public function store(Request $request)
+    // {
+    //     $data = $request->all();
+    //     $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
+    //     $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
+        
+    //     // Mendapatkan dosen berdasarkan id_dsn yang diterima dari request
+    //     $dosen = Dosen::find($data['id_dsn']); // Pastikan 'id_dsn' ada dalam $data
+
+    //     if ($dosen) {
+    //         $dosenPembimbing = DosenPembimbing::where('id_dsn', $dosen->id)->first();
+    //         $dosenPembimbing->jumlah_ajuan++;
+    //         $dosenPembimbing->save();
+    //     } else {
+    //         // Tangani jika dosen tidak ditemukan
+    //         return redirect()->back()->with('error', 'Dosen tidak ditemukan.');
+    //     }
+        
+    //     // $statusPengajuan = 'PENDING';
+    //     $statusPengajuan = $mahasiswa->id_dsn ? 'ACC' : 'PENDING';
+
+    //     // if ($mahasiswa->id_dsn != null) {
+    //     //     $statusPengajuan = 'ACC';
+    //     // }
+
+    //     // Cek apakah ini adalah pengajuan baru atau edit
+    //     $pengajuan = Pengajuan::where('id_mhs', $status->id_mhs)->first();
+
+    //     if (!$pengajuan) {
+    //         // Jika tidak ada pengajuan sebelumnya, maka kita tambahkan 1 ke field pengajuan
+    //         $dosenPembimbing->jumlah_ajuan = 1; 
+    //         $dosenPembimbing->save();
+            
+    //         $status->pengajuan = 1; // Tetap 1 untuk pengajuan baru
+    //         $status->save();
+    //     } else {
+    //         // Jika pengajuan sudah ada, pastikan pengajuan tetap 1
+    //         $status->pengajuan = 1;
+    //         $status->save();
+    //     }
+
+    //     // Save or update pengajuan
+    //     $pengajuan = Pengajuan::updateOrCreate(
+    //         ['id_mhs' => $status->id_mhs],
+    //         [
+    //             'id_dsn' => $data['id_dsn'],
+    //             'judul' => $data['judul'] ?? null,
+    //             'perusahaan' => $data['perusahaan'] ?? null,
+    //             'posisi' => $data['posisi'] ?? null,
+    //             'tanggal_mulai' => $data['tanggal_mulai'] ?? null,
+    //             'tanggal_selesai' => $data['tanggal_selesai'] ?? null,
+    //             'status' => $statusPengajuan,
+    //         ]
+    //     );
+        
+    //     // Log activity
+    //     activity()
+    //         ->inLog('Pengajuan')
+    //         ->causedBy(auth()->user())
+    //         ->performedOn($pengajuan)
+    //         ->withProperties(['id_dsn' => $data['id_dsn'], 'id_mhs' => $status->id_mhs])
+    //         ->log('Melakukan pengajuan Kerja Praktek');
+        
+    //     // Update dosen pembimbing data
+    //     // if ($status->id_dsn != 0) {
+    //         // if (isset($data['id_dsn'])) {
+    //         //     $dosen = DosenPembimbing::where('id_dsn', $data['id_dsn'])->first();
+    //         //     Log::info('Before Update:', ['id_dsn' => $data['id_dsn'], 'jumlah_ajuan' => $dosen->jumlah_ajuan]);
+    //         //     if ($dosen) {
+    //         //         $dosen->jumlah_ajuan = $dosen->jumlah_ajuan + 1;
+    //         //         $dosen->save();
+
+    //         //         Log::info('After Update:', ['id_dsn' => $data['id_dsn'], 'jumlah_ajuan' => $dosen->jumlah_ajuan]);
+    //         //     }
+    //         // }
+            
+    //         // Trigger event
+    //         $dsn = Dosen::where('id', $data['id_dsn'])->first();
+    //         event(new PengajuanKP($mahasiswa, $dsn));    
+    //     // }
+
+    //     // $dosen = DosenPembimbing::where('id_dsn', $pengajuan->id_dsn)->first();
+    //     // $dosen->jumlah_ajuan++;
+    //     // $dosen->save();
+
+    //     // $status->pengajuan++;
+    //     // $status->save();
+
+    //     return redirect()->route('pengajuan-mahasiswa');
+    // }
+
+    // solving 1 bug niko
+    // public function store(Request $request)
+    // {
+    //     $data = $request->all();
+    //     $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
+    //     $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
+    
+    //     // Mendapatkan dosen berdasarkan id_dsn yang diterima dari request
+    //     $dosen = Dosen::find($data['id_dsn']); // Pastikan 'id_dsn' ada dalam $data
+    
+    //     if (!$dosen) {
+    //         return redirect()->back()->with('error', 'Dosen tidak ditemukan.');
+    //     }
+    
+    //     $dosenPembimbing = DosenPembimbing::where('id_dsn', $dosen->id)->first();
+    
+    //     // Cek apakah ini adalah pengajuan baru atau edit
+    //     $pengajuan = Pengajuan::where('id_mhs', $status->id_mhs)->first();
+    
+    //     // Jika tidak ada pengajuan sebelumnya, set jumlah_ajuan menjadi 1
+    //     if (!$pengajuan) {
+    //         $dosenPembimbing->jumlah_ajuan = 1; 
+    //         $dosenPembimbing->save();
+    
+    //         $status->pengajuan = 1; // Tetap 1 untuk pengajuan baru
+    //         $status->save();
+    //     } else {
+    //         // Jika pengajuan sudah ada, tetap jaga status pengajuan di 1
+    //         $status->pengajuan = 1;
+    //         $status->save();
+    //     }
+    
+    //     // Save or update pengajuan
+    //     // Jika pengajuan dikosongkan (judul dan lain-lain), kita tetap ingin menambah jumlah_ajuan
+    //     if (empty($data['judul']) && empty($data['perusahaan']) && empty($data['posisi'])) {
+    //         $dosenPembimbing->jumlah_ajuan++; // Tambah jumlah_ajuan
+    //         $dosenPembimbing->save();
+    //     }
+    
+    //     $pengajuan = Pengajuan::updateOrCreate(
+    //         ['id_mhs' => $status->id_mhs],
+    //         [
+    //             'id_dsn' => $data['id_dsn'],
+    //             'judul' => $data['judul'] ?? null,
+    //             'perusahaan' => $data['perusahaan'] ?? null,
+    //             'posisi' => $data['posisi'] ?? null,
+    //             'tanggal_mulai' => $data['tanggal_mulai'] ?? null,
+    //             'tanggal_selesai' => $data['tanggal_selesai'] ?? null,
+    //             'status' => $mahasiswa->id_dsn ? 'ACC' : 'PENDING',
+    //         ]
+    //     );
+    
+    //     // Log activity
+    //     activity()
+    //         ->inLog('Pengajuan')
+    //         ->causedBy(auth()->user())
+    //         ->performedOn($pengajuan)
+    //         ->withProperties(['id_dsn' => $data['id_dsn'], 'id_mhs' => $status->id_mhs])
+    //         ->log('Melakukan pengajuan Kerja Praktek');
+    
+    //     // Trigger event
+    //     event(new PengajuanKP($mahasiswa, $dosen));
+    
+    //     return redirect()->route('pengajuan-mahasiswa');
+    // }
+
+    // solving 2
     public function store(Request $request)
     {
         $data = $request->all();
         $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
         $status = StatusMahasiswa::where('id_mhs', $mahasiswa->id)->first();
-        
-        // $statusPengajuan = 'PENDING';
-        $statusPengajuan = $mahasiswa->id_dsn ? 'ACC' : 'PENDING';
 
-        // if ($mahasiswa->id_dsn != null) {
-        //     $statusPengajuan = 'ACC';
-        // }
+        // Mendapatkan dosen berdasarkan id_dsn yang diterima dari request
+        $dosen = Dosen::find($data['id_dsn']); // Pastikan 'id_dsn' ada dalam $data
+        
+        if (!$dosen) {
+            return redirect()->back()->with('error', 'Dosen tidak ditemukan.');
+        }
+
+        $dosenPembimbing = DosenPembimbing::where('id_dsn', $dosen->id)->first();
+
+        if (!$dosenPembimbing) {
+            return redirect()->back()->with('error', 'Dosen pembimbing belum terdaftar.');
+        }
 
         // Cek apakah ini adalah pengajuan baru atau edit
         $pengajuan = Pengajuan::where('id_mhs', $status->id_mhs)->first();
 
+        // Jika pengajuan tidak ada, artinya ini pengajuan baru
         if (!$pengajuan) {
-            // Jika tidak ada pengajuan sebelumnya, maka kita tambahkan 1 ke field pengajuan
-            $status->pengajuan = 1; // Tetap 1 untuk pengajuan baru
-            $status->save();
-        } else {
-            // Jika pengajuan sudah ada, pastikan pengajuan tetap 1
+            // Cek apakah data judul, perusahaan, dan posisi kosong (ini bisa dianggap pengajuan kosong)
+            if (empty($data['judul']) && empty($data['perusahaan']) && empty($data['posisi'])) {
+                $dosenPembimbing->jumlah_ajuan++; // Tambahkan jumlah ajuan
+            }
+
+            // Tetapkan status pengajuan baru
             $status->pengajuan = 1;
             $status->save();
         }
 
-        // Save or update pengajuan
+        // Logika update pengajuan: jika judul, perusahaan, atau posisi diisi, maka itu edit pengajuan
+        if (!empty($data['judul']) || !empty($data['perusahaan']) || !empty($data['posisi'])) {
+            // Jika pengajuan sudah ada sebelumnya, dan sekarang judul, perusahaan, posisi diisi, kita anggap sebagai edit
+            if ($pengajuan) {
+                // Jangan tambahkan jumlah ajuan jika ini hanya edit
+            }
+        }
+
+        // Update or create pengajuan
         $pengajuan = Pengajuan::updateOrCreate(
             ['id_mhs' => $status->id_mhs],
             [
@@ -199,46 +373,27 @@ class PengajuanController extends Controller
                 'posisi' => $data['posisi'] ?? null,
                 'tanggal_mulai' => $data['tanggal_mulai'] ?? null,
                 'tanggal_selesai' => $data['tanggal_selesai'] ?? null,
-                'status' => $statusPengajuan,
+                'status' => $mahasiswa->id_dsn ? 'ACC' : 'PENDING',
             ]
         );
-        
-        // Log activity
+
+        // Simpan perubahan jumlah ajuan ke dosen pembimbing jika perlu
+        $dosenPembimbing->save();
+
+        // Log aktivitas pengajuan
         activity()
             ->inLog('Pengajuan')
             ->causedBy(auth()->user())
             ->performedOn($pengajuan)
             ->withProperties(['id_dsn' => $data['id_dsn'], 'id_mhs' => $status->id_mhs])
             ->log('Melakukan pengajuan Kerja Praktek');
-        
-        // Update dosen pembimbing data
-        // if ($status->id_dsn != 0) {
-            // if (isset($data['id_dsn'])) {
-            //     $dosen = DosenPembimbing::where('id_dsn', $data['id_dsn'])->first();
-            //     Log::info('Before Update:', ['id_dsn' => $data['id_dsn'], 'jumlah_ajuan' => $dosen->jumlah_ajuan]);
-            //     if ($dosen) {
-            //         $dosen->jumlah_ajuan = $dosen->jumlah_ajuan + 1;
-            //         $dosen->save();
 
-            //         Log::info('After Update:', ['id_dsn' => $data['id_dsn'], 'jumlah_ajuan' => $dosen->jumlah_ajuan]);
-            //     }
-            // }
-            
-            // Trigger event
-            $dsn = Dosen::where('id', $data['id_dsn'])->first();
-            event(new PengajuanKP($mahasiswa, $dsn));    
-        // }
+        // Trigger event
+        event(new PengajuanKP($mahasiswa, $dosen));
 
-        // $dosen = DosenPembimbing::where('id_dsn', $pengajuan->id_dsn)->first();
-        // $dosen->jumlah_ajuan++;
-        // $dosen->save();
-
-        // $status->pengajuan++;
-        // $status->save();
-
-        return redirect()->route('pengajuan-mahasiswa');
+        return redirect()->route('pengajuan-mahasiswa')->with('success', 'Pengajuan berhasil disimpan.');
     }
-
+    
     public function show($id_dospem)
     {
         $dosen = Dosen::find($id_dospem);

@@ -28,7 +28,7 @@
                 <div class="container">
                     <h4 class="mb-4">Pengajuan Kerja Praktek</h4>
                     <blockquote class="blockquote-primary">
-                        <p class="mb-3">Form dengan tanda asterik (<span class="required">*</span>) wajib diisi.</p>
+                        <p class="mb-3">Jika sudah magang, silahkan isi. Jika belum maka tidak wajib diisi.</p>
                     </blockquote>
                     <form action="{{ route('draft-pengajuan-mahasiswa') }}" method="GET">
                         @csrf
@@ -87,11 +87,10 @@
                             </div>
                         </div> --}}
                         <div class="form-group row mb-3">
-                            <label for="inputJudul" class="col-sm-2 col-form-label">Judul<span
-                                    class="required">*</span></label>
+                            <label for="inputJudul" class="col-sm-2 col-form-label">Judul</label>
                             <div class="col-sm-10">
                                 <input type="judul" name="judul" class="form-control" id="inputJudul"
-                                    placeholder="Masukkan Judul KP" value="{{ $data['judul'] }}">
+                                    placeholder="Masukkan judul KP. Jika belum ada judul KP, masukkan projek yang dikerjakan disini" value="{{ $data['judul'] }}">
                             </div>
                         </div>
                         <div class="form-group row mb-3">
