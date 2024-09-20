@@ -46,12 +46,12 @@
                     <span>Monitoring Sidang Kp</span>
                 </a>
             </li>
-            <li class="sidebar-item">
+            {{-- <li class="sidebar-item">
                 <a href="{{ route('koor-plotting') }}" class="sidebar-link">
                     <i class="fa fa-chart-bar"></i>
                     <span>Plotting Dosen</span>
                 </a>
-            </li>
+            </li> --}}
             <li class="sidebar-item">
                 <a href="{{ route('log_dosen') }}" class="sidebar-link">
                     <i class="fas fa-user-tie"></i>
