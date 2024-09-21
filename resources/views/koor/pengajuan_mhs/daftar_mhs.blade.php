@@ -101,64 +101,64 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var deleteButtons = document.querySelectorAll('.delete-button');
-    
-            deleteButtons.forEach(function (button) {
-                button.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    var id = this.id.split('_')[1]; // Ambil ID pengajuan dari ID tombol
-    
-                    Swal.fire({
-                        title: 'Apakah Anda yakin?',
-                        text: "Pengajuan ini akan ditolak!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Ya, tolak!',
-                        cancelButtonText: 'Batal'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            console.log({id: id, status: 'TOLAK'})
-                            fetch('/update-mahasiswa', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                },
-                                body: JSON.stringify({id: id, status: 'TOLAK'})
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.status === 'success') {
-                                    Swal.fire('Success!', 'Pengajuan berhasil ditolak', 'success');
-                                    // Lakukan tindakan tambahan setelah berhasil (misalnya, refresh tabel)
-                                    location.reload(); // Contoh: Refresh halaman setelah berhasil
-                                } else {
-                                    Swal.fire('Error!', 'Terjadi kesalahan saat menolak pengajuan.', 'error');
-                                }
-                            });
-                        } else if (result.dismiss === Swal.DismissReason.cancel) {
-                            Swal.fire('Canceled!', 'Pengajuan gagal ditolak', 'error');
-                        }
-                    });
+    document.addEventListener('DOMContentLoaded', function () {
+        var deleteButtons = document.querySelectorAll('.delete-button');
+
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                var id = this.id.split('_')[1]; // Ambil ID pengajuan dari ID tombol
+
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: "Pengajuan ini akan ditolak!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, tolak!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log({id: id, status: 'TOLAK'});
+                        fetch('{{ route("update-list") }}', { // Ganti URL dengan route name
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({id: id, status: 'TOLAK'})
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                Swal.fire('Success!', 'Pengajuan berhasil ditolak', 'success');
+                                location.reload(); // Refresh halaman setelah berhasil
+                            } else {
+                                Swal.fire('Error!', 'Terjadi kesalahan saat menolak pengajuan.', 'error');
+                            }
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        Swal.fire('Canceled!', 'Pengajuan gagal ditolak', 'error');
+                    }
                 });
             });
-    
-            setTimeout(function() {
-                var successAlert = document.getElementById('success-alert');
-                if (successAlert) {
-                    successAlert.style.display = 'none';
-                }
-    
-                var errorAlert = document.getElementById('error-alert');
-                if (errorAlert) {
-                    errorAlert.style.display = 'none';
-                }
-            }, 3000);
         });
-    </script>
+
+        setTimeout(function() {
+            var successAlert = document.getElementById('success-alert');
+            if (successAlert) {
+                successAlert.style.display = 'none';
+            }
+
+            var errorAlert = document.getElementById('error-alert');
+            if (errorAlert) {
+                errorAlert.style.display = 'none';
+            }
+        }, 3000);
+    });
+</script>
+
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>

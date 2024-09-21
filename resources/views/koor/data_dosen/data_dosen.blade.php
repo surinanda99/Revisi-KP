@@ -162,9 +162,9 @@
             $('.kuota-edit').on('change', function() {
                 var id = $(this).data('id');
                 var newKuota = $(this).val();
-
+    
                 $.ajax({
-                    url: '/update-kuota/' + id,
+                    url: "{{ route('updateKuota', '') }}/" + id, 
                     type: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -178,10 +178,10 @@
                             timer: 1500,
                             showConfirmButton: false
                         });
-
+    
                         // Update the remaining quota (sisa kuota)
                         $('#sisa-kuota-' + id).text(response.sisa_kuota);
-
+    
                         // Update the status of the dosen (full or available)
                         if (response.sisa_kuota == 0) {
                             $('#status-dosen-' + id).html('<span class="badge bg-danger">Penuh</span>');
@@ -202,12 +202,12 @@
                     }
                 });
             });
-
+    
             // Function to handle click on edit button
             $('.btn-edit').click(function() {
                 var id = $(this).data('id');
                 $.ajax({
-                    url: '/edit-dosen/' + id,
+                    url: "{{ route('editDosen', '') }}/" + id, // Menggunakan route Laravel
                     type: 'GET',
                     success: function(response) {
                         $('#editDosenId').val(response.id);
@@ -222,21 +222,22 @@
                     }
                 });
             });
-
+    
             // Function to handle click on delete button
             $('.btn-delete').click(function() {
                 var id = $(this).data('id');
                 $('#dialogHapusDosen_' + id).modal('show');
             });
         });
-
+    
+        // Function for searching in the table
         function searchTable() {
             var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById("searchBar");
             filter = input.value.toUpperCase();
             table = document.querySelector(".table");
             tr = table.getElementsByTagName("tr");
-
+    
             for (i = 1; i < tr.length; i++) {
                 td = tr[i].getElementsByTagName("td")[2]; // Kolom nama dosen (kolom ke-3)
                 if (td) {
@@ -249,20 +250,21 @@
                 }
             }
         }
-
+    
+        // Hide success/error alerts after 3 seconds
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 var successAlert = document.getElementById('success-alert');
                 if (successAlert) {
                     successAlert.style.display = 'none';
                 }
-
+    
                 var errorAlert = document.getElementById('error-alert');
                 if (errorAlert) {
                     errorAlert.style.display = 'none';
                 }
             }, 3000);
         });
-
     </script>
+    
 @endsection

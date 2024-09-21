@@ -87,7 +87,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var detailModal = new bootstrap.Modal(document.getElementById('detailPengumumanModal'));
-
+    
             document.querySelectorAll('.btn-warning[data-toggle="modal"][data-target="#detailPengumumanModal"]')
                 .forEach(function(button) {
                     button.addEventListener('click', function(event) {
@@ -96,9 +96,9 @@
                         fetchPengumumanDetail(pengumumanId);
                     });
                 });
-
+    
             function fetchPengumumanDetail(id) {
-                fetch('/detail-pengumuman/' + id, {
+                fetch('{{ route("koor-pengumuman.show", ":id") }}'.replace(':id', id), {
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -117,14 +117,14 @@
                     alert('Terjadi kesalahan saat mengambil data pengumuman.');
                 });
             }
-
+    
             document.getElementById('detailPengumumanModal').addEventListener('hidden.bs.modal', function() {
                 console.log('Modal hidden event triggered');
                 document.body.classList.remove('modal-open');
                 console.log('modal-open class removed from body');
                 removeBackdrop();
             });
-
+    
             function removeBackdrop() {
                 console.log('Attempting to remove backdrop');
                 const backdrop = document.querySelector('.modal-backdrop');
@@ -135,13 +135,13 @@
                     console.log('No backdrop found');
                 }
             }
-
+    
             document.querySelectorAll('[data-bs-dismiss="modal"]').forEach(function(button) {
                 button.addEventListener('click', function() {
                     detailModal.hide();
                 });
             });
-
+    
             setTimeout(function() {
                 var successAlert = document.getElementById('success-alert');
                 if (successAlert) {
@@ -167,6 +167,7 @@
             });
         });
     </script>
+    
 
     @include('koor.pengumuman.crud_pengumuman');
 @endsection

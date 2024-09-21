@@ -76,7 +76,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     // Route::get('/draft', [MahasiswaController::class, 'draft_penilaian']);
     Route::get('/Profil/{id}', [MahasiswaController::class, 'profil'])->name('halamanProfil');
     Route::get('/riwayat', [MahasiswaController::class, 'riwayat'])->name('riwayatPengajuan');
-    Route::get('/profilmhs', [MahasiswaController::class, 'datadiri']);
+    Route::get('/profilmhs', [MahasiswaController::class, 'datadiri'])->name('profilmahasiswa');
     Route::get('/pengajuan_sidang', [MahasiswaController::class, 'penilaian_sidang'])->name('pengajuanSidang');
 
     Route::get('/profile-penyelia', [MahasiswaController::class, 'profile_penyelia'])->name('profile_penyelia');

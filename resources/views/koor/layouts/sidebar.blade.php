@@ -71,12 +71,12 @@
                 </a>
             </li>
         </ul>
-        <div class="sidebar-footer">
+        {{-- <div class="sidebar-footer">
             <a href="/tentang" class="sidebar-link">
                 <i class="lni lni-code-alt"></i>
                 <span>Tentang</span>
             </a>
-        </div>
+        </div> --}}
         <div class="sidebar-footer">
             <a href="{{ route('logout') }}" class="sidebar-link">
                 <i class="lni lni-exit"></i>

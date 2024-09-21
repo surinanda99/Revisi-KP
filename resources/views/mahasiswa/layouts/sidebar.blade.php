@@ -56,7 +56,7 @@
             @endforeach --}}
         </ul>
         <div class="sidebar-footer">
-            <a href="/profilmhs" class="sidebar-link">
+            <a href="{{ route('profilmahasiswa') }}" class="sidebar-link">
                 <i class="fas fa-user"></i>
                 <span>Profil Mahasiswa</span>
             </a>

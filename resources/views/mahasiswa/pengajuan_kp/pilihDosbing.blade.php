@@ -170,7 +170,7 @@
                 var dosenId = button.getAttribute('data-id');
                 console.log(dosenId);
     
-                fetch('/dosen/' + dosenId)
+                fetch("{{ route('mahasiswa-pengajuan-detail-dosen', '') }}/" + dosenId)
                     .then(response => response.json())
                     .then(data => {
                         pilihModal.querySelector('#nama').value = data.nama;

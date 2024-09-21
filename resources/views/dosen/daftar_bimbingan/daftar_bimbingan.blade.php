@@ -527,7 +527,7 @@
             var deleteButtons = document.querySelectorAll('.delete-button');
             var rejectModal = new bootstrap.Modal(document.getElementById('rejectModal'));
             var rejectForm = document.getElementById('rejectForm');
-
+    
             deleteButtons.forEach(function (button) {
                 button.addEventListener('click', function (event) {
                     event.preventDefault();
@@ -536,12 +536,12 @@
                     rejectModal.show();
                 });
             });
-
+    
             rejectForm.addEventListener('submit', function (event) {
                 event.preventDefault();
                 var id = document.getElementById('rejectId').value;
                 var reason = document.getElementById('reason').value;
-
+    
                 if (reason) {
                     Swal.fire({
                         title: 'Apakah Anda yakin?',
@@ -554,7 +554,9 @@
                         cancelButtonText: 'Batal'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            fetch('/update-pengajuan', {
+                            var updatePengajuanUrl = "{{ route('update-bimbingan-mhs') }}";
+    
+                            fetch(updatePengajuanUrl, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -580,13 +582,13 @@
                     Swal.fire('Error!', 'Silakan isi alasan penolakan.', 'error');
                 }
             });
-
+    
             setTimeout(function() {
                 var successAlert = document.getElementById('success-alert');
                 if (successAlert) {
                     successAlert.style.display = 'none';
                 }
-
+    
                 var errorAlert = document.getElementById('error-alert');
                 if (errorAlert) {
                     errorAlert.style.display = 'none';
@@ -594,6 +596,7 @@
             }, 3000);
         });
     </script>
+    
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
