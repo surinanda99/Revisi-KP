@@ -4,10 +4,10 @@
     <div class="container-koor">
         <h4 class="mb-4">Data Dosen Pembimbing</h4>
 
-        <p class="mb-2 d-flex align-items-center">
+        <div class="row mb-2">
             <div class="col-md">
-                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogTambah"><i class="fas fa-plus"></i>Tambah Data</a>
-                <button class="btn btn-success ms-1" data-bs-toggle="modal" data-bs-target="#dialogImport"><i class="fas fa-file-import"></i>&nbsp;Import</button>
+                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogTambah"><i class="fas fa-plus"></i> Tambah Data</a>
+                <button class="btn btn-success ms-1" data-bs-toggle="modal" data-bs-target="#dialogImport"><i class="fas fa-file-import"></i> Import</button>
             </div>
 
             <!-- Search Bar -->
@@ -17,40 +17,40 @@
                     <input type="text" id="searchBar" class="form-control form-control-sm" placeholder="Cari Nama Dosen" onkeyup="searchTable()">
                 </div>
             </div>
+        </div>
 
-            <!-- Import Dosen Modal -->
-            <div class="modal fade" id="dialogImport" tabindex="-1" aria-labelledby="dialogImportLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <form method="POST" action="{{ route('importDosen') }}" class="modal-content" enctype="multipart/form-data">
-                        @csrf
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="dialogImportLabel">Import Data Dosen</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- Import Dosen Modal -->
+        <div class="modal fade" id="dialogImport" tabindex="-1" aria-labelledby="dialogImportLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form method="POST" action="{{ route('importDosen') }}" class="modal-content" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="dialogImportLabel">Import Data Dosen</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <a href="{{ route('templateDosen') }}" class="btn btn-info">
+                                <i class="fas fa-download"></i> Download Template Excel
+                            </a>
                         </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <a href="{{ route('templateDosen') }}" class="btn btn-info">
-                                    <i class="fas fa-download"></i> Download Template Excel
-                                </a>
-                            </div>
-                            <div>
-                                <label for="import" class="form-label fw-semibold">Data Excel</label>
-                                <input type="file" class="form-control @error('import') is-invalid @enderror" name="import" placeholder="Masukkan data excel" value="{{ old('import') }}">
-                                @error('import')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                        <div>
+                            <label for="import" class="form-label fw-semibold">Data Excel</label>
+                            <input type="file" class="form-control @error('import') is-invalid @enderror" name="import" placeholder="Masukkan data excel" value="{{ old('import') }}">
+                            @error('import')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
             </div>
-        </p>
+        </div>
 
         @if(session('success'))
             <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
@@ -73,17 +73,19 @@
         <div class="table-container table-logbook">
             <table class="table table-bordered">
                 <thead class="table-header">
-                    <th class="align-middle">No.</th>
-                    <th class="align-middle">NPP</th>
-                    <th class="align-middle">Nama Dosen Pembimbing</th>
-                    <th class="align-middle">Bidang Kajian</th>
-                    <th class="align-middle">Kuota Mhs KP baru</th>
-                    <th class="align-middle">Jumlah Ajuan</th>
-                    <th class="align-middle">Ajuan Diterima</th>
-                    <th class="align-middle">Ajuan Ditolak</th>
-                    <th class="align-middle">Sisa Kuota</th>
-                    <th class="align-middle">Status</th>
-                    <th class="align-middle">Aksi</th>
+                    <tr>
+                        <th class="align-middle">No.</th>
+                        <th class="align-middle">NPP</th>
+                        <th class="align-middle">Nama Dosen Pembimbing</th>
+                        <th class="align-middle">Bidang Kajian</th>
+                        <th class="align-middle">Kuota Mhs KP baru</th>
+                        <th class="align-middle">Jumlah Ajuan</th>
+                        <th class="align-middle">Ajuan Diterima</th>
+                        <th class="align-middle">Ajuan Ditolak</th>
+                        <th class="align-middle">Sisa Kuota</th>
+                        <th class="align-middle">Status</th>
+                        <th class="align-middle">Aksi</th>
+                    </tr>
                 </thead>
                 <tbody>
                     @foreach($dosens as $dosen)
@@ -139,25 +141,29 @@
         </nav>
     </div>
 
-    <!--Dialog tambah Dosen-->
+    <!-- Include all modals -->
     @include('koor.data_dosen.tambah')
-
-    <!--Dialog Detail Dosen-->
     @include('koor.data_dosen.detail_dosen')
-
-    <!--Dialog Edit Dosen-->
     @include('koor.data_dosen.edit')
-
-    <!--Dialog Hapus Dosen-->
     @include('koor.data_dosen.hapus')
 
+    <!-- jQuery and SweetAlert2 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        // Perubahan baru
         $(document).ready(function() {
+            // Inisialisasi Select2 ketika modal "Tambah Data Mahasiswa" dibuka
+            $('.modal').on('shown.bs.modal', function() {
+                $('.js-example-basic-single').select2({
+                    dropdownParent: $(this),
+                    width: '100%',
+                    placeholder: 'Pilih Mahasiswa',
+                    allowClear: true,
+                    minimumResultsForSearch: 0, // Tampilkan semua hasil tanpa harus mengetik
+                });
+            });
+
             // Handle kuota input change
             $('.kuota-edit').on('change', function() {
                 var id = $(this).data('id');
@@ -178,17 +184,17 @@
                             timer: 1500,
                             showConfirmButton: false
                         });
-    
+
                         // Update the remaining quota (sisa kuota)
                         $('#sisa-kuota-' + id).text(response.sisa_kuota);
-    
+
                         // Update the status of the dosen (full or available)
                         if (response.sisa_kuota == 0) {
                             $('#status-dosen-' + id).html('<span class="badge bg-danger">Penuh</span>');
-                            $('#row-' + id).addClass('bg-light text-muted'); // Add class to the row
+                            $('#row-' + id).addClass('bg-light text-muted');
                         } else {
                             $('#status-dosen-' + id).html('<span class="badge bg-success">Tersedia</span>');
-                            $('#row-' + id).removeClass('bg-light text-muted'); // Remove class from the row
+                            $('#row-' + id).removeClass('bg-light text-muted');
                         }
                     },
                     error: function(xhr) {
@@ -202,12 +208,12 @@
                     }
                 });
             });
-    
+
             // Function to handle click on edit button
             $('.btn-edit').click(function() {
                 var id = $(this).data('id');
                 $.ajax({
-                    url: "{{ route('editDosen', '') }}/" + id, // Menggunakan route Laravel
+                    url: '/edit-dosen/' + id,
                     type: 'GET',
                     success: function(response) {
                         $('#editDosenId').val(response.id);
@@ -222,7 +228,7 @@
                     }
                 });
             });
-    
+
             // Function to handle click on delete button
             $('.btn-delete').click(function() {
                 var id = $(this).data('id');
@@ -239,7 +245,7 @@
             tr = table.getElementsByTagName("tr");
     
             for (i = 1; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[2]; // Kolom nama dosen (kolom ke-3)
+                td = tr[i].getElementsByTagName("td")[2]; // Kolom nama dosen
                 if (td) {
                     txtValue = td.textContent || td.innerText;
                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
