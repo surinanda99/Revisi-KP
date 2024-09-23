@@ -85,38 +85,38 @@
 
                 <!-- Loop untuk Menampilkan Setiap Data Mahasiswa -->
                 @foreach($mahasiswas as $mahasiswa)
-                <tr>
-                    <td class="centered-column">{{ $loop->iteration }}</td>
-                    <td class="centered-column">{{ $mahasiswa->nim }}</td>
-                    <td class="centered-column">{{ $mahasiswa->nama }}</td>
-                    <td class="centered-column">{{ $mahasiswa->email }}</td>
-                    <td class="centered-column">
-                        @if($mahasiswa->statusMahasiswa && $mahasiswa->statusMahasiswa->dospem)
-                            {{ $mahasiswa->statusMahasiswa->dospem->nama }}
-                        @else
-                            Belum ada dosen pembimbing untuk mahasiswa ini.
-                        @endif
-                    </td>
-                    {{-- <td class="centered-column">
-                        @if($mahasiswa->dosen)
-                            {{ $mahasiswa->dosen->nama }}
-                        @else
-                            Belum ada dosen pembimbing untuk mahasiswa ini.
-                        @endif
-                    </td>                     --}}
-                    <td class="centered-column">{{ $mahasiswa->status_kp }}</td>
-                    <td class="centered-column">
-                        <button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataMahasiswa_{{ $mahasiswa->id }}">
-                            <i class="fas fa-info-circle"></i>
-                        </button>
-                        <button class="btn btn-warning me-1 btn-edit" data-id="{{ $mahasiswa->id }}" data-bs-toggle="modal" data-bs-target="#dialogEditMhs_{{ $mahasiswa->id }}">
-                            <i class="far fa-edit"></i>
-                        </button>
-                        <button class="btn btn-danger btn-delete" data-id="{{ $mahasiswa->id }}" data-bs-toggle="modal" data-bs-target="#dialogHapusMhs_{{ $mahasiswa->id }}">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
+                    <tr>
+                        <td class="centered-column">{{ $loop->iteration }}</td>
+                        <td class="centered-column">{{ $mahasiswa->nim }}</td>
+                        <td class="centered-column">{{ $mahasiswa->nama }}</td>
+                        <td class="centered-column">{{ $mahasiswa->email }}</td>
+                        <td class="centered-column">
+                            @if($mahasiswa->statusMahasiswa && $mahasiswa->statusMahasiswa->dospem)
+                                {{ $mahasiswa->statusMahasiswa->dospem->nama }}
+                            @else
+                                Belum ada dosen pembimbing untuk mahasiswa ini.
+                            @endif
+                        </td>
+                        {{-- <td class="centered-column">
+                            @if($mahasiswa->dosen)
+                                {{ $mahasiswa->dosen->nama }}
+                            @else
+                                Belum ada dosen pembimbing untuk mahasiswa ini.
+                            @endif
+                        </td>                     --}}
+                        <td class="centered-column">{{ $mahasiswa->status_kp }}</td>
+                        <td class="centered-column">
+                            <button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataMahasiswa_{{ $mahasiswa->id }}">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                            <button class="btn btn-warning me-1 btn-edit" data-id="{{ $mahasiswa->id }}" data-bs-toggle="modal" data-bs-target="#dialogEditMhs_{{ $mahasiswa->id }}">
+                                <i class="far fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger btn-delete" data-id="{{ $mahasiswa->id }}" data-bs-toggle="modal" data-bs-target="#dialogHapusMhs_{{ $mahasiswa->id }}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>

@@ -102,10 +102,10 @@ class KoorController extends Controller
         $validator = Validator::make($request->all(), [
             'npp' => 'required|string',
             'nama' => 'required|string',
-            'bidang_kajian' => 'required|in:RPLD,SC',
-            'kuota' => 'required|integer',
+            // 'bidang_kajian' => 'required|in:RPLD,SC',
+            // 'kuota' => 'required|integer',
             // 'email' => 'required|nullable|email',
-            'telp' => 'required|nullable|string',
+            // 'telp' => 'required|nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -117,8 +117,8 @@ class KoorController extends Controller
             'nama' => $request->nama,
             'npp' => $request->npp,
             // 'email' => $request->email, // Pastikan email dosen ada jika diperlukan
-            'bidang_kajian' => $request->bidang_kajian,
-            'telp' => $request->telp, // Pastikan nomor telepon ada jika diperlukan
+            // 'bidang_kajian' => $request->bidang_kajian,
+            // 'telp' => $request->telp, // Pastikan nomor telepon ada jika diperlukan
         ]);
 
         // DosenPembimbing::create([
@@ -132,7 +132,7 @@ class KoorController extends Controller
         // Simpan data dosen pembimbing
         DosenPembimbing::create([
             'id_dsn' => $dosen->id,
-            'kuota' => $request->kuota,
+            // 'kuota' => $request->kuota,
         ]);
 
         $user = User::create([
@@ -328,6 +328,7 @@ class KoorController extends Controller
     public function daftar_mhs()
     {
         $mahasiswas = Mahasiswa::all();
+
         return view('koor.data_mahasiswa.data_mahasiswa', compact('mahasiswas'));
     }
 

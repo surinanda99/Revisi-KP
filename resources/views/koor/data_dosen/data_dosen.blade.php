@@ -78,7 +78,7 @@
                         <th class="align-middle">NPP</th>
                         <th class="align-middle">Nama Dosen Pembimbing</th>
                         <th class="align-middle">Bidang Kajian</th>
-                        <th class="align-middle">Kuota Mhs KP baru</th>
+                        <th class="align-middle">Kuota Mhs KP</th>
                         <th class="align-middle">Jumlah Ajuan</th>
                         <th class="align-middle">Ajuan Diterima</th>
                         <th class="align-middle">Ajuan Ditolak</th>

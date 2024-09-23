@@ -35,7 +35,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group row mb-3">
+                        {{-- <div class="form-group row mb-3">
                             <label for="inputBidangKajian" class="col-sm-2 col-form-label">Bidang Kajian <span class="required">*</span></label>
                             <div class="col-sm-4">
                                 <select class="form-select @error('bidang_kajian') is-invalid @enderror" name="bidang_kajian" id="inputBidangKajian" aria-label="Bidang Kajian">
@@ -60,7 +60,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
                         {{-- <div class="form-group row mb-3">
                             <label for="inputEmail" class="col-sm-2 col-form-label">Email Dosen<span class="required">*</span></label>
                             <div class="col-sm-10">
@@ -72,7 +72,7 @@
                                 @enderror
                             </div>
                         </div> --}}
-                        <div class="form-group row mb-3">
+                        {{-- <div class="form-group row mb-3">
                             <label for="inputTelp" class="col-sm-2 col-form-label">Telepon Dosen<span class="required">*</span></label>
                             <div class="col-sm-10">
                                 <input type="tel" class="form-control @error('telp') is-invalid @enderror" name="telp" id="inputTelp" value="{{ old('telp') }}">
@@ -82,7 +82,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                             <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Tambah</button>
