@@ -13,7 +13,6 @@
             <!-- Search Bar -->
             <div class="col-md d-flex justify-content-end">
                 <div class="input-group" style="width: 400px;">
-                    <span class="input-group-text"><i class="fas fa-search"></i></span>
                     <input type="text" id="searchBar" class="form-control form-control-sm" placeholder="Cari Nama Dosen" onkeyup="searchTable()">
                 </div>
             </div>
