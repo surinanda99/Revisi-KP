@@ -9,14 +9,6 @@
             <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogTambah"><i class="fas fa-plus"></i>Tambah Data</a>
             <button class="btn btn-success ms-1" data-bs-toggle="modal" data-bs-target="#dialogImport"><i class="fas fa-file-import"></i>&nbsp;Import</button>
         </div>
-
-        <!-- Search Bar -->
-        <div class="col-md d-flex justify-content-end">
-            <div class="input-group" style="width: 400px;">
-                <span class="input-group-text"><i class="fas fa-search"></i></span>
-                <input type="text" id="searchBar" class="form-control form-control-sm" placeholder="Cari Nama Mahasiswa" onkeyup="searchTable()">
-            </div>
-        </div>
         
          <!-- Import Mahasiswa Modal -->
          <div class="modal fade" id="dialogImport" tabindex="-1" aria-labelledby="dialogImportLabel" aria-hidden="true">
@@ -70,73 +62,54 @@
         </div>
     @endif
 
-    <div class="table-container table-logbook">
-        <table class="table table-bordered">
-            <thead class="table-header">
-                <th class="align-middle">No.</th>
-                <th class="align-middle">NIM</th>
-                <th class="align-middle">Nama Mahasiswa</th>
-                <th class="align-middle">Email</th>
-                <th class="align-middle">Dosen Pembimbing</th>
-                <th class="align-middle">Status KP</th>
-                <th class="align-middle">Aksi</th>
-            </thead>
-            <tbody id="tableBody">
+    <div class="row my-4">
+        <div class="col-md">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover align-middle" id="mahasiswaTable">
+                    <thead class="table-header">
+                        <th class="align-middle">No.</th>
+                        <th class="align-middle">NIM</th>
+                        <th class="align-middle">Nama Mahasiswa</th>
+                        <th class="align-middle">Email</th>
+                        <th class="align-middle">Dosen Pembimbing</th>
+                        <th class="align-middle">Status KP</th>
+                        <th class="align-middle">Aksi</th>
+                    </thead>
+                    <tbody id="tableBody">
 
-                <!-- Loop untuk Menampilkan Setiap Data Mahasiswa -->
-                @foreach($mahasiswas as $mahasiswa)
-                    <tr>
-                        <td class="centered-column">{{ $loop->iteration }}</td>
-                        <td class="centered-column">{{ $mahasiswa->nim }}</td>
-                        <td class="centered-column">{{ $mahasiswa->nama }}</td>
-                        <td class="centered-column">{{ $mahasiswa->email }}</td>
-                        <td class="centered-column">
-                            @if($mahasiswa->statusMahasiswa && $mahasiswa->statusMahasiswa->dospem)
-                                {{ $mahasiswa->statusMahasiswa->dospem->nama }}
-                            @else
-                                Belum ada dosen pembimbing untuk mahasiswa ini.
-                            @endif
-                        </td>
-                        {{-- <td class="centered-column">
-                            @if($mahasiswa->dosen)
-                                {{ $mahasiswa->dosen->nama }}
-                            @else
-                                Belum ada dosen pembimbing untuk mahasiswa ini.
-                            @endif
-                        </td>                     --}}
-                        <td class="centered-column">{{ $mahasiswa->status_kp }}</td>
-                        <td class="centered-column">
-                            <button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataMahasiswa_{{ $mahasiswa->id }}">
-                                <i class="fas fa-info-circle"></i>
-                            </button>
-                            <button class="btn btn-warning me-1 btn-edit" data-id="{{ $mahasiswa->id }}" data-bs-toggle="modal" data-bs-target="#dialogEditMhs_{{ $mahasiswa->id }}">
-                                <i class="far fa-edit"></i>
-                            </button>
-                            <button class="btn btn-danger btn-delete" data-id="{{ $mahasiswa->id }}" data-bs-toggle="modal" data-bs-target="#dialogHapusMhs_{{ $mahasiswa->id }}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+                        <!-- Loop untuk Menampilkan Setiap Data Mahasiswa -->
+                        @foreach($mahasiswas as $mahasiswa)
+                            <tr>
+                                <td class="centered-column">{{ $loop->iteration }}</td>
+                                <td class="centered-column">{{ $mahasiswa->nim }}</td>
+                                <td class="centered-column">{{ $mahasiswa->nama }}</td>
+                                <td class="centered-column">{{ $mahasiswa->email }}</td>
+                                <td class="centered-column">
+                                    @if($mahasiswa->statusMahasiswa && $mahasiswa->statusMahasiswa->dospem)
+                                        {{ $mahasiswa->statusMahasiswa->dospem->nama }}
+                                    @else
+                                        Belum ada dosen pembimbing untuk mahasiswa ini.
+                                    @endif
+                                </td>
+                                <td class="centered-column">{{ $mahasiswa->status_kp }}</td>
+                                <td class="centered-column">
+                                    <button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataMahasiswa_{{ $mahasiswa->id }}">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                    <button class="btn btn-warning me-1 btn-edit" data-id="{{ $mahasiswa->id }}" data-bs-toggle="modal" data-bs-target="#dialogEditMhs_{{ $mahasiswa->id }}">
+                                        <i class="far fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-delete" data-id="{{ $mahasiswa->id }}" data-bs-toggle="modal" data-bs-target="#dialogHapusMhs_{{ $mahasiswa->id }}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <nav aria-label="pageNavigationLogbook">
-        <ul class="pagination justify-content-end">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link active" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
-    <!--
-    <button type="submit" class="btn btn-primary"><i class="fas fa-chevron-right"></i>Pengajuan Sidang</button>
-    -->
 </div>
 
 <!--Dialog detail mahasiswa-->
@@ -152,6 +125,27 @@
 @include('koor.data_mahasiswa.hapus')
 
 <script>
+    $(document).ready(function() {
+        $('#mahasiswaTable').DataTable({
+            "pageLength": 10,
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "language": {
+                "search": "Cari:",
+                "lengthMenu": "Tampilkan _MENU_ entri",
+                "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+                "infoEmpty": "Menampilkan 0 sampai 0 dari 0 entri",
+                "infoFiltered": "(disaring dari _MAX_ total entri)",
+                "zeroRecords": "Tidak ada data yang cocok",
+                "paginate": {
+                    "first": "Pertama",
+                    "last": "Terakhir",
+                    "next": "Selanjutnya",
+                    "previous": "Sebelumnya"
+                }
+            }
+        });
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
             var successAlert = document.getElementById('success-alert');

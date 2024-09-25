@@ -9,13 +9,6 @@
                 <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dialogTambah"><i class="fas fa-plus"></i> Tambah Data</a>
                 <button class="btn btn-success ms-1" data-bs-toggle="modal" data-bs-target="#dialogImport"><i class="fas fa-file-import"></i> Import</button>
             </div>
-
-            <!-- Search Bar -->
-            <div class="col-md d-flex justify-content-end">
-                <div class="input-group" style="width: 400px;">
-                    <input type="text" id="searchBar" class="form-control form-control-sm" placeholder="Cari Nama Dosen" onkeyup="searchTable()">
-                </div>
-            </div>
         </div>
 
         <!-- Import Dosen Modal -->
@@ -69,75 +62,64 @@
             </div>
         @endif
 
-        <div class="table-container table-logbook">
-            <table class="table table-bordered">
-                <thead class="table-header">
-                    <tr>
-                        <th class="align-middle">No.</th>
-                        <th class="align-middle">NPP</th>
-                        <th class="align-middle">Nama Dosen Pembimbing</th>
-                        <th class="align-middle">Bidang Kajian</th>
-                        <th class="align-middle">Kuota Mhs KP</th>
-                        <th class="align-middle">Jumlah Ajuan</th>
-                        <th class="align-middle">Ajuan Diterima</th>
-                        <th class="align-middle">Ajuan Ditolak</th>
-                        <th class="align-middle">Sisa Kuota</th>
-                        <th class="align-middle">Status</th>
-                        <th class="align-middle">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($dosens as $dosen)
-                        <tr id="row-{{ $dosen->id }}" class="{{ $dosen->sisa_kuota == 0 ? 'bg-light text-muted' : '' }}">
-                            <td class="centered-column">{{ $loop->iteration }}</td>
-                            <td class="centered-column">{{ $dosen->dosen->npp }}</td>
-                            <td class="centered-column">{{ $dosen->dosen->nama }}</td>
-                            <td class="centered-column">{{ $dosen->dosen->bidang_kajian }}</td>
-                            <td class="centered-column">
-                                <input type="number" class="form-control kuota-edit" data-id="{{ $dosen->id }}" value="{{ $dosen->kuota }}" style="width: 80px; text-align: center; margin: 0 auto;"/>
-                            </td>
-                            <td class="centered-column">{{ $dosen->jumlah_ajuan }}</td>
-                            <td class="centered-column">{{ $dosen->ajuan_diterima }}</td>
-                            <td class="centered-column">{{ $dosen->ajuan_ditolak }}</td>
-                            <td class="centered-column" id="sisa-kuota-{{ $dosen->id }}">{{ $dosen->sisa_kuota }}</td>
-                            <td class="centered-column" id="status-dosen-{{ $dosen->id }}">
-                                @if($dosen->sisa_kuota == 0)
-                                    <span class="badge bg-danger">Penuh</span>
-                                @else
-                                    <span class="badge bg-success">Tersedia</span>
-                                @endif
-                            </td>
-                            <td class="centered-column">
-                                <div class="d-inline">
-                                    <button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataDosen_{{ $dosen->id }}">
-                                        <i class="fas fa-info-circle"></i>
-                                    </button>
-                                    <button class="btn btn-warning me-1 btn-edit" data-id="{{ $dosen->id }}" data-bs-toggle="modal" data-bs-target="#dialogEditDosen_{{ $dosen->id }}">
-                                        <i class="far fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-delete" data-id="{{ $dosen->id }}" data-bs-toggle="modal" data-bs-target="#dialogHapusDosen_{{ $dosen->id }}">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        <div class="row my-4">
+            <div class="col-md">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover align-middle" id="dosenTable">
+                        <thead class="table-header">
+                            <th class="align-middle">No.</th>
+                            <th class="align-middle">NPP</th>
+                            <th class="align-middle">Nama Dosen Pembimbing</th>
+                            <th class="align-middle">Bidang Kajian</th>
+                            <th class="align-middle">Kuota Mhs KP</th>
+                            <th class="align-middle">Jumlah Ajuan</th>
+                            <th class="align-middle">Ajuan Diterima</th>
+                            <th class="align-middle">Ajuan Ditolak</th>
+                            <th class="align-middle">Sisa Kuota</th>
+                            <th class="align-middle">Status</th>
+                            <th class="align-middle">Aksi</th>
+                        </thead>
+                        <tbody>
+                            @foreach($dosens as $dosen)
+                                <tr id="row-{{ $dosen->id }}" class="{{ $dosen->sisa_kuota == 0 ? 'bg-light text-muted' : '' }}">
+                                    <td class="centered-column">{{ $loop->iteration }}</td>
+                                    <td class="centered-column">{{ $dosen->dosen->npp }}</td>
+                                    <td class="centered-column">{{ $dosen->dosen->nama }}</td>
+                                    <td class="centered-column">{{ $dosen->dosen->bidang_kajian }}</td>
+                                    <td class="centered-column">
+                                        <input type="number" class="form-control kuota-edit" data-id="{{ $dosen->id }}" value="{{ $dosen->kuota }}" style="width: 80px; text-align: center; margin: 0 auto;"/>
+                                    </td>
+                                    <td class="centered-column">{{ $dosen->jumlah_ajuan }}</td>
+                                    <td class="centered-column">{{ $dosen->ajuan_diterima }}</td>
+                                    <td class="centered-column">{{ $dosen->ajuan_ditolak }}</td>
+                                    <td class="centered-column" id="sisa-kuota-{{ $dosen->id }}">{{ $dosen->sisa_kuota }}</td>
+                                    <td class="centered-column" id="status-dosen-{{ $dosen->id }}">
+                                        @if($dosen->sisa_kuota == 0)
+                                            <span class="badge bg-danger">Penuh</span>
+                                        @else
+                                            <span class="badge bg-success">Tersedia</span>
+                                        @endif
+                                    </td>
+                                    <td class="centered-column">
+                                        <div class="d-inline">
+                                            <button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataDosen_{{ $dosen->id }}">
+                                                <i class="fas fa-info-circle"></i>
+                                            </button>
+                                            <button class="btn btn-warning me-1 btn-edit" data-id="{{ $dosen->id }}" data-bs-toggle="modal" data-bs-target="#dialogEditDosen_{{ $dosen->id }}">
+                                                <i class="far fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-delete" data-id="{{ $dosen->id }}" data-bs-toggle="modal" data-bs-target="#dialogHapusDosen_{{ $dosen->id }}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <nav aria-label="pageNavigationLogbook">
-            <ul class="pagination justify-content-end">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
-        </nav>
     </div>
 
     <!-- Include all modals -->
@@ -152,6 +134,26 @@
 
     <script>
         $(document).ready(function() {
+            // DataTable
+            $('#dosenTable').DataTable({
+                "pageLength": 10,
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "language": {
+                    "search": "Cari:",
+                    "lengthMenu": "Tampilkan _MENU_ entri",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+                    "infoEmpty": "Menampilkan 0 sampai 0 dari 0 entri",
+                    "infoFiltered": "(disaring dari _MAX_ total entri)",
+                    "zeroRecords": "Tidak ada data yang cocok",
+                    "paginate": {
+                        "first": "Pertama",
+                        "last": "Terakhir",
+                        "next": "Selanjutnya",
+                        "previous": "Sebelumnya"
+                    }
+                }
+            });
+
             // Inisialisasi Select2 ketika modal "Tambah Data Mahasiswa" dibuka
             $('.modal').on('shown.bs.modal', function() {
                 $('.js-example-basic-single').select2({
@@ -234,27 +236,6 @@
                 $('#dialogHapusDosen_' + id).modal('show');
             });
         });
-    
-        // Function for searching in the table
-        function searchTable() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("searchBar");
-            filter = input.value.toUpperCase();
-            table = document.querySelector(".table");
-            tr = table.getElementsByTagName("tr");
-    
-            for (i = 1; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[2]; // Kolom nama dosen
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-        }
     
         // Hide success/error alerts after 3 seconds
         document.addEventListener('DOMContentLoaded', function() {
