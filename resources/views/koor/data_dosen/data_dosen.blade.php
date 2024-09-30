@@ -116,7 +116,8 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                    </table>
+                    </table>      
+                    {{ $dosens->links() }}
                 </div>
             </div>
         </div>
@@ -134,25 +135,6 @@
 
     <script>
         $(document).ready(function() {
-            // DataTable
-            $('#dosenTable').DataTable({
-                "pageLength": 10,
-                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                "language": {
-                    "search": "Cari:",
-                    "lengthMenu": "Tampilkan _MENU_ entri",
-                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
-                    "infoEmpty": "Menampilkan 0 sampai 0 dari 0 entri",
-                    "infoFiltered": "(disaring dari _MAX_ total entri)",
-                    "zeroRecords": "Tidak ada data yang cocok",
-                    "paginate": {
-                        "first": "Pertama",
-                        "last": "Terakhir",
-                        "next": "Selanjutnya",
-                        "previous": "Sebelumnya"
-                    }
-                }
-            });
 
             // Inisialisasi Select2 ketika modal "Tambah Data Mahasiswa" dibuka
             $('.modal').on('shown.bs.modal', function() {

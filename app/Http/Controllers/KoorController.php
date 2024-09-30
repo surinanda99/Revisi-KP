@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\DetailPenilaian;
 use App\Models\DosenPembimbing;
 use App\Models\StatusMahasiswa;
-// use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Role;
 use App\Exports\ExportMahasiswa;
 use App\Imports\MahasiswaImport;
 use App\Models\LogbookBimbingan;
@@ -27,21 +27,8 @@ class KoorController extends Controller
 {
     public function index()
     {
-        // $role = Role::where('name', 'dosen')->first();
-        // $dosenIds = $role->users->pluck('id');
-
-        // $activities = Activity::whereIn('causer_id', $dosenIds)
-        //     ->with('causer.dosen')
-        //     ->get();
-
-        // $user = User::where('email', auth()->user()->email)->first();
-
-        // $activities = Activity::where('causer_id', $user->id)
-        //     ->get();
-
         $mahasiswa = Mahasiswa::all();
         $dosen = Dosen::with('dosen')->get();
-        // $dosen = Dosen::with('dosenPeriodik.status')->get();
 
         // Menghitung jumlah mahasiswa yang telah menyelesaikan setiap bab
         $logbooks = LogbookBimbingan::selectRaw('bab, COUNT(*) as total')
@@ -55,22 +42,9 @@ class KoorController extends Controller
 
     public function daftar_data_dosen()
     {
-        // $dosens = DosenPembimbing::all();
-        // $dosens = DosenPembimbing::with(['dosen', 'dosen.pengajuan'])->get();
-
-        // foreach ($dosens as $dosen) {
-        //     // Hitung ajuan_diterima dan sisa_kuota
-        //     $ajuanDiterima = $dosen->dosen->pengajuan()->where('status', 'ACC')->count();
-        //     $sisaKuota = $dosen->kuota - $ajuanDiterima;
-
-        //     // Perbarui data di database
-        //     $dosen->ajuan_diterima = $ajuanDiterima;
-        //     $dosen->sisa_kuota = $sisaKuota;
-        //     $dosen->save();
-        // }
-
         // Ambil semua data DosenPembimbing dengan relasi Dosen
-        $dosens = DosenPembimbing::with('dosen', 'dosen.pengajuan')->get();
+        $dosens = DosenPembimbing::with('dosen', 'dosen.pengajuan')->paginate(10);
+        // $dosens = DosenPembimbing::with('dosen', 'dosen.pengajuan')->get(); //perbedaan 
 
         foreach ($dosens as $dosen) {
             // Hitung jumlah ajuan diterima berdasarkan mahasiswa yang statusnya ACC
@@ -102,10 +76,6 @@ class KoorController extends Controller
         $validator = Validator::make($request->all(), [
             'npp' => 'required|string',
             'nama' => 'required|string',
-            // 'bidang_kajian' => 'required|in:RPLD,SC',
-            // 'kuota' => 'required|integer',
-            // 'email' => 'required|nullable|email',
-            // 'telp' => 'required|nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -116,18 +86,7 @@ class KoorController extends Controller
         $dosen = Dosen::create([
             'nama' => $request->nama,
             'npp' => $request->npp,
-            // 'email' => $request->email, // Pastikan email dosen ada jika diperlukan
-            // 'bidang_kajian' => $request->bidang_kajian,
-            // 'telp' => $request->telp, // Pastikan nomor telepon ada jika diperlukan
         ]);
-
-        // DosenPembimbing::create([
-        //     'id_dsn' => $request->id_dsn,
-        //     'npp' => $request->npp,
-        //     'nama' => $request->nama,
-        //     'bidang_kajian' => $request->bidang_kajian,
-        //     'kuota' => $request->kuota,
-        // ]);
 
         // Simpan data dosen pembimbing
         DosenPembimbing::create([
@@ -172,7 +131,6 @@ class KoorController extends Controller
 
     public function editDosen($id)
     {
-        // $dosen = DosenPembimbing::find($id);
         $dosen = DosenPembimbing::with('dosen')->findOrFail($id);
         return response()->json($dosen);
     }
@@ -184,8 +142,6 @@ class KoorController extends Controller
             'npp' => 'required|string',
             'nama' => 'required|string',
             'bidang_kajian' => 'required|in:RPLD,SC',
-            // 'kuota' => 'required|integer',
-            // 'email' => 'nullable|email',
             'telp' => 'nullable|string',
         ]);
 
@@ -221,19 +177,6 @@ class KoorController extends Controller
             // Jika user tidak ditemukan, tambahkan pesan kesalahan
             return redirect()->back()->with('error', 'User dengan NPP tersebut tidak ditemukan.');
         }
-
-        // Update data dosen pembimbing
-        // $dosen->update([
-        //     'kuota' => $request->input('kuota'),
-        // ]);
-
-        // Perbarui data dosen
-        // $dosen->update([
-        //     'npp' => $request->input('npp'),
-        //     'nama' => $request->input('nama'),
-        //     'bidang_kajian' => $request->input('bidang_kajian'),
-        //     'kuota' => $request->input('kuota'),
-        // ]);
 
         // Redirect kembali dengan pesan sukses
         return redirect()->back()->with('success', 'Data Dosen Pembimbing Berhasil Diperbarui.');
@@ -271,30 +214,6 @@ class KoorController extends Controller
             'sisa_kuota' => $dosenPembimbing->sisa_kuota
         ]);
 
-        // // Temukan dosen pembimbing yang akan diperbarui
-        // $dosen = DosenPembimbing::findOrFail($id);
-
-        // // Update kuota dosen
-        // $dosen->kuota = $request->input('kuota');
-
-        // // Hitung jumlah aplikasi diterima
-        // $ajuan_diterima = $dosen->dosen->pengajuan()->where('status', 'ACC')->count();
-
-        // // Update sisa kuota
-        // $sisa_kuota = max(0, $dosen->kuota - $ajuan_diterima); // Pastikan sisa kuota tidak negatif
-        // $dosen->sisa_kuota = $sisa_kuota;
-
-        // // Update status dosen
-        // $dosen->status = $sisa_kuota == 0 ? 'Penuh' : 'Tersedia';
-
-        // $dosen->save(); // Simpan perubahan
-
-        // // Redirect dengan pesan sukses
-        // return response()->json([
-        //     'success' => 'Kuota berhasil diperbarui',
-        //     'sisa_kuota' => $sisa_kuota,
-        //     'status' => $dosen->status
-        // ]);
     }
 
     public function deleteDosen($id)
@@ -337,11 +256,7 @@ class KoorController extends Controller
         $validator = Validator::make($request->all(), [
             'nim' => 'required|unique:mahasiswas',
             'nama' => 'required|string',
-            // 'ipk' => 'required',
-            // 'transkrip_nilai' => 'required',
-            // 'telp_mhs' => 'required',
             'email' => 'required|email|unique:mahasiswas',
-            // 'dosen_wali' => 'required|string',
             'status_kp' => 'required|string',
         ]);
 
@@ -352,11 +267,7 @@ class KoorController extends Controller
         $mahasiswa = Mahasiswa::create([
             'nim' => $request->nim,
             'nama' => $request->nama,
-            // 'ipk' => $request->ipk,
-            // 'transkrip_nilai' => $request->transkrip_nilai,
-            // 'telp_mhs' => $request->telp_mhs,
             'email' => $request->email,
-            // 'dosen_wali' => $request->dosen_wali,
             'status_kp' => $request->status_kp,
         ]);
 
@@ -365,12 +276,6 @@ class KoorController extends Controller
             'id_mhs' => $mahasiswa->id,
             'pengajuan' => 0,
         ]);
-
-        // Update kuota dosen setelah menambah mahasiswa baru pada Koor
-        // $dosenPembimbing = DosenPembimbing::find($request->id_dsn);
-        // $dosenPembimbing->jumlah_ajuan += 1; // Tambah jumlah ajuan
-        // $dosenPembimbing->sisa_kuota = $dosenPembimbing->kuota - $dosenPembimbing->jumlah_ajuan;
-        // $dosenPembimbing->save();
 
         $user = User::create([
             'nim' => $request->nim,
@@ -476,22 +381,13 @@ class KoorController extends Controller
         return Excel::download(new TemplateMahasiswaExport, 'template_mahasiswa.xlsx');
     }
 
-    // public function editMhs($id)
-    // {
-    //     $mahasiswas = Mahasiswa::find($id);
-    //     return view('koor.data_mahasiswa.edit_mhs', compact('mahasiswas'));
-    // }
-
     public function updateMhs(Request $request, $id)
     {
         // Validasi data yang diterima dari formulir
         $validator = Validator::make($request->all(), [
             'nim' => 'required',
             'nama' => 'required',
-            // 'ipk' => 'required',
-            // 'telp_mhs' => 'required',
             'email' => 'required',
-            // 'dosen_wali' => 'required',
             'status_kp' => 'required',
         ]);
 
@@ -510,10 +406,7 @@ class KoorController extends Controller
         $mahasiswas->update([
             'nim' => $request->input('nim'),
             'nama' => $request->input('nama'),
-            // 'ipk' => $request->input('ipk'),
-            // 'telp_mhs' => $request->input('telp_mhs'),
             'email' => $request->input('email'),
-            // 'dosen_wali' => $request->input('dosen_wali'),
             'status_kp' => $request->input('status_kp'),
         ]);
 
@@ -567,11 +460,6 @@ class KoorController extends Controller
 
         return view('koor.data_penyelia.data_penyelia', compact('detail_penilaians'));
     }
-
-    // public function dashboard()
-    // {
-    //     return view('koor.dashboard');
-    // }
 
     public function updateReviewKoor(Request $request, $id)
     {

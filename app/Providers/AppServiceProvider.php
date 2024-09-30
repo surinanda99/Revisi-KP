@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Mahasiswa; 
+use App\Models\Mahasiswa;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,5 +25,7 @@ class AppServiceProvider extends ServiceProvider
             $mahasiswas = Mahasiswa::all();
             $view->with('mahasiswas', $mahasiswas);
         });
+
+        Paginator::useBootstrapFive();
     }
 }
