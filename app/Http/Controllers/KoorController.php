@@ -40,12 +40,57 @@ class KoorController extends Controller
         return view('koor.dashboard', compact('mahasiswa', 'dosen', 'logbooks'));
     }
 
-    public function daftar_data_dosen()
+    // public function daftar_data_dosen()
+    // {
+    //     // Ambil semua data DosenPembimbing dengan relasi Dosen
+    //     $dosens = DosenPembimbing::with('dosen', 'dosen.pengajuan')->paginate(10);
+    //     // $dosens = DosenPembimbing::with('dosen', 'dosen.pengajuan')->get(); //perbedaan 
+
+    //     foreach ($dosens as $dosen) {
+    //         // Hitung jumlah ajuan diterima berdasarkan mahasiswa yang statusnya ACC
+    //         $ajuanDiterima = StatusMahasiswa::where('id_dsn', $dosen->dosen->id)
+    //             ->where('status', 'ACC')
+    //             ->count();
+
+    //         // Hitung jumlah ajuan ditolak
+    //         $ajuanDitolak = Pengajuan::where('id_dsn', $dosen->dosen->id)
+    //             ->where('status', 'TOLAK')
+    //             ->count();
+
+    //         // Hitung sisa kuota
+    //         $sisaKuota = $dosen->kuota - $ajuanDiterima;
+
+    //         // Perbarui data di DosenPembimbing
+    //         $dosen->ajuan_diterima = $ajuanDiterima;
+    //         $dosen->sisa_kuota = $sisaKuota;
+    //         $dosen->save();
+
+    //         $dosen->ajuan_ditolak = $ajuanDitolak;
+    //     }
+
+    //     return view('koor.data_dosen.data_dosen', compact('dosens'));
+    // }
+
+    public function daftar_data_dosen(Request $request)
     {
         // Ambil semua data DosenPembimbing dengan relasi Dosen
-        $dosens = DosenPembimbing::with('dosen', 'dosen.pengajuan')->paginate(10);
-        // $dosens = DosenPembimbing::with('dosen', 'dosen.pengajuan')->get(); //perbedaan 
+        $query = DosenPembimbing::with('dosen', 'dosen.pengajuan');
 
+        // Jika ada pencarian
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->whereHas('dosen', function($q) use ($search) {
+                $q->where('nama', 'LIKE', "%{$search}%");
+            });
+        }
+
+        // Tentukan jumlah data per halaman dari request atau gunakan default 10
+        $perPage = $request->get('length', 10); // Default 10
+
+        // Pagination
+        $dosens = $query->paginate($perPage);  // Menggunakan variabel $perPage
+
+        // Proses data untuk menghitung ajuan diterima, ditolak, dan sisa kuota
         foreach ($dosens as $dosen) {
             // Hitung jumlah ajuan diterima berdasarkan mahasiswa yang statusnya ACC
             $ajuanDiterima = StatusMahasiswa::where('id_dsn', $dosen->dosen->id)
@@ -65,9 +110,10 @@ class KoorController extends Controller
             $dosen->sisa_kuota = $sisaKuota;
             $dosen->save();
 
-            $dosen->ajuan_ditolak = $ajuanDitolak;
+            $dosen->ajuan_ditolak = $ajuanDitolak; 
         }
 
+        // Mengembalikan tampilan dengan data dosen
         return view('koor.data_dosen.data_dosen', compact('dosens'));
     }
 
