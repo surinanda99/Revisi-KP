@@ -65,7 +65,7 @@
         <div class="row my-4">
             <div class="col-md">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover align-middle" id="dosenTable">
+                    <table id="table-dosen" class="table table-bordered table-striped table-hover align-middle" id="dosenTable">
                         <thead class="table-header">
                             <th class="align-middle">No.</th>
                             <th class="align-middle">NPP</th>
@@ -251,6 +251,14 @@
                     errorAlert.style.display = 'none';
                 }
             }, 3000);
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // DataTable
+            $('#dosenTable').DataTable();
+
         });
     </script>
 @endsection
