@@ -45,7 +45,7 @@ class KoorController extends Controller
     //     // Ambil semua data DosenPembimbing dengan relasi Dosen
     //     $dosens = DosenPembimbing::with('dosen', 'dosen.pengajuan')->paginate(10);
     //     // $dosens = DosenPembimbing::with('dosen', 'dosen.pengajuan')->get(); //perbedaan 
-
+    
     //     foreach ($dosens as $dosen) {
     //         // Hitung jumlah ajuan diterima berdasarkan mahasiswa yang statusnya ACC
     //         $ajuanDiterima = StatusMahasiswa::where('id_dsn', $dosen->dosen->id)

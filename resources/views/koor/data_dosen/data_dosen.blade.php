@@ -20,7 +20,7 @@
                         <option value="10" {{ request()->get('length') == 10 ? 'selected' : '' }}>10</option>
                         <option value="25" {{ request()->get('length') == 25 ? 'selected' : '' }}>25</option>
                         <option value="50" {{ request()->get('length') == 50 ? 'selected' : '' }}>50</option>
-                        <option value="-1" {{ request()->get('length') == -1 ? 'selected' : '' }}>All</option>
+                        {{-- <option value="-1" {{ request()->get('length') == -1 ? 'selected' : '' }}>All</option> --}}
                     </select>
                     <span class="semi-bold fs-5">entries</span>
                 </form>
@@ -106,7 +106,7 @@
                         </thead>
                         <tbody>
                             @foreach($dosens as $index => $dosen)
-                                <tr id="row-{{ $dosen->id }}" class="{{ $dosen->sisa_kuota == 0 ? 'bg-light text-muted' : '' }}">
+                                <tr class="dosen-row" id="row-{{ $dosen->id }}" class="{{ $dosen->sisa_kuota == 0 ? 'bg-light text-muted' : '' }}">
                                     <td class="centered-column">{{ $index + $dosens->firstItem() }}</td>
                                     <td class="centered-column">{{ $dosen->dosen->npp }}</td>
                                     <td class="centered-column">{{ $dosen->dosen->nama }}</td>
@@ -346,7 +346,7 @@
             $('.btn-edit').click(function() {
                 var id = $(this).data('id');
                 $.ajax({
-                    url: '/edit-dosen/' + id,
+                    url: "{{ route('editDosen', '') }}" + id,
                     type: 'GET',
                     success: function(response) {
                         $('#editDosenId').val(response.id);
@@ -393,3 +393,5 @@
         });
     </script>
 @endsection
+
+

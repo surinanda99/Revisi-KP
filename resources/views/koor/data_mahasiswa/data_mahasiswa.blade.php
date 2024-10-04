@@ -107,7 +107,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{-- {{ $mahasiswa->links() }} --}}
             </div>
+
         </div>
     </div>
 </div>
@@ -128,7 +130,7 @@
     $(document).ready(function() {
         $('#mahasiswaTable').DataTable({
             "pageLength": 10,
-            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "lengthMenu": [[10, 25, 50], [10, 25, 50]],
             "language": {
                 "search": "Cari:",
                 "lengthMenu": "Tampilkan _MENU_ entri",
