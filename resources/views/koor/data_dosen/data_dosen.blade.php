@@ -11,31 +11,6 @@
             </div>
         </div>
 
-        <!-- Search and Length Selection -->
-        <div class="row mb-3 mt-4 align-items-end">
-            <div class="col-md-4">
-                <form action="{{ route('HalamanKoorDosen') }}" method="GET" class="d-flex align-items-center">
-                    <span class="me-2 semi-bold fs-5">Tampilkan</span>
-                    <select name="length" class="form-select me-2" style="width: 80px;" onchange="this.form.submit()">
-                        <option value="10" {{ request()->get('length') == 10 ? 'selected' : '' }}>10</option>
-                        <option value="25" {{ request()->get('length') == 25 ? 'selected' : '' }}>25</option>
-                        <option value="50" {{ request()->get('length') == 50 ? 'selected' : '' }}>50</option>
-                        <option value="-1" {{ request()->get('length') == -1 ? 'selected' : '' }}>All</option>
-                    </select>
-                    <span class="semi-bold fs-5">entries</span>
-                </form>
-            </div>
-            <div class="col-md-8 ms-auto d-flex justify-content-end position-relative">
-                <form action="{{ route('HalamanKoorDosen') }}" method="GET" class="d-flex position-relative">
-                    <div style="position: relative; width: 200px;">
-                        <input type="text" name="search" class="form-control" placeholder="Cari Dosen..." 
-                               value="{{ request()->get('search') }}" id="searchInput" style="padding-right: 30px;">
-                        <i class="fas fa-times" id="clearIcon" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; display: none;"></i>
-                    </div>
-                    <button class="btn btn-outline-secondary ms-2" type="submit">Cari</button>
-                </form>
-            </div>
-
         <!-- Import Dosen Modal -->
         <div class="modal fade" id="dialogImport" tabindex="-1" aria-labelledby="dialogImportLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -89,8 +64,8 @@
 
         <div class="row my-4">
             <div class="col-md">
-                <div class="table-responsive">
-                    <table id="table-dosen" class="table table-bordered table-striped table-hover align-middle" id="dosenTable">
+                <div class="table-responsive" style="display: none;" id="tableContainer">
+                    <table class="table table-bordered table-striped table-hover align-middle" id="dosenTable">
                         <thead class="table-header">
                             <th class="align-middle">No.</th>
                             <th class="align-middle">NPP</th>
@@ -105,44 +80,9 @@
                             <th class="align-middle">Aksi</th>
                         </thead>
                         <tbody>
-                            @foreach($dosens as $index => $dosen)
-                                <tr id="row-{{ $dosen->id }}" class="{{ $dosen->sisa_kuota == 0 ? 'bg-light text-muted' : '' }}">
-                                    <td class="centered-column">{{ $index + $dosens->firstItem() }}</td>
-                                    <td class="centered-column">{{ $dosen->dosen->npp }}</td>
-                                    <td class="centered-column">{{ $dosen->dosen->nama }}</td>
-                                    <td class="centered-column">{{ $dosen->dosen->bidang_kajian }}</td>
-                                    <td class="centered-column">
-                                        <input type="number" class="form-control kuota-edit" data-id="{{ $dosen->id }}" value="{{ $dosen->kuota }}" style="width: 80px; text-align: center; margin: 0 auto;"/>
-                                    </td>
-                                    <td class="centered-column">{{ $dosen->jumlah_ajuan }}</td>
-                                    <td class="centered-column">{{ $dosen->ajuan_diterima }}</td>
-                                    <td class="centered-column">{{ $dosen->ajuan_ditolak }}</td>
-                                    <td class="centered-column" id="sisa-kuota-{{ $dosen->id }}">{{ $dosen->sisa_kuota }}</td>
-                                    <td class="centered-column" id="status-dosen-{{ $dosen->id }}">
-                                        @if($dosen->sisa_kuota == 0)
-                                            <span class="badge bg-danger">Penuh</span>
-                                        @else
-                                            <span class="badge bg-success">Tersedia</span>
-                                        @endif
-                                    </td>
-                                    <td class="centered-column">
-                                        <div class="d-inline">
-                                            <button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataDosen_{{ $dosen->id }}">
-                                                <i class="fas fa-info-circle"></i>
-                                            </button>
-                                            <button class="btn btn-warning me-1 btn-edit" data-id="{{ $dosen->id }}" data-bs-toggle="modal" data-bs-target="#dialogEditDosen_{{ $dosen->id }}">
-                                                <i class="far fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-danger btn-delete" data-id="{{ $dosen->id }}" data-bs-toggle="modal" data-bs-target="#dialogHapusDosen_{{ $dosen->id }}">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
+                            
                         </tbody>
                     </table>      
-                    {{ $dosens->links() }}
                 </div>
             </div>
         </div>
@@ -159,132 +99,85 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        const searchInput = document.getElementById('searchInput');
-        const clearIcon = document.getElementById('clearIcon');
-        const searchResults = document.getElementById('searchResults');
-
-        searchInput.addEventListener('input', function() {
-            const query = searchInput.value;
-
-            // Tampilkan ikon "x" saat pengguna mengetik
-            clearIcon.style.display = query ? 'block' : 'none';
-            
-            // Jika query tidak kosong, lakukan AJAX request
-            if (query) {
-                fetch(`/search-dosen?query=${query}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        // Tampilkan hasil pencarian
-                        searchResults.innerHTML = '';
-                        data.forEach(dosen => {
-                            const resultItem = document.createElement('div');
-                            resultItem.textContent = dosen.name; // Ganti dengan field yang sesuai
-                            resultItem.style.padding = '8px';
-                            resultItem.style.cursor = 'pointer';
-                            resultItem.addEventListener('click', () => {
-                                searchInput.value = dosen.name; // Isi input dengan nama yang dipilih
-                                searchResults.style.display = 'none'; // Sembunyikan hasil pencarian
-                            });
-                            searchResults.appendChild(resultItem);
-                        });
-                        searchResults.style.display = data.length ? 'block' : 'none'; // Tampilkan hasil jika ada
-                    });
-            } else {
-                searchResults.style.display = 'none'; // Sembunyikan hasil jika input kosong
-            }
-        });
-
-        clearIcon.addEventListener('click', function() {
-            searchInput.value = ''; // Kosongkan input
-            clearIcon.style.display = 'none'; // Sembunyikan ikon
-            searchResults.style.display = 'none'; // Sembunyikan hasil pencarian
-        });
-        
         $(document).ready(function() {
-            // DataTable 1
-            // $('#dosenTable').DataTable({
-            //     "paging": true, 
-            //     "info": false,
-            //     "pageLength": 10,
-            //     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-            //     "language": {
-            //         "search": "Cari:",
-            //         "lengthMenu": "Tampilkan _MENU_ entri",
-            //         "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
-            //         "infoEmpty": "Menampilkan 0 sampai 0 dari 0 entri",
-            //         "infoFiltered": "(disaring dari _MAX_ total entri)",
-            //         "zeroRecords": "Tidak ada data yang cocok",
-            //         "paginate": {
-            //             "first": "Pertama",
-            //             "last": "Terakhir",
-            //             "next": "Selanjutnya",
-            //             "previous": "Sebelumnya"
-            //         }
-            //     }
-            // });
+            // Tampilkan animasi loading saat halaman pertama kali dibuka
+            Swal.fire({
+                title: 'Loading...',
+                html: '<div class="loading-spinner"></div>',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
 
-            // $('#dosenTable').DataTable({
-            //     "paging": true, // Pagination tetap aktif
-            //     "pagingType": "simple_numbers", // Menggunakan simple numbers pagination
-            //     "info": false, // Hilangkan info seperti "Menampilkan X sampai X dari Y entri"
-            //     "pageLength": 10, // Default tampilkan 10 entri
-            //     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], // Length menu untuk memilih jumlah entri
-            //     "language": {
-            //         "search": "Cari:",
-            //         "lengthMenu": "Tampilkan _MENU_ entri", // Hanya lengthMenu yang ditampilkan
-            //         "zeroRecords": "Tidak ada data yang cocok"
-            //     },
-            //     "bLengthChange": true, // Tetap tampilkan dropdown untuk memilih jumlah data per halaman
-            //     "bPaginate": true, // Pagination tetap aktif
-            //     "fnDrawCallback": function() {
-            //         var api = this.api();
-            //         var pages = api.page.info().pages;
-            //         if (pages <= 1) {
-            //             $('.dataTables_paginate').hide(); // Sembunyikan pagination jika hanya ada 1 halaman
-            //         }
-            //     }
-            // });
-
-
-            // $('#dosenTable').DataTable({
-            //     "processing": true,
-            //     "serverSide": true,
-            //     "ajax": {
-            //         "url": "{{ route('HalamanKoorDosen') }}",
-            //         "type": "GET",
-            //         "data": function (d) {
-            //             // Sertakan parameter pencarian jika ada
-            //             d.search.value = $('input[type="search"]').val();
-            //         }
-            //     },
-            //     "columns": [
-            //         { "data": "id", "render": function(data, type, row, meta) { return meta.row + meta.settings._iDisplayStart + 1; } },
-            //         { "data": "dosen.npp" },
-            //         { "data": "dosen.nama" },
-            //         { "data": "dosen.bidang_kajian" },
-            //         { "data": "kuota" },
-            //         { "data": "ajuan_diterima" },
-            //         { "data": "ajuan_ditolak" },
-            //         { "data": "sisa_kuota" },
-            //         { "data": "sisa_kuota", "render": function(data) {
-            //             return data == 0 ? '<span class="badge bg-danger">Penuh</span>' : '<span class="badge bg-success">Tersedia</span>';
-            //         }},
-            //         { "data": "id", "render": function(data) {
-            //             return `<button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataDosen_${data}"><i class="fas fa-info-circle"></i></button>
-            //                     <button class="btn btn-warning me-1 btn-edit" data-id="${data}" data-bs-toggle="modal" data-bs-target="#dialogEditDosen_${data}"><i class="far fa-edit"></i></button>
-            //                     <button class="btn btn-danger btn-delete" data-id="${data}" data-bs-toggle="modal" data-bs-target="#dialogHapusDosen_${data}"><i class="fas fa-trash"></i></button>`;
-            //         }}
-            //     ],
-            //     "pagingType": "simple_numbers",
-            //     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-            //     "language": {
-            //         "search": "Cari:",
-            //         "lengthMenu": "Tampilkan _MENU_ entri",
-            //         "zeroRecords": "Tidak ada data yang cocok"
-            //     }
-            // });
-
-
+            // Initialize DataTable with AJAX
+            var table = $('#dosenTable').DataTable({
+                serverSide: true,
+                ajax: {
+                    url: '{{ route('dataDosenAjax') }}',
+                    type: 'GET',
+                    complete: function() {
+                        // Tutup animasi loading setelah data berhasil dimuat
+                        Swal.close();
+                        $('#tableContainer').show(); // Tampilkan kontainer tabel
+                    }
+                },
+                columns: [
+                    { data: null, render: function(data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1; // Display the row number
+                    }},
+                    { data: 'npp' },
+                    { data: 'nama' },
+                    { data: 'bidang_kajian' },
+                    { 
+                        data: 'kuota', 
+                        render: function(data, type, row) {
+                            return '<input type="number" class="form-control kuota-edit" data-id="' + row.id + '" value="' + data + '" style="width: 80px; text-align: center; margin: 0 auto;"/>';
+                        },
+                        orderable: false, // Disable ordering for this column
+                        searchable: false // Disable searching for this column
+                    },
+                    { data: 'jumlah_ajuan' },
+                    { data: 'ajuan_diterima' },
+                    { data: 'ajuan_ditolak' },
+                    { data: 'sisa_kuota' },
+                    { data: 'status', render: function(data) {
+                        return data == 'Penuh' ? '<span class="badge bg-danger">' + data + '</span>' : '<span class="badge bg-success">' + data + '</span>';
+                    }},
+                    { data: 'id', render: function(data) {
+                        return `
+                            <button class="btn btn-primary btn-detail" data-bs-toggle="modal" data-bs-target="#dialogDetailDataDosen_${data}">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                            <button class="btn btn-warning me-1 btn-edit" data-id="${data}" data-bs-toggle="modal" data-bs-target="#dialogEditDosen_${data}">
+                                <i class="far fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger btn-delete" data-id="${data}" data-bs-toggle="modal" data-bs-target="#dialogHapusDosen_${data}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        `;
+                    }}
+                ],
+                createdRow: function(row, data, dataIndex) {
+                    // Add the id and class based on sisa_kuota
+                    $(row).attr('id', 'row-' + data.id);
+                    if (data.sisa_kuota == 0) {
+                        $(row).addClass('bg-light text-muted');
+                    }
+                },
+                language: {
+                    search: "Cari:",
+                    lengthMenu: "Tampilkan _MENU_ data per halaman",
+                    info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    paginate: {
+                        first: "Pertama",
+                        last: "Terakhir",
+                        next: "Berikutnya",
+                        previous: "Sebelumnya"
+                    },
+                }
+            });
 
             // Inisialisasi Select2 ketika modal "Tambah Data Mahasiswa" dibuka
             $('.modal').on('shown.bs.modal', function() {
@@ -298,7 +191,7 @@
             });
 
             // Handle kuota input change
-            $('.kuota-edit').on('change', function() {
+            $(document).on('change', '.kuota-edit', function() {
                 var id = $(this).data('id');
                 var newKuota = $(this).val();
     
@@ -385,11 +278,33 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function() {
-            // DataTable
-            $('#dosenTable').DataTable();
+    <style>
+        /* Loading spinner style specific to SweetAlert */
+        .swal2-html-container .swal-loading-spinner {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            border: 8px solid rgba(0, 0, 0, 0.1);
+            border-top: 8px solid #3498db; /* Biru di bagian atas */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
 
-        });
-    </script>
+        /* Keyframes for spinner animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Mengubah tampilan SweetAlert agar lebih baik dengan spinner */
+        .swal2-popup {
+            background-color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .swal2-title {
+            color: #3498db !important;
+            font-weight: bold;
+        }
+    </style>
+
 @endsection

@@ -40,57 +40,12 @@ class KoorController extends Controller
         return view('koor.dashboard', compact('mahasiswa', 'dosen', 'logbooks'));
     }
 
-    // public function daftar_data_dosen()
-    // {
-    //     // Ambil semua data DosenPembimbing dengan relasi Dosen
-    //     $dosens = DosenPembimbing::with('dosen', 'dosen.pengajuan')->paginate(10);
-    //     // $dosens = DosenPembimbing::with('dosen', 'dosen.pengajuan')->get(); //perbedaan 
-
-    //     foreach ($dosens as $dosen) {
-    //         // Hitung jumlah ajuan diterima berdasarkan mahasiswa yang statusnya ACC
-    //         $ajuanDiterima = StatusMahasiswa::where('id_dsn', $dosen->dosen->id)
-    //             ->where('status', 'ACC')
-    //             ->count();
-
-    //         // Hitung jumlah ajuan ditolak
-    //         $ajuanDitolak = Pengajuan::where('id_dsn', $dosen->dosen->id)
-    //             ->where('status', 'TOLAK')
-    //             ->count();
-
-    //         // Hitung sisa kuota
-    //         $sisaKuota = $dosen->kuota - $ajuanDiterima;
-
-    //         // Perbarui data di DosenPembimbing
-    //         $dosen->ajuan_diterima = $ajuanDiterima;
-    //         $dosen->sisa_kuota = $sisaKuota;
-    //         $dosen->save();
-
-    //         $dosen->ajuan_ditolak = $ajuanDitolak;
-    //     }
-
-    //     return view('koor.data_dosen.data_dosen', compact('dosens'));
-    // }
-
-    public function daftar_data_dosen(Request $request)
+    public function daftar_data_dosen()
     {
         // Ambil semua data DosenPembimbing dengan relasi Dosen
-        $query = DosenPembimbing::with('dosen', 'dosen.pengajuan');
+        // $dosens = DosenPembimbing::with('dosen', 'dosen.pengajuan')->paginate(10);
+        $dosens = DosenPembimbing::with('dosen', 'dosen.pengajuan')->get(); //perbedaan 
 
-        // Jika ada pencarian
-        if ($request->has('search')) {
-            $search = $request->get('search');
-            $query->whereHas('dosen', function($q) use ($search) {
-                $q->where('nama', 'LIKE', "%{$search}%");
-            });
-        }
-
-        // Tentukan jumlah data per halaman dari request atau gunakan default 10
-        $perPage = $request->get('length', 10); // Default 10
-
-        // Pagination
-        $dosens = $query->paginate($perPage);  // Menggunakan variabel $perPage
-
-        // Proses data untuk menghitung ajuan diterima, ditolak, dan sisa kuota
         foreach ($dosens as $dosen) {
             // Hitung jumlah ajuan diterima berdasarkan mahasiswa yang statusnya ACC
             $ajuanDiterima = StatusMahasiswa::where('id_dsn', $dosen->dosen->id)
@@ -110,12 +65,114 @@ class KoorController extends Controller
             $dosen->sisa_kuota = $sisaKuota;
             $dosen->save();
 
-            $dosen->ajuan_ditolak = $ajuanDitolak; 
+            $dosen->ajuan_ditolak = $ajuanDitolak;
         }
 
-        // Mengembalikan tampilan dengan data dosen
         return view('koor.data_dosen.data_dosen', compact('dosens'));
     }
+
+    public function getDataDosen(Request $request)
+    {
+        // Create a query for fetching dosen data
+        $query = DosenPembimbing::with('dosen', 'dosen.pengajuan');
+
+        // Check if there's a search value
+        if ($request->has('search') && $request->search['value'] != '') {
+            $search = $request->search['value'];
+            $query->whereHas('dosen', function ($q) use ($search) {
+                $q->where('nama', 'LIKE', "%$search%");
+            });
+        }
+
+        // Fetch total records
+        $totalData = $query->count();
+
+        // Get the paginated data
+        $dosens = $query->offset($request->start)
+                        ->limit($request->length)
+                        ->get();
+
+        // Prepare data for DataTable response
+        $data = [];
+        foreach ($dosens as $dosen) {
+            // Hitung jumlah ajuan diterima dan ditolak
+            $ajuanDiterima = StatusMahasiswa::where('id_dsn', $dosen->dosen->id)
+                ->where('status', 'ACC')
+                ->count();
+            $ajuanDitolak = Pengajuan::where('id_dsn', $dosen->dosen->id)
+                ->where('status', 'TOLAK')
+                ->count();
+            $sisaKuota = $dosen->kuota - $ajuanDiterima;
+
+            $data[] = [
+                'no' => null, // Will be filled by DataTables
+                'npp' => $dosen->dosen->npp,
+                'nama' => $dosen->dosen->nama,
+                'bidang_kajian' => $dosen->dosen->bidang_kajian,
+                'kuota' => $dosen->kuota,
+                'jumlah_ajuan' => $dosen->jumlah_ajuan,
+                'ajuan_diterima' => $ajuanDiterima,
+                'ajuan_ditolak' => $ajuanDitolak,
+                'sisa_kuota' => $sisaKuota,
+                'status' => $sisaKuota == 0 ? 'Penuh' : 'Tersedia',
+                'id' => $dosen->id,
+            ];
+        }
+
+        // Return the response in the format required by DataTables
+        return response()->json([
+            'draw' => intval($request->draw),
+            'recordsTotal' => $totalData,
+            'recordsFiltered' => $totalData,
+            'data' => $data,
+        ]);
+    }
+
+    // public function daftar_data_dosen(Request $request)
+    // {
+    //     // Ambil semua data DosenPembimbing dengan relasi Dosen
+    //     $query = DosenPembimbing::with('dosen', 'dosen.pengajuan');
+
+    //     // Jika ada pencarian
+    //     if ($request->has('search')) {
+    //         $search = $request->get('search');
+    //         $query->whereHas('dosen', function($q) use ($search) {
+    //             $q->where('nama', 'LIKE', "%{$search}%");
+    //         });
+    //     }
+
+    //     // Tentukan jumlah data per halaman dari request atau gunakan default 10
+    //     $perPage = $request->get('length', 10); // Default 10
+
+    //     // Pagination
+    //     $dosens = $query->paginate($perPage);  // Menggunakan variabel $perPage
+
+    //     // Proses data untuk menghitung ajuan diterima, ditolak, dan sisa kuota
+    //     foreach ($dosens as $dosen) {
+    //         // Hitung jumlah ajuan diterima berdasarkan mahasiswa yang statusnya ACC
+    //         $ajuanDiterima = StatusMahasiswa::where('id_dsn', $dosen->dosen->id)
+    //             ->where('status', 'ACC')
+    //             ->count();
+
+    //         // Hitung jumlah ajuan ditolak
+    //         $ajuanDitolak = Pengajuan::where('id_dsn', $dosen->dosen->id)
+    //             ->where('status', 'TOLAK')
+    //             ->count();
+
+    //         // Hitung sisa kuota
+    //         $sisaKuota = $dosen->kuota - $ajuanDiterima;
+
+    //         // Perbarui data di DosenPembimbing
+    //         $dosen->ajuan_diterima = $ajuanDiterima;
+    //         $dosen->sisa_kuota = $sisaKuota;
+    //         $dosen->save();
+
+    //         $dosen->ajuan_ditolak = $ajuanDitolak; 
+    //     }
+
+    //     // Mengembalikan tampilan dengan data dosen
+    //     return view('koor.data_dosen.data_dosen', compact('dosens'));
+    // }
 
     public function storeDosen(Request $request)
     {
@@ -296,6 +353,44 @@ class KoorController extends Controller
 
         return view('koor.data_mahasiswa.data_mahasiswa', compact('mahasiswas'));
     }
+
+    public function list_data_mhs(Request $request)
+    {
+        $query = Mahasiswa::with('statusMahasiswa.dospem'); // Eager load
+    
+        // Hitung total record sebelum pencarian (untuk pagination)
+        $totalRecords = $query->count();
+    
+        // Terapkan pencarian jika ada
+        if ($request->has('search') && $request->search['value']) {
+            $searchValue = $request->search['value'];
+            $query->where(function($q) use ($searchValue) {
+                $q->where('nim', 'like', "%{$searchValue}%")
+                  ->orWhere('nama', 'like', "%{$searchValue}%")
+                  ->orWhere('email', 'like', "%{$searchValue}%");
+            });
+        }
+    
+        // Hitung total record setelah pencarian (untuk recordsFiltered)
+        $totalFilteredRecords = $query->count();
+    
+        // Terapkan pagination atau ambil semua data jika length = -1
+        if ($request->length == -1) {
+            $records = $query->get(); // Ambil semua data jika length = All
+        } else {
+            $records = $query->skip($request->start)
+                             ->take($request->length)
+                             ->get();
+        }
+    
+        return response()->json([
+            "draw" => intval($request->draw),
+            "recordsTotal" => $totalRecords,
+            "recordsFiltered" => $totalFilteredRecords, // Total setelah pencarian
+            "data" => $records,
+        ]);
+    }
+    
 
     public function storeMhs(Request $request)
     {
